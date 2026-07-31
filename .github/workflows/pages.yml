@@ -1,0 +1,61 @@
+name: build & deploy
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: ตรวจคลังข้อสอบและหน้าเว็บ
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: ตรวจว่าไฟล์ข้อสอบที่สร้างจาก tools ตรงกับที่ commit ไว้
+        run: |
+          python3 tools/phase1_questions.py
+          python3 tools/phase1b_questions.py
+          git diff --exit-code -- questions/ \
+            || { echo "::error::questions/*.json ไม่ตรงกับผลลัพธ์ของ tools/*_questions.py — รันสคริปต์แล้ว commit ใหม่"; exit 1; }
+
+      - name: ตรวจคลังข้อสอบ (schema, เฉลย, SVG, syntax, สำเนา)
+        run: python3 tools/validate.py
+
+      - name: ทดสอบพฤติกรรมหน้าเว็บ
+        run: |
+          npm install jsdom --no-save --silent
+          node tools/dom_test.cjs
+
+  deploy:
+    name: เผยแพร่ GitHub Pages
+    needs: validate
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4

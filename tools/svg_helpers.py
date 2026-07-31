@@ -91,9 +91,10 @@ def bar_chart(labels, values, y_title="", caption=None, series_names=None, width
 
 
 # ------------------------------------------------------------------ กราฟเส้น
-def line_chart(labels, values, y_title="", caption=None, width=520):
+def line_chart(labels, values, y_title="", caption=None, width=520, x_title=""):
     pad_l, pad_r, pad_t, pad_b = 46, 16, 18, 40
-    plot_h, h = 180, 238
+    plot_h = 180
+    h = 238 + (16 if x_title else 0)
     plot_w = width - pad_l - pad_r
     vmin_data = min(values)
     vmax, step = _nice_ticks(max(values))
@@ -129,7 +130,134 @@ def line_chart(labels, values, y_title="", caption=None, width=520):
         b.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4" fill="#fff" '
                  f'stroke="{SERIES[0]}" stroke-width="2.2"/>')
         b.append(_t(x, y - 10, val, 11, "middle", INK, "600"))
+    if x_title:
+        b.append(_t(pad_l + plot_w / 2, pad_t + plot_h + 38, x_title, 11, "middle", SOFT, "600"))
     return _wrap(width, h, "".join(b), caption)
+
+
+# ------------------------------------------------------------------- เส้นจำนวน
+def number_line(lo, hi, marks=None, caption=None, step=1, width=520):
+    """เส้นจำนวนจาก lo ถึง hi · marks = {ค่า: 'ป้าย'} จุดที่ต้องการทำเครื่องหมาย"""
+    marks = marks or {}
+    pad, h = 26, 74
+    span = hi - lo
+    sx = lambda v: pad + (v - lo) / span * (width - pad * 2)
+    y = 40
+    b = [f'<rect x="0" y="0" width="{width}" height="{h}" fill="#fff"/>']
+    b.append(f'<line x1="{pad-14}" y1="{y}" x2="{width-pad+14}" y2="{y}" '
+             f'stroke="{INK}" stroke-width="1.6"/>')
+    for arrow in ((pad - 14, -1), (width - pad + 14, 1)):
+        x0, d = arrow
+        b.append(f'<polygon points="{x0},{y} {x0-6*d},{y-4} {x0-6*d},{y+4}" fill="{INK}"/>')
+    v = lo
+    while v <= hi:
+        x = sx(v)
+        big = v in marks
+        b.append(f'<line x1="{x:.1f}" y1="{y-6}" x2="{x:.1f}" y2="{y+6}" '
+                 f'stroke="{INK}" stroke-width="{1.6 if big else 1}"/>')
+        b.append(_t(x, y + 21, v, 11.5, "middle", INK if big else SOFT))
+        v += step
+    for v, lab in marks.items():
+        x = sx(v)
+        b.append(f'<circle cx="{x:.1f}" cy="{y}" r="5.5" fill="{SERIES[3]}"/>')
+        b.append(_t(x, y - 13, lab, 13, "middle", SERIES[3], "700"))
+    return _wrap(width, h, "".join(b), caption)
+
+
+# ------------------------------------------------------------- ระนาบพิกัดฉาก
+def coord_plane(points, lo=-5, hi=5, caption=None, cell=26):
+    """points = {'A': (x, y), ...} วาดจุดบนระนาบพิกัดฉาก"""
+    n = hi - lo
+    size = n * cell
+    pad = 22
+    w = h = size + pad * 2
+    px = lambda x: pad + (x - lo) * cell
+    py = lambda y: pad + (hi - y) * cell
+    b = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>']
+    for i in range(lo, hi + 1):
+        b.append(f'<line x1="{px(i)}" y1="{pad}" x2="{px(i)}" y2="{pad+size}" '
+                 f'stroke="{GRID}" stroke-width="1"/>')
+        b.append(f'<line x1="{pad}" y1="{py(i)}" x2="{pad+size}" y2="{py(i)}" '
+                 f'stroke="{GRID}" stroke-width="1"/>')
+    b.append(f'<line x1="{pad}" y1="{py(0)}" x2="{pad+size}" y2="{py(0)}" '
+             f'stroke="{INK}" stroke-width="1.6"/>')
+    b.append(f'<line x1="{px(0)}" y1="{pad}" x2="{px(0)}" y2="{pad+size}" '
+             f'stroke="{INK}" stroke-width="1.6"/>')
+    for i in range(lo, hi + 1):
+        if i == 0:
+            continue
+        b.append(_t(px(i), py(0) + 13, i, 9.5, "middle", SOFT))
+        b.append(_t(px(0) - 8, py(i) + 3.5, i, 9.5, "end", SOFT))
+    b.append(_t(pad + size + 8, py(0) + 4, "X", 12, "middle", NAVY, "700"))
+    b.append(_t(px(0), pad - 8, "Y", 12, "middle", NAVY, "700"))
+    for name, (x, y) in points.items():
+        # ป้ายชื่อจุดวางออกด้านนอก (ห่างจากแกน) เพื่อไม่ทับตัวเลขกำกับแกน
+        dx = 11 if x >= 0 else -11
+        dy = -8 if y >= 0 else 16
+        b.append(f'<circle cx="{px(x)}" cy="{py(y)}" r="4.5" fill="{SERIES[3]}"/>')
+        b.append(_t(px(x) + dx, py(y) + dy, name, 13, "middle", SERIES[3], "700"))
+    return _wrap(w, h, "".join(b), caption)
+
+
+# ------------------------------------------------- เส้นตรงสองเส้นตัดกัน (มุม)
+def intersecting_lines(angle_label, caption=None):
+    """เส้นตรงสองเส้นตัดกัน ทำเครื่องหมายมุมหนึ่งมุมด้วย angle_label"""
+    w, h, cx, cy, r = 300, 170, 150, 85, 66
+    import math
+    b = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>']
+    for deg in (0, 130):
+        a = math.radians(deg)
+        dx, dy = r * math.cos(a), -r * math.sin(a)
+        b.append(f'<line x1="{cx-dx:.1f}" y1="{cy-dy:.1f}" x2="{cx+dx:.1f}" y2="{cy+dy:.1f}" '
+                 f'stroke="{NAVY}" stroke-width="2"/>')
+    a1, a2 = 0, math.radians(130)
+    ar = 26
+    b.append(f'<path d="M {cx+ar} {cy} A {ar} {ar} 0 0 0 '
+             f'{cx+ar*math.cos(a2):.1f} {cy-ar*math.sin(a2):.1f}" fill="none" '
+             f'stroke="{SERIES[3]}" stroke-width="2"/>')
+    b.append(_t(cx + 34, cy - 26, angle_label, 14, "middle", SERIES[3], "700"))
+    b.append(_t(cx + 40, cy + 22, "?", 15, "middle", SERIES[0], "700"))
+    b.append(f'<circle cx="{cx}" cy="{cy}" r="3" fill="{INK}"/>')
+    return _wrap(w, h, "".join(b), caption)
+
+
+# --------------------------------------------------- รูปสามเหลี่ยมพร้อมมุม
+def triangle_fig(angle_a, angle_b, angle_c, unknown="B", caption=None):
+    """รูปสามเหลี่ยม ABC ที่วาดตามขนาดมุมจริง (A, B อยู่บนฐาน, C เป็นยอด)
+
+    มุมที่ระบุใน `unknown` จะแสดงเป็น "?" — รูปจึงตรงกับตัวเลขที่กำกับไว้เสมอ
+    """
+    import math
+    assert angle_a + angle_b + angle_c == 180, "ผลบวกของมุมภายในต้องเท่ากับ 180 องศา"
+    ta, tb = math.tan(math.radians(angle_a)), math.tan(math.radians(angle_b))
+    base = 1.0
+    cy = base * ta * tb / (ta + tb)      # ความสูงจากฐาน
+    cx = cy / ta
+    scale = min(232 / base, 190 / cy) if cy > 0 else 232 / base   # คุมทั้งกว้างและสูง
+    pts = [(0.0, 0.0), (base * scale, 0.0), (cx * scale, cy * scale)]
+    top = max(p[1] for p in pts)
+    padx, pady = 44, 30
+    w = int(base * scale + padx * 2)
+    h = int(top + pady * 2 + 12)
+    P = [(x + padx, h - pady - y) for x, y in pts]   # พลิกแกน y ให้ฐานอยู่ล่าง
+
+    b = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>']
+    b.append('<polygon points="' + " ".join(f"{x:.1f},{y:.1f}" for x, y in P) +
+             f'" fill="#f4f2ea" stroke="{NAVY}" stroke-width="2"/>')
+    # ป้ายมุม: เยื้องเข้าด้านในรูปจากจุดยอดแต่ละจุด
+    cxm = sum(x for x, _ in P) / 3
+    cym = sum(y for _, y in P) / 3
+    names = "ABC"
+    for i, (x, y) in enumerate(P):
+        val = (angle_a, angle_b, angle_c)[i]
+        is_unknown = names[i] == unknown
+        lab = "?" if is_unknown else f"{val}°"
+        vx, vy = cxm - x, cym - y
+        d = math.hypot(vx, vy) or 1
+        b.append(_t(x + vx / d * 36, y + vy / d * 36 + 5, lab, 14, "middle",
+                    SERIES[3] if is_unknown else INK, "700"))
+        b.append(_t(x - vx / d * 15, y - vy / d * 15 + 5, names[i], 13, "middle", NAVY, "700"))
+    return _wrap(w, h, "".join(b), caption)
 
 
 # ------------------------------------------------------------ แผนภูมิรูปวงกลม

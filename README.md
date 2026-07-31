@@ -27,19 +27,25 @@
 | `ข้อสอบคณิตศาสตร์_ม1.html` | สำเนาชื่อภาษาไทย ไว้ดาวน์โหลด/เปิดออฟไลน์ |
 | [`docs/coverage-plan.md`](docs/coverage-plan.md) | แผนขยายคลังข้อสอบเทียบตัวชี้วัด ม.1 + ความคืบหน้า |
 | `tools/svg_helpers.py` | ฟังก์ชันสร้างรูป SVG (แผนภูมิ, ภาพสามมิติ, รูปคลี่) |
-| `tools/phase1_questions.py` | นิยามข้อสอบเฟส 1 → `questions/phase1.json` |
+| `tools/phase1_questions.py` · `tools/phase1b_questions.py` | นิยามข้อสอบเฟส 1 → `questions/*.json` |
+| `tools/validate.py` · `tools/dom_test.cjs` | ชุดตรวจที่ CI ใช้ (คลังข้อสอบ + พฤติกรรมหน้าเว็บ) |
 | `tools/merge_into_html.py` | รวมข้อสอบชุดใหม่เข้า `index.html` (รันซ้ำได้ ข้ามข้อที่ซ้ำ) |
 
 ## เพิ่มข้อสอบ
 
 ```bash
-python3 tools/phase1_questions.py                      # สร้าง questions/phase1.json
-python3 tools/merge_into_html.py questions/phase1.json  # รวมเข้า index.html
-cp index.html ข้อสอบคณิตศาสตร์_ม1.html                  # ซิงค์สำเนา
+python3 tools/phase1b_questions.py                      # สร้าง questions/phase1b.json
+python3 tools/merge_into_html.py questions/phase1b.json # รวมเข้า index.html
+cp index.html ข้อสอบคณิตศาสตร์_ม1.html                   # ซิงค์สำเนา
+python3 tools/validate.py                               # ตรวจคลังข้อสอบ
+npm install jsdom --no-save && node tools/dom_test.cjs  # ทดสอบหน้าเว็บ
 ```
+
+ทุก pull request จะถูกตรวจด้วยชุดเดียวกันนี้ผ่าน GitHub Actions
+(`.github/workflows/pages.yml`) และเมื่อ merge เข้า `main` แล้วจะ deploy GitHub Pages ให้อัตโนมัติ
 
 ดูรายละเอียดหัวข้อที่ยังต้องเพิ่มและหลักการเขียนเฉลยให้ระบบตรวจอัตโนมัติได้ที่
 [`docs/coverage-plan.md`](docs/coverage-plan.md)
 
 > ⚠️ การแทรกข้อสอบทำให้เลขข้อเลื่อน ต้องเพิ่มเลขเวอร์ชันของ `STORE_KEY` ใน `index.html`
-> (ปัจจุบัน `funnymath-m1-v2`) เพื่อไม่ให้ความก้าวหน้าที่บันทึกไว้จับคู่ผิดข้อ
+> (ปัจจุบัน `funnymath-m1-v3`) เพื่อไม่ให้ความก้าวหน้าที่บันทึกไว้จับคู่ผิดข้อ
