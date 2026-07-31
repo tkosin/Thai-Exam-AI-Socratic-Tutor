@@ -1,0 +1,1632 @@
+[
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "ลำดับการดำเนินการ",
+  "text": "จงหาค่าของ 12 + 3 &times; 4",
+  "answer": "24",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "ลำดับการดำเนินการ",
+  "text": "จงหาค่าของ (12 + 3) &times; 4",
+  "answer": "60",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "ลำดับการดำเนินการ",
+  "text": "จงหาค่าของ 20 - 6 &divide; 2",
+  "answer": "17",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "ลำดับการดำเนินการ",
+  "text": "จงหาค่าของ 5 &times; (8 - 3) + 2<sup>2</sup>",
+  "answer": "29",
+  "level": "กลาง"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "ลำดับการดำเนินการ",
+  "text": "จงหาค่าของ (-3) &times; 4 + 18 &divide; (-6)",
+  "answer": "-15",
+  "level": "กลาง"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "ลำดับการดำเนินการ",
+  "text": "จงหาค่าของ 36 &divide; (2 + 4) &times; 3 - 5",
+  "answer": "13",
+  "level": "ยาก"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาจำนวนเต็ม",
+  "text": "ตอนเช้าอุณหภูมิ -3 องศาเซลเซียส ตอนบ่ายเพิ่มขึ้น 8 องศาเซลเซียส ตอนบ่ายอุณหภูมิเป็นกี่องศาเซลเซียส",
+  "answer": "5",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาจำนวนเต็ม",
+  "text": "ลิฟต์อยู่ที่ชั้นใต้ดินที่ 2 (แทนด้วย -2) ขึ้นไป 7 ชั้น จะอยู่ที่ชั้นใด",
+  "answer": "5",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาจำนวนเต็ม",
+  "text": "นักดำน้ำอยู่ที่ระดับ -18 เมตร ขึ้นมา 5 เมตร แล้วดำลงไปอีก 12 เมตร จะอยู่ที่ระดับใด (ตอบเป็นจำนวนเต็ม)",
+  "answer": "-25",
+  "level": "กลาง"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาจำนวนเต็ม",
+  "text": "ร้านค้าวันแรกได้กำไร 850 บาท วันที่สองขาดทุน 1,200 บาท รวมสองวันได้กำไรหรือขาดทุนกี่บาท (ตอบเป็นจำนวนเต็ม)",
+  "answer": "-350",
+  "level": "กลาง"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาจำนวนเต็ม",
+  "text": "อุณหภูมิที่ยอดเขา -12 องศาเซลเซียส ที่เชิงเขา 15 องศาเซลเซียส ต่างกันกี่องศาเซลเซียส",
+  "answer": "27",
+  "level": "กลาง"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาจำนวนเต็ม",
+  "text": "บัญชีมีเงิน 2,500 บาท ถอนเงิน 3,200 บาท (เบิกเกินบัญชีได้) แล้วฝากเพิ่ม 1,500 บาท จะเหลือเงินในบัญชีกี่บาท",
+  "answer": "800",
+  "level": "ยาก"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "เลขชี้กำลังเป็นศูนย์และฐานเป็นจำนวนลบ",
+  "text": "จงหาค่าของ 7<sup>0</sup>",
+  "answer": "1",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "เลขชี้กำลังเป็นศูนย์และฐานเป็นจำนวนลบ",
+  "text": "จงหาค่าของ (-5)<sup>0</sup>",
+  "answer": "1",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "เลขชี้กำลังเป็นศูนย์และฐานเป็นจำนวนลบ",
+  "text": "จงหาค่าของ (-2)<sup>5</sup>",
+  "answer": "-32",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "เลขชี้กำลังเป็นศูนย์และฐานเป็นจำนวนลบ",
+  "text": "จงหาค่าของ -2<sup>4</sup> (สังเกตว่าไม่มีวงเล็บ)",
+  "answer": "-16",
+  "level": "กลาง"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "เลขชี้กำลังเป็นศูนย์และฐานเป็นจำนวนลบ",
+  "text": "(-3)<sup>4</sup> มีค่ามากกว่า -3<sup>4</sup> เท่าใด",
+  "answer": "162",
+  "level": "ยาก"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การเขียนจำนวนในรูปเลขยกกำลัง",
+  "text": "64 เขียนในรูป 2<sup>n</sup> ค่าของ n เท่ากับเท่าใด",
+  "answer": "6",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การเขียนจำนวนในรูปเลขยกกำลัง",
+  "text": "81 เขียนในรูป 3<sup>n</sup> ค่าของ n เท่ากับเท่าใด",
+  "answer": "4",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การเขียนจำนวนในรูปเลขยกกำลัง",
+  "text": "1,000 เขียนในรูป 10<sup>n</sup> ค่าของ n เท่ากับเท่าใด",
+  "answer": "3",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การเขียนจำนวนในรูปเลขยกกำลัง",
+  "text": "216 เขียนในรูป 6<sup>n</sup> ค่าของ n เท่ากับเท่าใด",
+  "answer": "3",
+  "level": "กลาง"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "สมบัติของเลขยกกำลัง",
+  "text": "จงหาค่าของ (2 &times; 3)<sup>3</sup>",
+  "answer": "216",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "สมบัติของเลขยกกำลัง",
+  "text": "จงหาค่าของ (<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span>)<sup>4</sup>",
+  "answer": "<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">16</span></span>",
+  "level": "กลาง"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "สมบัติของเลขยกกำลัง",
+  "text": "จงหาค่าของ (0.2)<sup>3</sup>",
+  "answer": "0.008",
+  "level": "กลาง"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "สมบัติของเลขยกกำลัง",
+  "text": "จงหาค่าของ (2<sup>3</sup>)<sup>2</sup> &times; 2",
+  "answer": "128",
+  "level": "ยาก"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาเลขยกกำลัง",
+  "text": "ลูกบาศก์ยาวด้านละ 4 เซนติเมตร มีปริมาตรกี่ลูกบาศก์เซนติเมตร",
+  "answer": "64",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาเลขยกกำลัง",
+  "text": "หน่วยความจำขนาด 2<sup>10</sup> ไบต์ เท่ากับกี่ไบต์",
+  "answer": "1024",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาเลขยกกำลัง",
+  "text": "แบคทีเรียแบ่งตัวเป็น 2 เท่าทุกชั่วโมง เริ่มต้นมี 1 ตัว เมื่อผ่านไป 6 ชั่วโมงจะมีกี่ตัว",
+  "answer": "64",
+  "level": "กลาง"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาเลขยกกำลัง",
+  "text": "กระดาษแผ่นหนึ่งพับครึ่งซ้อนกัน 5 ครั้ง จะได้กระดาษซ้อนกันกี่ชั้น",
+  "answer": "32",
+  "level": "กลาง"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาเลขยกกำลัง",
+  "text": "เซลล์ชนิดหนึ่งเพิ่มจำนวนเป็น 3 เท่าทุกวัน เริ่มต้นมี 2 เซลล์ เมื่อผ่านไป 4 วันจะมีกี่เซลล์",
+  "answer": "162",
+  "level": "ยาก"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เศษเกินและจำนวนคละ",
+  "text": "<span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">3</span></span> เขียนเป็นจำนวนคละ ส่วนที่เป็นจำนวนเต็มคือจำนวนใด",
+  "answer": "2",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เศษเกินและจำนวนคละ",
+  "text": "3<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span> เขียนเป็นเศษเกิน ตัวเศษคือจำนวนใด",
+  "answer": "13",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เศษเกินและจำนวนคละ",
+  "text": "2<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> เขียนเป็นเศษเกินได้เท่าใด",
+  "answer": "<span class=\"frac\"><span class=\"num\">12</span><span class=\"den\">5</span></span>",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เศษเกินและจำนวนคละ",
+  "text": "<span class=\"frac\"><span class=\"num\">17</span><span class=\"den\">5</span></span> เขียนเป็นจำนวนคละได้ตรงกับข้อใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>3<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span></span></div><div class=\"ch\"><b>ข.</b><span>2<span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span></span></div><div class=\"ch\"><b>ค.</b><span>3<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">5</span></span></span></div><div class=\"ch\"><b>ง.</b><span>5<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span></span></div></div>",
+  "answer": "ก",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "ทศนิยมซ้ำ",
+  "text": "<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span> เขียนเป็นทศนิยมได้ 0.333... จำนวนนี้เป็นทศนิยมชนิดใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>ทศนิยมรู้จบ</span></div><div class=\"ch\"><b>ข.</b><span>ทศนิยมซ้ำ</span></div><div class=\"ch\"><b>ค.</b><span>จำนวนเต็ม</span></div><div class=\"ch\"><b>ง.</b><span>ไม่เป็นจำนวนตรรกยะ</span></div></div>",
+  "answer": "ข",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "ทศนิยมซ้ำ",
+  "text": "เศษส่วนในข้อใดเขียนเป็นทศนิยมรู้จบได้<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span><span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span></span></div><div class=\"ch\"><b>ข.</b><span><span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">6</span></span></span></div><div class=\"ch\"><b>ค.</b><span><span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">8</span></span></span></div><div class=\"ch\"><b>ง.</b><span><span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">7</span></span></span></div></div>",
+  "answer": "ค",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "ทศนิยมซ้ำ",
+  "text": "0.777... เขียนเป็นเศษส่วนอย่างต่ำ ตัวส่วนคือจำนวนใด",
+  "answer": "9",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "ทศนิยมซ้ำ",
+  "text": "<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">9</span></span> เขียนเป็นทศนิยม ตัวเลขที่ซ้ำคือเลขใด",
+  "answer": "2",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การปัดเศษและประมาณค่า",
+  "text": "ปัด 3.678 ให้เป็นทศนิยมสองตำแหน่ง ได้เท่าใด",
+  "answer": "3.68",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การปัดเศษและประมาณค่า",
+  "text": "ปัด 12.4499 ให้เป็นทศนิยมหนึ่งตำแหน่ง ได้เท่าใด",
+  "answer": "12.4",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การปัดเศษและประมาณค่า",
+  "text": "ปัด 0.0456 ให้เป็นทศนิยมสามตำแหน่ง ได้เท่าใด",
+  "answer": "0.046",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การปัดเศษและประมาณค่า",
+  "text": "ประมาณค่าของ 48.7 &times; 5.2 โดยปัดตัวเลขทั้งสองเป็นจำนวนเต็มก่อนคูณ ได้ผลลัพธ์เท่าใด",
+  "answer": "245",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาทศนิยม",
+  "text": "ผ้ายาว 12.5 เมตร ตัดออกไป 3.75 เมตร เหลือผ้ายาวกี่เมตร",
+  "answer": "8.75",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาทศนิยม",
+  "text": "แบ่งเชือกยาว 15.6 เมตร ออกเป็น 4 ส่วนเท่ากัน แต่ละส่วนยาวกี่เมตร",
+  "answer": "3.9",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาทศนิยม",
+  "text": "ซื้อของราคา 45.50 บาท และ 32.25 บาท จ่ายเงิน 100 บาท ได้เงินทอนกี่บาท",
+  "answer": "22.25",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาทศนิยม",
+  "text": "น้ำมัน 1 ลิตร ราคา 34.50 บาท ซื้อ 8 ลิตร ต้องจ่ายกี่บาท",
+  "answer": "276",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาทศนิยม",
+  "text": "นักเรียนสามคนหนัก 42.5, 38.75 และ 45.25 กิโลกรัม รวมกันหนักกี่กิโลกรัม",
+  "answer": "126.5",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาทศนิยม",
+  "text": "ค่าไฟฟ้าหน่วยละ 4.25 บาท เดือนนี้ใช้ไป 120 หน่วย ต้องจ่ายกี่บาท",
+  "answer": "510",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาเศษส่วน",
+  "text": "มีเงิน 480 บาท ใช้ไป <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span> ของเงินทั้งหมด เหลือเงินกี่บาท",
+  "answer": "360",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาเศษส่วน",
+  "text": "งานหนึ่งทำเสร็จไปแล้ว <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span> ของงานทั้งหมด เหลืองานอีกเป็นเศษส่วนเท่าใด",
+  "answer": "<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span>",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาเศษส่วน",
+  "text": "ถังน้ำมีน้ำอยู่ <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span> ของถัง ใช้ไป <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">6</span></span> ของถัง เหลือน้ำเป็นเศษส่วนเท่าใดของถัง",
+  "answer": "<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span>",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาเศษส่วน",
+  "text": "ผ้ายาว <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span> เมตร ตัดเป็นชิ้นละ <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">8</span></span> เมตร ได้กี่ชิ้น",
+  "answer": "6",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาเศษส่วน",
+  "text": "ห้องหนึ่งมีนักเรียน 40 คน เป็นนักเรียนหญิง <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">8</span></span> ของทั้งห้อง มีนักเรียนชายกี่คน",
+  "answer": "25",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาเศษส่วน",
+  "text": "สูตรขนมใช้แป้ง 2<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span> ถ้วย ถ้าทำ 2 เท่าของสูตร ต้องใช้แป้งกี่ถ้วย",
+  "answer": "4.5",
+  "level": "ยาก"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การคำนวณระคนของเศษส่วนและทศนิยม",
+  "text": "จงหาค่าของ <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span> + 0.25 (ตอบเป็นทศนิยม)",
+  "answer": "0.75",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การคำนวณระคนของเศษส่วนและทศนิยม",
+  "text": "จงหาค่าของ <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span> &times; 0.8 (ตอบเป็นทศนิยม)",
+  "answer": "0.6",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การคำนวณระคนของเศษส่วนและทศนิยม",
+  "text": "จงหาค่าของ 2.5 - <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span> + 0.75",
+  "answer": "2.75",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การคำนวณระคนของเศษส่วนและทศนิยม",
+  "text": "จงหาค่าของ (<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span> + 0.5) &times; 4",
+  "answer": "3",
+  "level": "ยาก"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เส้นขนานและมุมที่เกี่ยวข้อง",
+  "text": "เส้นตรงสองเส้นขนานกันเมื่อใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>เมื่อตัดกันที่จุดหนึ่ง</span></div><div class=\"ch\"><b>ข.</b><span>เมื่ออยู่บนระนาบเดียวกันและไม่ตัดกัน</span></div><div class=\"ch\"><b>ค.</b><span>เมื่อตั้งฉากกัน</span></div><div class=\"ch\"><b>ง.</b><span>เมื่อมีความยาวเท่ากัน</span></div></div>",
+  "answer": "ข",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เส้นขนานและมุมที่เกี่ยวข้อง",
+  "text": "เส้นขนานสองเส้นถูกตัดด้วยเส้นตัด มุมภายในที่อยู่บนข้างเดียวกันของเส้นตัด รวมกันได้กี่องศา",
+  "answer": "180",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เส้นขนานและมุมที่เกี่ยวข้อง",
+  "text": "เส้นขนานสองเส้นถูกตัดด้วยเส้นตัด ถ้ามุมหนึ่งมีขนาด 65 องศา มุมแย้งของมุมนั้นมีขนาดกี่องศา",
+  "answer": "65",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เส้นขนานและมุมที่เกี่ยวข้อง",
+  "text": "จากรูป มุม x มีขนาดกี่องศา<figure><svg viewBox=\"0 0 340 178\" width=\"340\" height=\"178\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"178\" fill=\"#fff\"/><line x1=\"24\" y1=\"48\" x2=\"316\" y2=\"48\" stroke=\"#1E3A5F\" stroke-width=\"2\"/><polygon points=\"316,48 308,44 308,52\" fill=\"#1E3A5F\"/><polygon points=\"24,48 32,44 32,52\" fill=\"#1E3A5F\"/><line x1=\"24\" y1=\"122\" x2=\"316\" y2=\"122\" stroke=\"#1E3A5F\" stroke-width=\"2\"/><polygon points=\"316,122 308,118 308,126\" fill=\"#1E3A5F\"/><polygon points=\"24,122 32,118 32,126\" fill=\"#1E3A5F\"/><line x1=\"79.0\" y1=\"22.0\" x2=\"239.0\" y2=\"148.0\" stroke=\"#1E3A5F\" stroke-width=\"2\"/><path d=\"M 136.0 48.0 A 24 24 0 0 1 130.9 62.8\" fill=\"none\" stroke=\"#232323\" stroke-width=\"2\"/><text x=\"149.8\" y=\"66.1\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13.5\" font-weight=\"700\" fill=\"#232323\" text-anchor=\"middle\">70°</text><path d=\"M 182.0 122.0 A 24 24 0 0 1 187.1 107.2\" fill=\"none\" stroke=\"#C0392B\" stroke-width=\"2\"/><text x=\"168.2\" y=\"113.9\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13.5\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">x</text><path d=\"M 230.0 122.0 A 24 24 0 0 0 187.1 107.2\" fill=\"none\" stroke=\"#2F8F6F\" stroke-width=\"2\"/><text x=\"219.1\" y=\"89.2\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13.5\" font-weight=\"700\" fill=\"#2F8F6F\" text-anchor=\"middle\">y</text><circle cx=\"112.0\" cy=\"48.0\" r=\"3\" fill=\"#232323\"/><circle cx=\"206.0\" cy=\"122.0\" r=\"3\" fill=\"#232323\"/></svg><figcaption>เส้นขนานสองเส้นถูกตัดด้วยเส้นตัด</figcaption></figure>",
+  "answer": "70",
+  "level": "กลาง"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เส้นขนานและมุมที่เกี่ยวข้อง",
+  "text": "จากรูป มุม y มีขนาดกี่องศา<figure><svg viewBox=\"0 0 340 178\" width=\"340\" height=\"178\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"340\" height=\"178\" fill=\"#fff\"/><line x1=\"24\" y1=\"48\" x2=\"316\" y2=\"48\" stroke=\"#1E3A5F\" stroke-width=\"2\"/><polygon points=\"316,48 308,44 308,52\" fill=\"#1E3A5F\"/><polygon points=\"24,48 32,44 32,52\" fill=\"#1E3A5F\"/><line x1=\"24\" y1=\"122\" x2=\"316\" y2=\"122\" stroke=\"#1E3A5F\" stroke-width=\"2\"/><polygon points=\"316,122 308,118 308,126\" fill=\"#1E3A5F\"/><polygon points=\"24,122 32,118 32,126\" fill=\"#1E3A5F\"/><line x1=\"79.0\" y1=\"22.0\" x2=\"239.0\" y2=\"148.0\" stroke=\"#1E3A5F\" stroke-width=\"2\"/><path d=\"M 136.0 48.0 A 24 24 0 0 1 130.9 62.8\" fill=\"none\" stroke=\"#232323\" stroke-width=\"2\"/><text x=\"149.8\" y=\"66.1\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13.5\" font-weight=\"700\" fill=\"#232323\" text-anchor=\"middle\">70°</text><path d=\"M 182.0 122.0 A 24 24 0 0 1 187.1 107.2\" fill=\"none\" stroke=\"#C0392B\" stroke-width=\"2\"/><text x=\"168.2\" y=\"113.9\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13.5\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">x</text><path d=\"M 230.0 122.0 A 24 24 0 0 0 187.1 107.2\" fill=\"none\" stroke=\"#2F8F6F\" stroke-width=\"2\"/><text x=\"219.1\" y=\"89.2\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13.5\" font-weight=\"700\" fill=\"#2F8F6F\" text-anchor=\"middle\">y</text><circle cx=\"112.0\" cy=\"48.0\" r=\"3\" fill=\"#232323\"/><circle cx=\"206.0\" cy=\"122.0\" r=\"3\" fill=\"#232323\"/></svg><figcaption>เส้นขนานสองเส้นถูกตัดด้วยเส้นตัด</figcaption></figure>",
+  "answer": "110",
+  "level": "กลาง"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เส้นขนานและมุมที่เกี่ยวข้อง",
+  "text": "เส้นขนานสองเส้นถูกตัดด้วยเส้นตัด ถ้ามุมภายนอกมุมหนึ่งมีขนาด 118 องศา มุมภายนอกที่สมนัยกับมุมนั้นมีขนาดกี่องศา",
+  "answer": "118",
+  "level": "กลาง"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การนำการสร้างไปใช้",
+  "text": "แบ่งส่วนของเส้นตรงยาว 12 เซนติเมตร ออกเป็น 4 ส่วนเท่ากันด้วยวงเวียนและสันตรง แต่ละส่วนยาวกี่เซนติเมตร",
+  "answer": "3",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การนำการสร้างไปใช้",
+  "text": "ใช้วิธีแบ่งครึ่งมุมกับมุมขนาด 144 องศา สองครั้งติดกัน จะได้มุมขนาดกี่องศา",
+  "answer": "36",
+  "level": "กลาง"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การนำการสร้างไปใช้",
+  "text": "สร้างรูปหกเหลี่ยมด้านเท่าโดยใช้วงเวียนรัศมี 5 เซนติเมตรถ่ายรอบวงกลม ด้านของรูปหกเหลี่ยมยาวกี่เซนติเมตร",
+  "answer": "5",
+  "level": "ยาก"
+ },
+ {
+  "unit": 5,
+  "uname": "รูปเรขาคณิตสองมิติและสามมิติ",
+  "std": "ค 2.2 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การนับลูกบาศก์และภาพสามมิติ",
+  "text": "จากแผนผัง ใช้ลูกบาศก์ทั้งหมดกี่ลูก<figure><svg viewBox=\"0 0 246 138\" width=\"246\" height=\"138\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"246\" height=\"138\" fill=\"#fff\"/><rect x=\"14\" y=\"14\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"35.0\" y=\"42.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">3</text><rect x=\"56\" y=\"14\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"77.0\" y=\"42.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">1</text><rect x=\"98\" y=\"14\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"119.0\" y=\"42.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">2</text><rect x=\"14\" y=\"56\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"35.0\" y=\"84.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">1</text><rect x=\"56\" y=\"56\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"77.0\" y=\"84.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">2</text><rect x=\"98\" y=\"56\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"119.0\" y=\"84.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">1</text><text x=\"77.0\" y=\"122.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#1E3A5F\" text-anchor=\"middle\">▲ ด้านหน้า</text><text x=\"152.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#1E3A5F\" text-anchor=\"start\">◀ ด้านข้าง</text></svg><figcaption>แผนผังด้านบน — ตัวเลขคือจำนวนลูกบาศก์ที่วางซ้อนกันในแต่ละตำแหน่ง</figcaption></figure>",
+  "answer": "10",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 5,
+  "uname": "รูปเรขาคณิตสองมิติและสามมิติ",
+  "std": "ค 2.2 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การนับลูกบาศก์และภาพสามมิติ",
+  "text": "จากแผนผัง รูปทรงนี้สูงมากที่สุดกี่ชั้น<figure><svg viewBox=\"0 0 246 138\" width=\"246\" height=\"138\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"246\" height=\"138\" fill=\"#fff\"/><rect x=\"14\" y=\"14\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"35.0\" y=\"42.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">3</text><rect x=\"56\" y=\"14\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"77.0\" y=\"42.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">1</text><rect x=\"98\" y=\"14\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"119.0\" y=\"42.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">2</text><rect x=\"14\" y=\"56\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"35.0\" y=\"84.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">1</text><rect x=\"56\" y=\"56\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"77.0\" y=\"84.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">2</text><rect x=\"98\" y=\"56\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"119.0\" y=\"84.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">1</text><text x=\"77.0\" y=\"122.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#1E3A5F\" text-anchor=\"middle\">▲ ด้านหน้า</text><text x=\"152.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#1E3A5F\" text-anchor=\"start\">◀ ด้านข้าง</text></svg><figcaption>แผนผังด้านบน — ตัวเลขคือจำนวนลูกบาศก์ที่วางซ้อนกันในแต่ละตำแหน่ง</figcaption></figure>",
+  "answer": "3",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 5,
+  "uname": "รูปเรขาคณิตสองมิติและสามมิติ",
+  "std": "ค 2.2 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การนับลูกบาศก์และภาพสามมิติ",
+  "text": "จากแผนผัง ภาพที่ได้จากการมองด้านบนประกอบด้วยรูปสี่เหลี่ยมจัตุรัสกี่รูป<figure><svg viewBox=\"0 0 246 138\" width=\"246\" height=\"138\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"246\" height=\"138\" fill=\"#fff\"/><rect x=\"14\" y=\"14\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"35.0\" y=\"42.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">3</text><rect x=\"56\" y=\"14\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"77.0\" y=\"42.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">1</text><rect x=\"98\" y=\"14\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"119.0\" y=\"42.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">2</text><rect x=\"14\" y=\"56\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"35.0\" y=\"84.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">1</text><rect x=\"56\" y=\"56\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"77.0\" y=\"84.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">2</text><rect x=\"98\" y=\"56\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"119.0\" y=\"84.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">1</text><text x=\"77.0\" y=\"122.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#1E3A5F\" text-anchor=\"middle\">▲ ด้านหน้า</text><text x=\"152.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#1E3A5F\" text-anchor=\"start\">◀ ด้านข้าง</text></svg><figcaption>แผนผังด้านบน — ตัวเลขคือจำนวนลูกบาศก์ที่วางซ้อนกันในแต่ละตำแหน่ง</figcaption></figure>",
+  "answer": "6",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 5,
+  "uname": "รูปเรขาคณิตสองมิติและสามมิติ",
+  "std": "ค 2.2 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การนับลูกบาศก์และภาพสามมิติ",
+  "text": "จากแผนผัง ภาพที่ได้จากการมองด้านหน้าประกอบด้วยรูปสี่เหลี่ยมจัตุรัสกี่รูป<figure><svg viewBox=\"0 0 246 138\" width=\"246\" height=\"138\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"246\" height=\"138\" fill=\"#fff\"/><rect x=\"14\" y=\"14\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"35.0\" y=\"42.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">3</text><rect x=\"56\" y=\"14\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"77.0\" y=\"42.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">1</text><rect x=\"98\" y=\"14\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"119.0\" y=\"42.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">2</text><rect x=\"14\" y=\"56\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"35.0\" y=\"84.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">1</text><rect x=\"56\" y=\"56\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"77.0\" y=\"84.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">2</text><rect x=\"98\" y=\"56\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"119.0\" y=\"84.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">1</text><text x=\"77.0\" y=\"122.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#1E3A5F\" text-anchor=\"middle\">▲ ด้านหน้า</text><text x=\"152.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#1E3A5F\" text-anchor=\"start\">◀ ด้านข้าง</text></svg><figcaption>แผนผังด้านบน — ตัวเลขคือจำนวนลูกบาศก์ที่วางซ้อนกันในแต่ละตำแหน่ง</figcaption></figure>",
+  "answer": "7",
+  "level": "กลาง"
+ },
+ {
+  "unit": 5,
+  "uname": "รูปเรขาคณิตสองมิติและสามมิติ",
+  "std": "ค 2.2 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การนับลูกบาศก์และภาพสามมิติ",
+  "text": "จากแผนผัง ภาพที่ได้จากการมองด้านข้างประกอบด้วยรูปสี่เหลี่ยมจัตุรัสกี่รูป<figure><svg viewBox=\"0 0 246 138\" width=\"246\" height=\"138\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"246\" height=\"138\" fill=\"#fff\"/><rect x=\"14\" y=\"14\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"35.0\" y=\"42.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">3</text><rect x=\"56\" y=\"14\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"77.0\" y=\"42.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">1</text><rect x=\"98\" y=\"14\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"119.0\" y=\"42.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">2</text><rect x=\"14\" y=\"56\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"35.0\" y=\"84.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">1</text><rect x=\"56\" y=\"56\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"77.0\" y=\"84.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">2</text><rect x=\"98\" y=\"56\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"119.0\" y=\"84.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">1</text><text x=\"77.0\" y=\"122.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#1E3A5F\" text-anchor=\"middle\">▲ ด้านหน้า</text><text x=\"152.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#1E3A5F\" text-anchor=\"start\">◀ ด้านข้าง</text></svg><figcaption>แผนผังด้านบน — ตัวเลขคือจำนวนลูกบาศก์ที่วางซ้อนกันในแต่ละตำแหน่ง</figcaption></figure>",
+  "answer": "5",
+  "level": "ยาก"
+ },
+ {
+  "unit": 5,
+  "uname": "รูปเรขาคณิตสองมิติและสามมิติ",
+  "std": "ค 2.2 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การนับลูกบาศก์และภาพสามมิติ",
+  "text": "จากแผนผัง ใช้ลูกบาศก์ทั้งหมดกี่ลูก<figure><svg viewBox=\"0 0 204 138\" width=\"204\" height=\"138\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"204\" height=\"138\" fill=\"#fff\"/><rect x=\"14\" y=\"14\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"35.0\" y=\"42.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">2</text><rect x=\"56\" y=\"14\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"77.0\" y=\"42.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">2</text><rect x=\"14\" y=\"56\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"35.0\" y=\"84.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">1</text><rect x=\"56\" y=\"56\" width=\"42\" height=\"42\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"1.4\"/><text x=\"77.0\" y=\"84.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"18\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">3</text><text x=\"56.0\" y=\"122.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#1E3A5F\" text-anchor=\"middle\">▲ ด้านหน้า</text><text x=\"110.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"600\" fill=\"#1E3A5F\" text-anchor=\"start\">◀ ด้านข้าง</text></svg><figcaption>แผนผังด้านบน — ตัวเลขคือจำนวนลูกบาศก์ที่วางซ้อนกันในแต่ละตำแหน่ง</figcaption></figure>",
+  "answer": "8",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การแทนค่าในนิพจน์และสูตร",
+  "text": "สูตรพื้นที่รูปสามเหลี่ยม A = <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span>bh ถ้า b = 12 และ h = 8 พื้นที่เท่ากับเท่าใด",
+  "answer": "48",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การแทนค่าในนิพจน์และสูตร",
+  "text": "สูตรความยาวรอบรูปสี่เหลี่ยมผืนผ้า P = 2(w + l) ถ้า w = 7 และ l = 11 ค่าของ P เท่ากับเท่าใด",
+  "answer": "36",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การแทนค่าในนิพจน์และสูตร",
+  "text": "ถ้า x = 5 ค่าของนิพจน์ x<sup>2</sup> - 3x เท่ากับเท่าใด",
+  "answer": "10",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การแทนค่าในนิพจน์และสูตร",
+  "text": "ถ้า a = -2 และ b = 3 ค่าของนิพจน์ a<sup>2</sup>b เท่ากับเท่าใด",
+  "answer": "12",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การแทนค่าในนิพจน์และสูตร",
+  "text": "สูตรเปลี่ยนหน่วยอุณหภูมิ C = <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">9</span></span>(F - 32) ถ้า F = 68 ค่าของ C เท่ากับเท่าใด",
+  "answer": "20",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติของการเท่ากัน",
+  "text": "จากสมการ x - 5 = 12 ต้องบวกด้วยจำนวนใดทั้งสองข้างเพื่อหาค่า x",
+  "answer": "5",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติของการเท่ากัน",
+  "text": "จากสมการ x + 7 = 20 ต้องลบด้วยจำนวนใดทั้งสองข้างเพื่อหาค่า x",
+  "answer": "7",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติของการเท่ากัน",
+  "text": "จากสมการ 4x = 28 ต้องหารด้วยจำนวนใดทั้งสองข้างเพื่อหาค่า x",
+  "answer": "4",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติของการเท่ากัน",
+  "text": "จากสมการ <span class=\"frac\"><span class=\"num\">x</span><span class=\"den\">3</span></span> = 9 ต้องคูณด้วยจำนวนใดทั้งสองข้างเพื่อหาค่า x",
+  "answer": "3",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติของการเท่ากัน",
+  "text": "ถ้า a = b แล้ว a + 5 = b + 5 เป็นการใช้สมบัติใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>สมบัติการบวกของการเท่ากัน</span></div><div class=\"ch\"><b>ข.</b><span>สมบัติการคูณของการเท่ากัน</span></div><div class=\"ch\"><b>ค.</b><span>สมบัติการสลับที่</span></div><div class=\"ch\"><b>ง.</b><span>สมบัติการแจกแจง</span></div></div>",
+  "answer": "ก",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมการที่มีวงเล็บ",
+  "text": "จงแก้สมการ 2(x + 3) = 14 ค่าของ x เท่ากับเท่าใด",
+  "answer": "4",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมการที่มีวงเล็บ",
+  "text": "จงแก้สมการ 3(x - 2) = 15 ค่าของ x เท่ากับเท่าใด",
+  "answer": "7",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมการที่มีวงเล็บ",
+  "text": "จงแก้สมการ 5(x + 1) = 2x + 17 ค่าของ x เท่ากับเท่าใด",
+  "answer": "4",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมการที่มีวงเล็บ",
+  "text": "จงแก้สมการ 4(2x - 1) = 3(x + 7) ค่าของ x เท่ากับเท่าใด",
+  "answer": "5",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมการที่มีวงเล็บ",
+  "text": "จงแก้สมการ 2(3x + 4) - 5 = 3(x + 6) ค่าของ x เท่ากับเท่าใด",
+  "answer": "5",
+  "level": "ยาก"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมการที่มีเศษส่วนหรือทศนิยม",
+  "text": "จงแก้สมการ <span class=\"frac\"><span class=\"num\">x</span><span class=\"den\">2</span></span> = 9 ค่าของ x เท่ากับเท่าใด",
+  "answer": "18",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมการที่มีเศษส่วนหรือทศนิยม",
+  "text": "จงแก้สมการ <span class=\"frac\"><span class=\"num\">x</span><span class=\"den\">3</span></span> + 2 = 7 ค่าของ x เท่ากับเท่าใด",
+  "answer": "15",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมการที่มีเศษส่วนหรือทศนิยม",
+  "text": "จงแก้สมการ 0.5x = 12 ค่าของ x เท่ากับเท่าใด",
+  "answer": "24",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมการที่มีเศษส่วนหรือทศนิยม",
+  "text": "จงแก้สมการ <span class=\"frac\"><span class=\"num\">2x</span><span class=\"den\">5</span></span> = 8 ค่าของ x เท่ากับเท่าใด",
+  "answer": "20",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมการที่มีเศษส่วนหรือทศนิยม",
+  "text": "จงแก้สมการ 0.2x + 1.5 = 3.1 ค่าของ x เท่ากับเท่าใด",
+  "answer": "8",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมการที่มีเศษส่วนหรือทศนิยม",
+  "text": "จงแก้สมการ <span class=\"frac\"><span class=\"num\">x</span><span class=\"den\">2</span></span> + <span class=\"frac\"><span class=\"num\">x</span><span class=\"den\">3</span></span> = 10 ค่าของ x เท่ากับเท่าใด",
+  "answer": "12",
+  "level": "ยาก"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาสมการเชิงเส้น",
+  "text": "จำนวนหนึ่งบวกด้วย 15 ได้ผลลัพธ์ 42 จำนวนนั้นคือจำนวนใด",
+  "answer": "27",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาสมการเชิงเส้น",
+  "text": "ซื้อดินสอ 5 แท่งและยางลบ 1 ก้อน รวมราคา 47 บาท ถ้ายางลบราคา 12 บาท ดินสอราคาแท่งละกี่บาท",
+  "answer": "7",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาสมการเชิงเส้น",
+  "text": "สามเท่าของจำนวนหนึ่งลบด้วย 8 ได้ผลลัพธ์ 25 จำนวนนั้นคือจำนวนใด",
+  "answer": "11",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาสมการเชิงเส้น",
+  "text": "พ่ออายุเป็น 3 เท่าของลูก อายุรวมกันได้ 48 ปี ลูกอายุกี่ปี",
+  "answer": "12",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาสมการเชิงเส้น",
+  "text": "รูปสี่เหลี่ยมผืนผ้ามีความยาวมากกว่าความกว้าง 5 เซนติเมตร และมีความยาวรอบรูป 42 เซนติเมตร ความกว้างเท่ากับกี่เซนติเมตร",
+  "answer": "8",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาสมการเชิงเส้น",
+  "text": "จำนวนเต็มสองจำนวนที่เรียงติดกัน รวมกันได้ 47 จำนวนที่น้อยกว่าคือจำนวนใด",
+  "answer": "23",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาสมการเชิงเส้น",
+  "text": "รถแล่นด้วยความเร็ว 60 กิโลเมตรต่อชั่วโมง ต้องใช้เวลากี่ชั่วโมง จึงจะแล่นได้ระยะทาง 270 กิโลเมตร",
+  "answer": "4.5",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาสมการเชิงเส้น",
+  "text": "มุมสองมุมรวมกันได้ 90 องศา โดยมุมหนึ่งเป็น 2 เท่าของอีกมุม มุมที่เล็กกว่ามีขนาดกี่องศา",
+  "answer": "30",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาสมการเชิงเส้น",
+  "text": "มีเงินจำนวนหนึ่ง ใช้ไปครึ่งหนึ่ง แล้วใช้อีก 120 บาท เหลือเงิน 380 บาท เดิมมีเงินกี่บาท",
+  "answer": "1000",
+  "level": "ยาก"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "โจทย์ปัญหาสมการเชิงเส้น",
+  "text": "แม่อายุมากกว่าลูก 26 ปี อีก 4 ปีข้างหน้าแม่จะมีอายุเป็น 3 เท่าของลูก ปัจจุบันลูกอายุกี่ปี",
+  "answer": "9",
+  "level": "ยาก"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "อัตราส่วนที่เท่ากัน",
+  "text": "อัตราส่วนในข้อใดเท่ากับ 3 : 5<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>6 : 15</span></div><div class=\"ch\"><b>ข.</b><span>9 : 15</span></div><div class=\"ch\"><b>ค.</b><span>5 : 3</span></div><div class=\"ch\"><b>ง.</b><span>8 : 10</span></div></div>",
+  "answer": "ข",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "อัตราส่วนที่เท่ากัน",
+  "text": "จากอัตราส่วนที่เท่ากัน 4 : 6 = 6 : ⬜ จำนวนในช่องว่างคือจำนวนใด",
+  "answer": "9",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "อัตราส่วนที่เท่ากัน",
+  "text": "12 : 20 เขียนเป็นอัตราส่วนอย่างต่ำได้ 3 : ⬜ จำนวนในช่องว่างคือจำนวนใด",
+  "answer": "5",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "อัตราส่วนที่เท่ากัน",
+  "text": "อัตราส่วน 2 : 3 และ 8 : 12 เท่ากันหรือไม่ (ตอบ เท่ากัน หรือ ไม่เท่ากัน)",
+  "answer": "เท่ากัน",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "อัตราส่วนที่เท่ากัน",
+  "text": "ถ้า a : b = 5 : 8 และ a = 35 แล้ว b มีค่าเท่าใด",
+  "answer": "56",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "อัตราและการเปรียบเทียบราคา",
+  "text": "รถแล่นได้ 240 กิโลเมตรใน 3 ชั่วโมง ความเร็วเฉลี่ยกี่กิโลเมตรต่อชั่วโมง",
+  "answer": "80",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "อัตราและการเปรียบเทียบราคา",
+  "text": "ข้าวสาร 5 กิโลกรัม ราคา 175 บาท ราคากิโลกรัมละกี่บาท",
+  "answer": "35",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "อัตราและการเปรียบเทียบราคา",
+  "text": "คนงานทาสีได้ 15 ตารางเมตรต่อชั่วโมง ถ้าต้องทาสี 105 ตารางเมตร ใช้เวลากี่ชั่วโมง",
+  "answer": "7",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "อัตราและการเปรียบเทียบราคา",
+  "text": "เครื่องพิมพ์พิมพ์ได้ 24 หน้าใน 3 นาที ถ้าพิมพ์ 80 หน้า ใช้เวลากี่นาที",
+  "answer": "10",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "อัตราและการเปรียบเทียบราคา",
+  "text": "เงิน 1 ดอลลาร์แลกได้ 35 บาท ถ้ามีเงิน 2,800 บาท จะแลกได้กี่ดอลลาร์",
+  "answer": "80",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "อัตราและการเปรียบเทียบราคา",
+  "text": "นมกล่องใหญ่ 1 ลิตร ราคา 42 บาท กล่องเล็ก 250 มิลลิลิตร ราคา 12 บาท แบบใดคุ้มกว่า (ตอบ กล่องใหญ่ หรือ กล่องเล็ก)",
+  "answer": "กล่องใหญ่",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "มาตราส่วน",
+  "text": "มาตราส่วน 1 : 200 หมายความว่าอย่างไร<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ระยะจริง 1 หน่วย เท่ากับระยะในแผนผัง 200 หน่วย</span></div><div class=\"ch\"><b>ข.</b><span>ระยะในแผนผัง 1 หน่วย เท่ากับระยะจริง 200 หน่วย</span></div><div class=\"ch\"><b>ค.</b><span>ย่อลง 100 เท่า</span></div><div class=\"ch\"><b>ง.</b><span>ขยายขึ้น 200 เท่า</span></div></div>",
+  "answer": "ข",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "มาตราส่วน",
+  "text": "แผนผังบ้านมาตราส่วน 1 : 50 ห้องหนึ่งกว้างจริง 4 เมตร ในแผนผังกว้างกี่เซนติเมตร",
+  "answer": "8",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "มาตราส่วน",
+  "text": "แผนที่มาตราส่วน 1 : 100,000 ระยะทางจริง 8 กิโลเมตร วัดในแผนที่ได้กี่เซนติเมตร",
+  "answer": "8",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "มาตราส่วน",
+  "text": "แผนที่มาตราส่วน 1 : 25,000 ระยะในแผนที่ 4 เซนติเมตร เท่ากับระยะทางจริงกี่กิโลเมตร",
+  "answer": "1",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "มาตราส่วน",
+  "text": "หุ่นจำลองรถยนต์มาตราส่วน 1 : 24 รถจริงยาว 4.8 เมตร หุ่นจำลองยาวกี่เซนติเมตร",
+  "answer": "20",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "ร้อยละ - กำไรและขาดทุน",
+  "text": "ซื้อสินค้ามาราคา 60 บาท ขายไป 75 บาท ได้กำไรกี่บาท",
+  "answer": "15",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "ร้อยละ - กำไรและขาดทุน",
+  "text": "ซื้อสินค้ามาราคา 400 บาท ขายไป 500 บาท ได้กำไรร้อยละเท่าใด",
+  "answer": "25",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "ร้อยละ - กำไรและขาดทุน",
+  "text": "ซื้อสินค้ามาราคา 800 บาท ขายไป 720 บาท ขาดทุนร้อยละเท่าใด",
+  "answer": "10",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "ร้อยละ - กำไรและขาดทุน",
+  "text": "ซื้อสินค้ามาราคา 250 บาท ต้องการกำไรร้อยละ 20 ต้องขายราคากี่บาท",
+  "answer": "300",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "ร้อยละ - กำไรและขาดทุน",
+  "text": "ซื้อสินค้ามาราคา 1,200 บาท ขายขาดทุนร้อยละ 25 ขายได้กี่บาท",
+  "answer": "900",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "ร้อยละ - กำไรและขาดทุน",
+  "text": "ขายสินค้าได้ 828 บาท โดยได้กำไรร้อยละ 15 ต้นทุนของสินค้ากี่บาท",
+  "answer": "720",
+  "level": "ยาก"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "ร้อยละ - ส่วนลด ภาษี และดอกเบี้ย",
+  "text": "สินค้าราคา 1,500 บาท ลดราคาร้อยละ 20 ต้องจ่ายกี่บาท",
+  "answer": "1200",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "ร้อยละ - ส่วนลด ภาษี และดอกเบี้ย",
+  "text": "สินค้าราคา 800 บาท ลดราคาร้อยละ 15 ลดไปกี่บาท",
+  "answer": "120",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "ร้อยละ - ส่วนลด ภาษี และดอกเบี้ย",
+  "text": "ฝากเงิน 10,000 บาท ได้ดอกเบี้ยร้อยละ 2 ต่อปี ครบ 1 ปีได้ดอกเบี้ยกี่บาท",
+  "answer": "200",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "ร้อยละ - ส่วนลด ภาษี และดอกเบี้ย",
+  "text": "สินค้าราคา 2,000 บาท บวกภาษีมูลค่าเพิ่มร้อยละ 7 ต้องจ่ายรวมกี่บาท",
+  "answer": "2140",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "ร้อยละ - ส่วนลด ภาษี และดอกเบี้ย",
+  "text": "ฝากเงิน 20,000 บาท ได้ดอกเบี้ยร้อยละ 3 ต่อปี (ดอกเบี้ยคงต้น) ครบ 2 ปีได้ดอกเบี้ยรวมกี่บาท",
+  "answer": "1200",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "ร้อยละ - ส่วนลด ภาษี และดอกเบี้ย",
+  "text": "สินค้าติดป้ายราคา 900 บาท ลดร้อยละ 10 แล้วลดเพิ่มอีกร้อยละ 10 จากราคาที่ลดแล้ว ต้องจ่ายกี่บาท",
+  "answer": "729",
+  "level": "ยาก"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "การเพิ่มขึ้นและลดลงเป็นร้อยละ",
+  "text": "จำนวนหนึ่งเพิ่มจาก 200 เป็น 250 เพิ่มขึ้นร้อยละเท่าใด",
+  "answer": "25",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "การเพิ่มขึ้นและลดลงเป็นร้อยละ",
+  "text": "จำนวนหนึ่งลดจาก 80 เหลือ 60 ลดลงร้อยละเท่าใด",
+  "answer": "25",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "การเพิ่มขึ้นและลดลงเป็นร้อยละ",
+  "text": "จำนวนนักเรียนเพิ่มจาก 500 คน เป็น 540 คน เพิ่มขึ้นร้อยละเท่าใด",
+  "answer": "8",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "การเพิ่มขึ้นและลดลงเป็นร้อยละ",
+  "text": "ราคาสินค้า 30 บาท ขึ้นราคาร้อยละ 10 แล้วลดราคาร้อยละ 10 จากราคาใหม่ ราคาสุดท้ายกี่บาท",
+  "answer": "29.7",
+  "level": "ยาก"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "กราฟของความสัมพันธ์เชิงเส้น",
+  "text": "จากสมการ y = 2x + 1 เมื่อ x = 3 ค่าของ y เท่ากับเท่าใด",
+  "answer": "7",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "กราฟของความสัมพันธ์เชิงเส้น",
+  "text": "กราฟของ y = 3x ผ่านจุด (2, ⬜) จำนวนในช่องว่างคือจำนวนใด",
+  "answer": "6",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "กราฟของความสัมพันธ์เชิงเส้น",
+  "text": "จากสมการ y = 2x + 1 เมื่อ y = 11 ค่าของ x เท่ากับเท่าใด",
+  "answer": "5",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "กราฟของความสัมพันธ์เชิงเส้น",
+  "text": "กราฟของ y = x - 4 ตัดแกน Y ที่ค่า y เท่ากับเท่าใด",
+  "answer": "-4",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "กราฟของความสัมพันธ์เชิงเส้น",
+  "text": "กราฟของ y = 2x - 6 ตัดแกน X ที่ค่า x เท่ากับเท่าใด",
+  "answer": "3",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "กราฟของความสัมพันธ์เชิงเส้น",
+  "text": "จุดในข้อใดอยู่บนกราฟของ y = 4x - 1<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>(1, 3)</span></div><div class=\"ch\"><b>ข.</b><span>(2, 6)</span></div><div class=\"ch\"><b>ค.</b><span>(0, 1)</span></div><div class=\"ch\"><b>ง.</b><span>(3, 10)</span></div></div>",
+  "answer": "ก",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "กราฟของความสัมพันธ์เชิงเส้น",
+  "text": "จากตารางความสัมพันธ์ ค่าของ y เมื่อ x = 5 เท่ากับเท่าใด<table class=\"data-table\"><tr><th>x</th><td>1</td><td>2</td><td>3</td><td>4</td></tr><tr><th>y</th><td>5</td><td>8</td><td>11</td><td>14</td></tr></table>",
+  "answer": "17",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "กราฟของความสัมพันธ์เชิงเส้น",
+  "text": "จากตารางความสัมพันธ์ ความสัมพันธ์นี้เขียนได้เป็น y = 3x + ⬜ จำนวนในช่องว่างคือจำนวนใด<table class=\"data-table\"><tr><th>x</th><td>1</td><td>2</td><td>3</td><td>4</td></tr><tr><th>y</th><td>5</td><td>8</td><td>11</td><td>14</td></tr></table>",
+  "answer": "2",
+  "level": "ยาก"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "โจทย์ความสัมพันธ์เชิงเส้น",
+  "text": "ค่าโดยสารแท็กซี่เริ่มต้น 35 บาท แล้วคิดเพิ่มกิโลเมตรละ 6 บาท ถ้าเดินทาง 10 กิโลเมตร ต้องจ่ายกี่บาท",
+  "answer": "95",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "โจทย์ความสัมพันธ์เชิงเส้น",
+  "text": "ค่าน้ำประปาคิดค่าบริการเดือนละ 50 บาท บวกหน่วยละ 12 บาท ถ้าใช้ 20 หน่วย ต้องจ่ายกี่บาท",
+  "answer": "290",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "โจทย์ความสัมพันธ์เชิงเส้น",
+  "text": "เริ่มออมเงิน 200 บาท แล้วออมเพิ่มสัปดาห์ละ 50 บาท เมื่อผ่านไป 8 สัปดาห์จะมีเงินกี่บาท",
+  "answer": "600",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "โจทย์ความสัมพันธ์เชิงเส้น",
+  "text": "ค่าโดยสารแท็กซี่เริ่มต้น 35 บาท คิดเพิ่มกิโลเมตรละ 6 บาท ถ้าจ่ายค่าโดยสาร 125 บาท เดินทางได้กี่กิโลเมตร",
+  "answer": "15",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "โจทย์ความสัมพันธ์เชิงเส้น",
+  "text": "ค่าโดยสารแท็กซี่เริ่มต้น 35 บาท คิดเพิ่มกิโลเมตรละ 6 บาท เขียนความสัมพันธ์ได้เป็น y = 6x + ⬜ จำนวนในช่องว่างคือจำนวนใด",
+  "answer": "35",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "โจทย์ความสัมพันธ์เชิงเส้น",
+  "text": "เช่าจักรยานชั่วโมงแรก 40 บาท ชั่วโมงต่อไปชั่วโมงละ 25 บาท ถ้าเช่า 5 ชั่วโมง ต้องจ่ายกี่บาท",
+  "answer": "140",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "โจทย์ความสัมพันธ์เชิงเส้น",
+  "text": "เริ่มออมเงิน 200 บาท ออมเพิ่มสัปดาห์ละ 50 บาท จะมีเงินครบ 1,000 บาท เมื่อผ่านไปกี่สัปดาห์",
+  "answer": "16",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "โจทย์ความสัมพันธ์เชิงเส้น",
+  "text": "ถังน้ำมีน้ำ 100 ลิตร เปิดให้น้ำไหลออกนาทีละ 8 ลิตร น้ำจะหมดถังเมื่อผ่านไปกี่นาที",
+  "answer": "12.5",
+  "level": "ยาก"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "หาสมการจากตารางและกราฟ",
+  "text": "จากตารางความสัมพันธ์ อัตราการเปลี่ยนแปลงของ y ต่อ x เท่ากับเท่าใด<table class=\"data-table\"><tr><th>x</th><td>0</td><td>1</td><td>2</td><td>3</td></tr><tr><th>y</th><td>4</td><td>6</td><td>8</td><td>10</td></tr></table>",
+  "answer": "2",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "หาสมการจากตารางและกราฟ",
+  "text": "จากตารางความสัมพันธ์ ค่าของ y เมื่อ x = 0 เท่ากับเท่าใด<table class=\"data-table\"><tr><th>x</th><td>0</td><td>1</td><td>2</td><td>3</td></tr><tr><th>y</th><td>4</td><td>6</td><td>8</td><td>10</td></tr></table>",
+  "answer": "4",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "หาสมการจากตารางและกราฟ",
+  "text": "จากตารางความสัมพันธ์ ความสัมพันธ์นี้เขียนได้เป็น y = 2x + ⬜ จำนวนในช่องว่างคือจำนวนใด<table class=\"data-table\"><tr><th>x</th><td>0</td><td>1</td><td>2</td><td>3</td></tr><tr><th>y</th><td>4</td><td>6</td><td>8</td><td>10</td></tr></table>",
+  "answer": "4",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "หาสมการจากตารางและกราฟ",
+  "text": "กราฟเส้นตรงผ่านจุด (0, 3) และ (2, 7) อัตราการเปลี่ยนแปลงเท่ากับเท่าใด",
+  "answer": "2",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "หาสมการจากตารางและกราฟ",
+  "text": "กราฟเส้นตรงผ่านจุด (0, -2) และ (3, 7) อัตราการเปลี่ยนแปลงเท่ากับเท่าใด",
+  "answer": "3",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/3",
+  "tag": "ม.1",
+  "sub": "หาสมการจากตารางและกราฟ",
+  "text": "เส้นตรงผ่านจุด (0, 5) และมีอัตราการเปลี่ยนแปลงเท่ากับ -2 เขียนสมการได้เป็น y = -2x + ⬜ จำนวนในช่องว่างคือจำนวนใด",
+  "answer": "5",
+  "level": "ยาก"
+ },
+ {
+  "unit": 9,
+  "uname": "สถิติเบื้องต้น",
+  "std": "ค 3.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การแปลความหมายและกราฟชวนเข้าใจผิด",
+  "text": "ถ้าต้องการแสดงแนวโน้มยอดขายรายเดือนตลอดทั้งปี ควรใช้การนำเสนอแบบใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>แผนภูมิรูปวงกลม</span></div><div class=\"ch\"><b>ข.</b><span>กราฟเส้น</span></div><div class=\"ch\"><b>ค.</b><span>แผนภูมิรูปภาพ</span></div><div class=\"ch\"><b>ง.</b><span>ตารางที่ไม่เรียงลำดับ</span></div></div>",
+  "answer": "ข",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 9,
+  "uname": "สถิติเบื้องต้น",
+  "std": "ค 3.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การแปลความหมายและกราฟชวนเข้าใจผิด",
+  "text": "แผนภูมิรูปวงกลมเหมาะกับการนำเสนอข้อมูลลักษณะใดมากที่สุด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>การเปลี่ยนแปลงของข้อมูลตามเวลา</span></div><div class=\"ch\"><b>ข.</b><span>สัดส่วนของส่วนย่อยเทียบกับข้อมูลทั้งหมด</span></div><div class=\"ch\"><b>ค.</b><span>ความสัมพันธ์ระหว่างสองตัวแปร</span></div><div class=\"ch\"><b>ง.</b><span>การกระจายของข้อมูลรายตัว</span></div></div>",
+  "answer": "ข",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 9,
+  "uname": "สถิติเบื้องต้น",
+  "std": "ค 3.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การแปลความหมายและกราฟชวนเข้าใจผิด",
+  "text": "แผนภูมิแท่งที่แกนตั้งไม่ได้เริ่มจาก 0 อาจทำให้ผู้อ่านเข้าใจผิดอย่างไร<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ทำให้ผลต่างระหว่างแท่งดูมากกว่าความจริง</span></div><div class=\"ch\"><b>ข.</b><span>ทำให้ผลต่างระหว่างแท่งดูน้อยกว่าความจริง</span></div><div class=\"ch\"><b>ค.</b><span>ไม่มีผลต่อการอ่านข้อมูล</span></div><div class=\"ch\"><b>ง.</b><span>ทำให้อ่านค่าได้แม่นยำขึ้น</span></div></div>",
+  "answer": "ก",
+  "level": "กลาง"
+ },
+ {
+  "unit": 9,
+  "uname": "สถิติเบื้องต้น",
+  "std": "ค 3.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การแปลความหมายและกราฟชวนเข้าใจผิด",
+  "text": "สำรวจนักเรียน 30 คนในห้องหนึ่ง พบว่าชอบสีน้ำเงินมากที่สุด ข้อสรุปใดสมเหตุสมผลที่สุด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>นักเรียนทั้งโรงเรียนชอบสีน้ำเงินมากที่สุด</span></div><div class=\"ch\"><b>ข.</b><span>นักเรียนทั้งประเทศชอบสีน้ำเงินมากที่สุด</span></div><div class=\"ch\"><b>ค.</b><span>นักเรียน 30 คนในห้องนี้ชอบสีน้ำเงินมากที่สุด</span></div><div class=\"ch\"><b>ง.</b><span>สีน้ำเงินเป็นสีที่ดีที่สุด</span></div></div>",
+  "answer": "ค",
+  "level": "กลาง"
+ },
+ {
+  "unit": 9,
+  "uname": "สถิติเบื้องต้น",
+  "std": "ค 3.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การแปลความหมายและกราฟชวนเข้าใจผิด",
+  "text": "แผนภูมิแท่งแสดงยอดขายของสองร้าน ร้าน ก ขายได้ 102 ล้านบาท ร้าน ข ขายได้ 98 ล้านบาท ถ้าเขียนแผนภูมิโดยให้แกนตั้งเริ่มที่ 95 ล้านบาท แท่งของร้าน ก จะสูงเป็นกี่เท่าของแท่งร้าน ข (ตอบเป็นทศนิยมหนึ่งตำแหน่ง)",
+  "answer": "2.3",
+  "level": "ยาก"
+ }
+]

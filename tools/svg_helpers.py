@@ -221,6 +221,77 @@ def intersecting_lines(angle_label, caption=None):
     return _wrap(w, h, "".join(b), caption)
 
 
+# ------------------------------------------------ เส้นขนานและเส้นตัด (มุม)
+def parallel_lines(given, caption=None):
+    """เส้นขนานสองเส้นถูกตัดด้วยเส้นตัด
+
+    ทำเครื่องหมายมุมที่กำหนด (`given`) ที่จุดตัดบน และมุม x (มุมแย้ง)
+    กับมุม y (มุมภายในบนข้างเดียวกันของเส้นตัด) ที่จุดตัดล่าง
+    """
+    import math
+    w, h = 340, 178
+    y1, y2 = 48, 122
+    P1, P2 = (112.0, float(y1)), (206.0, float(y2))
+    dx, dy = P2[0] - P1[0], P2[1] - P1[1]
+    n = math.hypot(dx, dy)
+    ux, uy = dx / n, dy / n
+    ext = 42
+
+    b = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>']
+    for y in (y1, y2):
+        b.append(f'<line x1="24" y1="{y}" x2="{w-24}" y2="{y}" stroke="{NAVY}" stroke-width="2"/>')
+        b.append(f'<polygon points="{w-24},{y} {w-32},{y-4} {w-32},{y+4}" fill="{NAVY}"/>')
+        b.append(f'<polygon points="24,{y} 32,{y-4} 32,{y+4}" fill="{NAVY}"/>')
+    b.append(f'<line x1="{P1[0]-ux*ext:.1f}" y1="{P1[1]-uy*ext:.1f}" '
+             f'x2="{P2[0]+ux*ext:.1f}" y2="{P2[1]+uy*ext:.1f}" '
+             f'stroke="{SERIES[0]}" stroke-width="2"/>')
+
+    def arc(V, u1, u2, lab, col, r=24):
+        a = (V[0] + u1[0] * r, V[1] + u1[1] * r)
+        c = (V[0] + u2[0] * r, V[1] + u2[1] * r)
+        cross = u1[0] * u2[1] - u1[1] * u2[0]
+        sweep = 1 if cross > 0 else 0
+        bx = (u1[0] + u2[0]) / 2
+        by = (u1[1] + u2[1]) / 2
+        m = math.hypot(bx, by) or 1
+        out = [f'<path d="M {a[0]:.1f} {a[1]:.1f} A {r} {r} 0 0 {sweep} {c[0]:.1f} {c[1]:.1f}" '
+               f'fill="none" stroke="{col}" stroke-width="2"/>']
+        out.append(_t(V[0] + bx / m * 40, V[1] + by / m * 40 + 5, lab, 13.5, "middle", col, "700"))
+        return out
+
+    b += arc(P1, (1, 0), (ux, uy), f"{given}°", INK)               # มุมที่กำหนด (ล่าง-ขวาของจุดตัดบน)
+    b += arc(P2, (-1, 0), (-ux, -uy), "x", SERIES[3])              # มุมแย้ง (บน-ซ้ายของจุดตัดล่าง)
+    b += arc(P2, (1, 0), (-ux, -uy), "y", SERIES[2])               # มุมภายในข้างเดียวกัน
+    for P in (P1, P2):
+        b.append(f'<circle cx="{P[0]:.1f}" cy="{P[1]:.1f}" r="3" fill="{INK}"/>')
+    return _wrap(w, h, "".join(b), caption)
+
+
+# --------------------------------- แผนผังด้านบนแสดงจำนวนลูกบาศก์ที่วางซ้อน
+def top_view_heights(rows, caption=None, cell=42):
+    """rows = [[ความสูงแต่ละตำแหน่ง], ...] แถวแรกคือแถวหลังสุด
+
+    ใช้แทนภาพสามมิติ เมื่อต้องการให้ผู้เรียนสร้างภาพ 3 ด้านจากตัวเลขความสูง
+    """
+    nr, nc = len(rows), len(rows[0])
+    pad_l, pad_t = 14, 14
+    w = nc * cell + pad_l * 2 + 92
+    h = nr * cell + pad_t + 40
+    b = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>']
+    for r, row in enumerate(rows):
+        for c, v in enumerate(row):
+            x, y = pad_l + c * cell, pad_t + r * cell
+            fill = "#f4f2ea" if v else "#fafaf7"
+            b.append(f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" fill="{fill}" '
+                     f'stroke="{NAVY}" stroke-width="1.4"/>')
+            b.append(_t(x + cell / 2, y + cell / 2 + 7, v if v else "", 18, "middle", NAVY, "700"))
+    base_y = pad_t + nr * cell
+    b.append(_t(pad_l + nc * cell / 2, base_y + 24, "▲ ด้านหน้า", 12, "middle", NAVY, "600"))
+    b.append(_t(pad_l + nc * cell + 12, pad_t + nr * cell / 2 + 5,
+                "◀ ด้านข้าง", 12, "start", NAVY, "600"))
+    return _wrap(w, h, "".join(b), caption)
+
+
 # --------------------------------------------------- รูปสามเหลี่ยมพร้อมมุม
 def triangle_fig(angle_a, angle_b, angle_c, unknown="B", caption=None):
     """รูปสามเหลี่ยม ABC ที่วาดตามขนาดมุมจริง (A, B อยู่บนฐาน, C เป็นยอด)
