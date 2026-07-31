@@ -32,6 +32,7 @@ jobs:
         run: |
           python3 tools/phase1_questions.py
           python3 tools/phase1b_questions.py
+          python3 tools/phase2_questions.py
           git diff --exit-code -- questions/ \
             || { echo "::error::questions/*.json ไม่ตรงกับผลลัพธ์ของ tools/*_questions.py — รันสคริปต์แล้ว commit ใหม่"; exit 1; }
 
