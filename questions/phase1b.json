@@ -1,0 +1,1212 @@
+[
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบจำนวนเต็มและค่าสัมบูรณ์",
+  "text": "จงหาค่าของ |-15|",
+  "answer": "15",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบจำนวนเต็มและค่าสัมบูรณ์",
+  "text": "จำนวนตรงข้ามของ -23 คือจำนวนใด",
+  "answer": "23",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบจำนวนเต็มและค่าสัมบูรณ์",
+  "text": "จงหาค่าของ |-8| + |5|",
+  "answer": "13",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบจำนวนเต็มและค่าสัมบูรณ์",
+  "text": "เปรียบเทียบ -25 กับ -52 จำนวนใดมีค่ามากกว่า",
+  "answer": "-25",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบจำนวนเต็มและค่าสัมบูรณ์",
+  "text": "เมื่อเรียงจำนวน -7, 3, -12, 0, 5 จากน้อยไปมาก จำนวนที่อยู่ในลำดับที่ 2 คือจำนวนใด",
+  "answer": "-7",
+  "level": "กลาง"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบจำนวนเต็มและค่าสัมบูรณ์",
+  "text": "บนเส้นจำนวน จุดที่แทน -4 อยู่ห่างจากจุดที่แทน 3 เป็นระยะกี่หน่วย<figure><svg viewBox=\"0 0 520 74\" width=\"520\" height=\"74\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"520\" height=\"74\" fill=\"#fff\"/><line x1=\"12\" y1=\"40\" x2=\"508\" y2=\"40\" stroke=\"#232323\" stroke-width=\"1.6\"/><polygon points=\"12,40 18,36 18,44\" fill=\"#232323\"/><polygon points=\"508,40 502,36 502,44\" fill=\"#232323\"/><line x1=\"26.0\" y1=\"34\" x2=\"26.0\" y2=\"46\" stroke=\"#232323\" stroke-width=\"1\"/><text x=\"26.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-6</text><line x1=\"65.0\" y1=\"34\" x2=\"65.0\" y2=\"46\" stroke=\"#232323\" stroke-width=\"1\"/><text x=\"65.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-5</text><line x1=\"104.0\" y1=\"34\" x2=\"104.0\" y2=\"46\" stroke=\"#232323\" stroke-width=\"1.6\"/><text x=\"104.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">-4</text><line x1=\"143.0\" y1=\"34\" x2=\"143.0\" y2=\"46\" stroke=\"#232323\" stroke-width=\"1\"/><text x=\"143.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-3</text><line x1=\"182.0\" y1=\"34\" x2=\"182.0\" y2=\"46\" stroke=\"#232323\" stroke-width=\"1\"/><text x=\"182.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-2</text><line x1=\"221.0\" y1=\"34\" x2=\"221.0\" y2=\"46\" stroke=\"#232323\" stroke-width=\"1\"/><text x=\"221.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-1</text><line x1=\"260.0\" y1=\"34\" x2=\"260.0\" y2=\"46\" stroke=\"#232323\" stroke-width=\"1\"/><text x=\"260.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">0</text><line x1=\"299.0\" y1=\"34\" x2=\"299.0\" y2=\"46\" stroke=\"#232323\" stroke-width=\"1\"/><text x=\"299.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">1</text><line x1=\"338.0\" y1=\"34\" x2=\"338.0\" y2=\"46\" stroke=\"#232323\" stroke-width=\"1\"/><text x=\"338.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">2</text><line x1=\"377.0\" y1=\"34\" x2=\"377.0\" y2=\"46\" stroke=\"#232323\" stroke-width=\"1.6\"/><text x=\"377.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">3</text><line x1=\"416.0\" y1=\"34\" x2=\"416.0\" y2=\"46\" stroke=\"#232323\" stroke-width=\"1\"/><text x=\"416.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">4</text><line x1=\"455.0\" y1=\"34\" x2=\"455.0\" y2=\"46\" stroke=\"#232323\" stroke-width=\"1\"/><text x=\"455.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">5</text><line x1=\"494.0\" y1=\"34\" x2=\"494.0\" y2=\"46\" stroke=\"#232323\" stroke-width=\"1\"/><text x=\"494.0\" y=\"61.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">6</text><circle cx=\"104.0\" cy=\"40\" r=\"5.5\" fill=\"#C0392B\"/><text x=\"104.0\" y=\"27.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">A</text><circle cx=\"377.0\" cy=\"40\" r=\"5.5\" fill=\"#C0392B\"/><text x=\"377.0\" y=\"27.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">B</text></svg><figcaption>เส้นจำนวน</figcaption></figure>",
+  "answer": "7",
+  "level": "กลาง"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบจำนวนเต็มและค่าสัมบูรณ์",
+  "text": "จำนวนเต็มที่มากที่สุดซึ่งน้อยกว่า -5 คือจำนวนใด",
+  "answer": "-6",
+  "level": "กลาง"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบจำนวนเต็มและค่าสัมบูรณ์",
+  "text": "มีจำนวนเต็ม x กี่จำนวนที่ทำให้ |x| &lt; 4 เป็นจริง",
+  "answer": "7",
+  "level": "ยาก"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติการบวกและการคูณจำนวนเต็ม",
+  "text": "17 + (-9) = (-9) + 17 เป็นการใช้สมบัติใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>สมบัติการสลับที่ของการบวก</span></div><div class=\"ch\"><b>ข.</b><span>สมบัติการเปลี่ยนกลุ่มของการบวก</span></div><div class=\"ch\"><b>ค.</b><span>สมบัติการแจกแจง</span></div><div class=\"ch\"><b>ง.</b><span>สมบัติการมีเอกลักษณ์การบวก</span></div></div>",
+  "answer": "ก",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติการบวกและการคูณจำนวนเต็ม",
+  "text": "(4 &times; 7) &times; 25 = 4 &times; (7 &times; 25) เป็นการใช้สมบัติใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>สมบัติการสลับที่ของการคูณ</span></div><div class=\"ch\"><b>ข.</b><span>สมบัติการเปลี่ยนกลุ่มของการคูณ</span></div><div class=\"ch\"><b>ค.</b><span>สมบัติการแจกแจง</span></div><div class=\"ch\"><b>ง.</b><span>สมบัติการมีเอกลักษณ์การคูณ</span></div></div>",
+  "answer": "ข",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติการบวกและการคูณจำนวนเต็ม",
+  "text": "จากสมบัติการแจกแจง 6 &times; (10 + 3) = (6 &times; 10) + (6 &times; ⬜) จำนวนในช่องว่างคือจำนวนใด",
+  "answer": "3",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติการบวกและการคูณจำนวนเต็ม",
+  "text": "เอกลักษณ์การบวกของจำนวนเต็มคือจำนวนใด",
+  "answer": "0",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติการบวกและการคูณจำนวนเต็ม",
+  "text": "อินเวอร์สการบวกของ -14 คือจำนวนใด",
+  "answer": "14",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติการบวกและการคูณจำนวนเต็ม",
+  "text": "ใช้สมบัติการแจกแจงหาค่าของ 98 &times; 25 โดยเขียน 98 = 100 - 2",
+  "answer": "2450",
+  "level": "กลาง"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติการบวกและการคูณจำนวนเต็ม",
+  "text": "ใช้สมบัติการสลับที่และการเปลี่ยนกลุ่มหาค่าของ 25 + (-13) + 75 + 13",
+  "answer": "100",
+  "level": "กลาง"
+ },
+ {
+  "unit": 1,
+  "uname": "จำนวนเต็ม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติการบวกและการคูณจำนวนเต็ม",
+  "text": "จากสมบัติการแจกแจง 47 &times; 8 + 47 &times; 2 = 47 &times; ⬜ จำนวนในช่องว่างคือจำนวนใด",
+  "answer": "10",
+  "level": "กลาง"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "สัญกรณ์วิทยาศาสตร์",
+  "text": "45,000 เขียนในรูปสัญกรณ์วิทยาศาสตร์ได้เป็นข้อใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>4.5 &times; 10<sup>3</sup></span></div><div class=\"ch\"><b>ข.</b><span>4.5 &times; 10<sup>4</sup></span></div><div class=\"ch\"><b>ค.</b><span>45 &times; 10<sup>3</sup></span></div><div class=\"ch\"><b>ง.</b><span>0.45 &times; 10<sup>5</sup></span></div></div>",
+  "answer": "ข",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "สัญกรณ์วิทยาศาสตร์",
+  "text": "3.2 &times; 10<sup>5</sup> เขียนเป็นจำนวนธรรมดาได้เท่าใด",
+  "answer": "320000",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "สัญกรณ์วิทยาศาสตร์",
+  "text": "เขียน 6,700,000 ในรูป A &times; 10<sup>n</sup> เมื่อ 1 &le; A &lt; 10 ค่าของ n เท่ากับเท่าใด",
+  "answer": "6",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "สัญกรณ์วิทยาศาสตร์",
+  "text": "เขียน 0.00058 ในรูป A &times; 10<sup>n</sup> เมื่อ 1 &le; A &lt; 10 ค่าของ n เท่ากับเท่าใด",
+  "answer": "-4",
+  "level": "กลาง"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "สัญกรณ์วิทยาศาสตร์",
+  "text": "7.5 &times; 10<sup>-3</sup> เขียนเป็นทศนิยมได้เท่าใด",
+  "answer": "0.0075",
+  "level": "กลาง"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "สัญกรณ์วิทยาศาสตร์",
+  "text": "ข้อใดเขียนถูกต้องตามหลักสัญกรณ์วิทยาศาสตร์<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>12.5 &times; 10<sup>4</sup></span></div><div class=\"ch\"><b>ข.</b><span>0.85 &times; 10<sup>6</sup></span></div><div class=\"ch\"><b>ค.</b><span>9.02 &times; 10<sup>5</sup></span></div><div class=\"ch\"><b>ง.</b><span>10 &times; 10<sup>3</sup></span></div></div>",
+  "answer": "ค",
+  "level": "กลาง"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "สัญกรณ์วิทยาศาสตร์",
+  "text": "(2 &times; 10<sup>4</sup>) &times; (3 &times; 10<sup>3</sup>) = A &times; 10<sup>n</sup> โดย A = 6 ค่าของ n เท่ากับเท่าใด",
+  "answer": "7",
+  "level": "กลาง"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "สัญกรณ์วิทยาศาสตร์",
+  "text": "(8 &times; 10<sup>9</sup>) &divide; (2 &times; 10<sup>4</sup>) = A &times; 10<sup>n</sup> เมื่อ 1 &le; A &lt; 10 ค่าของ A เท่ากับเท่าใด",
+  "answer": "4",
+  "level": "กลาง"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "สัญกรณ์วิทยาศาสตร์",
+  "text": "(8 &times; 10<sup>9</sup>) &divide; (2 &times; 10<sup>4</sup>) = A &times; 10<sup>n</sup> เมื่อ 1 &le; A &lt; 10 ค่าของ n เท่ากับเท่าใด",
+  "answer": "5",
+  "level": "กลาง"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "สัญกรณ์วิทยาศาสตร์",
+  "text": "(3 &times; 10<sup>5</sup>) + (4 &times; 10<sup>5</sup>) = A &times; 10<sup>5</sup> ค่าของ A เท่ากับเท่าใด",
+  "answer": "7",
+  "level": "กลาง"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "สัญกรณ์วิทยาศาสตร์",
+  "text": "ระยะทางจากโลกถึงดวงอาทิตย์ประมาณ 1.5 &times; 10<sup>8</sup> กิโลเมตร เขียนเป็นจำนวนธรรมดาได้กี่กิโลเมตร",
+  "answer": "150000000",
+  "level": "กลาง"
+ },
+ {
+  "unit": 2,
+  "uname": "เลขยกกำลัง",
+  "std": "ค 1.1 ม.1/2",
+  "tag": "ม.1",
+  "sub": "สัญกรณ์วิทยาศาสตร์",
+  "text": "จำนวนในข้อใดมีค่ามากที่สุด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>9.9 &times; 10<sup>5</sup></span></div><div class=\"ch\"><b>ข.</b><span>1.2 &times; 10<sup>6</sup></span></div><div class=\"ch\"><b>ค.</b><span>8.7 &times; 10<sup>5</sup></span></div><div class=\"ch\"><b>ง.</b><span>9.99 &times; 10<sup>5</sup></span></div></div>",
+  "answer": "ข",
+  "level": "ยาก"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "ค่าประจำหลักของทศนิยม",
+  "text": "ในจำนวน 25.376 เลข 7 อยู่ในหลักใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>ส่วนสิบ</span></div><div class=\"ch\"><b>ข.</b><span>ส่วนร้อย</span></div><div class=\"ch\"><b>ค.</b><span>ส่วนพัน</span></div><div class=\"ch\"><b>ง.</b><span>หน่วย</span></div></div>",
+  "answer": "ข",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "ค่าประจำหลักของทศนิยม",
+  "text": "ค่าของเลข 4 ในจำนวน 8.045 เท่ากับเท่าใด (ตอบเป็นทศนิยม)",
+  "answer": "0.04",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "ค่าประจำหลักของทศนิยม",
+  "text": "3.507 เขียนในรูปกระจายได้ตรงกับข้อใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>3 + 0.5 + 0.07</span></div><div class=\"ch\"><b>ข.</b><span>3 + 0.5 + 0.007</span></div><div class=\"ch\"><b>ค.</b><span>3 + 0.05 + 0.007</span></div><div class=\"ch\"><b>ง.</b><span>3 + 5 + 7</span></div></div>",
+  "answer": "ข",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "ค่าประจำหลักของทศนิยม",
+  "text": "จำนวนในข้อใดมีเลขในหลักส่วนพันเป็น 8<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>1.892</span></div><div class=\"ch\"><b>ข.</b><span>1.028</span></div><div class=\"ch\"><b>ค.</b><span>1.280</span></div><div class=\"ch\"><b>ง.</b><span>1.820</span></div></div>",
+  "answer": "ข",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบทศนิยม",
+  "text": "จงหาค่าของ |-3.7|",
+  "answer": "3.7",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบทศนิยม",
+  "text": "จำนวนในข้อใดมีค่ามากที่สุด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>0.5</span></div><div class=\"ch\"><b>ข.</b><span>0.45</span></div><div class=\"ch\"><b>ค.</b><span>0.505</span></div><div class=\"ch\"><b>ง.</b><span>0.055</span></div></div>",
+  "answer": "ค",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบทศนิยม",
+  "text": "เมื่อเรียง -2.5, -2.05, -2.55 จากน้อยไปมาก จำนวนแรกคือจำนวนใด",
+  "answer": "-2.55",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบทศนิยม",
+  "text": "ควรเติมเครื่องหมายใดในช่องว่าง -1.8 ⬜ -1.08 (ตอบ &lt; หรือ &gt;)",
+  "answer": "&lt;",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบทศนิยม",
+  "text": "มีจำนวนเต็มกี่จำนวนที่อยู่ระหว่าง -3.6 และ 2.4",
+  "answer": "6",
+  "level": "ยาก"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบเศษส่วน",
+  "text": "เศษส่วนในข้อใดมีค่ามากที่สุด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span><span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span></span></div><div class=\"ch\"><b>ข.</b><span><span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">8</span></span></span></div><div class=\"ch\"><b>ค.</b><span><span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">12</span></span></span></div><div class=\"ch\"><b>ง.</b><span><span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span></span></div></div>",
+  "answer": "ก",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบเศษส่วน",
+  "text": "ระหว่าง <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span> กับ <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">7</span></span> จำนวนใดมีค่ามากกว่า",
+  "answer": "<span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">7</span></span>",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบเศษส่วน",
+  "text": "<span class=\"frac\"><span class=\"num\">12</span><span class=\"den\">18</span></span> เขียนเป็นเศษส่วนอย่างต่ำได้เท่าใด",
+  "answer": "<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span>",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบเศษส่วน",
+  "text": "เมื่อเรียง -<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span>, -<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span>, -<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span> จากน้อยไปมาก จำนวนแรกคือจำนวนใด",
+  "answer": "-<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span>",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "เปรียบเทียบเศษส่วน",
+  "text": "มีเศษส่วนที่มีตัวส่วนเป็น 8 และตัวเศษเป็นจำนวนเต็ม กี่จำนวน ที่มากกว่า <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span> และน้อยกว่า <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span>",
+  "answer": "3",
+  "level": "ยาก"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "จำนวนตรรกยะ",
+  "text": "จำนวนตรรกยะคือจำนวนที่เขียนได้ในรูป <span class=\"frac\"><span class=\"num\">a</span><span class=\"den\">b</span></span> เมื่อ a และ b เป็นจำนวนเต็ม โดย b ต้องไม่เท่ากับจำนวนใด",
+  "answer": "0",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "จำนวนตรรกยะ",
+  "text": "เขียน 0.6 ในรูปเศษส่วนอย่างต่ำ ตัวส่วนเท่ากับเท่าใด",
+  "answer": "5",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "จำนวนตรรกยะ",
+  "text": "เขียน -2.25 ในรูปเศษส่วนอย่างต่ำได้เท่าใด",
+  "answer": "-<span class=\"frac\"><span class=\"num\">9</span><span class=\"den\">4</span></span>",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "จำนวนตรรกยะ",
+  "text": "<span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">8</span></span> เขียนเป็นทศนิยมได้เท่าใด",
+  "answer": "0.625",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติการบวกและการคูณของจำนวนตรรกยะ",
+  "text": "0.25 + 1.75 = 1.75 + 0.25 เป็นการใช้สมบัติใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>สมบัติการสลับที่ของการบวก</span></div><div class=\"ch\"><b>ข.</b><span>สมบัติการเปลี่ยนกลุ่มของการบวก</span></div><div class=\"ch\"><b>ค.</b><span>สมบัติการแจกแจง</span></div><div class=\"ch\"><b>ง.</b><span>สมบัติการมีเอกลักษณ์การบวก</span></div></div>",
+  "answer": "ก",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติการบวกและการคูณของจำนวนตรรกยะ",
+  "text": "<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> &times; 1 = <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> แสดงว่า 1 เป็นเอกลักษณ์ของการดำเนินการใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>การบวก</span></div><div class=\"ch\"><b>ข.</b><span>การคูณ</span></div><div class=\"ch\"><b>ค.</b><span>การลบ</span></div><div class=\"ch\"><b>ง.</b><span>การหาร</span></div></div>",
+  "answer": "ข",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติการบวกและการคูณของจำนวนตรรกยะ",
+  "text": "ใช้สมบัติการเปลี่ยนกลุ่มหาค่าของ 0.8 &times; 2.5 &times; 4",
+  "answer": "8",
+  "level": "กลาง"
+ },
+ {
+  "unit": 3,
+  "uname": "เศษส่วนและทศนิยม",
+  "std": "ค 1.1 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติการบวกและการคูณของจำนวนตรรกยะ",
+  "text": "อินเวอร์สการคูณ (ส่วนกลับ) ของ <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span> คือจำนวนใด",
+  "answer": "<span class=\"frac\"><span class=\"num\">4</span><span class=\"den\">3</span></span>",
+  "level": "กลาง"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "รูปเรขาคณิตพื้นฐานและชนิดของมุม",
+  "text": "มุมที่มีขนาด 90 องศา เรียกว่ามุมชนิดใด",
+  "answer": "มุมฉาก",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "รูปเรขาคณิตพื้นฐานและชนิดของมุม",
+  "text": "มุมที่มีขนาดมากกว่า 90 องศา แต่น้อยกว่า 180 องศา เรียกว่ามุมชนิดใด",
+  "answer": "มุมป้าน",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "รูปเรขาคณิตพื้นฐานและชนิดของมุม",
+  "text": "ถ้ามุมสองมุมรวมกันได้ 90 องศา และมุมหนึ่งมีขนาด 35 องศา อีกมุมมีขนาดกี่องศา",
+  "answer": "55",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "รูปเรขาคณิตพื้นฐานและชนิดของมุม",
+  "text": "ถ้ามุมสองมุมรวมกันได้ 180 องศา และมุมหนึ่งมีขนาด 118 องศา อีกมุมมีขนาดกี่องศา",
+  "answer": "62",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "รูปเรขาคณิตพื้นฐานและชนิดของมุม",
+  "text": "ข้อใดกล่าวถูกต้องเกี่ยวกับ “รังสี”<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>มีจุดปลายทั้งสองข้าง</span></div><div class=\"ch\"><b>ข.</b><span>มีจุดเริ่มต้นหนึ่งจุด และต่อออกไปไม่สิ้นสุดเพียงข้างเดียว</span></div><div class=\"ch\"><b>ค.</b><span>ไม่มีจุดปลายทั้งสองข้าง</span></div><div class=\"ch\"><b>ง.</b><span>วัดความยาวได้เสมอ</span></div></div>",
+  "answer": "ข",
+  "level": "กลาง"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "รูปเรขาคณิตพื้นฐานและชนิดของมุม",
+  "text": "เส้นตรงสองเส้นตัดกันดังรูป มุมที่ทำเครื่องหมาย ? มีขนาดกี่องศา<figure><svg viewBox=\"0 0 300 170\" width=\"300\" height=\"170\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"300\" height=\"170\" fill=\"#fff\"/><line x1=\"84.0\" y1=\"85.0\" x2=\"216.0\" y2=\"85.0\" stroke=\"#1E3A5F\" stroke-width=\"2\"/><line x1=\"192.4\" y1=\"135.6\" x2=\"107.6\" y2=\"34.4\" stroke=\"#1E3A5F\" stroke-width=\"2\"/><path d=\"M 176 85 A 26 26 0 0 0 133.3 65.1\" fill=\"none\" stroke=\"#C0392B\" stroke-width=\"2\"/><text x=\"184.0\" y=\"59.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"14\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">130°</text><text x=\"190.0\" y=\"107.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"15\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">?</text><circle cx=\"150\" cy=\"85\" r=\"3\" fill=\"#232323\"/></svg><figcaption>เส้นตรงสองเส้นตัดกัน</figcaption></figure>",
+  "answer": "50",
+  "level": "กลาง"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การสร้างรูปสามเหลี่ยม",
+  "text": "ต้องการสร้างรูปสามเหลี่ยมที่มีด้านยาว 3, 4 และ 5 เซนติเมตร จะสร้างได้หรือไม่ (ตอบ ได้ หรือ ไม่ได้)",
+  "answer": "ได้",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การสร้างรูปสามเหลี่ยม",
+  "text": "ต้องการสร้างรูปสามเหลี่ยมที่มีด้านยาว 2, 3 และ 6 เซนติเมตร จะสร้างได้หรือไม่ (ตอบ ได้ หรือ ไม่ได้)",
+  "answer": "ไม่ได้",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การสร้างรูปสามเหลี่ยม",
+  "text": "รูปสามเหลี่ยมมีด้านยาว 7 เซนติเมตร และ 10 เซนติเมตร ถ้าด้านที่สามยาวเป็นจำนวนเต็มเซนติเมตร จะยาวได้มากที่สุดกี่เซนติเมตร",
+  "answer": "16",
+  "level": "กลาง"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การสร้างรูปสามเหลี่ยม",
+  "text": "การสร้างรูปสามเหลี่ยมเมื่อกำหนดความยาวของด้านทั้งสามด้าน เป็นการสร้างด้วยเงื่อนไขแบบใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>ด้าน-มุม-ด้าน</span></div><div class=\"ch\"><b>ข.</b><span>ด้าน-ด้าน-ด้าน</span></div><div class=\"ch\"><b>ค.</b><span>มุม-ด้าน-มุม</span></div><div class=\"ch\"><b>ง.</b><span>มุม-มุม-มุม</span></div></div>",
+  "answer": "ข",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การสร้างรูปสามเหลี่ยม",
+  "text": "ถ้ากำหนดขนาดของมุมทั้งสามมุมของรูปสามเหลี่ยมให้ จะสร้างรูปสามเหลี่ยมที่แตกต่างกันได้กี่รูป<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ได้เพียง 1 รูปเท่านั้น</span></div><div class=\"ch\"><b>ข.</b><span>ได้ 2 รูป</span></div><div class=\"ch\"><b>ค.</b><span>สร้างไม่ได้เลย</span></div><div class=\"ch\"><b>ง.</b><span>ได้มากมายไม่จำกัด เพราะเป็นรูปที่คล้ายกันแต่ขนาดต่างกัน</span></div></div>",
+  "answer": "ง",
+  "level": "ยาก"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติของรูปสามเหลี่ยม",
+  "text": "รูปสามเหลี่ยมมีมุมภายในขนาด 55 องศา และ 65 องศา มุมภายในที่สามมีขนาดกี่องศา",
+  "answer": "60",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติของรูปสามเหลี่ยม",
+  "text": "รูปสามเหลี่ยมด้านเท่ามีมุมภายในแต่ละมุมขนาดกี่องศา",
+  "answer": "60",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติของรูปสามเหลี่ยม",
+  "text": "รูปสามเหลี่ยมมุมฉากมีมุมแหลมมุมหนึ่งขนาด 37 องศา มุมแหลมอีกมุมมีขนาดกี่องศา",
+  "answer": "53",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติของรูปสามเหลี่ยม",
+  "text": "รูปสามเหลี่ยมหน้าจั่วมีมุมยอดขนาด 40 องศา มุมที่ฐานแต่ละมุมมีขนาดกี่องศา",
+  "answer": "70",
+  "level": "กลาง"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติของรูปสามเหลี่ยม",
+  "text": "รูปสามเหลี่ยมหน้าจั่วมีมุมที่ฐานขนาด 50 องศา มุมยอดมีขนาดกี่องศา",
+  "answer": "80",
+  "level": "กลาง"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติของรูปสามเหลี่ยม",
+  "text": "มุมภายนอกของรูปสามเหลี่ยมเท่ากับผลบวกของมุมภายในที่ไม่ประชิดกับมุมภายนอกนั้น ถ้ามุมภายในสองมุมนั้นมีขนาด 48 องศา และ 62 องศา มุมภายนอกมีขนาดกี่องศา",
+  "answer": "110",
+  "level": "กลาง"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติของรูปสามเหลี่ยม",
+  "text": "จากรูป มุม B มีขนาดกี่องศา<figure><svg viewBox=\"0 0 245 262\" width=\"245\" height=\"262\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"245\" height=\"262\" fill=\"#fff\"/><polygon points=\"44.0,232.0 201.8,232.0 113.2,42.0\" fill=\"#f4f2ea\" stroke=\"#1E3A5F\" stroke-width=\"2\"/><text x=\"71.6\" y=\"213.9\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"14\" font-weight=\"700\" fill=\"#232323\" text-anchor=\"middle\">70°</text><text x=\"32.5\" y=\"246.6\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">A</text><text x=\"173.2\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"14\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">?</text><text x=\"213.6\" y=\"246.2\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">B</text><text x=\"115.0\" y=\"83.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"14\" font-weight=\"700\" fill=\"#232323\" text-anchor=\"middle\">45°</text><text x=\"112.4\" y=\"32.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">C</text></svg><figcaption>รูปสามเหลี่ยม ABC</figcaption></figure>",
+  "answer": "65",
+  "level": "กลาง"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมบัติของรูปสามเหลี่ยม",
+  "text": "รูปสามเหลี่ยมมีขนาดของมุมภายในเป็นอัตราส่วน 1 : 2 : 3 มุมที่ใหญ่ที่สุดมีขนาดกี่องศา",
+  "answer": "90",
+  "level": "ยาก"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การสร้างรูปสี่เหลี่ยมและสมบัติ",
+  "text": "ผลบวกของขนาดของมุมภายในทั้งสี่มุมของรูปสี่เหลี่ยมเท่ากับกี่องศา",
+  "answer": "360",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การสร้างรูปสี่เหลี่ยมและสมบัติ",
+  "text": "รูปสี่เหลี่ยมด้านขนานมีมุมหนึ่งขนาด 65 องศา มุมที่อยู่ตรงข้ามมีขนาดกี่องศา",
+  "answer": "65",
+  "level": "กลาง"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การสร้างรูปสี่เหลี่ยมและสมบัติ",
+  "text": "รูปสี่เหลี่ยมด้านขนานมีมุมหนึ่งขนาด 110 องศา มุมที่อยู่ประชิดมีขนาดกี่องศา",
+  "answer": "70",
+  "level": "กลาง"
+ },
+ {
+  "unit": 4,
+  "uname": "การสร้างทางเรขาคณิต",
+  "std": "ค 2.2 ม.1/1",
+  "tag": "ม.1",
+  "sub": "การสร้างรูปสี่เหลี่ยมและสมบัติ",
+  "text": "รูปสี่เหลี่ยมในข้อใดมีเส้นทแยงมุมยาวเท่ากันและตัดกันเป็นมุมฉาก<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>รูปสี่เหลี่ยมผืนผ้า</span></div><div class=\"ch\"><b>ข.</b><span>รูปสี่เหลี่ยมจัตุรัส</span></div><div class=\"ch\"><b>ค.</b><span>รูปสี่เหลี่ยมขนมเปียกปูน</span></div><div class=\"ch\"><b>ง.</b><span>รูปสี่เหลี่ยมด้านขนาน</span></div></div>",
+  "answer": "ข",
+  "level": "ยาก"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "แบบรูปและนิพจน์พีชคณิต",
+  "text": "เขียนข้อความ “สามเท่าของ x บวกกับ 5” เป็นนิพจน์ได้เท่าใด",
+  "answer": "3x + 5",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "แบบรูปและนิพจน์พีชคณิต",
+  "text": "ถ้าให้จำนวนหนึ่งเป็น x ประโยค “จำนวนนั้นลบด้วย 7 แล้วได้ 12” เขียนเป็นสมการได้ตรงกับข้อใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>x - 7 = 12</span></div><div class=\"ch\"><b>ข.</b><span>7 - x = 12</span></div><div class=\"ch\"><b>ค.</b><span>x + 7 = 12</span></div><div class=\"ch\"><b>ง.</b><span>12 - x = 7</span></div></div>",
+  "answer": "ก",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "แบบรูปและนิพจน์พีชคณิต",
+  "text": "จากแบบรูป 5, 10, 20, 40, ... พจน์ถัดไปคือจำนวนใด",
+  "answer": "80",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "แบบรูปและนิพจน์พีชคณิต",
+  "text": "ถ้า x = -3 ค่าของนิพจน์ 2x + 7 เท่ากับเท่าใด",
+  "answer": "1",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "แบบรูปและนิพจน์พีชคณิต",
+  "text": "จากแบบรูป 3, 7, 11, 15, ... พจน์ที่ 10 มีค่าเท่าใด",
+  "answer": "39",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "แบบรูปและนิพจน์พีชคณิต",
+  "text": "ถ้า a = 4 และ b = -2 ค่าของนิพจน์ 3a - 2b เท่ากับเท่าใด",
+  "answer": "16",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "แบบรูปและนิพจน์พีชคณิต",
+  "text": "จากแบบรูป 2, 5, 8, 11, ... นิพจน์ของพจน์ที่ n คือข้อใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>3n</span></div><div class=\"ch\"><b>ข.</b><span>3n - 1</span></div><div class=\"ch\"><b>ค.</b><span>2n + 1</span></div><div class=\"ch\"><b>ง.</b><span>3n + 1</span></div></div>",
+  "answer": "ข",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "แบบรูปและนิพจน์พีชคณิต",
+  "text": "เขียนข้อความ “ครึ่งหนึ่งของ x ลบด้วย 4” เป็นนิพจน์ได้ตรงกับข้อใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span><span class=\"frac\"><span class=\"num\">x</span><span class=\"den\">2</span></span> - 4</span></div><div class=\"ch\"><b>ข.</b><span><span class=\"frac\"><span class=\"num\">x - 4</span><span class=\"den\">2</span></span></span></div><div class=\"ch\"><b>ค.</b><span>2x - 4</span></div><div class=\"ch\"><b>ง.</b><span>4 - <span class=\"frac\"><span class=\"num\">x</span><span class=\"den\">2</span></span></span></div></div>",
+  "answer": "ก",
+  "level": "กลาง"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมการและคำตอบของสมการ",
+  "text": "x = 5 เป็นคำตอบของสมการ 3x - 7 = 8 หรือไม่ (ตอบ ใช่ หรือ ไม่ใช่)",
+  "answer": "ใช่",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมการและคำตอบของสมการ",
+  "text": "x = -2 เป็นคำตอบของสมการ 4x + 3 = 11 หรือไม่ (ตอบ ใช่ หรือ ไม่ใช่)",
+  "answer": "ไม่ใช่",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมการและคำตอบของสมการ",
+  "text": "สมการในข้อใดมีคำตอบเป็น x = 3<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>2x = 5</span></div><div class=\"ch\"><b>ข.</b><span>x + 4 = 7</span></div><div class=\"ch\"><b>ค.</b><span>3x = 12</span></div><div class=\"ch\"><b>ง.</b><span>x - 5 = 2</span></div></div>",
+  "answer": "ข",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมการและคำตอบของสมการ",
+  "text": "ประโยค 3 &times; 4 = 15 - 2 เป็นประโยคจริงหรือประโยคเท็จ (ตอบ จริง หรือ เท็จ)",
+  "answer": "เท็จ",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมการและคำตอบของสมการ",
+  "text": "สมการ x + 2 = x + 5 มีคำตอบกี่คำตอบ",
+  "answer": "0",
+  "level": "ยาก"
+ },
+ {
+  "unit": 6,
+  "uname": "สมการเชิงเส้นตัวแปรเดียว",
+  "std": "ค 1.3 ม.1/1",
+  "tag": "ม.1",
+  "sub": "สมการและคำตอบของสมการ",
+  "text": "สมการ 2(x + 3) = 2x + 6 มีคำตอบลักษณะใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ไม่มีคำตอบ</span></div><div class=\"ch\"><b>ข.</b><span>มีคำตอบเพียง 1 คำตอบ</span></div><div class=\"ch\"><b>ค.</b><span>มีคำตอบ 2 คำตอบ</span></div><div class=\"ch\"><b>ง.</b><span>จำนวนทุกจำนวนเป็นคำตอบของสมการ</span></div></div>",
+  "answer": "ง",
+  "level": "ยาก"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "อัตราส่วนของจำนวนหลายจำนวน",
+  "text": "อัตราส่วนอย่างต่ำของ 12 : 18 : 30 คือข้อใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>2 : 3 : 5</span></div><div class=\"ch\"><b>ข.</b><span>4 : 6 : 10</span></div><div class=\"ch\"><b>ค.</b><span>6 : 9 : 15</span></div><div class=\"ch\"><b>ง.</b><span>2 : 3 : 6</span></div></div>",
+  "answer": "ก",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "อัตราส่วนของจำนวนหลายจำนวน",
+  "text": "ถ้า a : b = 2 : 3 และ b : c = 3 : 5 เมื่อ c = 20 แล้ว a มีค่าเท่าใด",
+  "answer": "8",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "อัตราส่วนของจำนวนหลายจำนวน",
+  "text": "แบ่งเงิน 3,600 บาท ให้สามคนตามอัตราส่วน 2 : 3 : 4 คนที่ได้มากที่สุดได้เงินกี่บาท",
+  "answer": "1600",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "อัตราส่วนของจำนวนหลายจำนวน",
+  "text": "รูปสามเหลี่ยมมีขนาดของมุมภายในเป็นอัตราส่วน 2 : 3 : 4 มุมที่เล็กที่สุดมีขนาดกี่องศา",
+  "answer": "40",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "อัตราส่วนของจำนวนหลายจำนวน",
+  "text": "น้ำหวานผสมจากน้ำ : น้ำเชื่อม : น้ำแข็ง เป็นอัตราส่วน 5 : 2 : 3 ถ้าใช้น้ำเชื่อม 120 มิลลิลิตร ต้องใช้น้ำกี่มิลลิลิตร",
+  "answer": "300",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "อัตราส่วนของจำนวนหลายจำนวน",
+  "text": "ถ้า x : y = 3 : 4 และ y : z = 8 : 9 เมื่อ z = 18 แล้ว x มีค่าเท่าใด",
+  "answer": "12",
+  "level": "ยาก"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "สัดส่วนตรง",
+  "text": "ดินสอ 4 แท่ง ราคา 20 บาท ดินสอ 7 แท่ง ราคากี่บาท",
+  "answer": "35",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "สัดส่วนตรง",
+  "text": "ถ้า <span class=\"frac\"><span class=\"num\">a</span><span class=\"den\">12</span></span> = <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">4</span></span> แล้ว a มีค่าเท่าใด",
+  "answer": "15",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "สัดส่วนตรง",
+  "text": "รถยนต์แล่นได้ 180 กิโลเมตร ใช้น้ำมัน 12 ลิตร ถ้าแล่น 300 กิโลเมตร ต้องใช้น้ำมันกี่ลิตร",
+  "answer": "20",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "สัดส่วนตรง",
+  "text": "คนงาน 5 คน ผลิตสินค้าได้ 200 ชิ้นต่อวัน ถ้าเพิ่มเป็นคนงาน 8 คน จะผลิตสินค้าได้กี่ชิ้นต่อวัน",
+  "answer": "320",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "สัดส่วนตรง",
+  "text": "น้ำมัน 3 ลิตร ราคา 108 บาท ถ้ามีเงิน 288 บาท จะซื้อน้ำมันได้กี่ลิตร",
+  "answer": "8",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "สัดส่วนตรง",
+  "text": "แผนที่มีมาตราส่วน 1 : 50,000 ระยะในแผนที่ 6 เซนติเมตร เท่ากับระยะทางจริงกี่กิโลเมตร",
+  "answer": "3",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "สัดส่วนผกผัน",
+  "text": "รถยนต์แล่นด้วยความเร็ว 60 กิโลเมตรต่อชั่วโมง ใช้เวลา 4 ชั่วโมง ถ้าแล่นด้วยความเร็ว 80 กิโลเมตรต่อชั่วโมง จะใช้เวลากี่ชั่วโมง",
+  "answer": "3",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "สัดส่วนผกผัน",
+  "text": "คนงาน 6 คน ทำงานหนึ่งเสร็จใน 12 วัน ถ้าใช้คนงาน 9 คน จะทำงานเสร็จในกี่วัน",
+  "answer": "8",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "สัดส่วนผกผัน",
+  "text": "อาหารสำรองเลี้ยงคน 20 คน ได้ 15 วัน ถ้ามีคน 25 คน จะเลี้ยงได้กี่วัน",
+  "answer": "12",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "สัดส่วนผกผัน",
+  "text": "ท่อน้ำ 4 ท่อ เติมน้ำเต็มสระใน 6 ชั่วโมง ถ้าใช้ท่อน้ำ 3 ท่อ จะใช้เวลากี่ชั่วโมง",
+  "answer": "8",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "สัดส่วนผกผัน",
+  "text": "ความสัมพันธ์ในข้อใดเป็นสัดส่วนผกผัน<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>จำนวนดินสอกับราคารวมที่ต้องจ่าย</span></div><div class=\"ch\"><b>ข.</b><span>ความเร็วของรถกับเวลาที่ใช้ เมื่อระยะทางคงที่</span></div><div class=\"ch\"><b>ค.</b><span>ระยะทางที่แล่นกับปริมาณน้ำมันที่ใช้</span></div><div class=\"ch\"><b>ง.</b><span>จำนวนคนกับค่าอาหารรวมทั้งหมด</span></div></div>",
+  "answer": "ข",
+  "level": "กลาง"
+ },
+ {
+  "unit": 7,
+  "uname": "อัตราส่วน สัดส่วน และร้อยละ",
+  "std": "ค 1.1 ม.1/3",
+  "tag": "ม.1",
+  "sub": "สัดส่วนผกผัน",
+  "text": "เครื่องจักร 12 เครื่อง ผลิตสินค้าเสร็จใน 10 วัน ถ้าต้องการให้เสร็จใน 8 วัน ต้องใช้เครื่องจักรเพิ่มขึ้นกี่เครื่อง",
+  "answer": "3",
+  "level": "ยาก"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/2",
+  "tag": "ม.1",
+  "sub": "คู่อันดับและระนาบพิกัดฉาก",
+  "text": "จากกราฟ จุด A อยู่ในจตุภาคที่เท่าใด<figure><svg viewBox=\"0 0 304 304\" width=\"304\" height=\"304\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"304\" height=\"304\" fill=\"#fff\"/><line x1=\"22\" y1=\"22\" x2=\"22\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"282\" x2=\"282\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"48\" y1=\"22\" x2=\"48\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"256\" x2=\"282\" y2=\"256\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"74\" y1=\"22\" x2=\"74\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"230\" x2=\"282\" y2=\"230\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"100\" y1=\"22\" x2=\"100\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"204\" x2=\"282\" y2=\"204\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"126\" y1=\"22\" x2=\"126\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"178\" x2=\"282\" y2=\"178\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"152\" y1=\"22\" x2=\"152\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"152\" x2=\"282\" y2=\"152\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"178\" y1=\"22\" x2=\"178\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"126\" x2=\"282\" y2=\"126\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"204\" y1=\"22\" x2=\"204\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"100\" x2=\"282\" y2=\"100\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"230\" y1=\"22\" x2=\"230\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"74\" x2=\"282\" y2=\"74\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"256\" y1=\"22\" x2=\"256\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"48\" x2=\"282\" y2=\"48\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"282\" y1=\"22\" x2=\"282\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"22\" x2=\"282\" y2=\"22\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"152\" x2=\"282\" y2=\"152\" stroke=\"#232323\" stroke-width=\"1.6\"/><line x1=\"152\" y1=\"22\" x2=\"152\" y2=\"282\" stroke=\"#232323\" stroke-width=\"1.6\"/><text x=\"22.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-5</text><text x=\"144.0\" y=\"285.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-5</text><text x=\"48.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-4</text><text x=\"144.0\" y=\"259.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-4</text><text x=\"74.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-3</text><text x=\"144.0\" y=\"233.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-3</text><text x=\"100.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-2</text><text x=\"144.0\" y=\"207.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-2</text><text x=\"126.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-1</text><text x=\"144.0\" y=\"181.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-1</text><text x=\"178.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">1</text><text x=\"144.0\" y=\"129.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">1</text><text x=\"204.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">2</text><text x=\"144.0\" y=\"103.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">2</text><text x=\"230.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">3</text><text x=\"144.0\" y=\"77.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">3</text><text x=\"256.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">4</text><text x=\"144.0\" y=\"51.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">4</text><text x=\"282.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">5</text><text x=\"144.0\" y=\"25.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">5</text><text x=\"290.0\" y=\"156.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">X</text><text x=\"152.0\" y=\"14.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">Y</text><circle cx=\"230\" cy=\"100\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"241.0\" y=\"92.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">A</text><circle cx=\"100\" cy=\"48\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"89.0\" y=\"40.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">B</text><circle cx=\"74\" cy=\"178\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"63.0\" y=\"194.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">C</text><circle cx=\"256\" cy=\"230\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"267.0\" y=\"246.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">D</text><circle cx=\"152\" cy=\"74\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"163.0\" y=\"66.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">E</text></svg><figcaption>ระนาบพิกัดฉาก</figcaption></figure>",
+  "answer": "1",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/2",
+  "tag": "ม.1",
+  "sub": "คู่อันดับและระนาบพิกัดฉาก",
+  "text": "จากกราฟ พิกัดที่ 1 (พิกัด x) ของจุด B เท่ากับเท่าใด<figure><svg viewBox=\"0 0 304 304\" width=\"304\" height=\"304\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"304\" height=\"304\" fill=\"#fff\"/><line x1=\"22\" y1=\"22\" x2=\"22\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"282\" x2=\"282\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"48\" y1=\"22\" x2=\"48\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"256\" x2=\"282\" y2=\"256\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"74\" y1=\"22\" x2=\"74\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"230\" x2=\"282\" y2=\"230\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"100\" y1=\"22\" x2=\"100\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"204\" x2=\"282\" y2=\"204\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"126\" y1=\"22\" x2=\"126\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"178\" x2=\"282\" y2=\"178\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"152\" y1=\"22\" x2=\"152\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"152\" x2=\"282\" y2=\"152\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"178\" y1=\"22\" x2=\"178\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"126\" x2=\"282\" y2=\"126\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"204\" y1=\"22\" x2=\"204\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"100\" x2=\"282\" y2=\"100\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"230\" y1=\"22\" x2=\"230\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"74\" x2=\"282\" y2=\"74\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"256\" y1=\"22\" x2=\"256\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"48\" x2=\"282\" y2=\"48\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"282\" y1=\"22\" x2=\"282\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"22\" x2=\"282\" y2=\"22\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"152\" x2=\"282\" y2=\"152\" stroke=\"#232323\" stroke-width=\"1.6\"/><line x1=\"152\" y1=\"22\" x2=\"152\" y2=\"282\" stroke=\"#232323\" stroke-width=\"1.6\"/><text x=\"22.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-5</text><text x=\"144.0\" y=\"285.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-5</text><text x=\"48.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-4</text><text x=\"144.0\" y=\"259.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-4</text><text x=\"74.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-3</text><text x=\"144.0\" y=\"233.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-3</text><text x=\"100.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-2</text><text x=\"144.0\" y=\"207.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-2</text><text x=\"126.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-1</text><text x=\"144.0\" y=\"181.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-1</text><text x=\"178.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">1</text><text x=\"144.0\" y=\"129.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">1</text><text x=\"204.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">2</text><text x=\"144.0\" y=\"103.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">2</text><text x=\"230.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">3</text><text x=\"144.0\" y=\"77.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">3</text><text x=\"256.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">4</text><text x=\"144.0\" y=\"51.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">4</text><text x=\"282.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">5</text><text x=\"144.0\" y=\"25.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">5</text><text x=\"290.0\" y=\"156.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">X</text><text x=\"152.0\" y=\"14.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">Y</text><circle cx=\"230\" cy=\"100\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"241.0\" y=\"92.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">A</text><circle cx=\"100\" cy=\"48\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"89.0\" y=\"40.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">B</text><circle cx=\"74\" cy=\"178\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"63.0\" y=\"194.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">C</text><circle cx=\"256\" cy=\"230\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"267.0\" y=\"246.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">D</text><circle cx=\"152\" cy=\"74\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"163.0\" y=\"66.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">E</text></svg><figcaption>ระนาบพิกัดฉาก</figcaption></figure>",
+  "answer": "-2",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/2",
+  "tag": "ม.1",
+  "sub": "คู่อันดับและระนาบพิกัดฉาก",
+  "text": "จากกราฟ พิกัดที่ 2 (พิกัด y) ของจุด D เท่ากับเท่าใด<figure><svg viewBox=\"0 0 304 304\" width=\"304\" height=\"304\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"304\" height=\"304\" fill=\"#fff\"/><line x1=\"22\" y1=\"22\" x2=\"22\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"282\" x2=\"282\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"48\" y1=\"22\" x2=\"48\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"256\" x2=\"282\" y2=\"256\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"74\" y1=\"22\" x2=\"74\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"230\" x2=\"282\" y2=\"230\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"100\" y1=\"22\" x2=\"100\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"204\" x2=\"282\" y2=\"204\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"126\" y1=\"22\" x2=\"126\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"178\" x2=\"282\" y2=\"178\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"152\" y1=\"22\" x2=\"152\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"152\" x2=\"282\" y2=\"152\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"178\" y1=\"22\" x2=\"178\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"126\" x2=\"282\" y2=\"126\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"204\" y1=\"22\" x2=\"204\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"100\" x2=\"282\" y2=\"100\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"230\" y1=\"22\" x2=\"230\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"74\" x2=\"282\" y2=\"74\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"256\" y1=\"22\" x2=\"256\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"48\" x2=\"282\" y2=\"48\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"282\" y1=\"22\" x2=\"282\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"22\" x2=\"282\" y2=\"22\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"152\" x2=\"282\" y2=\"152\" stroke=\"#232323\" stroke-width=\"1.6\"/><line x1=\"152\" y1=\"22\" x2=\"152\" y2=\"282\" stroke=\"#232323\" stroke-width=\"1.6\"/><text x=\"22.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-5</text><text x=\"144.0\" y=\"285.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-5</text><text x=\"48.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-4</text><text x=\"144.0\" y=\"259.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-4</text><text x=\"74.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-3</text><text x=\"144.0\" y=\"233.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-3</text><text x=\"100.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-2</text><text x=\"144.0\" y=\"207.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-2</text><text x=\"126.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-1</text><text x=\"144.0\" y=\"181.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-1</text><text x=\"178.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">1</text><text x=\"144.0\" y=\"129.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">1</text><text x=\"204.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">2</text><text x=\"144.0\" y=\"103.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">2</text><text x=\"230.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">3</text><text x=\"144.0\" y=\"77.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">3</text><text x=\"256.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">4</text><text x=\"144.0\" y=\"51.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">4</text><text x=\"282.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">5</text><text x=\"144.0\" y=\"25.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">5</text><text x=\"290.0\" y=\"156.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">X</text><text x=\"152.0\" y=\"14.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">Y</text><circle cx=\"230\" cy=\"100\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"241.0\" y=\"92.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">A</text><circle cx=\"100\" cy=\"48\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"89.0\" y=\"40.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">B</text><circle cx=\"74\" cy=\"178\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"63.0\" y=\"194.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">C</text><circle cx=\"256\" cy=\"230\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"267.0\" y=\"246.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">D</text><circle cx=\"152\" cy=\"74\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"163.0\" y=\"66.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">E</text></svg><figcaption>ระนาบพิกัดฉาก</figcaption></figure>",
+  "answer": "-3",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/2",
+  "tag": "ม.1",
+  "sub": "คู่อันดับและระนาบพิกัดฉาก",
+  "text": "จากกราฟ มีจุดกี่จุดที่มีพิกัดที่ 1 (พิกัด x) เป็นจำนวนลบ<figure><svg viewBox=\"0 0 304 304\" width=\"304\" height=\"304\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"304\" height=\"304\" fill=\"#fff\"/><line x1=\"22\" y1=\"22\" x2=\"22\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"282\" x2=\"282\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"48\" y1=\"22\" x2=\"48\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"256\" x2=\"282\" y2=\"256\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"74\" y1=\"22\" x2=\"74\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"230\" x2=\"282\" y2=\"230\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"100\" y1=\"22\" x2=\"100\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"204\" x2=\"282\" y2=\"204\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"126\" y1=\"22\" x2=\"126\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"178\" x2=\"282\" y2=\"178\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"152\" y1=\"22\" x2=\"152\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"152\" x2=\"282\" y2=\"152\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"178\" y1=\"22\" x2=\"178\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"126\" x2=\"282\" y2=\"126\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"204\" y1=\"22\" x2=\"204\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"100\" x2=\"282\" y2=\"100\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"230\" y1=\"22\" x2=\"230\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"74\" x2=\"282\" y2=\"74\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"256\" y1=\"22\" x2=\"256\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"48\" x2=\"282\" y2=\"48\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"282\" y1=\"22\" x2=\"282\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"22\" x2=\"282\" y2=\"22\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"152\" x2=\"282\" y2=\"152\" stroke=\"#232323\" stroke-width=\"1.6\"/><line x1=\"152\" y1=\"22\" x2=\"152\" y2=\"282\" stroke=\"#232323\" stroke-width=\"1.6\"/><text x=\"22.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-5</text><text x=\"144.0\" y=\"285.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-5</text><text x=\"48.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-4</text><text x=\"144.0\" y=\"259.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-4</text><text x=\"74.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-3</text><text x=\"144.0\" y=\"233.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-3</text><text x=\"100.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-2</text><text x=\"144.0\" y=\"207.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-2</text><text x=\"126.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-1</text><text x=\"144.0\" y=\"181.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-1</text><text x=\"178.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">1</text><text x=\"144.0\" y=\"129.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">1</text><text x=\"204.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">2</text><text x=\"144.0\" y=\"103.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">2</text><text x=\"230.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">3</text><text x=\"144.0\" y=\"77.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">3</text><text x=\"256.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">4</text><text x=\"144.0\" y=\"51.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">4</text><text x=\"282.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">5</text><text x=\"144.0\" y=\"25.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">5</text><text x=\"290.0\" y=\"156.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">X</text><text x=\"152.0\" y=\"14.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">Y</text><circle cx=\"230\" cy=\"100\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"241.0\" y=\"92.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">A</text><circle cx=\"100\" cy=\"48\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"89.0\" y=\"40.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">B</text><circle cx=\"74\" cy=\"178\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"63.0\" y=\"194.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">C</text><circle cx=\"256\" cy=\"230\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"267.0\" y=\"246.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">D</text><circle cx=\"152\" cy=\"74\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"163.0\" y=\"66.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">E</text></svg><figcaption>ระนาบพิกัดฉาก</figcaption></figure>",
+  "answer": "2",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/2",
+  "tag": "ม.1",
+  "sub": "คู่อันดับและระนาบพิกัดฉาก",
+  "text": "จากกราฟ จุด E อยู่บนแกนใด<figure><svg viewBox=\"0 0 304 304\" width=\"304\" height=\"304\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"304\" height=\"304\" fill=\"#fff\"/><line x1=\"22\" y1=\"22\" x2=\"22\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"282\" x2=\"282\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"48\" y1=\"22\" x2=\"48\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"256\" x2=\"282\" y2=\"256\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"74\" y1=\"22\" x2=\"74\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"230\" x2=\"282\" y2=\"230\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"100\" y1=\"22\" x2=\"100\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"204\" x2=\"282\" y2=\"204\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"126\" y1=\"22\" x2=\"126\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"178\" x2=\"282\" y2=\"178\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"152\" y1=\"22\" x2=\"152\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"152\" x2=\"282\" y2=\"152\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"178\" y1=\"22\" x2=\"178\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"126\" x2=\"282\" y2=\"126\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"204\" y1=\"22\" x2=\"204\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"100\" x2=\"282\" y2=\"100\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"230\" y1=\"22\" x2=\"230\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"74\" x2=\"282\" y2=\"74\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"256\" y1=\"22\" x2=\"256\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"48\" x2=\"282\" y2=\"48\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"282\" y1=\"22\" x2=\"282\" y2=\"282\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"22\" x2=\"282\" y2=\"22\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><line x1=\"22\" y1=\"152\" x2=\"282\" y2=\"152\" stroke=\"#232323\" stroke-width=\"1.6\"/><line x1=\"152\" y1=\"22\" x2=\"152\" y2=\"282\" stroke=\"#232323\" stroke-width=\"1.6\"/><text x=\"22.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-5</text><text x=\"144.0\" y=\"285.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-5</text><text x=\"48.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-4</text><text x=\"144.0\" y=\"259.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-4</text><text x=\"74.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-3</text><text x=\"144.0\" y=\"233.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-3</text><text x=\"100.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-2</text><text x=\"144.0\" y=\"207.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-2</text><text x=\"126.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">-1</text><text x=\"144.0\" y=\"181.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">-1</text><text x=\"178.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">1</text><text x=\"144.0\" y=\"129.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">1</text><text x=\"204.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">2</text><text x=\"144.0\" y=\"103.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">2</text><text x=\"230.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">3</text><text x=\"144.0\" y=\"77.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">3</text><text x=\"256.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">4</text><text x=\"144.0\" y=\"51.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">4</text><text x=\"282.0\" y=\"165.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"middle\">5</text><text x=\"144.0\" y=\"25.5\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"9.5\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">5</text><text x=\"290.0\" y=\"156.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">X</text><text x=\"152.0\" y=\"14.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#1E3A5F\" text-anchor=\"middle\">Y</text><circle cx=\"230\" cy=\"100\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"241.0\" y=\"92.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">A</text><circle cx=\"100\" cy=\"48\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"89.0\" y=\"40.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">B</text><circle cx=\"74\" cy=\"178\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"63.0\" y=\"194.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">C</text><circle cx=\"256\" cy=\"230\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"267.0\" y=\"246.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">D</text><circle cx=\"152\" cy=\"74\" r=\"4.5\" fill=\"#C0392B\"/><text x=\"163.0\" y=\"66.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#C0392B\" text-anchor=\"middle\">E</text></svg><figcaption>ระนาบพิกัดฉาก</figcaption></figure><div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>แกน X</span></div><div class=\"ch\"><b>ข.</b><span>แกน Y</span></div><div class=\"ch\"><b>ค.</b><span>อยู่ในจตุภาคที่ 1</span></div><div class=\"ch\"><b>ง.</b><span>อยู่ในจตุภาคที่ 2</span></div></div>",
+  "answer": "ข",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/2",
+  "tag": "ม.1",
+  "sub": "คู่อันดับและระนาบพิกัดฉาก",
+  "text": "จุดที่มีพิกัดที่ 2 (พิกัด y) เป็น 0 จะอยู่บนแกนใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>แกน X</span></div><div class=\"ch\"><b>ข.</b><span>แกน Y</span></div><div class=\"ch\"><b>ค.</b><span>อยู่บนทั้งสองแกน</span></div><div class=\"ch\"><b>ง.</b><span>ไม่อยู่บนแกนใดเลย</span></div></div>",
+  "answer": "ก",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การอ่านและแปลความหมายกราฟ",
+  "text": "จากกราฟ เมื่อเวลาผ่านไป 2 ชั่วโมง รถแล่นได้ระยะทางกี่กิโลเมตร<figure><svg viewBox=\"0 0 520 254\" width=\"520\" height=\"254\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"520\" height=\"254\" fill=\"#fff\"/><line x1=\"46\" y1=\"198.0\" x2=\"504\" y2=\"198.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"202.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">0</text><line x1=\"46\" y1=\"162.0\" x2=\"504\" y2=\"162.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"166.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">50</text><line x1=\"46\" y1=\"126.0\" x2=\"504\" y2=\"126.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"130.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">100</text><line x1=\"46\" y1=\"90.0\" x2=\"504\" y2=\"90.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"94.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">150</text><line x1=\"46\" y1=\"54.0\" x2=\"504\" y2=\"54.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"58.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">200</text><line x1=\"46\" y1=\"18.0\" x2=\"504\" y2=\"18.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"22.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">250</text><line x1=\"46\" y1=\"18\" x2=\"46\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><line x1=\"46\" y1=\"198\" x2=\"504\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><g transform=\"translate(13,108.0) rotate(-90)\"><text x=\"0.0\" y=\"0.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">ระยะทาง (กม.)</text></g><text x=\"84.2\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">0</text><text x=\"160.5\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">1</text><text x=\"236.8\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">2</text><text x=\"313.2\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">3</text><text x=\"389.5\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">4</text><text x=\"465.8\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">5</text><polyline points=\"84.2,198.0 160.5,154.8 236.8,111.6 313.2,111.6 389.5,68.4 465.8,25.2\" fill=\"none\" stroke=\"#1E3A5F\" stroke-width=\"2.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"84.2\" cy=\"198.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"84.2\" y=\"188.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">0</text><circle cx=\"160.5\" cy=\"154.8\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"160.5\" y=\"144.8\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">60</text><circle cx=\"236.8\" cy=\"111.6\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"236.8\" y=\"101.6\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">120</text><circle cx=\"313.2\" cy=\"111.6\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"313.2\" y=\"101.6\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">120</text><circle cx=\"389.5\" cy=\"68.4\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"389.5\" y=\"58.4\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">180</text><circle cx=\"465.8\" cy=\"25.2\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"465.8\" y=\"15.2\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">240</text><text x=\"275.0\" y=\"236.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">เวลา (ชั่วโมง)</text></svg><figcaption>ระยะทางที่รถแล่นได้ในแต่ละช่วงเวลา</figcaption></figure>",
+  "answer": "120",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การอ่านและแปลความหมายกราฟ",
+  "text": "จากกราฟ รถแล่นได้ระยะทางทั้งหมดกี่กิโลเมตร<figure><svg viewBox=\"0 0 520 254\" width=\"520\" height=\"254\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"520\" height=\"254\" fill=\"#fff\"/><line x1=\"46\" y1=\"198.0\" x2=\"504\" y2=\"198.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"202.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">0</text><line x1=\"46\" y1=\"162.0\" x2=\"504\" y2=\"162.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"166.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">50</text><line x1=\"46\" y1=\"126.0\" x2=\"504\" y2=\"126.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"130.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">100</text><line x1=\"46\" y1=\"90.0\" x2=\"504\" y2=\"90.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"94.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">150</text><line x1=\"46\" y1=\"54.0\" x2=\"504\" y2=\"54.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"58.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">200</text><line x1=\"46\" y1=\"18.0\" x2=\"504\" y2=\"18.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"22.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">250</text><line x1=\"46\" y1=\"18\" x2=\"46\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><line x1=\"46\" y1=\"198\" x2=\"504\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><g transform=\"translate(13,108.0) rotate(-90)\"><text x=\"0.0\" y=\"0.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">ระยะทาง (กม.)</text></g><text x=\"84.2\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">0</text><text x=\"160.5\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">1</text><text x=\"236.8\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">2</text><text x=\"313.2\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">3</text><text x=\"389.5\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">4</text><text x=\"465.8\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">5</text><polyline points=\"84.2,198.0 160.5,154.8 236.8,111.6 313.2,111.6 389.5,68.4 465.8,25.2\" fill=\"none\" stroke=\"#1E3A5F\" stroke-width=\"2.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"84.2\" cy=\"198.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"84.2\" y=\"188.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">0</text><circle cx=\"160.5\" cy=\"154.8\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"160.5\" y=\"144.8\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">60</text><circle cx=\"236.8\" cy=\"111.6\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"236.8\" y=\"101.6\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">120</text><circle cx=\"313.2\" cy=\"111.6\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"313.2\" y=\"101.6\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">120</text><circle cx=\"389.5\" cy=\"68.4\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"389.5\" y=\"58.4\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">180</text><circle cx=\"465.8\" cy=\"25.2\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"465.8\" y=\"15.2\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">240</text><text x=\"275.0\" y=\"236.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">เวลา (ชั่วโมง)</text></svg><figcaption>ระยะทางที่รถแล่นได้ในแต่ละช่วงเวลา</figcaption></figure>",
+  "answer": "240",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การอ่านและแปลความหมายกราฟ",
+  "text": "จากกราฟ รถหยุดพัก (ระยะทางไม่เพิ่มขึ้น) เป็นเวลากี่ชั่วโมง<figure><svg viewBox=\"0 0 520 254\" width=\"520\" height=\"254\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"520\" height=\"254\" fill=\"#fff\"/><line x1=\"46\" y1=\"198.0\" x2=\"504\" y2=\"198.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"202.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">0</text><line x1=\"46\" y1=\"162.0\" x2=\"504\" y2=\"162.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"166.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">50</text><line x1=\"46\" y1=\"126.0\" x2=\"504\" y2=\"126.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"130.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">100</text><line x1=\"46\" y1=\"90.0\" x2=\"504\" y2=\"90.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"94.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">150</text><line x1=\"46\" y1=\"54.0\" x2=\"504\" y2=\"54.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"58.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">200</text><line x1=\"46\" y1=\"18.0\" x2=\"504\" y2=\"18.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"22.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">250</text><line x1=\"46\" y1=\"18\" x2=\"46\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><line x1=\"46\" y1=\"198\" x2=\"504\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><g transform=\"translate(13,108.0) rotate(-90)\"><text x=\"0.0\" y=\"0.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">ระยะทาง (กม.)</text></g><text x=\"84.2\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">0</text><text x=\"160.5\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">1</text><text x=\"236.8\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">2</text><text x=\"313.2\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">3</text><text x=\"389.5\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">4</text><text x=\"465.8\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">5</text><polyline points=\"84.2,198.0 160.5,154.8 236.8,111.6 313.2,111.6 389.5,68.4 465.8,25.2\" fill=\"none\" stroke=\"#1E3A5F\" stroke-width=\"2.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"84.2\" cy=\"198.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"84.2\" y=\"188.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">0</text><circle cx=\"160.5\" cy=\"154.8\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"160.5\" y=\"144.8\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">60</text><circle cx=\"236.8\" cy=\"111.6\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"236.8\" y=\"101.6\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">120</text><circle cx=\"313.2\" cy=\"111.6\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"313.2\" y=\"101.6\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">120</text><circle cx=\"389.5\" cy=\"68.4\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"389.5\" y=\"58.4\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">180</text><circle cx=\"465.8\" cy=\"25.2\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"465.8\" y=\"15.2\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">240</text><text x=\"275.0\" y=\"236.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">เวลา (ชั่วโมง)</text></svg><figcaption>ระยะทางที่รถแล่นได้ในแต่ละช่วงเวลา</figcaption></figure>",
+  "answer": "1",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การอ่านและแปลความหมายกราฟ",
+  "text": "จากกราฟ ในช่วง 2 ชั่วโมงแรก รถแล่นด้วยความเร็วเฉลี่ยกี่กิโลเมตรต่อชั่วโมง<figure><svg viewBox=\"0 0 520 254\" width=\"520\" height=\"254\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"520\" height=\"254\" fill=\"#fff\"/><line x1=\"46\" y1=\"198.0\" x2=\"504\" y2=\"198.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"202.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">0</text><line x1=\"46\" y1=\"162.0\" x2=\"504\" y2=\"162.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"166.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">50</text><line x1=\"46\" y1=\"126.0\" x2=\"504\" y2=\"126.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"130.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">100</text><line x1=\"46\" y1=\"90.0\" x2=\"504\" y2=\"90.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"94.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">150</text><line x1=\"46\" y1=\"54.0\" x2=\"504\" y2=\"54.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"58.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">200</text><line x1=\"46\" y1=\"18.0\" x2=\"504\" y2=\"18.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"22.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">250</text><line x1=\"46\" y1=\"18\" x2=\"46\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><line x1=\"46\" y1=\"198\" x2=\"504\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><g transform=\"translate(13,108.0) rotate(-90)\"><text x=\"0.0\" y=\"0.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">ระยะทาง (กม.)</text></g><text x=\"84.2\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">0</text><text x=\"160.5\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">1</text><text x=\"236.8\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">2</text><text x=\"313.2\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">3</text><text x=\"389.5\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">4</text><text x=\"465.8\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">5</text><polyline points=\"84.2,198.0 160.5,154.8 236.8,111.6 313.2,111.6 389.5,68.4 465.8,25.2\" fill=\"none\" stroke=\"#1E3A5F\" stroke-width=\"2.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"84.2\" cy=\"198.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"84.2\" y=\"188.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">0</text><circle cx=\"160.5\" cy=\"154.8\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"160.5\" y=\"144.8\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">60</text><circle cx=\"236.8\" cy=\"111.6\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"236.8\" y=\"101.6\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">120</text><circle cx=\"313.2\" cy=\"111.6\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"313.2\" y=\"101.6\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">120</text><circle cx=\"389.5\" cy=\"68.4\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"389.5\" y=\"58.4\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">180</text><circle cx=\"465.8\" cy=\"25.2\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"465.8\" y=\"15.2\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">240</text><text x=\"275.0\" y=\"236.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">เวลา (ชั่วโมง)</text></svg><figcaption>ระยะทางที่รถแล่นได้ในแต่ละช่วงเวลา</figcaption></figure>",
+  "answer": "60",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การอ่านและแปลความหมายกราฟ",
+  "text": "จากกราฟ ในช่วงชั่วโมงที่ 4 ถึงชั่วโมงที่ 5 รถแล่นได้ระยะทางกี่กิโลเมตร<figure><svg viewBox=\"0 0 520 254\" width=\"520\" height=\"254\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"520\" height=\"254\" fill=\"#fff\"/><line x1=\"46\" y1=\"198.0\" x2=\"504\" y2=\"198.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"202.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">0</text><line x1=\"46\" y1=\"162.0\" x2=\"504\" y2=\"162.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"166.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">50</text><line x1=\"46\" y1=\"126.0\" x2=\"504\" y2=\"126.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"130.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">100</text><line x1=\"46\" y1=\"90.0\" x2=\"504\" y2=\"90.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"94.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">150</text><line x1=\"46\" y1=\"54.0\" x2=\"504\" y2=\"54.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"58.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">200</text><line x1=\"46\" y1=\"18.0\" x2=\"504\" y2=\"18.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"22.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">250</text><line x1=\"46\" y1=\"18\" x2=\"46\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><line x1=\"46\" y1=\"198\" x2=\"504\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><g transform=\"translate(13,108.0) rotate(-90)\"><text x=\"0.0\" y=\"0.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">ระยะทาง (กม.)</text></g><text x=\"84.2\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">0</text><text x=\"160.5\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">1</text><text x=\"236.8\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">2</text><text x=\"313.2\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">3</text><text x=\"389.5\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">4</text><text x=\"465.8\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">5</text><polyline points=\"84.2,198.0 160.5,154.8 236.8,111.6 313.2,111.6 389.5,68.4 465.8,25.2\" fill=\"none\" stroke=\"#1E3A5F\" stroke-width=\"2.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"84.2\" cy=\"198.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"84.2\" y=\"188.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">0</text><circle cx=\"160.5\" cy=\"154.8\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"160.5\" y=\"144.8\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">60</text><circle cx=\"236.8\" cy=\"111.6\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"236.8\" y=\"101.6\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">120</text><circle cx=\"313.2\" cy=\"111.6\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"313.2\" y=\"101.6\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">120</text><circle cx=\"389.5\" cy=\"68.4\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"389.5\" y=\"58.4\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">180</text><circle cx=\"465.8\" cy=\"25.2\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"465.8\" y=\"15.2\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">240</text><text x=\"275.0\" y=\"236.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">เวลา (ชั่วโมง)</text></svg><figcaption>ระยะทางที่รถแล่นได้ในแต่ละช่วงเวลา</figcaption></figure>",
+  "answer": "60",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การอ่านและแปลความหมายกราฟ",
+  "text": "จากกราฟ ถ้าใช้โทรศัพท์ 20 นาที ต้องจ่ายค่าบริการกี่บาท<figure><svg viewBox=\"0 0 520 254\" width=\"520\" height=\"254\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"520\" height=\"254\" fill=\"#fff\"/><line x1=\"46\" y1=\"198.0\" x2=\"504\" y2=\"198.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"202.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">0</text><line x1=\"46\" y1=\"162.0\" x2=\"504\" y2=\"162.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"166.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">100</text><line x1=\"46\" y1=\"126.0\" x2=\"504\" y2=\"126.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"130.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">200</text><line x1=\"46\" y1=\"90.0\" x2=\"504\" y2=\"90.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"94.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">300</text><line x1=\"46\" y1=\"54.0\" x2=\"504\" y2=\"54.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"58.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">400</text><line x1=\"46\" y1=\"18.0\" x2=\"504\" y2=\"18.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"22.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">500</text><line x1=\"46\" y1=\"18\" x2=\"46\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><line x1=\"46\" y1=\"198\" x2=\"504\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><g transform=\"translate(13,108.0) rotate(-90)\"><text x=\"0.0\" y=\"0.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">ค่าบริการ (บาท)</text></g><text x=\"91.8\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">0</text><text x=\"183.4\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">10</text><text x=\"275.0\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">20</text><text x=\"366.6\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">30</text><text x=\"458.2\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">40</text><polyline points=\"91.8,162.0 183.4,144.0 275.0,126.0 366.6,108.0 458.2,90.0\" fill=\"none\" stroke=\"#1E3A5F\" stroke-width=\"2.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"91.8\" cy=\"162.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"91.8\" y=\"152.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">100</text><circle cx=\"183.4\" cy=\"144.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"183.4\" y=\"134.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">150</text><circle cx=\"275.0\" cy=\"126.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"275.0\" y=\"116.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">200</text><circle cx=\"366.6\" cy=\"108.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"366.6\" y=\"98.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">250</text><circle cx=\"458.2\" cy=\"90.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"458.2\" y=\"80.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">300</text><text x=\"275.0\" y=\"236.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">เวลาที่ใช้ (นาที)</text></svg><figcaption>ค่าบริการโทรศัพท์ตามเวลาที่ใช้</figcaption></figure>",
+  "answer": "200",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การอ่านและแปลความหมายกราฟ",
+  "text": "จากกราฟ ค่าบริการพื้นฐาน (เมื่อยังไม่ได้ใช้โทรศัพท์เลย) เท่ากับกี่บาท<figure><svg viewBox=\"0 0 520 254\" width=\"520\" height=\"254\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"520\" height=\"254\" fill=\"#fff\"/><line x1=\"46\" y1=\"198.0\" x2=\"504\" y2=\"198.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"202.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">0</text><line x1=\"46\" y1=\"162.0\" x2=\"504\" y2=\"162.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"166.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">100</text><line x1=\"46\" y1=\"126.0\" x2=\"504\" y2=\"126.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"130.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">200</text><line x1=\"46\" y1=\"90.0\" x2=\"504\" y2=\"90.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"94.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">300</text><line x1=\"46\" y1=\"54.0\" x2=\"504\" y2=\"54.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"58.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">400</text><line x1=\"46\" y1=\"18.0\" x2=\"504\" y2=\"18.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"22.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">500</text><line x1=\"46\" y1=\"18\" x2=\"46\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><line x1=\"46\" y1=\"198\" x2=\"504\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><g transform=\"translate(13,108.0) rotate(-90)\"><text x=\"0.0\" y=\"0.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">ค่าบริการ (บาท)</text></g><text x=\"91.8\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">0</text><text x=\"183.4\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">10</text><text x=\"275.0\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">20</text><text x=\"366.6\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">30</text><text x=\"458.2\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">40</text><polyline points=\"91.8,162.0 183.4,144.0 275.0,126.0 366.6,108.0 458.2,90.0\" fill=\"none\" stroke=\"#1E3A5F\" stroke-width=\"2.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"91.8\" cy=\"162.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"91.8\" y=\"152.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">100</text><circle cx=\"183.4\" cy=\"144.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"183.4\" y=\"134.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">150</text><circle cx=\"275.0\" cy=\"126.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"275.0\" y=\"116.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">200</text><circle cx=\"366.6\" cy=\"108.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"366.6\" y=\"98.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">250</text><circle cx=\"458.2\" cy=\"90.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"458.2\" y=\"80.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">300</text><text x=\"275.0\" y=\"236.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">เวลาที่ใช้ (นาที)</text></svg><figcaption>ค่าบริการโทรศัพท์ตามเวลาที่ใช้</figcaption></figure>",
+  "answer": "100",
+  "level": "ง่าย"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การอ่านและแปลความหมายกราฟ",
+  "text": "จากกราฟ ค่าบริการเพิ่มขึ้นกี่บาทต่อการใช้โทรศัพท์ 1 นาที<figure><svg viewBox=\"0 0 520 254\" width=\"520\" height=\"254\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"520\" height=\"254\" fill=\"#fff\"/><line x1=\"46\" y1=\"198.0\" x2=\"504\" y2=\"198.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"202.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">0</text><line x1=\"46\" y1=\"162.0\" x2=\"504\" y2=\"162.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"166.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">100</text><line x1=\"46\" y1=\"126.0\" x2=\"504\" y2=\"126.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"130.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">200</text><line x1=\"46\" y1=\"90.0\" x2=\"504\" y2=\"90.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"94.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">300</text><line x1=\"46\" y1=\"54.0\" x2=\"504\" y2=\"54.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"58.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">400</text><line x1=\"46\" y1=\"18.0\" x2=\"504\" y2=\"18.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"22.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">500</text><line x1=\"46\" y1=\"18\" x2=\"46\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><line x1=\"46\" y1=\"198\" x2=\"504\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><g transform=\"translate(13,108.0) rotate(-90)\"><text x=\"0.0\" y=\"0.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">ค่าบริการ (บาท)</text></g><text x=\"91.8\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">0</text><text x=\"183.4\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">10</text><text x=\"275.0\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">20</text><text x=\"366.6\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">30</text><text x=\"458.2\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">40</text><polyline points=\"91.8,162.0 183.4,144.0 275.0,126.0 366.6,108.0 458.2,90.0\" fill=\"none\" stroke=\"#1E3A5F\" stroke-width=\"2.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"91.8\" cy=\"162.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"91.8\" y=\"152.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">100</text><circle cx=\"183.4\" cy=\"144.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"183.4\" y=\"134.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">150</text><circle cx=\"275.0\" cy=\"126.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"275.0\" y=\"116.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">200</text><circle cx=\"366.6\" cy=\"108.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"366.6\" y=\"98.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">250</text><circle cx=\"458.2\" cy=\"90.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"458.2\" y=\"80.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">300</text><text x=\"275.0\" y=\"236.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">เวลาที่ใช้ (นาที)</text></svg><figcaption>ค่าบริการโทรศัพท์ตามเวลาที่ใช้</figcaption></figure>",
+  "answer": "5",
+  "level": "กลาง"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การอ่านและแปลความหมายกราฟ",
+  "text": "จากกราฟ ถ้าจ่ายค่าบริการ 350 บาท จะใช้โทรศัพท์ไปกี่นาที<figure><svg viewBox=\"0 0 520 254\" width=\"520\" height=\"254\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"520\" height=\"254\" fill=\"#fff\"/><line x1=\"46\" y1=\"198.0\" x2=\"504\" y2=\"198.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"202.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">0</text><line x1=\"46\" y1=\"162.0\" x2=\"504\" y2=\"162.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"166.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">100</text><line x1=\"46\" y1=\"126.0\" x2=\"504\" y2=\"126.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"130.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">200</text><line x1=\"46\" y1=\"90.0\" x2=\"504\" y2=\"90.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"94.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">300</text><line x1=\"46\" y1=\"54.0\" x2=\"504\" y2=\"54.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"58.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">400</text><line x1=\"46\" y1=\"18.0\" x2=\"504\" y2=\"18.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"22.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">500</text><line x1=\"46\" y1=\"18\" x2=\"46\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><line x1=\"46\" y1=\"198\" x2=\"504\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><g transform=\"translate(13,108.0) rotate(-90)\"><text x=\"0.0\" y=\"0.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">ค่าบริการ (บาท)</text></g><text x=\"91.8\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">0</text><text x=\"183.4\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">10</text><text x=\"275.0\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">20</text><text x=\"366.6\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">30</text><text x=\"458.2\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">40</text><polyline points=\"91.8,162.0 183.4,144.0 275.0,126.0 366.6,108.0 458.2,90.0\" fill=\"none\" stroke=\"#1E3A5F\" stroke-width=\"2.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"91.8\" cy=\"162.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"91.8\" y=\"152.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">100</text><circle cx=\"183.4\" cy=\"144.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"183.4\" y=\"134.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">150</text><circle cx=\"275.0\" cy=\"126.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"275.0\" y=\"116.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">200</text><circle cx=\"366.6\" cy=\"108.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"366.6\" y=\"98.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">250</text><circle cx=\"458.2\" cy=\"90.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"458.2\" y=\"80.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">300</text><text x=\"275.0\" y=\"236.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">เวลาที่ใช้ (นาที)</text></svg><figcaption>ค่าบริการโทรศัพท์ตามเวลาที่ใช้</figcaption></figure>",
+  "answer": "50",
+  "level": "ยาก"
+ },
+ {
+  "unit": 8,
+  "uname": "กราฟและความสัมพันธ์เชิงเส้น",
+  "std": "ค 1.3 ม.1/2",
+  "tag": "ม.1",
+  "sub": "การอ่านและแปลความหมายกราฟ",
+  "text": "จากกราฟ ความสัมพันธ์นี้เขียนเป็นสมการได้ตรงกับข้อใด เมื่อ y เป็นค่าบริการ (บาท) และ x เป็นเวลาที่ใช้ (นาที)<figure><svg viewBox=\"0 0 520 254\" width=\"520\" height=\"254\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\"><rect x=\"0\" y=\"0\" width=\"520\" height=\"254\" fill=\"#fff\"/><line x1=\"46\" y1=\"198.0\" x2=\"504\" y2=\"198.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"202.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">0</text><line x1=\"46\" y1=\"162.0\" x2=\"504\" y2=\"162.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"166.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">100</text><line x1=\"46\" y1=\"126.0\" x2=\"504\" y2=\"126.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"130.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">200</text><line x1=\"46\" y1=\"90.0\" x2=\"504\" y2=\"90.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"94.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">300</text><line x1=\"46\" y1=\"54.0\" x2=\"504\" y2=\"54.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"58.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">400</text><line x1=\"46\" y1=\"18.0\" x2=\"504\" y2=\"18.0\" stroke=\"#d8d4c6\" stroke-width=\"1\"/><text x=\"39.0\" y=\"22.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"400\" fill=\"#5b5952\" text-anchor=\"end\">500</text><line x1=\"46\" y1=\"18\" x2=\"46\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><line x1=\"46\" y1=\"198\" x2=\"504\" y2=\"198\" stroke=\"#232323\" stroke-width=\"1.5\"/><g transform=\"translate(13,108.0) rotate(-90)\"><text x=\"0.0\" y=\"0.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">ค่าบริการ (บาท)</text></g><text x=\"91.8\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">0</text><text x=\"183.4\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">10</text><text x=\"275.0\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">20</text><text x=\"366.6\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">30</text><text x=\"458.2\" y=\"215.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11.5\" font-weight=\"400\" fill=\"#232323\" text-anchor=\"middle\">40</text><polyline points=\"91.8,162.0 183.4,144.0 275.0,126.0 366.6,108.0 458.2,90.0\" fill=\"none\" stroke=\"#1E3A5F\" stroke-width=\"2.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><circle cx=\"91.8\" cy=\"162.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"91.8\" y=\"152.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">100</text><circle cx=\"183.4\" cy=\"144.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"183.4\" y=\"134.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">150</text><circle cx=\"275.0\" cy=\"126.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"275.0\" y=\"116.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">200</text><circle cx=\"366.6\" cy=\"108.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"366.6\" y=\"98.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">250</text><circle cx=\"458.2\" cy=\"90.0\" r=\"4\" fill=\"#fff\" stroke=\"#1E3A5F\" stroke-width=\"2.2\"/><text x=\"458.2\" y=\"80.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#232323\" text-anchor=\"middle\">300</text><text x=\"275.0\" y=\"236.0\" font-family=\"'IBM Plex Sans Thai Looped', sans-serif\" font-size=\"11\" font-weight=\"600\" fill=\"#5b5952\" text-anchor=\"middle\">เวลาที่ใช้ (นาที)</text></svg><figcaption>ค่าบริการโทรศัพท์ตามเวลาที่ใช้</figcaption></figure><div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>y = 5x</span></div><div class=\"ch\"><b>ข.</b><span>y = 5x + 100</span></div><div class=\"ch\"><b>ค.</b><span>y = 100x + 5</span></div><div class=\"ch\"><b>ง.</b><span>y = x + 100</span></div></div>",
+  "answer": "ข",
+  "level": "ยาก"
+ }
+]
