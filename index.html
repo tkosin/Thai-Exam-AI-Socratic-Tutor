@@ -20,6 +20,8 @@
     --gold:#E0A83D;
     --card:#FFFFFF;
     --radius:12px;
+    --maxw:1180px;
+    --hh:150px;            /* header height, kept in sync by JS */
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;height:100%;}
@@ -41,7 +43,7 @@
     background:var(--navy); color:#fff;
     box-shadow:0 2px 10px rgba(0,0,0,.18);
   }
-  .header-inner{ max-width:760px; margin:0 auto; padding:16px 20px 0 20px; }
+  .header-inner{ max-width:var(--maxw); margin:0 auto; padding:16px 20px 0 20px; }
   .title-row{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap; }
   .eyebrow{ display:block; font-size:11.5px; font-weight:600; letter-spacing:1.5px; color:var(--gold); text-transform:uppercase; margin-bottom:3px;}
   .title-row h1{ margin:0; font-size:19px; font-weight:700; }
@@ -58,22 +60,66 @@
   .btn.gold:hover{ background:#eab654; }
   .btn:disabled{ opacity:.4; cursor:not-allowed; }
 
-  .progress-wrap{ max-width:760px; margin:0 auto; padding:0 20px 12px 20px; display:flex; align-items:center; gap:12px;}
+  .progress-wrap{ max-width:var(--maxw); margin:0 auto; padding:0 20px 14px 20px; display:flex; align-items:center; gap:12px;}
   .progress-track{ flex:1; height:7px; border-radius:6px; background:rgba(255,255,255,.18); overflow:hidden;}
   .progress-fill{ height:100%; width:0%; background:linear-gradient(90deg, var(--gold), #f3c56b); border-radius:6px; transition:width .2s ease;}
-  .progress-label{ font-size:12px; color:#dfe6ee; min-width:100px; text-align:right;}
+  .progress-label{ font-size:12px; color:#dfe6ee; min-width:150px; text-align:right;}
 
-  .tabs{ display:flex; gap:6px; overflow-x:auto; padding:0 20px 14px 20px; max-width:760px; margin:0 auto; scrollbar-width:thin;}
-  .tabs::-webkit-scrollbar{ height:5px;}
-  .tabs::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.25); border-radius:4px;}
-  .tab{ flex:0 0 auto; font-family:inherit; font-size:12.5px; font-weight:600; padding:6px 12px; border-radius:18px;
-        border:1px solid rgba(255,255,255,.25); background:transparent; color:#dbe3ec; cursor:pointer; transition:all .15s ease;}
-  .tab .n{ opacity:.7; font-weight:400; margin-left:4px;}
-  .tab:hover{ background:rgba(255,255,255,.1);}
-  .tab.active{ background:#fff; color:var(--navy-deep); border-color:#fff;}
+  /* ---------------- Layout: left filters + exam ---------------- */
+  .layout{
+    max-width:var(--maxw); margin:0 auto; padding:24px 20px 50px 20px;
+    display:flex; align-items:flex-start; gap:26px;
+  }
+
+  .sidebar{
+    flex:0 0 252px; align-self:flex-start;
+    position:sticky; top:calc(var(--hh) + 18px);
+    max-height:calc(100vh - var(--hh) - 40px); overflow-y:auto;
+    background:var(--card); border:1px solid #ece8dc; border-radius:var(--radius);
+    padding:16px 14px 14px 14px; box-shadow:0 3px 14px rgba(20,20,20,.06);
+    scrollbar-width:thin;
+  }
+  .sidebar::-webkit-scrollbar{ width:6px;}
+  .sidebar::-webkit-scrollbar-thumb{ background:#dcd7c8; border-radius:4px;}
+
+  .sb-title{
+    font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    color:var(--navy); display:flex; align-items:center; justify-content:space-between; gap:8px;
+    padding-bottom:10px; border-bottom:1px solid #efece1; margin-bottom:12px;
+  }
+  .sb-reset{
+    font-family:inherit; font-size:11px; font-weight:600; text-transform:none; letter-spacing:0;
+    color:var(--ink-soft); background:transparent; border:none; cursor:pointer; padding:2px 4px; border-radius:5px;
+  }
+  .sb-reset:hover{ color:var(--red); background:#f7eeec;}
+
+  .fgroup + .fgroup{ margin-top:15px; padding-top:13px; border-top:1px solid #efece1;}
+  .fhead{ font-size:10.5px; font-weight:700; letter-spacing:1.1px; text-transform:uppercase; color:#8f8a7c; margin-bottom:7px;}
+  .flist{ display:flex; flex-direction:column; gap:2px;}
+  .flist.scroll{ max-height:300px; overflow-y:auto; padding-right:2px; scrollbar-width:thin;}
+  .flist.scroll::-webkit-scrollbar{ width:5px;}
+  .flist.scroll::-webkit-scrollbar-thumb{ background:#dcd7c8; border-radius:4px;}
+
+  .fitem{
+    display:flex; align-items:center; gap:7px; width:100%; text-align:left;
+    font-family:inherit; font-size:13px; line-height:1.35; color:var(--ink);
+    background:transparent; border:1px solid transparent; border-radius:7px;
+    padding:6px 8px; cursor:pointer; transition:background .12s ease, color .12s ease;
+  }
+  .fitem:hover{ background:#f4f2ea;}
+  .fitem.active{ background:var(--navy); color:#fff; font-weight:600;}
+  .fitem .unum{ flex:0 0 auto; font-size:11px; font-weight:700; color:var(--navy); background:#eef1f4;
+                border-radius:4px; padding:1px 5px; min-width:19px; text-align:center;}
+  .fitem.active .unum{ background:rgba(255,255,255,.18); color:var(--gold);}
+  .fitem .fname{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .fitem .cnt{ flex:0 0 auto; font-size:11px; font-weight:600; color:var(--ink-soft);}
+  .fitem.active .cnt{ color:rgba(255,255,255,.75);}
+  .fitem.empty{ opacity:.4; cursor:not-allowed;}
+
+  .filter-toggle{ display:none; }
 
   /* ---------------- Main exam area ---------------- */
-  main{ max-width:760px; margin:0 auto; padding:26px 20px 50px 20px; }
+  main{ flex:1 1 auto; min-width:0; }
 
   .exam-card{
     position:relative; background:var(--card); border-radius:var(--radius);
@@ -97,13 +143,62 @@
   .frac .num{ border-bottom:1.4px solid var(--ink); padding:0 3px;}
   .frac .den{ padding:0 3px;}
 
-  .answer-space{ margin-top:16px;}
-  .answer-space label{ font-size:12.5px; color:var(--ink-soft); font-weight:600; display:block; margin-bottom:5px;}
-  .answer-space textarea{
-    width:100%; font-family:inherit; font-size:14px; border:1px solid #ddd8c9; border-radius:8px;
-    padding:9px 11px; resize:vertical; min-height:52px; background:#fdfcf8;
+  /* ---------------- work area: multi-line steps + final answer ---------------- */
+  .work-box{
+    margin-top:18px; background:#fdfcf8; border:1px solid #e7e3d6; border-radius:10px;
+    padding:14px 14px 13px 14px;
   }
-  .answer-space textarea:focus{ outline:2px solid var(--gold); border-color:transparent; }
+  .work-head{ font-size:12.5px; font-weight:700; color:var(--navy); margin-bottom:2px;}
+  .work-hint{ font-size:11.5px; color:var(--ink-soft); margin-bottom:10px;}
+
+  .work-lines{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px;}
+  .work-line{ display:flex; align-items:flex-start; gap:7px;}
+  .work-line .ln{
+    flex:0 0 20px; min-height:34px; display:flex; align-items:center; justify-content:flex-end;
+    font-size:11.5px; font-weight:700; color:#a8a294; padding-top:1px;
+  }
+  .work-line textarea{
+    flex:1 1 auto; min-width:0; font-family:inherit; font-size:14px; line-height:1.55;
+    border:1px solid #ddd8c9; border-radius:7px; padding:6px 10px; background:#fff;
+    resize:none; overflow:hidden; min-height:34px;
+  }
+  .work-line textarea:focus{ outline:2px solid var(--gold); border-color:transparent;}
+  .line-del{
+    flex:0 0 auto; width:28px; min-height:34px; border:none; background:transparent;
+    color:#c2bcac; font-size:17px; line-height:1; cursor:pointer; border-radius:6px;
+  }
+  .line-del:hover{ color:var(--red); background:#f7eeec;}
+  .line-del:disabled{ opacity:.25; cursor:not-allowed;}
+
+  .add-line{
+    margin-top:9px; margin-left:27px; font-family:inherit; font-size:12.5px; font-weight:600;
+    color:var(--navy); background:#eef1f4; border:1px dashed #c6d0da; border-radius:7px;
+    padding:6px 12px; cursor:pointer;
+  }
+  .add-line:hover{ background:#e2e8ee;}
+
+  .final-row{ margin-top:15px; padding-top:13px; border-top:1px dashed #e2ded0;}
+  .final-row > label{ font-size:12.5px; font-weight:700; color:var(--navy); display:block; margin-bottom:6px;}
+  .final-row .sub-hint{ font-weight:400; color:var(--ink-soft); font-size:11.5px;}
+  .final-input-row{ display:flex; gap:8px; flex-wrap:wrap;}
+  .final-input-row input{
+    flex:1 1 180px; min-width:0; font-family:inherit; font-size:15.5px; font-weight:600;
+    color:var(--navy-deep); background:#fff; border:1.5px solid #cfd8e0; border-radius:8px; padding:8px 12px;
+  }
+  .final-input-row input:focus{ outline:2px solid var(--gold); border-color:transparent;}
+  .check-btn{
+    flex:0 0 auto; font-family:inherit; font-size:13px; font-weight:700; cursor:pointer;
+    border-radius:8px; border:1px solid var(--navy); background:var(--navy); color:#fff; padding:8px 16px;
+  }
+  .check-btn:hover{ background:var(--navy-deep);}
+  .check-btn:active{ transform:scale(.97);}
+
+  .check-result{ display:none; margin-top:9px; padding:8px 12px; border-radius:7px; font-size:13.5px; font-weight:600;}
+  .check-result.show{ display:block;}
+  .check-result.ok{ background:#e4f2ec; color:#1d6b52; border-left:3px solid var(--green);}
+  .check-result.no{ background:#fbf1ef; color:#8d3325; border-left:3px solid var(--red);}
+  .check-result.manual{ background:#fdf6e6; color:#7a5a13; border-left:3px solid var(--gold);}
+  .check-result .rhint{ display:block; font-weight:400; font-size:12px; margin-top:3px; opacity:.85;}
 
   .qfoot{
     display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
@@ -191,9 +286,9 @@
   #printOnly{ display:none; }
 
   @media print{
-    header, .navrow, footer, .modal, .overlay{ display:none !important; }
+    header, .navrow, footer, .modal, .overlay, .sidebar{ display:none !important; }
     body{ background:#fff; }
-    main{ display:none !important; }
+    main, .layout{ display:none !important; }
     #printOnly{
       display:block !important; max-width:720px; margin:0 auto; padding:20px;
       font-family:'IBM Plex Sans Thai Looped', sans-serif;
@@ -206,10 +301,25 @@
     body.print-with-answers #printOnly .p-ans{ display:block; }
   }
 
+  /* tablet / mobile: sidebar becomes a collapsible panel above the exam */
+  @media (max-width:900px){
+    .layout{ flex-direction:column; gap:16px; padding-top:18px; }
+    .sidebar{
+      flex:none; width:100%; position:static; max-height:none;
+      display:none;
+    }
+    .sidebar.open{ display:block; }
+    .flist.scroll{ max-height:220px; }
+    .filter-toggle{ display:inline-flex; align-items:center; gap:5px; }
+  }
+
   @media (max-width:600px){
     .title-row h1{ font-size:17px; }
     .qtext{ font-size:15.5px; }
     .exam-card{ padding:22px 16px 18px 22px; }
+    .progress-label{ min-width:0; }
+    .add-line{ margin-left:0; }
+    .work-line .ln{ display:none; }
   }
 
   :focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
@@ -226,6 +336,7 @@
       </div>
     </div>
     <div class="header-actions">
+      <button class="btn filter-toggle" id="filterToggle" aria-expanded="false">🔍 ตัวกรอง</button>
       <button class="btn" id="overviewBtn">📋 ภาพรวมข้อสอบ</button>
       <button class="btn" id="printExamBtn">🖨️ พิมพ์ข้อสอบ (ไม่มีเฉลย)</button>
       <button class="btn gold" id="printAnswerBtn">🔒 พิมพ์เฉลย</button>
@@ -235,17 +346,33 @@
     <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     <div class="progress-label" id="progressLabel">ข้อ 1 / 200</div>
   </div>
-  <nav class="tabs" id="tabs"></nav>
 </header>
 
-<main>
-  <div class="exam-card" id="examCard"></div>
-  <div class="navrow">
-    <button class="navbtn" id="prevBtn" title="ข้อก่อนหน้า">‹</button>
-    <div class="navcenter" id="navCenter">ข้อ 1 / 200</div>
-    <button class="navbtn" id="nextBtn" title="ข้อถัดไป">›</button>
-  </div>
-</main>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-title">
+      <span>ตัวกรองข้อสอบ</span>
+      <button class="sb-reset" id="resetFilterBtn">ล้างตัวกรอง</button>
+    </div>
+    <div class="fgroup">
+      <div class="fhead">หน่วยการเรียนรู้</div>
+      <div class="flist" id="unitList"></div>
+    </div>
+    <div class="fgroup">
+      <div class="fhead">ประเภทข้อสอบ</div>
+      <div class="flist scroll" id="subList"></div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="exam-card" id="examCard"></div>
+    <div class="navrow">
+      <button class="navbtn" id="prevBtn" title="ข้อก่อนหน้า">‹</button>
+      <div class="navcenter" id="navCenter">ข้อ 1 / 200</div>
+      <button class="navbtn" id="nextBtn" title="ข้อถัดไป">›</button>
+    </div>
+  </main>
+</div>
 
 <footer>รหัสผ่านสำหรับดูเฉลยกำหนดไว้ล่วงหน้าโดยคุณครู/ผู้ปกครอง · ใช้ฟอนต์ IBM Plex Sans Thai Looped</footer>
 
@@ -297,15 +424,44 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "text": "
 
   const state = {
     activeUnit: 'all',
+    activeSub: 'all',
     index: 0,
     done: new Set(),
     revealed: new Set(),
     unlocked: false,
-    studentAnswers: {},
+    work: {},        // gidx -> array of solution lines
+    finalAns: {},    // gidx -> final answer string
+    checked: {},     // gidx -> {status:'ok'|'no'|'manual'}
     pendingAction: null
   };
 
-  const tabsEl = document.getElementById('tabs');
+  // ---------- persistence (work is easy to lose otherwise) ----------
+  const STORE_KEY = 'funnymath-m1-v1';
+  function saveState(){
+    try{
+      localStorage.setItem(STORE_KEY, JSON.stringify({
+        done: [...state.done], work: state.work, finalAns: state.finalAns, checked: state.checked
+      }));
+    }catch(e){/* storage unavailable / full — keep working in memory */}
+  }
+  function loadState(){
+    try{
+      const raw = localStorage.getItem(STORE_KEY);
+      if(!raw) return;
+      const d = JSON.parse(raw) || {};
+      if(Array.isArray(d.done)) d.done.forEach(i => state.done.add(i));
+      if(d.work && typeof d.work === 'object') state.work = d.work;
+      if(d.finalAns && typeof d.finalAns === 'object') state.finalAns = d.finalAns;
+      if(d.checked && typeof d.checked === 'object') state.checked = d.checked;
+    }catch(e){/* corrupt payload — start fresh */}
+  }
+  loadState();
+
+  const unitList = document.getElementById('unitList');
+  const subList = document.getElementById('subList');
+  const sidebar = document.getElementById('sidebar');
+  const filterToggle = document.getElementById('filterToggle');
+  const resetFilterBtn = document.getElementById('resetFilterBtn');
   const examCard = document.getElementById('examCard');
   const progressFill = document.getElementById('progressFill');
   const progressLabel = document.getElementById('progressLabel');
@@ -325,28 +481,79 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "text": "
   const printExamBtn = document.getElementById('printExamBtn');
   const printAnswerBtn = document.getElementById('printAnswerBtn');
 
+  const subOf = q => q.sub || q.uname;
+
   function getFiltered(){
-    if(state.activeUnit === 'all') return QUESTIONS.map((q,i)=>({q, gidx:i}));
-    return QUESTIONS.map((q,i)=>({q,gidx:i})).filter(item => item.q.unit === state.activeUnit);
+    return QUESTIONS.map((q,i)=>({q, gidx:i})).filter(item =>
+      (state.activeUnit === 'all' || item.q.unit === state.activeUnit) &&
+      (state.activeSub === 'all' || subOf(item.q) === state.activeSub)
+    );
   }
 
-  function buildTabs(){
-    tabsEl.innerHTML = '';
-    const allTab = document.createElement('button');
-    allTab.className = 'tab' + (state.activeUnit==='all' ? ' active' : '');
-    allTab.innerHTML = `ทั้งหมด<span class="n">(${QUESTIONS.length})</span>`;
-    allTab.onclick = () => { state.activeUnit='all'; state.index=0; renderAll(); };
-    tabsEl.appendChild(allTab);
+  // sub-topics available under the currently selected unit
+  function subEntries(){
+    const m = new Map();
+    QUESTIONS.forEach(q => {
+      if(state.activeUnit !== 'all' && q.unit !== state.activeUnit) return;
+      const k = subOf(q);
+      m.set(k, (m.get(k) || 0) + 1);
+    });
+    return [...m.entries()];
+  }
+
+  function makeFilterItem({label, count, active, unum, title, onClick}){
+    const b = document.createElement('button');
+    b.className = 'fitem' + (active ? ' active' : '');
+    b.title = title || label;
+    b.innerHTML =
+      (unum != null ? `<span class="unum">${unum}</span>` : '') +
+      `<span class="fname">${label}</span><span class="cnt">${count}</span>`;
+    b.onclick = onClick;
+    return b;
+  }
+
+  function buildSidebar(){
+    // --- units ---
+    unitList.innerHTML = '';
+    unitList.appendChild(makeFilterItem({
+      label:'ทุกหน่วย', count:QUESTIONS.length, active:state.activeUnit==='all',
+      onClick:() => { state.activeUnit='all'; state.activeSub='all'; state.index=0; renderAll(); }
+    }));
     unitIds.forEach(uid => {
-      const count = QUESTIONS.filter(q=>q.unit===uid).length;
-      const btn = document.createElement('button');
-      btn.className = 'tab' + (state.activeUnit===uid ? ' active' : '');
-      btn.innerHTML = `หน่วย ${uid}<span class="n">(${count})</span>`;
-      btn.title = UNIT_NAMES[uid];
-      btn.onclick = () => { state.activeUnit = uid; state.index = 0; renderAll(); };
-      tabsEl.appendChild(btn);
+      unitList.appendChild(makeFilterItem({
+        label:UNIT_NAMES[uid], unum:uid, title:`หน่วย ${uid}: ${UNIT_NAMES[uid]}`,
+        count:QUESTIONS.filter(q=>q.unit===uid).length, active:state.activeUnit===uid,
+        onClick:() => {
+          state.activeUnit = uid;
+          state.activeSub = 'all';
+          state.index = 0;
+          renderAll();
+        }
+      }));
+    });
+
+    // --- sub-topics of the selected unit ---
+    const entries = subEntries();
+    subList.innerHTML = '';
+    subList.appendChild(makeFilterItem({
+      label:'ทุกประเภท', count:entries.reduce((s,[,c])=>s+c,0), active:state.activeSub==='all',
+      onClick:() => { state.activeSub='all'; state.index=0; renderAll(); }
+    }));
+    entries.forEach(([name, count]) => {
+      subList.appendChild(makeFilterItem({
+        label:name, count, active:state.activeSub===name,
+        onClick:() => { state.activeSub = name; state.index = 0; renderAll(); }
+      }));
     });
   }
+
+  resetFilterBtn.onclick = () => {
+    state.activeUnit = 'all'; state.activeSub = 'all'; state.index = 0; renderAll();
+  };
+  filterToggle.onclick = () => {
+    const open = sidebar.classList.toggle('open');
+    filterToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  };
 
   function updateProgress(list){
     const total = list.length;
@@ -355,6 +562,170 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "text": "
     progressFill.style.width = pct + '%';
     progressLabel.textContent = `ข้อ ${state.index+1} / ${total} · ทำแล้ว ${doneCount}`;
   }
+
+  // ---------- answer-key comparison ----------
+  // Words that carry no mathematical value: units, labels and lead-ins that a
+  // student may or may not type. Stripped from both sides before comparing.
+  const NOISE_WORDS = [
+    'ตารางเซนติเมตร','ลูกบาศก์เซนติเมตร','อัตราการเปลี่ยนแปลง','ค่าเฉลี่ยเลขคณิต','เปอร์เซ็นต์',
+    'ตร.ซม.','ลบ.ซม.','ตร.ม.','ลบ.ม.','เซนติเมตร','กิโลเมตร','มิลลิเมตร','กิโลกรัม','ชั่วโมง',
+    'จตุภาคที่','ค่าเฉลี่ย','มัธยฐาน','ฐานนิยม','สตางค์','สัปดาห์','วินาที','ประมาณ','เท่ากับ',
+    'ร้อยละ','คำตอบ','พิสัย','หน่วย','องศา','นาที','เดือน','กล่อง','กรัม','ลิตร','เมตร','บาท',
+    'ซม.','ลบ.','ตร.','กม.','มม.','กก.','ตอบ','คน','ปี','วัน','ด้าม','เล่ม','ชิ้น','อัน','ใบ','ตัว'
+  ];
+  const NOISE_RE = new RegExp(
+    NOISE_WORDS.slice().sort((a,b)=>b.length-a.length)
+      .map(w => w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|'), 'g');
+
+  function htmlToText(html){
+    return String(html)
+      .replace(/<span[^>]*class="frac"[^>]*>\s*<span[^>]*class="num"[^>]*>([\s\S]*?)<\/span>\s*<span[^>]*class="den"[^>]*>([\s\S]*?)<\/span>\s*<\/span>/gi, '$1/$2')
+      .replace(/<sup>([\s\S]*?)<\/sup>/gi, '^$1')
+      .replace(/<br\s*\/?>/gi, ' ')
+      .replace(/<[^>]*>/g, '')
+      .replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+      .replace(/\s+/g,' ').trim();
+  }
+
+  function norm(s){
+    return htmlToText(s)
+      .replace(NOISE_RE, ' ')
+      .replace(/[%°]/g, ' ')
+      .replace(/[–—−]/g, '-')
+      .replace(/[×✕✖]/g, '*')
+      .replace(/÷/g, '/')
+      .replace(/[,\s]/g, '')
+      .toLowerCase();
+  }
+
+  // like norm(), but keeps separators so several values stay distinguishable
+  function normLoose(s){
+    return htmlToText(s)
+      .replace(NOISE_RE, ' ')
+      .replace(/[%°]/g, ' ')
+      .replace(/[–—−]/g, '-')
+      .replace(/÷/g, '/')
+      .replace(/(\d),(?=\d{3}(\D|$))/g, '$1')   // 1,200 -> 1200
+      .toLowerCase();
+  }
+
+  function toNumber(s){
+    const t = String(s).replace(/[()]/g,'');
+    const f = t.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)$/);
+    if(f){ const d = parseFloat(f[2]); return d ? parseFloat(f[1]) / d : NaN; }
+    if(/^-?\d+(?:\.\d+)?$/.test(t)) return parseFloat(t);
+    return NaN;
+  }
+  function numEq(a,b){
+    if(!isFinite(a) || !isFinite(b)) return false;
+    const d = Math.abs(a-b);
+    return d <= 1e-9 || d / Math.max(Math.abs(a), Math.abs(b), 1e-9) < 1e-4;
+  }
+
+  function keyCandidates(rawAnswer){
+    const out = new Set();
+    const full = htmlToText(rawAnswer);
+    out.add(full);
+    full.split(/\s*หรือ\s*/).filter(Boolean).forEach(alt => {
+      out.add(alt);
+      const parts = alt.split('=');
+      if(parts.length > 1) out.add(parts[parts.length-1]);   // "x = 9" -> "9"
+    });
+    return [...out].map(norm).filter(Boolean);
+  }
+
+  // 'ok' | 'no' | 'manual' | 'empty'
+  function checkAnswer(rawAnswer, input){
+    const student = norm(input);
+    if(!student) return { status:'empty' };
+
+    const text = htmlToText(rawAnswer);
+    const compact = text.replace(/\s/g,'');
+    const descriptive = compact.length > 40 || !/\d/.test(compact);
+
+    // answers made of several values, e.g. "ค่าเฉลี่ย = 6, มัธยฐาน = 6, ฐานนิยม = 6"
+    if(!descriptive && (text.match(/=/g) || []).length >= 2){
+      const keyNums = text.split(/[,;]/).map(p => toNumber(norm(p.split('=').pop()))).filter(n => isFinite(n));
+      const stuNums = (normLoose(input).match(/-?\d+(?:\.\d+)?(?:\/\d+(?:\.\d+)?)?/g) || []).map(toNumber);
+      if(keyNums.length >= 2){
+        const ok = keyNums.length === stuNums.length && keyNums.every((v,i) => numEq(v, stuNums[i]));
+        return { status: ok ? 'ok' : 'no' };
+      }
+    }
+
+    for(const c of keyCandidates(rawAnswer)){
+      if(student === c) return { status:'ok' };
+      if(numEq(toNumber(student), toNumber(c))) return { status:'ok' };
+    }
+    return { status: descriptive ? 'manual' : 'no' };
+  }
+
+  // ---------- solution lines ----------
+  function autoGrow(ta){
+    ta.style.height = 'auto';
+    ta.style.height = (ta.scrollHeight + 2) + 'px';
+  }
+
+  function renderWorkLines(gidx, focusIdx){
+    const lines = state.work[gidx];
+    const ol = document.getElementById('workLines');
+    if(!ol) return;
+    ol.innerHTML = '';
+    lines.forEach((val, i) => {
+      const li = document.createElement('li');
+      li.className = 'work-line';
+
+      const num = document.createElement('span');
+      num.className = 'ln';
+      num.textContent = (i+1) + '.';
+
+      const ta = document.createElement('textarea');
+      ta.rows = 1;
+      ta.value = val;
+      ta.setAttribute('aria-label', `วิธีทำ บรรทัดที่ ${i+1}`);
+      if(i === 0) ta.placeholder = 'ขั้นตอนที่ 1 …';
+      ta.oninput = () => { lines[i] = ta.value; autoGrow(ta); saveState(); };
+      ta.onkeydown = (e) => {
+        if(e.key === 'Enter' && !e.shiftKey){
+          e.preventDefault();
+          lines.splice(i+1, 0, '');
+          renderWorkLines(gidx, i+1);
+          saveState();
+        } else if(e.key === 'Backspace' && ta.value === '' && lines.length > 1){
+          e.preventDefault();
+          lines.splice(i, 1);
+          renderWorkLines(gidx, Math.max(0, i-1));
+          saveState();
+        }
+      };
+
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'line-del';
+      del.title = 'ลบบรรทัดนี้';
+      del.textContent = '×';
+      del.disabled = lines.length <= 1;
+      del.onclick = () => {
+        lines.splice(i, 1);
+        if(!lines.length) lines.push('');
+        renderWorkLines(gidx, Math.max(0, i-1));
+        saveState();
+      };
+
+      li.append(num, ta, del);
+      ol.appendChild(li);
+      autoGrow(ta);
+    });
+
+    if(focusIdx != null){
+      const tas = ol.querySelectorAll('textarea');
+      if(tas[focusIdx]){ tas[focusIdx].focus(); autoGrow(tas[focusIdx]); }
+    }
+  }
+
+  const escAttr = s => String(s).replace(/[&<>"']/g, c => (
+    {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
+  ));
 
   function renderExamCard(list){
     const item = list[state.index];
@@ -365,7 +736,9 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "text": "
     const { q, gidx } = item;
     const isDone = state.done.has(gidx);
     const isRevealed = state.revealed.has(gidx);
-    const savedAnswer = state.studentAnswers[gidx] || '';
+
+    if(!Array.isArray(state.work[gidx]) || !state.work[gidx].length) state.work[gidx] = [''];
+    const finalVal = state.finalAns[gidx] || '';
 
     examCard.className = 'exam-card' + (isDone ? ' done' : '');
     examCard.innerHTML = `
@@ -374,9 +747,19 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "text": "
         <span class="qtag">${q.sub || q.uname}</span>
       </div>
       <div class="qtext">${q.text}</div>
-      <div class="answer-space">
-        <label for="studentInput">คำตอบของคุณ (ไม่บังคับ เขียนเพื่อทบทวนก่อนดูเฉลย)</label>
-        <textarea id="studentInput" placeholder="พิมพ์วิธีทำหรือคำตอบของคุณที่นี่...">${savedAnswer}</textarea>
+      <div class="work-box">
+        <div class="work-head">วิธีทำ</div>
+        <div class="work-hint">เขียนได้หลายบรรทัด · กด Enter เพื่อขึ้นบรรทัดใหม่ (Shift+Enter = ขึ้นบรรทัดในช่องเดิม)</div>
+        <ol class="work-lines" id="workLines"></ol>
+        <button class="add-line" type="button" id="addLineBtn">+ เพิ่มบรรทัด</button>
+        <div class="final-row">
+          <label for="finalInput">คำตอบสุดท้าย <span class="sub-hint">— บรรทัดนี้ใช้ตรวจกับเฉลย</span></label>
+          <div class="final-input-row">
+            <input type="text" id="finalInput" placeholder="กรอกเฉพาะคำตอบ เช่น -41" value="${escAttr(finalVal)}">
+            <button class="check-btn" type="button" id="checkBtn">ตรวจคำตอบ</button>
+          </div>
+          <div class="check-result" id="checkResult"></div>
+        </div>
       </div>
       <div class="answer ${isRevealed ? 'show' : ''}" id="answerBox">
         <span class="lbl">เฉลย:</span>${q.answer}
@@ -393,14 +776,63 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "text": "
       </div>
     `;
 
-    document.getElementById('studentInput').oninput = (e) => {
-      state.studentAnswers[gidx] = e.target.value;
+    renderWorkLines(gidx);
+
+    document.getElementById('addLineBtn').onclick = () => {
+      state.work[gidx].push('');
+      renderWorkLines(gidx, state.work[gidx].length - 1);
+      saveState();
     };
 
-    document.getElementById('doneCheck').onchange = (e) => {
+    const finalInput = document.getElementById('finalInput');
+    const checkResult = document.getElementById('checkResult');
+    const doneCheck = document.getElementById('doneCheck');
+
+    const MSG = {
+      ok:     ['ok',     '✅ ถูกต้อง!', 'ทำเครื่องหมาย “ทำแล้ว” ให้อัตโนมัติแล้ว'],
+      no:     ['no',     '❌ ยังไม่ถูก ลองทบทวนวิธีทำอีกครั้ง', 'ถ้าติดจริง ๆ กด “ดูเฉลย” (ต้องใส่รหัสผ่าน)'],
+      manual: ['manual', 'ℹ️ ข้อนี้เป็นคำตอบเชิงอธิบาย ตรวจอัตโนมัติไม่ได้', 'กด “ดูเฉลย” แล้วเทียบกับคำตอบของคุณเอง'],
+      empty:  ['manual', 'กรอกคำตอบสุดท้ายก่อนกดตรวจ', '']
+    };
+    function paintResult(status){
+      const [cls, msg, hint] = MSG[status] || MSG.empty;
+      checkResult.className = 'check-result show ' + cls;
+      checkResult.innerHTML = msg + (hint ? `<span class="rhint">${hint}</span>` : '');
+    }
+    function clearResult(){
+      checkResult.className = 'check-result';
+      checkResult.innerHTML = '';
+    }
+    function doCheck(){
+      const status = checkAnswer(q.answer, finalInput.value).status;
+      paintResult(status);
+      if(status === 'empty') return;
+      state.checked[gidx] = status;
+      if(status === 'ok' && !state.done.has(gidx)){
+        state.done.add(gidx);
+        doneCheck.checked = true;
+        examCard.classList.add('done');
+        updateProgress(list);
+      }
+      saveState();
+    }
+
+    if(state.checked[gidx]) paintResult(state.checked[gidx]);
+
+    finalInput.oninput = () => {
+      state.finalAns[gidx] = finalInput.value;
+      delete state.checked[gidx];
+      clearResult();
+      saveState();
+    };
+    finalInput.onkeydown = (e) => { if(e.key === 'Enter'){ e.preventDefault(); doCheck(); } };
+    document.getElementById('checkBtn').onclick = doCheck;
+
+    doneCheck.onchange = (e) => {
       if(e.target.checked) state.done.add(gidx); else state.done.delete(gidx);
       examCard.classList.toggle('done', e.target.checked);
       updateProgress(list);
+      saveState();
     };
 
     document.getElementById('revealBtn').onclick = () => {
@@ -429,7 +861,8 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "text": "
   }
 
   function renderAll(){
-    buildTabs();
+    buildSidebar();
+    if(window.innerWidth <= 900) sidebar.classList.remove('open');
     const list = getFiltered();
     if(state.index >= list.length) state.index = Math.max(0, list.length - 1);
     renderExamCard(list);
@@ -448,15 +881,30 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "text": "
 
   document.addEventListener('keydown', (e) => {
     if(pwOverlay.classList.contains('show') || overviewOverlay.classList.contains('show')) return;
-    if(document.activeElement && document.activeElement.tagName === 'TEXTAREA') return;
+    const tag = document.activeElement && document.activeElement.tagName;
+    if(tag === 'TEXTAREA' || tag === 'INPUT') return;
     if(e.key === 'ArrowLeft') prevBtn.click();
     if(e.key === 'ArrowRight') nextBtn.click();
   });
 
+  // keep the sticky sidebar clear of the sticky header
+  const headerEl = document.querySelector('header');
+  function syncHeaderHeight(){
+    document.documentElement.style.setProperty('--hh', headerEl.offsetHeight + 'px');
+  }
+  window.addEventListener('resize', syncHeaderHeight);
+  window.addEventListener('load', syncHeaderHeight);
+  syncHeaderHeight();
+
+  function filterLabel(){
+    const u = state.activeUnit === 'all' ? 'ทุกหน่วย' : `หน่วยที่ ${state.activeUnit}: ${UNIT_NAMES[state.activeUnit]}`;
+    return u + (state.activeSub === 'all' ? '' : ` · ${state.activeSub}`);
+  }
+
   // ---------- overview modal ----------
   function openOverview(){
     const list = getFiltered();
-    overviewSub.textContent = `หน่วยที่เลือก: ${state.activeUnit === 'all' ? 'ทั้งหมด' : UNIT_NAMES[state.activeUnit]} (${list.length} ข้อ)`;
+    overviewSub.textContent = `${filterLabel()} · ${list.length} ข้อ`;
     gridNav.innerHTML = '';
     list.forEach((item, i) => {
       const b = document.createElement('button');
@@ -505,7 +953,8 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "text": "
   // ---------- print ----------
   function buildPrintView(list){
     const printOnly = document.getElementById('printOnly');
-    const unitLabel = state.activeUnit === 'all' ? 'ข้อสอบชุดเต็ม (9 หน่วยการเรียนรู้)' : `หน่วยที่ ${state.activeUnit}: ${UNIT_NAMES[state.activeUnit]}`;
+    const unitLabel = (state.activeUnit === 'all' && state.activeSub === 'all')
+      ? 'ข้อสอบชุดเต็ม (9 หน่วยการเรียนรู้)' : filterLabel();
     let html = `<h2>ข้อสอบคณิตศาสตร์ ม.1</h2><div class="p-sub">${unitLabel} · จำนวน ${list.length} ข้อ · ชื่อ-นามสกุล.......................................... เลขที่..........</div>`;
     list.forEach((item) => {
       html += `<div class="p-card"><span class="p-qnum">${item.gidx+1}.</span>${item.q.text}
