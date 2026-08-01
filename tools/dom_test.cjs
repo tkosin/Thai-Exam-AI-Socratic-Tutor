@@ -91,6 +91,37 @@ for (let u = 1; u <= UNITS; u++) {
 }
 click($('#resetFilterBtn'));
 
+// ---------- กลุ่มตัวกรองพับ/กางได้ ----------
+const head = k => d.querySelector('#group-' + k + ' .fhead');
+const listOf = k => d.querySelector('#group-' + k + ' .flist');
+const isOpen = k => !d.querySelector('#group-' + k).classList.contains('collapsed');
+chk('หัวกลุ่มทุกกลุ่มเป็นปุ่มกดได้', ['unit', 'sub', 'level', 'tag']
+    .every(k => head(k) && head(k).tagName === 'BUTTON'), '');
+chk('หัวกลุ่มบอกสถานะด้วย aria-expanded', head('unit').getAttribute('aria-expanded') === 'true'
+    && head('level').getAttribute('aria-expanded') === 'false',
+    head('unit').getAttribute('aria-expanded') + '/' + head('level').getAttribute('aria-expanded'));
+chk('หัวกลุ่มชี้ไปยังรายการที่ควบคุม',
+    head('sub').getAttribute('aria-controls') === listOf('sub').id, '');
+chk('ค่าเริ่มต้น: หน่วยและประเภทกางอยู่', isOpen('unit') && isOpen('sub'), '');
+chk('ค่าเริ่มต้น: ระดับและขอบเขตพับอยู่', !isOpen('level') && !isOpen('tag'), '');
+chk('กลุ่มที่พับไม่แสดงรายการ', !!d.querySelector('#group-level.collapsed .flist'), '');
+click(head('level'));
+chk('กดหัวกลุ่มแล้วกางออก', isOpen('level') && head('level').getAttribute('aria-expanded') === 'true', '');
+chk('กางแล้วเห็นรายการครบ', items('levelList').length === 4, items('levelList').length);
+click(head('unit'));
+chk('กดอีกกลุ่มแล้วพับได้', !isOpen('unit'), '');
+chk('พับกลุ่มหน่วยไม่กระทบกลุ่มอื่น', isOpen('sub') && isOpen('level'), '');
+// กลุ่มที่พับอยู่ต้องยังบอกได้ว่ามีตัวกรองทำงานอยู่
+click(head('unit'));
+click(items('unitList')[1]);
+click(head('unit'));
+chk('กลุ่มที่พับแสดงค่าที่เลือกไว้', !isOpen('unit') && !!head('unit').querySelector('.fsel'),
+    head('unit').textContent.trim());
+click($('#resetFilterBtn'));
+chk('ล้างตัวกรองแล้วป้ายค่าที่เลือกหายไป', !head('unit').querySelector('.fsel'), '');
+chk('ล้างตัวกรองไม่ไปกางกลุ่มที่พับไว้', !isOpen('unit'), '');
+click(head('unit'));   // กลับสู่สภาพเดิมก่อนทดสอบส่วนอื่น
+
 // ---------- ช่องวิธีทำหลายบรรทัด ----------
 chk('เริ่มต้นมี 1 บรรทัด', $$('#workLines .work-line').length === 1);
 chk('ปุ่มลบปิดใช้งานเมื่อมีบรรทัดเดียว', $$('.line-del')[0].disabled);
@@ -137,9 +168,11 @@ chk('กลับมาแล้วคำตอบยังอยู่', $('#fi
 chk('กลับมาแล้วผลตรวจยังอยู่', res().className.includes('ok'));
 
 // ---------- บันทึกลง localStorage ----------
+const PROGRESS = /^funnymath-m1-v\d+$/;          // คีย์ความก้าวหน้า (แยกจากคีย์ความชอบส่วนตัว)
 const keys = Object.keys(w.localStorage);
-chk('บันทึกด้วยคีย์ที่มีเลขเวอร์ชัน', keys.some(k => /^funnymath-m1-v\d+$/.test(k)), keys.join());
-const saved = JSON.parse(w.localStorage.getItem(keys.find(k => k.startsWith('funnymath'))) || '{}');
+chk('บันทึกด้วยคีย์ที่มีเลขเวอร์ชัน', keys.some(k => PROGRESS.test(k)), keys.join());
+chk('ความชอบส่วนตัวเก็บแยกคีย์', keys.some(k => k === 'funnymath-ui-v1'), keys.join());
+const saved = JSON.parse(w.localStorage.getItem(keys.find(k => PROGRESS.test(k))) || '{}');
 chk('บันทึกข้อที่ทำแล้วและคำตอบ',
     Array.isArray(saved.done) && saved.done.length === 1 && !!saved.finalAns,
     JSON.stringify(saved).slice(0, 90));
@@ -156,7 +189,7 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
 
 // ---------- โหลดข้อมูลที่บันทึกไว้กลับมาได้ ----------
 {
-  const key = Object.keys(w.localStorage).find(k => k.startsWith('funnymath'));
+  const key = Object.keys(w.localStorage).find(k => PROGRESS.test(k));
   const r = load({ key, value: { done: [0, 5], work: { 0: ['a', 'b', 'c'] }, finalAns: { 0: '42' }, checked: {} } });
   const rd = s => r.d.querySelector(s);
   chk('รีเฟรชแล้วกู้วิธีทำกลับมา', r.d.querySelectorAll('#workLines .work-line').length === 3,
@@ -166,6 +199,15 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
       rd('#progressLabel').textContent);
   chk('ข้อมูลที่บันทึกเสียหายก็ยังเปิดหน้าได้',
       !!load({ key, value: 'ไม่ใช่ JSON' }).d.querySelector('#finalInput'));
+
+  // การพับ/กางกลุ่มตัวกรองต้องอยู่ข้ามการรีเฟรช และไม่พังเมื่อข้อมูลเสียหาย
+  const ui = load({ key: 'funnymath-ui-v1', value: { collapsed: { unit: true, sub: true, level: false, tag: false } } });
+  const cls = k => r2 => r2.d.querySelector('#group-' + k).classList.contains('collapsed');
+  chk('รีเฟรชแล้วจำการพับ/กางไว้',
+      cls('unit')(ui) && cls('sub')(ui) && !cls('level')(ui) && !cls('tag')(ui), '');
+  const uiBad = load({ key: 'funnymath-ui-v1', value: 'ไม่ใช่ JSON' });
+  chk('ความชอบที่เสียหายกลับไปใช้ค่าเริ่มต้น',
+      !cls('unit')(uiBad) && cls('level')(uiBad), '');
 }
 
 // ---------- ผลลัพธ์ ----------

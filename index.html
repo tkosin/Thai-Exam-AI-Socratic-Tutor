@@ -93,8 +93,29 @@
   }
   .sb-reset:hover{ color:var(--red); background:#f7eeec;}
 
-  .fgroup + .fgroup{ margin-top:15px; padding-top:13px; border-top:1px solid #efece1;}
-  .fhead{ font-size:10.5px; font-weight:700; letter-spacing:1.1px; text-transform:uppercase; color:#8f8a7c; margin-bottom:7px;}
+  .fgroup + .fgroup{ margin-top:11px; padding-top:11px; border-top:1px solid #efece1;}
+  .fhead{
+    display:flex; align-items:center; gap:6px; width:100%;
+    font-family:inherit; font-size:10.5px; font-weight:700; letter-spacing:1.1px;
+    text-transform:uppercase; color:#8f8a7c; text-align:left;
+    background:transparent; border:none; border-radius:6px;
+    padding:5px 6px; margin:0 0 5px -6px; cursor:pointer;
+  }
+  .fhead:hover{ background:#f4f2ea; color:var(--navy);}
+  .fhead .chev{
+    flex:0 0 auto; font-size:9px; color:#b3ada0; transition:transform .15s ease;
+    transform:rotate(90deg);            /* ▸ ชี้ลงเมื่อกางอยู่ */
+  }
+  .fgroup.collapsed .fhead .chev{ transform:rotate(0deg); }
+  .fgroup.collapsed .flist{ display:none; }
+  .fhead .fname-g{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .fhead .fcount{ flex:0 0 auto; font-weight:600; letter-spacing:0; color:#b3ada0;}
+  /* ค่าที่เลือกอยู่ ยังเห็นได้แม้กลุ่มถูกพับ */
+  .fhead .fsel{
+    flex:0 0 auto; max-width:96px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+    font-size:10.5px; font-weight:700; letter-spacing:0; text-transform:none;
+    color:#fff; background:var(--navy); border-radius:10px; padding:1px 8px;
+  }
   .flist{ display:flex; flex-direction:column; gap:2px;}
   .flist.scroll{ max-height:300px; overflow-y:auto; padding-right:2px; scrollbar-width:thin;}
   .flist.scroll::-webkit-scrollbar{ width:5px;}
@@ -368,22 +389,10 @@
       <span>ตัวกรองข้อสอบ</span>
       <button class="sb-reset" id="resetFilterBtn">ล้างตัวกรอง</button>
     </div>
-    <div class="fgroup">
-      <div class="fhead">หน่วยการเรียนรู้</div>
-      <div class="flist" id="unitList"></div>
-    </div>
-    <div class="fgroup">
-      <div class="fhead">ประเภทข้อสอบ</div>
-      <div class="flist scroll" id="subList"></div>
-    </div>
-    <div class="fgroup">
-      <div class="fhead">ระดับความยาก</div>
-      <div class="flist" id="levelList"></div>
-    </div>
-    <div class="fgroup">
-      <div class="fhead">ขอบเขตเนื้อหา</div>
-      <div class="flist" id="tagList"></div>
-    </div>
+    <div class="fgroup" id="group-unit"><div class="flist" id="unitList"></div></div>
+    <div class="fgroup" id="group-sub"><div class="flist scroll" id="subList"></div></div>
+    <div class="fgroup" id="group-level"><div class="flist" id="levelList"></div></div>
+    <div class="fgroup" id="group-tag"><div class="flist" id="tagList"></div></div>
   </aside>
 
   <main>
@@ -488,6 +497,22 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "sub": "�
   }
   loadState();
 
+  // การพับ/กางกลุ่มตัวกรองเป็นความชอบส่วนตัว ไม่ใช่ความก้าวหน้า จึงเก็บแยกคีย์
+  // เพื่อไม่ให้หายไปตอนเพิ่มเลขเวอร์ชันของ STORE_KEY เมื่อเลขข้อขยับ
+  const UI_KEY = 'funnymath-ui-v1';
+  const collapsed = { unit:false, sub:false, level:true, tag:true };
+  try{
+    const d = JSON.parse(localStorage.getItem(UI_KEY) || '{}');
+    if(d && typeof d.collapsed === 'object'){
+      Object.keys(collapsed).forEach(k => {
+        if(typeof d.collapsed[k] === 'boolean') collapsed[k] = d.collapsed[k];
+      });
+    }
+  }catch(e){/* corrupt payload — ใช้ค่าเริ่มต้น */}
+  function saveUI(){
+    try{ localStorage.setItem(UI_KEY, JSON.stringify({ collapsed })); }catch(e){}
+  }
+
   const unitList = document.getElementById('unitList');
   const subList = document.getElementById('subList');
   const levelList = document.getElementById('levelList');
@@ -564,6 +589,31 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "sub": "�
     return b;
   }
 
+  // หัวกลุ่มที่กดพับ/กางได้ · แสดงค่าที่เลือกไว้ด้วย เพื่อไม่ให้ตัวกรองที่ทำงานอยู่ถูกซ่อนเงียบ ๆ
+  function buildGroupHead(key, title, options, selected){
+    const group = document.getElementById('group-' + key);
+    const old = group.querySelector('.fhead');
+    if(old) old.remove();
+    const isCollapsed = collapsed[key];
+    group.classList.toggle('collapsed', isCollapsed);
+
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'fhead';
+    b.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+    b.setAttribute('aria-controls', group.querySelector('.flist').id);
+    b.title = isCollapsed ? `กางกลุ่ม ${title}` : `พับกลุ่ม ${title}`;
+    b.innerHTML = `<span class="chev">▶</span><span class="fname-g">${title}</span>` +
+      (selected ? `<span class="fsel" title="${selected}">${selected}</span>`
+                : `<span class="fcount">${options}</span>`);
+    b.onclick = () => {
+      collapsed[key] = !collapsed[key];
+      saveUI();
+      buildSidebar();
+    };
+    group.insertBefore(b, group.firstChild);
+  }
+
   function buildSidebar(){
     // --- units ---
     unitList.innerHTML = '';
@@ -600,6 +650,16 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "sub": "�
     // --- difficulty / scope ---
     buildValueFilter(levelList, 'level', LEVEL_ORDER, 'ทุกระดับ', 'activeLevel');
     buildValueFilter(tagList,   'tag',   TAG_ORDER,   'ทุกขอบเขต', 'activeTag');
+
+    // --- หัวกลุ่ม (สร้างหลังรายการ เพื่อให้นับจำนวนตัวเลือกได้ถูก) ---
+    buildGroupHead('unit', 'หน่วยการเรียนรู้', unitIds.length,
+      state.activeUnit === 'all' ? '' : `หน่วย ${state.activeUnit}`);
+    buildGroupHead('sub', 'ประเภทข้อสอบ', subEntries().length,
+      state.activeSub === 'all' ? '' : state.activeSub);
+    buildGroupHead('level', 'ระดับความยาก', fieldValues('level', LEVEL_ORDER).length,
+      state.activeLevel === 'all' ? '' : state.activeLevel);
+    buildGroupHead('tag', 'ขอบเขตเนื้อหา', fieldValues('tag', TAG_ORDER).length,
+      state.activeTag === 'all' ? '' : state.activeTag);
   }
 
   function buildValueFilter(el, field, order, allLabel, stateKey){
