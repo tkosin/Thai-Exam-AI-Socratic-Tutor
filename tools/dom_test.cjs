@@ -50,7 +50,10 @@ chk('ชื่อเรื่องมีจำนวนข้อตรงกั
     $('#mainTitle').textContent);
 
 // ---------- ตัวกรอง 4 ชั้น ----------
-chk('มีตัวกรองหน่วย 1 + 9', items('unitList').length === 10, items('unitList').length);
+const UNITS = items('unitList').length - 1;      // ไม่นับปุ่ม "ทุกหน่วย"
+chk('มีตัวกรองหน่วยครบ (อ่านจากข้อมูล)', UNITS >= 9, UNITS + ' หน่วย');
+chk('ทุกปุ่มหน่วยมีเลขหน่วยกำกับ',
+    items('unitList').slice(1).every(e => e.querySelector('.unum')), '');
 chk('มีตัวกรองระดับความยาก', items('levelList').map(label).join('/') === 'ทุกระดับ/ง่าย/กลาง/ยาก',
     items('levelList').map(label).join('/'));
 chk('มีตัวกรองขอบเขตเนื้อหา',
@@ -79,7 +82,7 @@ click($('#resetFilterBtn'));
 chk('ล้างตัวกรองกลับเป็นทุกข้อ', shown() === TOTAL, shown());
 
 // ทุกหน่วยต้องเปิดได้และมีข้อ
-for (let u = 1; u <= 9; u++) {
+for (let u = 1; u <= UNITS; u++) {
   click(items('unitList')[u]);
   const n = shown();
   const subs = items('subList').length - 1;
