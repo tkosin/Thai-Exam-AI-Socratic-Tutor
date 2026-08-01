@@ -164,24 +164,71 @@
 
 ---
 
-## วิธีเพิ่มข้อสอบ
+## โครงสร้างคลังข้อสอบ
 
-รูปประกอบทั้งหมดเป็น **inline SVG** ในฟิลด์ `text` — ไม่พึ่งไฟล์ภายนอก เปิดออฟไลน์และสั่งพิมพ์ได้
+```text
+questions/
+  units/
+    unit-01-integers.json              59 ข้อ   หน่วย 1 จำนวนเต็ม
+    unit-02-exponents.json             50 ข้อ   หน่วย 2 เลขยกกำลัง
+    unit-03-fractions-decimals.json    75 ข้อ   หน่วย 3 เศษส่วนและทศนิยม
+    unit-04-constructions.json         47 ข้อ   หน่วย 4 การสร้างทางเรขาคณิต
+    unit-05-2d-3d-shapes.json          75 ข้อ   หน่วย 5 รูปเรขาคณิตสองมิติและสามมิติ
+    unit-06-linear-equations.json      70 ข้อ   หน่วย 6 สมการเชิงเส้นตัวแปรเดียว
+    unit-07-ratio-proportion-percent   80 ข้อ   หน่วย 7 อัตราส่วน สัดส่วน ร้อยละ
+    unit-08-graphs.json                53 ข้อ   หน่วย 8 กราฟและความสัมพันธ์เชิงเส้น
+    unit-09-statistics.json            71 ข้อ   หน่วย 9 สถิติ
+    unit-10-applied-problems.json      30 ข้อ   หน่วย 10 โจทย์ประยุกต์
+  figures.json                         20 รูป   คลังรูป SVG (อ้างด้วยชื่อ ใช้ซ้ำได้)
+```
+
+**ไฟล์หน่วยหนึ่งไฟล์** = หนึ่งหน่วยการเรียนรู้ · ข้อสอบเรียงตามประเภท (`sub`) อยู่แล้ว
+
+```json
+{
+ "unit": 9,
+ "uname": "สถิติเบื้องต้น",
+ "questions": [
+  {
+   "text": "จากแผนภูมิแท่ง วันใดมีนักเรียนมาสายมากที่สุด[[fig]]",
+   "answer": "ศุกร์",
+   "sub": "แผนภูมิแท่ง",
+   "level": "ง่าย",
+   "std": "ค 3.1 ม.1/1",
+   "tag": "ม.1",
+   "figure": "bar-late-students"
+  }
+ ]
+}
+```
+
+- `unit` และ `uname` อยู่ที่หัวไฟล์ ไม่ต้องเขียนซ้ำทุกข้อ
+- `figure` อ้างชื่อรูปใน `figures.json` · `[[fig]]` คือตำแหน่งที่รูปจะไปแทรก
+  (ถ้าไม่ใส่ `[[fig]]` รูปจะต่อท้ายโจทย์)
+
+## วิธีแก้ไขและเพิ่มข้อสอบ
 
 ```bash
-# 1) เขียนโจทย์ชุดใหม่ตามรูปแบบของ tools/phase1b_questions.py
-python3 tools/phase3_questions.py              # -> questions/phase3.json
+# แก้ข้อสอบ: เปิดไฟล์ของหน่วยนั้นแล้วแก้ text / answer / level ได้เลย
+$EDITOR questions/units/unit-07-ratio-proportion-percent.json
+python3 tools/build.py            # ประกอบเข้า index.html + ซิงค์สำเนาให้อัตโนมัติ
 
-# 2) รวมเข้า index.html (แทรกตามลำดับหน่วย + เติม std/tag/level ให้ข้อเดิม)
-python3 tools/merge_into_html.py questions/phase3.json
+# เพิ่มรูปใหม่: เพิ่มรายการใน FIGURES แล้วอ้างชื่อนั้นจากข้อสอบ
+$EDITOR tools/build_figures.py
+python3 tools/build_figures.py && python3 tools/build.py
 
-# 3) ซิงค์สำเนาชื่อภาษาไทย
-cp index.html ข้อสอบคณิตศาสตร์_ม1.html
-
-# 4) ตรวจก่อน commit (CI รันชุดเดียวกันนี้)
+# ตรวจก่อน commit (CI รันชุดเดียวกันนี้)
+python3 tools/build.py --check
 python3 tools/validate.py
 npm install jsdom --no-save && node tools/dom_test.cjs
 ```
+
+`tools/build.py` จะฟ้องทันทีเมื่อ **อ้างชื่อรูปที่ไม่มีอยู่**, **ใส่ `[[fig]]` แต่ลืมระบุ `figure`**
+หรือ **มีรูปที่ไม่มีข้อไหนใช้** โดยบอกชื่อไฟล์และเลขข้อที่ผิด
+
+> ⚠️ การ**เพิ่ม/ลบ/สลับลำดับ**ข้อสอบทำให้เลขข้อขยับ ต้องเพิ่มเลขเวอร์ชันของคีย์
+> `localStorage` ใน `index.html` (ปัจจุบัน `funnymath-m1-v5`) ด้วย
+> ส่วนการ**แก้ข้อความหรือเฉลย**ของข้อเดิมไม่ทำให้เลขข้อขยับ จึงไม่ต้องเพิ่มเวอร์ชัน
 
 ## ด่านตรวจอัตโนมัติ (CI)
 
@@ -189,12 +236,13 @@ npm install jsdom --no-save && node tools/dom_test.cjs
 
 | ขั้น | ตรวจอะไร |
 | --- | --- |
-| สร้างไฟล์ข้อสอบใหม่ | `questions/*.json` ต้องตรงกับผลลัพธ์ของ `tools/*_questions.py` |
+| `tools/build_figures.py` | `questions/figures.json` ต้องตรงกับผลลัพธ์ของสคริปต์ |
+| `tools/build.py --check` | `index.html` และสำเนาต้องตรงกับคลังข้อสอบใน `questions/units/` |
 | `tools/validate.py` | ฟิลด์ครบ · `level`/`tag`/`std` ถูกรูปแบบ · เรียงตามหน่วย · ไม่มีโจทย์ซ้ำ · ข้อปรนัยมี 4 ตัวเลือกและเฉลยเป็น ก-ง · SVG เป็น XML ที่ถูกต้อง · JS ไม่มี syntax error · **กรอกค่าตรงเฉลยทุกข้อต้องได้ “ถูกต้อง”** · สำเนาชื่อภาษาไทยตรงกับ `index.html` |
 | `tools/dom_test.cjs` | ตัวกรอง 4 ชั้น · ทุกหน่วยเปิดได้ · ช่องวิธีทำหลายบรรทัด · การตรวจคำตอบ · บันทึก/กู้คืน `localStorage` · เฉลยล็อกด้วยรหัสผ่าน |
 | เผยแพร่ | ถ้าผ่านทั้งหมดและอยู่บน `main` จะ deploy GitHub Pages ให้อัตโนมัติ |
 
-`tools/svg_helpers.py` มีฟังก์ชันสร้างรูปทั้งหมด 9 แบบ
+`tools/svg_helpers.py` มีฟังก์ชันสร้างรูปทั้งหมด 9 แบบ ที่ `tools/build_figures.py` เรียกใช้
 
 | ฟังก์ชัน | รูปที่ได้ |
 | --- | --- |

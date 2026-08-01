@@ -28,14 +28,14 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: ตรวจว่าไฟล์ข้อสอบที่สร้างจาก tools ตรงกับที่ commit ไว้
+      - name: ตรวจว่าคลังรูปตรงกับ tools/build_figures.py
         run: |
-          python3 tools/phase1_questions.py
-          python3 tools/phase1b_questions.py
-          python3 tools/phase2_questions.py
-          python3 tools/phase3_questions.py
-          git diff --exit-code -- questions/ \
-            || { echo "::error::questions/*.json ไม่ตรงกับผลลัพธ์ของ tools/*_questions.py — รันสคริปต์แล้ว commit ใหม่"; exit 1; }
+          python3 tools/build_figures.py
+          git diff --exit-code -- questions/figures.json \
+            || { echo "::error::questions/figures.json ไม่ตรงกับ tools/build_figures.py — รันสคริปต์แล้ว commit ใหม่"; exit 1; }
+
+      - name: ตรวจว่า index.html ประกอบจากคลังข้อสอบแล้วตรงกัน
+        run: python3 tools/build.py --check
 
       - name: ตรวจคลังข้อสอบ (schema, เฉลย, SVG, syntax, สำเนา)
         run: python3 tools/validate.py
