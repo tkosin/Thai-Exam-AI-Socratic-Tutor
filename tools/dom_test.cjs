@@ -19,7 +19,7 @@ function load(seed) {
   const dom = new JSDOM(html, {
     runScripts: 'dangerously',
     pretendToBeVisual: true,
-    url: 'https://tkosin.github.io/funny-math/',
+    url: 'https://tkosin.github.io/math-is-fun/',
     beforeParse(w) {
       if (seed) w.localStorage.setItem(seed.key, JSON.stringify(seed.value));
     },
