@@ -72,7 +72,10 @@
     display:flex; align-items:flex-start; gap:26px;
   }
 
+  /* แผงตัวกรองซ่อนไว้เป็นค่าเริ่มต้นทุกขนาดจอ ไม่ให้เกะกะเวลาทำข้อสอบ
+     กาง/พับด้วยปุ่ม “🔍 ตัวกรอง” บนหัวเรื่อง แล้วจำสถานะไว้ใน UI_KEY */
   .sidebar{
+    display:none;
     flex:0 0 252px; align-self:flex-start;
     position:sticky; top:calc(var(--hh) + 18px);
     max-height:calc(100vh - var(--hh) - 40px); overflow-y:auto;
@@ -80,6 +83,7 @@
     padding:16px 14px 14px 14px; box-shadow:0 3px 14px rgba(20,20,20,.06);
     scrollbar-width:thin;
   }
+  .sidebar.open{ display:block; }
   .sidebar::-webkit-scrollbar{ width:6px;}
   .sidebar::-webkit-scrollbar-thumb{ background:#dcd7c8; border-radius:4px;}
 
@@ -93,6 +97,13 @@
     color:var(--ink-soft); background:transparent; border:none; cursor:pointer; padding:2px 4px; border-radius:5px;
   }
   .sb-reset:hover{ color:var(--red); background:#f7eeec;}
+  .sb-actions{ flex:0 0 auto; display:flex; align-items:center; gap:2px;}
+  .sb-close{
+    font-family:inherit; font-size:13px; line-height:1;
+    color:var(--ink-soft); background:transparent; border:none; cursor:pointer;
+    padding:3px 5px; border-radius:5px;
+  }
+  .sb-close:hover{ color:var(--navy); background:#f4f2ea;}
 
   .fgroup + .fgroup{ margin-top:11px; padding-top:11px; border-top:1px solid #efece1;}
   .fhead{
@@ -138,7 +149,15 @@
   .fitem.active .cnt{ color:rgba(255,255,255,.75);}
   .fitem.empty{ opacity:.4; cursor:not-allowed;}
 
-  .filter-toggle{ display:none; }
+  /* ปุ่มกาง/พับแผงตัวกรอง · แสดงทุกขนาดจอ เพราะแผงถูกซ่อนไว้ตั้งแต่เริ่ม
+     ตัวเลขบนปุ่มบอกจำนวนตัวกรองที่ใช้อยู่ ไม่ให้ตัวกรองที่ทำงานอยู่ถูกซ่อนเงียบ ๆ */
+  .filter-toggle{ display:inline-flex; align-items:center; gap:6px; }
+  .filter-toggle.on{ background:rgba(255,255,255,.2); border-color:rgba(255,255,255,.55); }
+  .filter-toggle .fbadge{
+    font-size:10.5px; font-weight:700; line-height:1;
+    color:#402c05; background:var(--gold); border-radius:9px; padding:2px 6px;
+  }
+  .filter-toggle .fbadge:empty{ display:none; }
 
   /* ---------------- Main exam area ---------------- */
   main{ flex:1 1 auto; min-width:0; }
@@ -337,16 +356,11 @@
     body.print-with-answers #printOnly .p-ans{ display:block; }
   }
 
-  /* tablet / mobile: sidebar becomes a collapsible panel above the exam */
+  /* tablet / mobile: แผงตัวกรองกางเป็นแถบเต็มความกว้างเหนือข้อสอบ (ไม่ sticky) */
   @media (max-width:900px){
     .layout{ flex-direction:column; gap:16px; padding-top:18px; }
-    .sidebar{
-      flex:none; width:100%; position:static; max-height:none;
-      display:none;
-    }
-    .sidebar.open{ display:block; }
+    .sidebar{ flex:none; width:100%; position:static; max-height:none; }
     .flist.scroll{ max-height:220px; }
-    .filter-toggle{ display:inline-flex; align-items:center; gap:5px; }
   }
 
   @media (max-width:600px){
@@ -372,7 +386,8 @@
       </div>
     </div>
     <div class="header-actions">
-      <button class="btn filter-toggle" id="filterToggle" aria-expanded="false">🔍 ตัวกรอง</button>
+      <button class="btn filter-toggle" id="filterToggle" aria-expanded="false" aria-controls="sidebar"
+              title="แสดงตัวกรอง"><span>🔍 ตัวกรอง</span><span class="fbadge" id="filterBadge"></span></button>
       <button class="btn" id="overviewBtn">📋 ภาพรวมข้อสอบ</button>
       <button class="btn" id="printExamBtn">🖨️ พิมพ์ข้อสอบ (ไม่มีเฉลย)</button>
       <button class="btn gold" id="printAnswerBtn">🔒 พิมพ์เฉลย</button>
@@ -388,7 +403,10 @@
   <aside class="sidebar" id="sidebar">
     <div class="sb-title">
       <span>ตัวกรองข้อสอบ</span>
-      <button class="sb-reset" id="resetFilterBtn">ล้างตัวกรอง</button>
+      <span class="sb-actions">
+        <button class="sb-reset" id="resetFilterBtn">ล้างตัวกรอง</button>
+        <button class="sb-close" id="sidebarCloseBtn" title="ซ่อนแผงตัวกรอง" aria-label="ซ่อนแผงตัวกรอง">✕</button>
+      </span>
     </div>
     <div class="fgroup" id="group-unit"><div class="flist" id="unitList"></div></div>
     <div class="fgroup" id="group-sub"><div class="flist scroll" id="subList"></div></div>
@@ -502,6 +520,8 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "sub": "�
   // เพื่อไม่ให้หายไปตอนเพิ่มเลขเวอร์ชันของ STORE_KEY เมื่อเลขข้อขยับ
   const UI_KEY = 'funnymath-ui-v1';
   const collapsed = { unit:false, sub:false, level:true, tag:true };
+  // แผงตัวกรองเริ่มต้นแบบซ่อน — เปิดหน้ามาเห็นข้อสอบเต็มความกว้างก่อน
+  let sidebarOpen = false;
   try{
     const d = JSON.parse(localStorage.getItem(UI_KEY) || '{}');
     if(d && typeof d.collapsed === 'object'){
@@ -509,9 +529,10 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "sub": "�
         if(typeof d.collapsed[k] === 'boolean') collapsed[k] = d.collapsed[k];
       });
     }
+    if(d && typeof d.sidebarOpen === 'boolean') sidebarOpen = d.sidebarOpen;
   }catch(e){/* corrupt payload — ใช้ค่าเริ่มต้น */}
   function saveUI(){
-    try{ localStorage.setItem(UI_KEY, JSON.stringify({ collapsed })); }catch(e){}
+    try{ localStorage.setItem(UI_KEY, JSON.stringify({ collapsed, sidebarOpen })); }catch(e){}
   }
 
   const unitList = document.getElementById('unitList');
@@ -520,6 +541,8 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "sub": "�
   const tagList = document.getElementById('tagList');
   const sidebar = document.getElementById('sidebar');
   const filterToggle = document.getElementById('filterToggle');
+  const filterBadge = document.getElementById('filterBadge');
+  const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
   const resetFilterBtn = document.getElementById('resetFilterBtn');
   const examCard = document.getElementById('examCard');
   const progressFill = document.getElementById('progressFill');
@@ -683,10 +706,28 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "sub": "�
     state.activeLevel = 'all'; state.activeTag = 'all';
     state.index = 0; renderAll();
   };
-  filterToggle.onclick = () => {
-    const open = sidebar.classList.toggle('open');
-    filterToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  };
+  // ---------- กาง/พับแผงตัวกรอง ----------
+  function applySidebar(){
+    sidebar.classList.toggle('open', sidebarOpen);
+    filterToggle.classList.toggle('on', sidebarOpen);
+    filterToggle.setAttribute('aria-expanded', sidebarOpen ? 'true' : 'false');
+    filterToggle.title = sidebarOpen ? 'ซ่อนตัวกรอง' : 'แสดงตัวกรอง';
+  }
+  function setSidebar(open){
+    sidebarOpen = open;
+    saveUI();
+    applySidebar();
+  }
+  filterToggle.onclick = () => setSidebar(!sidebarOpen);
+  sidebarCloseBtn.onclick = () => setSidebar(false);
+
+  // จำนวนตัวกรองที่ใช้อยู่ · ขึ้นเป็นตัวเลขบนปุ่มเพื่อให้รู้แม้แผงถูกซ่อน
+  function updateFilterBadge(){
+    const n = [state.activeUnit, state.activeSub, state.activeLevel, state.activeTag]
+      .filter(v => v !== 'all').length;
+    filterBadge.textContent = n ? String(n) : '';
+    filterToggle.setAttribute('aria-label', n ? `ตัวกรอง · ใช้อยู่ ${n} รายการ` : 'ตัวกรอง');
+  }
 
   function updateProgress(list){
     const total = list.length;
@@ -1006,7 +1047,10 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "sub": "�
 
   function renderAll(){
     buildSidebar();
-    if(window.innerWidth <= 900) sidebar.classList.remove('open');
+    updateFilterBadge();
+    // จอเล็ก: แผงกางทับข้อสอบอยู่ เลือกตัวกรองแล้วพับเก็บให้เห็นข้อสอบทันที
+    if(sidebarOpen && window.innerWidth <= 900) setSidebar(false);
+    else applySidebar();
     const list = getFiltered();
     if(state.index >= list.length) state.index = Math.max(0, list.length - 1);
     renderExamCard(list);
@@ -1029,6 +1073,7 @@ const QUESTIONS = [{"unit": 1, "uname": "จำนวนเต็ม", "sub": "�
     if(tag === 'TEXTAREA' || tag === 'INPUT') return;
     if(e.key === 'ArrowLeft') prevBtn.click();
     if(e.key === 'ArrowRight') nextBtn.click();
+    if(e.key === 'Escape' && sidebarOpen) setSidebar(false);
   });
 
   // keep the sticky sidebar clear of the sticky header

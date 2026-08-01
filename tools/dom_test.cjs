@@ -210,6 +210,46 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
       !cls('unit')(uiBad) && cls('level')(uiBad), '');
 }
 
+// ---------- แผงตัวกรอง: ซ่อนไว้เป็นค่าเริ่มต้น กาง/พับได้ทุกขนาดจอ ----------
+{
+  const r = load();
+  const rd = s => r.d.querySelector(s);
+  const rclick = el => el.dispatchEvent(new r.w.Event('click'));
+  const isOpen = () => rd('#sidebar').classList.contains('open');
+  const aria = () => rd('#filterToggle').getAttribute('aria-expanded');
+
+  chk('เริ่มต้นแผงตัวกรองถูกซ่อนไว้', !isOpen() && aria() === 'false', aria());
+  chk('ปุ่มตัวกรองไม่ถูกซ่อนด้วย CSS ฐาน (เห็นได้ทุกขนาดจอ)',
+      !/\.filter-toggle\s*\{\s*display\s*:\s*none/.test(html), '');
+  chk('มีปุ่มปิดอยู่ในแผง', !!rd('#sidebarCloseBtn'));
+
+  rclick(rd('#filterToggle'));
+  chk('กดปุ่มแล้วแผงกางออก', isOpen() && aria() === 'true', aria());
+  rclick(rd('#filterToggle'));
+  chk('กดปุ่มซ้ำแล้วพับเก็บ', !isOpen() && aria() === 'false', aria());
+  rclick(rd('#filterToggle'));
+  rclick(rd('#sidebarCloseBtn'));
+  chk('กดปิดในแผงแล้วพับเก็บ', !isOpen() && aria() === 'false', aria());
+
+  // สถานะกาง/พับของแผงเป็นความชอบส่วนตัว ต้องอยู่ข้ามการรีเฟรช
+  rclick(rd('#filterToggle'));
+  const ui = JSON.parse(r.w.localStorage.getItem('funnymath-ui-v1') || '{}');
+  chk('บันทึกสถานะกาง/พับของแผง', ui.sidebarOpen === true, JSON.stringify(ui));
+  chk('รีเฟรชแล้วจำว่าแผงกางอยู่',
+      load({ key: 'funnymath-ui-v1', value: { sidebarOpen: true } })
+        .d.querySelector('#sidebar').classList.contains('open'));
+
+  // แผงถูกซ่อนแล้วตัวกรองต้องไม่หายเงียบ ๆ — ปุ่มบอกจำนวนตัวกรองที่ใช้อยู่
+  const badge = () => rd('#filterBadge').textContent;
+  chk('ยังไม่กรองอะไร ปุ่มไม่มีตัวเลข', badge() === '', badge());
+  rclick(r.d.querySelectorAll('#unitList .fitem')[1]);      // เลือกหน่วยที่ 1
+  chk('เลือกตัวกรองแล้วปุ่มขึ้นจำนวน', badge() === '1', badge());
+  rclick(r.d.querySelectorAll('#levelList .fitem')[1]);     // + ระดับง่าย
+  chk('กรองสองชั้นแล้วนับเป็น 2', badge() === '2', badge());
+  rclick(rd('#resetFilterBtn'));
+  chk('ล้างตัวกรองแล้วตัวเลขหาย', badge() === '', badge());
+}
+
 // ---------- ผลลัพธ์ ----------
 const failed = T.filter(t => t[0] === 'FAIL');
 console.log(T.map(([s, n, e]) => `${s}  ${n}${s === 'FAIL' ? '   << ' + e : ''}`).join('\n'));
