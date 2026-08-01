@@ -1,0 +1,606 @@
+{
+ "unit": 3,
+ "uname": "เศษส่วนและทศนิยม",
+ "questions": [
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">6</span></span> - <span class=\"frac\"><span class=\"num\">11</span><span class=\"den\">12</span></span>",
+   "answer": "-<span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">12</span></span>",
+   "sub": "บวกลบเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ -<span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">12</span></span> + <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span>",
+   "answer": "<span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">20</span></span>",
+   "sub": "บวกลบเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">8</span></span> - <span class=\"frac\"><span class=\"num\">6</span><span class=\"den\">10</span></span>",
+   "answer": "-<span class=\"frac\"><span class=\"num\">19</span><span class=\"den\">40</span></span>",
+   "sub": "บวกลบเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> - <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span>",
+   "answer": "-<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">10</span></span>",
+   "sub": "บวกลบเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span> - <span class=\"frac\"><span class=\"num\">11</span><span class=\"den\">12</span></span>",
+   "answer": "-<span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">12</span></span>",
+   "sub": "บวกลบเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ -<span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">12</span></span> + <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span>",
+   "answer": "-<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">6</span></span>",
+   "sub": "บวกลบเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">8</span></span> ÷ <span class=\"frac\"><span class=\"num\">6</span><span class=\"den\">9</span></span>",
+   "answer": "<span class=\"frac\"><span class=\"num\">15</span><span class=\"den\">16</span></span>",
+   "sub": "คูณหารเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> ÷ <span class=\"frac\"><span class=\"num\">4</span><span class=\"den\">3</span></span>",
+   "answer": "<span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">10</span></span>",
+   "sub": "คูณหารเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">11</span></span> × <span class=\"frac\"><span class=\"num\">9</span><span class=\"den\">5</span></span>",
+   "answer": "<span class=\"frac\"><span class=\"num\">9</span><span class=\"den\">55</span></span>",
+   "sub": "คูณหารเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span> × <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">5</span></span>",
+   "answer": "<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">15</span></span>",
+   "sub": "คูณหารเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">7</span></span> × <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">10</span></span>",
+   "answer": "<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">35</span></span>",
+   "sub": "คูณหารเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">12</span></span> × <span class=\"frac\"><span class=\"num\">8</span><span class=\"den\">5</span></span>",
+   "answer": "<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span>",
+   "sub": "คูณหารเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ 22.34 - 38.24",
+   "answer": "-15.9",
+   "sub": "บวกลบทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ (-25.7) - (-2.7)",
+   "answer": "-23.0",
+   "sub": "บวกลบทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ (-30.96) - (-40.31)",
+   "answer": "9.35",
+   "sub": "บวกลบทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ (-14.57) + (-8.89)",
+   "answer": "-23.46",
+   "sub": "บวกลบทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ 13.8 × 11.8",
+   "answer": "162.84",
+   "sub": "คูณหารทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ 2.2 × 9.0",
+   "answer": "19.8",
+   "sub": "คูณหารทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ 36.0 ÷ 4",
+   "answer": "9.0",
+   "sub": "คูณหารทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ 6.3 × 3.7",
+   "answer": "23.31",
+   "sub": "คูณหารทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงเขียน <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">8</span></span> ในรูปทศนิยม",
+   "answer": "0.125",
+   "sub": "แปลงเศษส่วนทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงเขียนเศษส่วน <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span> ในรูปทศนิยม แล้วเขียนเป็นร้อยละ",
+   "answer": "0.75 หรือร้อยละ 75",
+   "sub": "แปลงเศษส่วนทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงเขียน <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> ในรูปทศนิยม",
+   "answer": "0.4",
+   "sub": "แปลงเศษส่วนทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงเขียนเศษส่วน <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">5</span></span> ในรูปทศนิยม แล้วเขียนเป็นร้อยละ",
+   "answer": "0.2 หรือร้อยละ 20",
+   "sub": "แปลงเศษส่วนทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงเขียน <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span> ในรูปทศนิยม",
+   "answer": "0.6",
+   "sub": "แปลงเศษส่วนทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "ในจำนวน 25.376 เลข 7 อยู่ในหลักใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>ส่วนสิบ</span></div><div class=\"ch\"><b>ข.</b><span>ส่วนร้อย</span></div><div class=\"ch\"><b>ค.</b><span>ส่วนพัน</span></div><div class=\"ch\"><b>ง.</b><span>หน่วย</span></div></div>",
+   "answer": "ข",
+   "sub": "ค่าประจำหลักของทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "ค่าของเลข 4 ในจำนวน 8.045 เท่ากับเท่าใด (ตอบเป็นทศนิยม)",
+   "answer": "0.04",
+   "sub": "ค่าประจำหลักของทศนิยม",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "3.507 เขียนในรูปกระจายได้ตรงกับข้อใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>3 + 0.5 + 0.07</span></div><div class=\"ch\"><b>ข.</b><span>3 + 0.5 + 0.007</span></div><div class=\"ch\"><b>ค.</b><span>3 + 0.05 + 0.007</span></div><div class=\"ch\"><b>ง.</b><span>3 + 5 + 7</span></div></div>",
+   "answer": "ข",
+   "sub": "ค่าประจำหลักของทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จำนวนในข้อใดมีเลขในหลักส่วนพันเป็น 8<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>1.892</span></div><div class=\"ch\"><b>ข.</b><span>1.028</span></div><div class=\"ch\"><b>ค.</b><span>1.280</span></div><div class=\"ch\"><b>ง.</b><span>1.820</span></div></div>",
+   "answer": "ข",
+   "sub": "ค่าประจำหลักของทศนิยม",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาค่าของ |-3.7|",
+   "answer": "3.7",
+   "sub": "เปรียบเทียบทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จำนวนในข้อใดมีค่ามากที่สุด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>0.5</span></div><div class=\"ch\"><b>ข.</b><span>0.45</span></div><div class=\"ch\"><b>ค.</b><span>0.505</span></div><div class=\"ch\"><b>ง.</b><span>0.055</span></div></div>",
+   "answer": "ค",
+   "sub": "เปรียบเทียบทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "เมื่อเรียง -2.5, -2.05, -2.55 จากน้อยไปมาก จำนวนแรกคือจำนวนใด",
+   "answer": "-2.55",
+   "sub": "เปรียบเทียบทศนิยม",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "ควรเติมเครื่องหมายใดในช่องว่าง -1.8 ⬜ -1.08 (ตอบ &lt; หรือ &gt;)",
+   "answer": "&lt;",
+   "sub": "เปรียบเทียบทศนิยม",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "มีจำนวนเต็มกี่จำนวนที่อยู่ระหว่าง -3.6 และ 2.4",
+   "answer": "6",
+   "sub": "เปรียบเทียบทศนิยม",
+   "level": "ยาก",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "เศษส่วนในข้อใดมีค่ามากที่สุด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span><span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span></span></div><div class=\"ch\"><b>ข.</b><span><span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">8</span></span></span></div><div class=\"ch\"><b>ค.</b><span><span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">12</span></span></span></div><div class=\"ch\"><b>ง.</b><span><span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span></span></div></div>",
+   "answer": "ก",
+   "sub": "เปรียบเทียบเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "ระหว่าง <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span> กับ <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">7</span></span> จำนวนใดมีค่ามากกว่า",
+   "answer": "<span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">7</span></span>",
+   "sub": "เปรียบเทียบเศษส่วน",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "<span class=\"frac\"><span class=\"num\">12</span><span class=\"den\">18</span></span> เขียนเป็นเศษส่วนอย่างต่ำได้เท่าใด",
+   "answer": "<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span>",
+   "sub": "เปรียบเทียบเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "เมื่อเรียง -<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span>, -<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span>, -<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span> จากน้อยไปมาก จำนวนแรกคือจำนวนใด",
+   "answer": "-<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span>",
+   "sub": "เปรียบเทียบเศษส่วน",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "มีเศษส่วนที่มีตัวส่วนเป็น 8 และตัวเศษเป็นจำนวนเต็ม กี่จำนวน ที่มากกว่า <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span> และน้อยกว่า <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span>",
+   "answer": "3",
+   "sub": "เปรียบเทียบเศษส่วน",
+   "level": "ยาก",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จำนวนตรรกยะคือจำนวนที่เขียนได้ในรูป <span class=\"frac\"><span class=\"num\">a</span><span class=\"den\">b</span></span> เมื่อ a และ b เป็นจำนวนเต็ม โดย b ต้องไม่เท่ากับจำนวนใด",
+   "answer": "0",
+   "sub": "จำนวนตรรกยะ",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "เขียน 0.6 ในรูปเศษส่วนอย่างต่ำ ตัวส่วนเท่ากับเท่าใด",
+   "answer": "5",
+   "sub": "จำนวนตรรกยะ",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "เขียน -2.25 ในรูปเศษส่วนอย่างต่ำได้เท่าใด",
+   "answer": "-<span class=\"frac\"><span class=\"num\">9</span><span class=\"den\">4</span></span>",
+   "sub": "จำนวนตรรกยะ",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "<span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">8</span></span> เขียนเป็นทศนิยมได้เท่าใด",
+   "answer": "0.625",
+   "sub": "จำนวนตรรกยะ",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "0.25 + 1.75 = 1.75 + 0.25 เป็นการใช้สมบัติใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>สมบัติการสลับที่ของการบวก</span></div><div class=\"ch\"><b>ข.</b><span>สมบัติการเปลี่ยนกลุ่มของการบวก</span></div><div class=\"ch\"><b>ค.</b><span>สมบัติการแจกแจง</span></div><div class=\"ch\"><b>ง.</b><span>สมบัติการมีเอกลักษณ์การบวก</span></div></div>",
+   "answer": "ก",
+   "sub": "สมบัติการบวกและการคูณของจำนวนตรรกยะ",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> &times; 1 = <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> แสดงว่า 1 เป็นเอกลักษณ์ของการดำเนินการใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>การบวก</span></div><div class=\"ch\"><b>ข.</b><span>การคูณ</span></div><div class=\"ch\"><b>ค.</b><span>การลบ</span></div><div class=\"ch\"><b>ง.</b><span>การหาร</span></div></div>",
+   "answer": "ข",
+   "sub": "สมบัติการบวกและการคูณของจำนวนตรรกยะ",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "ใช้สมบัติการเปลี่ยนกลุ่มหาค่าของ 0.8 &times; 2.5 &times; 4",
+   "answer": "8",
+   "sub": "สมบัติการบวกและการคูณของจำนวนตรรกยะ",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "อินเวอร์สการคูณ (ส่วนกลับ) ของ <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span> คือจำนวนใด",
+   "answer": "<span class=\"frac\"><span class=\"num\">4</span><span class=\"den\">3</span></span>",
+   "sub": "สมบัติการบวกและการคูณของจำนวนตรรกยะ",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "<span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">3</span></span> เขียนเป็นจำนวนคละ ส่วนที่เป็นจำนวนเต็มคือจำนวนใด",
+   "answer": "2",
+   "sub": "เศษเกินและจำนวนคละ",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "3<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span> เขียนเป็นเศษเกิน ตัวเศษคือจำนวนใด",
+   "answer": "13",
+   "sub": "เศษเกินและจำนวนคละ",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "2<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> เขียนเป็นเศษเกินได้เท่าใด",
+   "answer": "<span class=\"frac\"><span class=\"num\">12</span><span class=\"den\">5</span></span>",
+   "sub": "เศษเกินและจำนวนคละ",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "<span class=\"frac\"><span class=\"num\">17</span><span class=\"den\">5</span></span> เขียนเป็นจำนวนคละได้ตรงกับข้อใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>3<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span></span></div><div class=\"ch\"><b>ข.</b><span>2<span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span></span></div><div class=\"ch\"><b>ค.</b><span>3<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">5</span></span></span></div><div class=\"ch\"><b>ง.</b><span>5<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span></span></div></div>",
+   "answer": "ก",
+   "sub": "เศษเกินและจำนวนคละ",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span> เขียนเป็นทศนิยมได้ 0.333... จำนวนนี้เป็นทศนิยมชนิดใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>ทศนิยมรู้จบ</span></div><div class=\"ch\"><b>ข.</b><span>ทศนิยมซ้ำ</span></div><div class=\"ch\"><b>ค.</b><span>จำนวนเต็ม</span></div><div class=\"ch\"><b>ง.</b><span>ไม่เป็นจำนวนตรรกยะ</span></div></div>",
+   "answer": "ข",
+   "sub": "ทศนิยมซ้ำ",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "เศษส่วนในข้อใดเขียนเป็นทศนิยมรู้จบได้<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span><span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span></span></div><div class=\"ch\"><b>ข.</b><span><span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">6</span></span></span></div><div class=\"ch\"><b>ค.</b><span><span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">8</span></span></span></div><div class=\"ch\"><b>ง.</b><span><span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">7</span></span></span></div></div>",
+   "answer": "ค",
+   "sub": "ทศนิยมซ้ำ",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "0.777... เขียนเป็นเศษส่วนอย่างต่ำ ตัวส่วนคือจำนวนใด",
+   "answer": "9",
+   "sub": "ทศนิยมซ้ำ",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">9</span></span> เขียนเป็นทศนิยม ตัวเลขที่ซ้ำคือเลขใด",
+   "answer": "2",
+   "sub": "ทศนิยมซ้ำ",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "ปัด 3.678 ให้เป็นทศนิยมสองตำแหน่ง ได้เท่าใด",
+   "answer": "3.68",
+   "sub": "การปัดเศษและประมาณค่า",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "ปัด 12.4499 ให้เป็นทศนิยมหนึ่งตำแหน่ง ได้เท่าใด",
+   "answer": "12.4",
+   "sub": "การปัดเศษและประมาณค่า",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "ปัด 0.0456 ให้เป็นทศนิยมสามตำแหน่ง ได้เท่าใด",
+   "answer": "0.046",
+   "sub": "การปัดเศษและประมาณค่า",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "ประมาณค่าของ 48.7 &times; 5.2 โดยปัดตัวเลขทั้งสองเป็นจำนวนเต็มก่อนคูณ ได้ผลลัพธ์เท่าใด",
+   "answer": "245",
+   "sub": "การปัดเศษและประมาณค่า",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "ผ้ายาว 12.5 เมตร ตัดออกไป 3.75 เมตร เหลือผ้ายาวกี่เมตร",
+   "answer": "8.75",
+   "sub": "โจทย์ปัญหาทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "แบ่งเชือกยาว 15.6 เมตร ออกเป็น 4 ส่วนเท่ากัน แต่ละส่วนยาวกี่เมตร",
+   "answer": "3.9",
+   "sub": "โจทย์ปัญหาทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "ซื้อของราคา 45.50 บาท และ 32.25 บาท จ่ายเงิน 100 บาท ได้เงินทอนกี่บาท",
+   "answer": "22.25",
+   "sub": "โจทย์ปัญหาทศนิยม",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "น้ำมัน 1 ลิตร ราคา 34.50 บาท ซื้อ 8 ลิตร ต้องจ่ายกี่บาท",
+   "answer": "276",
+   "sub": "โจทย์ปัญหาทศนิยม",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "นักเรียนสามคนหนัก 42.5, 38.75 และ 45.25 กิโลกรัม รวมกันหนักกี่กิโลกรัม",
+   "answer": "126.5",
+   "sub": "โจทย์ปัญหาทศนิยม",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "ค่าไฟฟ้าหน่วยละ 4.25 บาท เดือนนี้ใช้ไป 120 หน่วย ต้องจ่ายกี่บาท",
+   "answer": "510",
+   "sub": "โจทย์ปัญหาทศนิยม",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "มีเงิน 480 บาท ใช้ไป <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span> ของเงินทั้งหมด เหลือเงินกี่บาท",
+   "answer": "360",
+   "sub": "โจทย์ปัญหาเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "งานหนึ่งทำเสร็จไปแล้ว <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span> ของงานทั้งหมด เหลืองานอีกเป็นเศษส่วนเท่าใด",
+   "answer": "<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span>",
+   "sub": "โจทย์ปัญหาเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "ถังน้ำมีน้ำอยู่ <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span> ของถัง ใช้ไป <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">6</span></span> ของถัง เหลือน้ำเป็นเศษส่วนเท่าใดของถัง",
+   "answer": "<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span>",
+   "sub": "โจทย์ปัญหาเศษส่วน",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "ผ้ายาว <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span> เมตร ตัดเป็นชิ้นละ <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">8</span></span> เมตร ได้กี่ชิ้น",
+   "answer": "6",
+   "sub": "โจทย์ปัญหาเศษส่วน",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "ห้องหนึ่งมีนักเรียน 40 คน เป็นนักเรียนหญิง <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">8</span></span> ของทั้งห้อง มีนักเรียนชายกี่คน",
+   "answer": "25",
+   "sub": "โจทย์ปัญหาเศษส่วน",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "สูตรขนมใช้แป้ง 2<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span> ถ้วย ถ้าทำ 2 เท่าของสูตร ต้องใช้แป้งกี่ถ้วย",
+   "answer": "4.5",
+   "sub": "โจทย์ปัญหาเศษส่วน",
+   "level": "ยาก",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาค่าของ <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span> + 0.25 (ตอบเป็นทศนิยม)",
+   "answer": "0.75",
+   "sub": "การคำนวณระคนของเศษส่วนและทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาค่าของ <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span> &times; 0.8 (ตอบเป็นทศนิยม)",
+   "answer": "0.6",
+   "sub": "การคำนวณระคนของเศษส่วนและทศนิยม",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาค่าของ 2.5 - <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span> + 0.75",
+   "answer": "2.75",
+   "sub": "การคำนวณระคนของเศษส่วนและทศนิยม",
+   "level": "กลาง",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  },
+  {
+   "text": "จงหาค่าของ (<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span> + 0.5) &times; 4",
+   "answer": "3",
+   "sub": "การคำนวณระคนของเศษส่วนและทศนิยม",
+   "level": "ยาก",
+   "std": "ค 1.1 ม.1/1",
+   "tag": "ม.1"
+  }
+ ]
+}

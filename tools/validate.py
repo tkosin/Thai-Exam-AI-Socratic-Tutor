@@ -152,8 +152,7 @@ console.log(JSON.stringify({{ bad, manual }}));
     if not os.path.exists(COPY):
         err("ไม่พบไฟล์สำเนา ข้อสอบคณิตศาสตร์_ม1.html")
     elif open(COPY, encoding="utf-8").read() != html:
-        err("สำเนา ข้อสอบคณิตศาสตร์_ม1.html ไม่ตรงกับ index.html "
-            "(รัน: cp index.html ข้อสอบคณิตศาสตร์_ม1.html)")
+        err("สำเนา ข้อสอบคณิตศาสตร์_ม1.html ไม่ตรงกับ index.html (รัน: python3 tools/build.py)")
 
     # ---- 9. สรุปจำนวนข้อตามหน่วย ----
     per_unit = {}

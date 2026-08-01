@@ -26,17 +26,21 @@
 | `index.html` | **ไฟล์หลัก** — GitHub Pages เสิร์ฟไฟล์นี้ (รวมข้อสอบทั้งหมดไว้ในไฟล์เดียว) |
 | `ข้อสอบคณิตศาสตร์_ม1.html` | สำเนาชื่อภาษาไทย ไว้ดาวน์โหลด/เปิดออฟไลน์ |
 | [`docs/coverage-plan.md`](docs/coverage-plan.md) | แผนขยายคลังข้อสอบเทียบตัวชี้วัด ม.1 + ความคืบหน้า |
-| `tools/svg_helpers.py` | ฟังก์ชันสร้างรูป SVG (แผนภูมิ, ภาพสามมิติ, รูปคลี่) |
-| `tools/phase1_questions.py` · `phase1b` · `phase2` · `phase3` | นิยามข้อสอบแต่ละเฟส → `questions/*.json` |
+| `questions/units/*.json` | **คลังข้อสอบ แยกไฟล์ตามหน่วยการเรียนรู้** — แก้ข้อสอบที่นี่ |
+| `questions/figures.json` | คลังรูป SVG อ้างด้วยชื่อ ใช้ซ้ำได้หลายข้อ |
+| `tools/build.py` | ประกอบคลังข้อสอบ + รูป เข้า `index.html` (และซิงค์สำเนา) |
+| `tools/build_figures.py` · `svg_helpers.py` | สร้างคลังรูป (แผนภูมิ, ภาพสามมิติ, ระนาบพิกัด ฯลฯ) |
 | `tools/validate.py` · `tools/dom_test.cjs` | ชุดตรวจที่ CI ใช้ (คลังข้อสอบ + พฤติกรรมหน้าเว็บ) |
-| `tools/merge_into_html.py` | รวมข้อสอบชุดใหม่เข้า `index.html` (รันซ้ำได้ ข้ามข้อที่ซ้ำ) |
 
-## เพิ่มข้อสอบ
+## แก้ไขและเพิ่มข้อสอบ
+
+ข้อสอบแยกเป็นไฟล์ละหน่วยใน `questions/units/` — แก้ไฟล์ของหน่วยนั้นแล้ว build
 
 ```bash
-python3 tools/phase3_questions.py                       # สร้าง questions/phase3.json
-python3 tools/merge_into_html.py questions/phase3.json  # รวมเข้า index.html
-cp index.html ข้อสอบคณิตศาสตร์_ม1.html                   # ซิงค์สำเนา
+$EDITOR questions/units/unit-07-ratio-proportion-percent.json
+python3 tools/build.py                                  # ประกอบเข้า index.html + ซิงค์สำเนา
+
+python3 tools/build.py --check                          # ตรวจว่าไฟล์ตรงกับคลังข้อสอบ
 python3 tools/validate.py                               # ตรวจคลังข้อสอบ
 npm install jsdom --no-save && node tools/dom_test.cjs  # ทดสอบหน้าเว็บ
 ```
