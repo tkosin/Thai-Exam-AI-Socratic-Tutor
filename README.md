@@ -1,10 +1,10 @@
-# funny-math
+# math-is-fun
 
 ข้อสอบคณิตศาสตร์ ม.1 · 610 ข้อ ครอบคลุมตัวชี้วัดครบทั้ง 9 ตัว — หน้าเว็บแบบไฟล์เดียว (single-file HTML) ทำข้อสอบและตรวจคำตอบได้ในเบราว์เซอร์
 
 ## เปิดใช้งาน
 
-👉 [tkosin.github.io/funny-math](https://tkosin.github.io/funny-math/)
+👉 [tkosin.github.io/math-is-fun](https://tkosin.github.io/math-is-fun/)
 
 ## ความสามารถ
 
