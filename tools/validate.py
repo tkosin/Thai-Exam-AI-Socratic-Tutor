@@ -16,12 +16,15 @@ import xml.etree.ElementTree as ET
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HTML = os.path.join(ROOT, "index.html")
 COPY = os.path.join(ROOT, "ข้อสอบคณิตศาสตร์_ม1.html")
+COURSES = os.path.join(ROOT, "questions", "courses.json")
 
 LEVELS = {"ง่าย", "กลาง", "ยาก"}
-TAGS = {"ม.1", "ทบทวน ป.6", "ต่อยอด ม.2"}
-STD_RE = re.compile(r"^(ค \d\.\d ม\.\d/\d|-)$")
+TAGS = {"ม.1", "ม.2", "ทบทวน ป.6", "ต่อยอด ม.2"}
+# ค = คณิตศาสตร์ · ว = วิทยาศาสตร์ · ตัวชี้วัดวิทย์บางมาตรฐานมีถึงสองหลัก (เช่น ว 1.2 ม.2/17)
+STD_RE = re.compile(r"^([คว] \d\.\d ม\.\d/\d{1,2}|-)$")
 CHOICE_LETTERS = {"ก", "ข", "ค", "ง"}
-FIELDS = ("unit", "uname", "sub", "text", "answer", "level", "std", "tag")
+FIELDS = ("subject", "grade", "unit", "uname", "sub",
+          "text", "answer", "level", "std", "tag")
 
 errors, notes = [], []
 
@@ -56,16 +59,44 @@ def main():
         if not STD_RE.match(str(q.get("std", ""))):
             err(f"ข้อ {i}: std '{q.get('std')}' ไม่ตรงรูปแบบตัวชี้วัด")
 
-    # ---- 2. เรียงตามหน่วย และชื่อหน่วยตรงกันทุกข้อ ----
-    units = [q["unit"] for q in qs]
-    if units != sorted(units):
-        err("ข้อสอบไม่ได้เรียงตามหน่วย (จะทำให้ลำดับข้อในโหมด 'ทุกหน่วย' สลับไปมา)")
-    names = {}
+    # ---- 2. วิชาต่อเนื่องกันเป็นบล็อก · เรียงตามหน่วย · ชื่อหน่วยตรงกันทุกข้อ ----
+    manifest = [(c["subject"], c["grade"]) for c in json.load(open(COURSES, encoding="utf-8"))]
+    blocks = []
     for q in qs:
-        names.setdefault(q["unit"], set()).add(q["uname"])
-    for u, ns in sorted(names.items()):
-        if len(ns) > 1:
-            err(f"หน่วย {u}: ชื่อหน่วยไม่ตรงกัน {sorted(ns)}")
+        key = (q.get("subject"), q.get("grade"))
+        if not blocks or blocks[-1] != key:
+            blocks.append(key)
+    if blocks != manifest:
+        err(f"ลำดับวิชาใน index.html ({blocks}) ไม่ตรงกับ questions/courses.json ({manifest}) "
+            "— แต่ละวิชาต้องอยู่ติดกันเป็นบล็อกและเรียงตามไฟล์ manifest")
+
+    by_course = {}
+    for q in qs:
+        by_course.setdefault((q.get("subject"), q.get("grade")), []).append(q)
+    for (subj, grade), cqs in by_course.items():
+        units = [q["unit"] for q in cqs]
+        if units != sorted(units):
+            err(f"{subj} {grade}: ข้อสอบไม่ได้เรียงตามหน่วย "
+                "(จะทำให้ลำดับข้อในโหมด 'ทุกหน่วย' สลับไปมา)")
+        names = {}
+        for q in cqs:
+            names.setdefault(q["unit"], set()).add(q["uname"])
+        for u, ns in sorted(names.items()):
+            if len(ns) > 1:
+                err(f"{subj} {grade} หน่วย {u}: ชื่อหน่วยไม่ตรงกัน {sorted(ns)}")
+
+    # ตัวชี้วัดต้องขึ้นต้นด้วยอักษรของวิชานั้น (คณิต = ค · วิทยาศาสตร์ = ว)
+    PREFIX = {"คณิตศาสตร์": "ค", "วิทยาศาสตร์": "ว"}
+    for i, q in enumerate(qs, 1):
+        want = PREFIX.get(q.get("subject"))
+        std = str(q.get("std", ""))
+        if want and std != "-" and not std.startswith(want + " "):
+            err(f"ข้อ {i}: วิชา {q.get('subject')} แต่ตัวชี้วัดเป็น '{std}'")
+        # ข้อที่ติด tag ทบทวน/ต่อยอด ตั้งใจให้ตัวชี้วัดข้ามชั้น จึงยกเว้นให้
+        on_grade = q.get("tag") in ("ม.1", "ม.2")
+        if std != "-" and on_grade and f" {q['grade']}/" not in std:
+            err(f"ข้อ {i}: ระดับชั้น {q.get('grade')} tag '{q.get('tag')}' "
+                f"แต่ตัวชี้วัดเป็น '{std}'")
 
     # ---- 3. ไม่มีโจทย์ซ้ำ ----
     seen = {}
@@ -154,11 +185,13 @@ console.log(JSON.stringify({{ bad, manual }}));
     elif open(COPY, encoding="utf-8").read() != html:
         err("สำเนา ข้อสอบคณิตศาสตร์_ม1.html ไม่ตรงกับ index.html (รัน: python3 tools/build.py)")
 
-    # ---- 9. สรุปจำนวนข้อตามหน่วย ----
-    per_unit = {}
-    for q in qs:
-        per_unit[q["unit"]] = per_unit.get(q["unit"], 0) + 1
-    notes.append("ต่อหน่วย: " + " · ".join(f"{u}:{c}" for u, c in sorted(per_unit.items())))
+    # ---- 9. สรุปจำนวนข้อตามวิชาและหน่วย ----
+    for (subj, grade), cqs in by_course.items():
+        per_unit = {}
+        for q in cqs:
+            per_unit[q["unit"]] = per_unit.get(q["unit"], 0) + 1
+        notes.append(f"{subj} {grade}: {len(cqs)} ข้อ · " +
+                     " · ".join(f"{u}:{c}" for u, c in sorted(per_unit.items())))
     return report()
 
 

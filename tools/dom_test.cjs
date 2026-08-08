@@ -38,7 +38,7 @@ const count = el => +el.querySelector('.cnt').textContent;
 const label = el => el.querySelector('.fname').textContent;
 const shown = () => +($('#navCenter').textContent.match(/\/\s*(\d+)/) || [0, 0])[1];
 
-// จำนวนข้อสอบจริงจากข้อมูลในหน้า
+// จำนวนข้อสอบของ "วิชาที่เลือกอยู่" (ไม่ใช่ทั้งคลัง — คลังมีหลายวิชา)
 const TOTAL = count(items('unitList')[0]);
 chk('อ่านคลังข้อสอบได้', TOTAL > 0, TOTAL);
 
@@ -49,7 +49,23 @@ chk('ไม่มีแถบแท็บแบบเดิมเหลืออ
 chk('ชื่อเรื่องมีจำนวนข้อตรงกับข้อมูล', $('#mainTitle').textContent.includes(String(TOTAL)),
     $('#mainTitle').textContent);
 
-// ---------- ตัวกรอง 4 ชั้น ----------
+// ---------- ตัวกรองวิชา (วิชา + ระดับชั้น) ----------
+const courses = () => items('courseList');
+chk('มีตัวกรองวิชา', courses().length >= 2, courses().length + ' วิชา');
+chk('เลือกวิชาแรกไว้ตั้งแต่เปิดหน้า', courses()[0].classList.contains('active'),
+    courses().map(label).join(' / '));
+chk('ตัวกรองวิชาไม่มีตัวเลือก "ทุกวิชา"',
+    courses().every(e => !/ทุกวิชา/.test(label(e))), courses().map(label).join(' / '));
+chk('จำนวนของทุกวิชารวมกันมากกว่าวิชาเดียว',
+    courses().reduce((a, e) => a + count(e), 0) > TOTAL,
+    courses().map(e => `${label(e)}:${count(e)}`).join(' · '));
+chk('ชื่อเรื่องตรงกับวิชาที่เลือก', $('#mainTitle').textContent.includes(label(courses()[0])),
+    $('#mainTitle').textContent);
+chk('หัวกลุ่มวิชาแสดงวิชาที่เลือกอยู่เสมอ',
+    !!d.querySelector('#group-course .fhead .fsel'),
+    d.querySelector('#group-course .fhead').textContent.trim());
+
+// ---------- ตัวกรอง 4 ชั้นภายในวิชา ----------
 const UNITS = items('unitList').length - 1;      // ไม่นับปุ่ม "ทุกหน่วย"
 chk('มีตัวกรองหน่วยครบ (อ่านจากข้อมูล)', UNITS >= 9, UNITS + ' หน่วย');
 chk('ทุกปุ่มหน่วยมีเลขหน่วยกำกับ',
@@ -248,6 +264,69 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
   chk('กรองสองชั้นแล้วนับเป็น 2', badge() === '2', badge());
   rclick(rd('#resetFilterBtn'));
   chk('ล้างตัวกรองแล้วตัวเลขหาย', badge() === '', badge());
+}
+
+// ---------- สลับวิชา ----------
+{
+  const r = load();
+  const rd = s => r.d.querySelector(s);
+  const rall = s => [...r.d.querySelectorAll(s)];
+  const rclick = el => el.dispatchEvent(new r.w.Event('click'));
+  const cItems = () => rall('#courseList .fitem');
+  const uItems = () => rall('#unitList .fitem');
+  const cnt = el => +el.querySelector('.cnt').textContent;
+  const name = el => el.querySelector('.fname').textContent;
+  const showing = () => +(rd('#navCenter').textContent.match(/\/\s*(\d+)/) || [0, 0])[1];
+
+  const first = cItems()[0], second = cItems()[1];
+  const firstUnits = uItems().map(name).join('|');
+  const secondCount = cnt(second);
+
+  // เลือกตัวกรองในวิชาแรกไว้ก่อน เพื่อดูว่าสลับวิชาแล้วถูกล้างจริง
+  rclick(uItems()[1]);
+  rclick(rall('#levelList .fitem')[1]);
+  chk('ก่อนสลับวิชามีตัวกรองทำงานอยู่', rd('#filterBadge').textContent === '2',
+      rd('#filterBadge').textContent);
+
+  rclick(second);
+  chk('สลับวิชาแล้วจำนวนข้อตรงกับวิชาใหม่', showing() === secondCount,
+      `${showing()} vs ${secondCount}`);
+  chk('สลับวิชาแล้วล้างตัวกรองของวิชาเดิม', rd('#filterBadge').textContent === '',
+      rd('#filterBadge').textContent);
+  chk('สลับวิชาแล้วรายการหน่วยเปลี่ยนตาม', uItems().map(name).join('|') !== firstUnits,
+      uItems().map(name).join('|').slice(0, 60));
+  chk('สลับวิชาแล้วชื่อเรื่องเปลี่ยนตาม', rd('#mainTitle').textContent.includes(name(second)),
+      rd('#mainTitle').textContent);
+  chk('เลขข้อเริ่มนับใหม่ในแต่ละวิชา', rd('.qnum-big').textContent.trim() === 'ข้อที่ 1',
+      rd('.qnum-big').textContent);
+  chk('ทุกวิชามีเพียงวิชาเดียวที่ถูกเลือก',
+      cItems().filter(e => e.classList.contains('active')).length === 1, '');
+
+  // ล้างตัวกรองต้องไม่ดีดกลับไปวิชาแรก
+  rclick(uItems()[1]);
+  rclick(rd('#resetFilterBtn'));
+  chk('ล้างตัวกรองไม่เปลี่ยนวิชาที่เลือกไว้', cItems()[1].classList.contains('active'), '');
+
+  // วิชาที่เลือกเป็นความชอบส่วนตัว ต้องอยู่ข้ามการรีเฟรช
+  const ui = JSON.parse(r.w.localStorage.getItem('funnymath-ui-v1') || '{}');
+  chk('บันทึกวิชาที่เลือกไว้', ui.course === name(second), JSON.stringify(ui.course));
+  const back = load({ key: 'funnymath-ui-v1', value: { course: ui.course } });
+  chk('รีเฟรชแล้วยังอยู่ที่วิชาเดิม',
+      back.d.querySelectorAll('#courseList .fitem')[1].classList.contains('active'), '');
+  const bogus = load({ key: 'funnymath-ui-v1', value: { course: 'วิชาที่ไม่มีอยู่จริง' } });
+  chk('วิชาที่บันทึกไว้ไม่มีอยู่แล้วกลับไปใช้วิชาแรก',
+      bogus.d.querySelectorAll('#courseList .fitem')[0].classList.contains('active'), '');
+
+  // ทุกวิชาต้องเปิดได้และมีข้อสอบ
+  for (let i = 0; i < cItems().length; i++) {
+    const rr = load();
+    const rrclick = el => el.dispatchEvent(new rr.w.Event('click'));
+    rrclick(rr.d.querySelectorAll('#courseList .fitem')[i]);
+    const n = +(rr.d.querySelector('#navCenter').textContent.match(/\/\s*(\d+)/) || [0, 0])[1];
+    const units = rr.d.querySelectorAll('#unitList .fitem').length - 1;
+    chk(`วิชาที่ ${i + 1} เปิดได้และมีหน่วยครบ`,
+        n > 0 && units > 0 && !!rr.d.querySelector('.qtext'), `${n} ข้อ / ${units} หน่วย`);
+  }
 }
 
 // ---------- ผลลัพธ์ ----------
