@@ -49,6 +49,8 @@
   .eyebrow{ display:block; font-size:11.5px; font-weight:600; letter-spacing:1.5px; color:var(--gold); text-transform:uppercase; margin-bottom:3px;}
   .title-row h1{ margin:0; font-size:19px; font-weight:700; }
   .header-actions{ display:flex; gap:8px; align-items:center; padding:10px 0 14px 0; flex-wrap:wrap; }
+  .exam-actions{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .exam-actions.hide, .btn.hide{ display:none; }
   .btn{
     font-family:inherit; font-size:12.5px; font-weight:600; cursor:pointer;
     border-radius:7px; border:1px solid rgba(255,255,255,.3);
@@ -65,6 +67,60 @@
   .progress-track{ flex:1; height:7px; border-radius:6px; background:rgba(255,255,255,.18); overflow:hidden;}
   .progress-fill{ height:100%; width:0%; background:linear-gradient(90deg, var(--gold), #f3c56b); border-radius:6px; transition:width .2s ease;}
   .progress-label{ font-size:12px; color:#dfe6ee; min-width:150px; text-align:right;}
+
+  /* ---------------- หน้าแรก ---------------- */
+  .home{ max-width:var(--maxw); margin:0 auto; padding:26px 20px 60px 20px; }
+  .home.hide, .layout.hide{ display:none; }
+
+  /* การ์ด "ทำต่อ" มาก่อนทุกอย่าง — คนที่ทำข้อสอบทุกวันจะได้กดครั้งเดียวถึงที่ค้างไว้ */
+  .resume{
+    display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+    background:linear-gradient(100deg, var(--navy), var(--navy-deep));
+    color:#fff; border-radius:var(--radius); padding:18px 22px; margin-bottom:22px;
+    box-shadow:0 6px 20px rgba(30,58,95,.22);
+  }
+  .resume .r-text{ flex:1 1 260px; min-width:0; }
+  .resume .r-lbl{ font-size:11.5px; letter-spacing:1.2px; text-transform:uppercase;
+                  color:var(--gold); font-weight:600; }
+  .resume .r-main{ font-size:16.5px; font-weight:600; margin-top:3px; }
+  .resume .r-sub{ font-size:12.5px; color:#c9d6e4; margin-top:3px; }
+  .resume .btn.gold{ font-size:13.5px; padding:9px 18px; }
+
+  .home-sum{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:10px; }
+  .home-sum h2{ margin:0; font-size:15px; color:var(--navy-deep); }
+  .home-sum .s-note{ font-size:12.5px; color:var(--ink-soft); margin-left:auto; }
+  .home-bar{ height:8px; border-radius:6px; background:#e6e2d6; overflow:hidden; margin-bottom:26px; }
+  .home-bar i{ display:block; height:100%; background:linear-gradient(90deg, var(--green), #58b894); }
+
+  .course-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(420px, 1fr)); gap:18px; }
+  .course-card{
+    background:var(--card); border:1px solid var(--paper-line); border-radius:var(--radius);
+    padding:18px 20px 16px 20px; box-shadow:0 2px 8px rgba(0,0,0,.05);
+    display:flex; flex-direction:column;
+  }
+  .course-card .c-head{ display:flex; align-items:baseline; gap:9px; flex-wrap:wrap; }
+  .course-card .c-name{
+    font-size:17px; font-weight:700; color:var(--navy-deep); background:none; border:0;
+    font-family:inherit; padding:0; cursor:pointer; text-align:left;
+  }
+  .course-card .c-name:hover{ color:var(--red); text-decoration:underline; }
+  .course-card .c-count{ margin-left:auto; font-size:12px; color:var(--ink-soft); }
+  .course-card .c-bar{ height:7px; border-radius:5px; background:#eeebe0; overflow:hidden; margin:11px 0 7px 0; }
+  .course-card .c-bar i{ display:block; height:100%; background:var(--navy); }
+  .course-card .c-stat{ font-size:12px; color:var(--ink-soft); display:flex; gap:12px; flex-wrap:wrap; }
+  .course-card .c-stat b{ font-weight:600; }
+  .course-card .c-stat .ok{ color:var(--green); }
+  .course-card .c-stat .no{ color:var(--red); }
+  .course-card .c-units{ display:flex; flex-wrap:wrap; gap:6px; margin-top:13px; }
+  .course-card .c-units button{
+    font-family:inherit; font-size:12px; color:var(--ink-soft); cursor:pointer;
+    background:#fbfaf6; border:1px solid var(--paper-line); border-radius:6px; padding:4px 9px;
+    display:inline-flex; align-items:center; gap:6px; max-width:100%;
+  }
+  .course-card .c-units button:hover{ background:#eef1f4; color:var(--navy); border-color:#c8d2dd; }
+  .course-card .c-units button .u-n{ font-weight:700; color:var(--navy); }
+  .course-card .c-units button .u-t{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .course-card .c-go{ margin-top:14px; align-self:flex-start; }
 
   /* ---------------- Layout: left filters + exam ---------------- */
   .layout{
@@ -381,7 +437,7 @@
   #printOnly{ display:none; }
 
   @media print{
-    header, .navrow, footer, .modal, .overlay, .sidebar{ display:none !important; }
+    header, .navrow, footer, .modal, .overlay, .sidebar, .home{ display:none !important; }
     body{ background:#fff; }
     main, .layout{ display:none !important; }
     #printOnly{
@@ -433,11 +489,14 @@
       </div>
     </div>
     <div class="header-actions">
-      <button class="btn filter-toggle" id="filterToggle" aria-expanded="false" aria-controls="sidebar"
-              title="แสดงตัวกรอง"><span>🔍 ตัวกรอง</span><span class="fbadge" id="filterBadge"></span></button>
-      <button class="btn" id="overviewBtn">📋 ภาพรวมข้อสอบ</button>
-      <button class="btn" id="printExamBtn">🖨️ พิมพ์ข้อสอบ (ไม่มีเฉลย)</button>
-      <button class="btn gold" id="printAnswerBtn">🔒 พิมพ์เฉลย</button>
+      <button class="btn" id="homeBtn">🏠 หน้าแรก</button>
+      <span class="exam-actions" id="examActions">
+        <button class="btn filter-toggle" id="filterToggle" aria-expanded="false" aria-controls="sidebar"
+                title="แสดงตัวกรอง"><span>🔍 ตัวกรอง</span><span class="fbadge" id="filterBadge"></span></button>
+        <button class="btn" id="overviewBtn">📋 ภาพรวมข้อสอบ</button>
+        <button class="btn" id="printExamBtn">🖨️ พิมพ์ข้อสอบ (ไม่มีเฉลย)</button>
+        <button class="btn gold" id="printAnswerBtn">🔒 พิมพ์เฉลย</button>
+      </span>
     </div>
   </div>
   <div class="progress-wrap">
@@ -446,7 +505,17 @@
   </div>
 </header>
 
-<div class="layout">
+<section class="home" id="homeView">
+  <div id="resumeSlot"></div>
+  <div class="home-sum">
+    <h2>ความก้าวหน้าทั้งหมด</h2>
+    <span class="s-note" id="homeSumNote"></span>
+  </div>
+  <div class="home-bar"><i id="homeBarFill"></i></div>
+  <div class="course-grid" id="courseGrid"></div>
+</section>
+
+<div class="layout hide" id="examView">
   <aside class="sidebar" id="sidebar">
     <div class="sb-title">
       <span>ตัวกรองข้อสอบ</span>
@@ -560,6 +629,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
   }
 
   const state = {
+    view: 'home',           // 'home' | 'exam' — เปิดเว็บมาเจอหน้าแรกเสมอ
     activeCourse: COURSES[0].key,
     activeUnit: 'all',
     activeSub: 'all',
@@ -605,6 +675,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
   const collapsed = { course:false, unit:false, sub:false, level:true, tag:true };
   // แผงตัวกรองเริ่มต้นแบบซ่อน — เปิดหน้ามาเห็นข้อสอบเต็มความกว้างก่อน
   let sidebarOpen = false;
+  let lastGidx = null;      // ข้อล่าสุดที่เปิดค้างไว้ (ลำดับในอาร์เรย์รวม)
   try{
     const d = JSON.parse(localStorage.getItem(UI_KEY) || '{}');
     if(d && typeof d.collapsed === 'object'){
@@ -615,11 +686,13 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
     if(d && typeof d.sidebarOpen === 'boolean') sidebarOpen = d.sidebarOpen;
     // วิชาที่เลือกไว้ล่าสุดเป็นความชอบส่วนตัว ไม่ใช่ความก้าวหน้า จึงเก็บที่คีย์นี้
     if(d && COURSE_BY_KEY[d.course]) state.activeCourse = d.course;
+    // ข้อล่าสุดที่เปิดค้างไว้ ใช้ทำปุ่ม "ทำต่อ" บนหน้าแรก
+    if(d && Number.isInteger(d.lastGidx) && QUESTIONS[d.lastGidx]) lastGidx = d.lastGidx;
   }catch(e){/* corrupt payload — ใช้ค่าเริ่มต้น */}
   function saveUI(){
     try{
       localStorage.setItem(UI_KEY, JSON.stringify({
-        collapsed, sidebarOpen, course: state.activeCourse
+        collapsed, sidebarOpen, course: state.activeCourse, lastGidx
       }));
     }catch(e){}
   }
@@ -713,13 +786,155 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
   }
 
   function applyCourseTitle(){
+    const mainTitle = document.getElementById('mainTitle');
+    const eyebrow = document.getElementById('eyebrow');
+    if(state.view === 'home'){
+      const TITLE = `คลังข้อสอบ ม.ต้น · ${QUESTIONS.length.toLocaleString('th-TH')} ข้อ`;
+      mainTitle.textContent = TITLE;
+      eyebrow.textContent = `สสวท. · ${COURSES.length} วิชา`;
+      document.title = TITLE;
+      return;
+    }
     const c = curCourse();
     const TITLE = `ข้อสอบ${c.subject} ${c.grade} · ${c.count} ข้อ`;
-    document.getElementById('mainTitle').textContent = TITLE;
-    document.getElementById('eyebrow').textContent =
-      `สสวท. · ระดับมัธยมศึกษาปีที่ ${c.grade.replace('ม.','')}`;
+    mainTitle.textContent = TITLE;
+    eyebrow.textContent = `สสวท. · ระดับมัธยมศึกษาปีที่ ${c.grade.replace('ม.','')}`;
     document.title = TITLE;
   }
+
+  // ---------- หน้าแรก ----------
+  // ตั้ง scrollTop ตรง ๆ แทนการเรียก scrollTo ของ window — ได้ผลเท่ากันในเบราว์เซอร์
+  // แต่ jsdom ยังไม่รองรับ จึงโยน error จนชุดทดสอบตกทั้งที่ไม่มีอะไรพังจริง
+  function scrollToTop(){
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
+  const homeView = document.getElementById('homeView');
+  const examView = document.getElementById('examView');
+  const examActions = document.getElementById('examActions');
+  const homeBtn = document.getElementById('homeBtn');
+
+  // นับสถานะของทุกวิชาในรอบเดียว — เรียกทุกครั้งที่กลับหน้าแรก ตัวเลขจึงสดเสมอ
+  function allStats(){
+    const m = {};
+    COURSES.forEach(c => { m[c.key] = { total:0, done:0, ok:0, no:0 }; });
+    QUESTIONS.forEach((q, i) => {
+      const s = m[courseKey(q)];
+      s.total++;
+      if(state.done.has(i)) s.done++;
+      const st = state.checked[i];
+      if(st === 'ok') s.ok++; else if(st === 'no') s.no++;
+    });
+    return m;
+  }
+
+  // เข้าหน้าข้อสอบพร้อมตั้งตัวกรองให้เสร็จในคลิกเดียว
+  function openCourse(key, unit, gidx){
+    state.activeCourse = key;
+    state.activeUnit = unit == null ? 'all' : unit;
+    state.activeSub = 'all'; state.activeLevel = 'all'; state.activeTag = 'all';
+    state.index = 0;
+    state.view = 'exam';
+    saveUI();
+    renderAll();
+    if(gidx != null){
+      const at = getFiltered().findIndex(item => item.gidx === gidx);
+      if(at >= 0){ state.index = at; renderAll(); }
+    }
+    scrollToTop();
+  }
+
+  function buildResume(stats){
+    const slot = document.getElementById('resumeSlot');
+    slot.innerHTML = '';
+    if(lastGidx == null) return;
+    const q = QUESTIONS[lastGidx];
+    const c = COURSE_BY_KEY[courseKey(q)];
+    if(!c) return;
+    const s = stats[c.key];
+    const box = document.createElement('div');
+    box.className = 'resume';
+    box.innerHTML =
+      `<div class="r-text"><div class="r-lbl">ทำต่อจากที่ค้างไว้</div>` +
+      `<div class="r-main">${c.subject} ${c.grade} · ข้อที่ ${QNO[lastGidx]}</div>` +
+      `<div class="r-sub">หน่วยที่ ${q.unit}: ${q.uname} · ทำแล้ว ${s.done} จาก ${s.total} ข้อ</div></div>`;
+    const go = document.createElement('button');
+    go.className = 'btn gold';
+    go.id = 'resumeBtn';
+    go.textContent = 'ทำต่อ →';
+    go.onclick = () => openCourse(c.key, null, lastGidx);
+    box.appendChild(go);
+    slot.appendChild(box);
+  }
+
+  function buildHome(){
+    const stats = allStats();
+    buildResume(stats);
+
+    const done = COURSES.reduce((a, c) => a + stats[c.key].done, 0);
+    const ok = COURSES.reduce((a, c) => a + stats[c.key].ok, 0);
+    const no = COURSES.reduce((a, c) => a + stats[c.key].no, 0);
+    const pct = QUESTIONS.length ? Math.round(done / QUESTIONS.length * 100) : 0;
+    document.getElementById('homeBarFill').style.width = pct + '%';
+    document.getElementById('homeSumNote').innerHTML =
+      `ทำแล้ว <b>${done}</b> จาก ${QUESTIONS.length.toLocaleString('th-TH')} ข้อ (${pct}%) · ` +
+      `<span style="color:var(--green)">ถูก ${ok}</span> · <span style="color:var(--red)">ผิด ${no}</span>`;
+
+    const grid = document.getElementById('courseGrid');
+    grid.innerHTML = '';
+    COURSES.forEach(c => {
+      const s = stats[c.key];
+      const cpct = s.total ? Math.round(s.done / s.total * 100) : 0;
+      const card = document.createElement('article');
+      card.className = 'course-card';
+
+      const head = document.createElement('div');
+      head.className = 'c-head';
+      const name = document.createElement('button');
+      name.className = 'c-name';
+      name.textContent = `${c.subject} ${c.grade}`;
+      name.onclick = () => openCourse(c.key);
+      const count = document.createElement('span');
+      count.className = 'c-count';
+      count.textContent = `${s.total} ข้อ · ${Object.keys(c.units).length} หน่วย`;
+      head.append(name, count);
+
+      const bar = document.createElement('div');
+      bar.className = 'c-bar';
+      bar.innerHTML = `<i style="width:${cpct}%"></i>`;
+
+      const stat = document.createElement('div');
+      stat.className = 'c-stat';
+      stat.innerHTML = `<span>ทำแล้ว <b>${s.done}</b> / ${s.total}</span>` +
+        `<span class="ok">ถูก <b>${s.ok}</b></span><span class="no">ผิด <b>${s.no}</b></span>`;
+
+      const units = document.createElement('div');
+      units.className = 'c-units';
+      Object.keys(c.units).map(Number).sort((a, b) => a - b).forEach(u => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.title = `${c.subject} ${c.grade} · หน่วยที่ ${u}: ${c.units[u]}`;
+        b.innerHTML = `<span class="u-n">${u}</span><span class="u-t">${c.units[u]}</span>`;
+        b.onclick = () => openCourse(c.key, u);
+        units.appendChild(b);
+      });
+
+      const go = document.createElement('button');
+      go.className = 'btn dark c-go';
+      go.textContent = 'เริ่มทำข้อสอบ →';
+      go.onclick = () => openCourse(c.key);
+
+      card.append(head, bar, stat, units, go);
+      grid.appendChild(card);
+    });
+  }
+
+  function goHome(){
+    state.view = 'home';
+    renderAll();
+    scrollToTop();
+  }
+  homeBtn.onclick = goHome;
 
   function makeFilterItem({label, count, active, unum, title, onClick}){
     const b = document.createElement('button');
@@ -1047,6 +1262,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
       return;
     }
     const { q, gidx } = item;
+    if(lastGidx !== gidx){ lastGidx = gidx; saveUI(); }
     const isDone = state.done.has(gidx);
     const isRevealed = state.revealed.has(gidx);
 
@@ -1179,9 +1395,25 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
   }
 
   function renderAll(){
+    const home = state.view === 'home';
+    homeView.classList.toggle('hide', !home);
+    examView.classList.toggle('hide', home);
+    examActions.classList.toggle('hide', home);
+    homeBtn.classList.toggle('hide', home);
     applyCourseTitle();
+    // สร้างแผงตัวกรองไว้เสมอ แม้อยู่หน้าแรก จะได้พร้อมใช้ทันทีที่เข้าหน้าข้อสอบ
     buildSidebar();
     updateFilterBadge();
+    if(home){
+      applySidebar();
+      buildHome();
+      // แถบบนหัวเรื่องสลับมาบอกความก้าวหน้ารวมทุกวิชา
+      const done = state.done.size;
+      const pct = QUESTIONS.length ? Math.round(done / QUESTIONS.length * 100) : 0;
+      progressFill.style.width = pct + '%';
+      progressLabel.textContent = `ทำแล้ว ${done} / ${QUESTIONS.length.toLocaleString('th-TH')} ข้อ`;
+      return;
+    }
     // จอเล็ก: แผงกางทับข้อสอบอยู่ เลือกตัวกรองแล้วพับเก็บให้เห็นข้อสอบทันที
     if(sidebarOpen && window.innerWidth <= 900) setSidebar(false);
     else applySidebar();

@@ -28,6 +28,13 @@ function load(seed) {
   return { dom, d: dom.window.document, w: dom.window, errs };
 }
 
+// ทุก load() เริ่มที่หน้าแรก — บล็อกที่ทดสอบหน้าข้อสอบต้องกดเข้าไปก่อน
+const enterExam = (r, nth = 0) => {
+  const b = [...r.d.querySelectorAll('#courseGrid .course-card .c-go')][nth];
+  b.dispatchEvent(new r.w.Event('click'));
+  return r;
+};
+
 const { dom, d, w, errs } = load();
 const $ = s => d.querySelector(s);
 const $$ = s => [...d.querySelectorAll(s)];
@@ -37,6 +44,35 @@ const items = id => $$('#' + id + ' .fitem');
 const count = el => +el.querySelector('.cnt').textContent;
 const label = el => el.querySelector('.fname').textContent;
 const shown = () => +($('#navCenter').textContent.match(/\/\s*(\d+)/) || [0, 0])[1];
+
+// ---------- หน้าแรก: เปิดเว็บมาเจอก่อนเสมอ ----------
+chk('เปิดเว็บมาอยู่ที่หน้าแรก',
+    !$('#homeView').classList.contains('hide') && $('#examView').classList.contains('hide'), '');
+chk('หน้าแรกซ่อนปุ่มที่ใช้เฉพาะหน้าข้อสอบ', $('#examActions').classList.contains('hide'), '');
+chk('หน้าแรกซ่อนปุ่มหน้าแรกของตัวเอง', $('#homeBtn').classList.contains('hide'), '');
+chk('หัวเรื่องหน้าแรกบอกจำนวนข้อทั้งคลัง', /คลังข้อสอบ/.test($('#mainTitle').textContent),
+    $('#mainTitle').textContent);
+chk('มีการ์ดครบทุกวิชา',
+    $$('#courseGrid .course-card').length === $$('#courseList .fitem').length,
+    `${$$('#courseGrid .course-card').length} การ์ด`);
+chk('การ์ดวิชาบอกจำนวนข้อและจำนวนหน่วย',
+    $$('#courseGrid .course-card .c-count').every(e => /ข้อ.*หน่วย/.test(e.textContent)),
+    $('#courseGrid .c-count').textContent);
+chk('การ์ดวิชาบอกความก้าวหน้า ถูก และผิด',
+    !!$('#courseGrid .c-stat .ok') && !!$('#courseGrid .c-stat .no'),
+    $('#courseGrid .c-stat').textContent.replace(/\s+/g, ' ').trim());
+chk('ยังไม่เคยทำข้อสอบจึงไม่มีปุ่มทำต่อ', !$('#resumeBtn'), '');
+chk('แถบบนหัวเรื่องบอกความก้าวหน้ารวมทุกวิชา',
+    /ทำแล้ว 0 \//.test($('#progressLabel').textContent), $('#progressLabel').textContent);
+
+// ปุ่มบนการ์ดวิชาแรกพาเข้าหน้าข้อสอบ
+const firstCourseName = $('#courseGrid .c-name').textContent;
+click($('#courseGrid .course-card .c-go'));
+chk('กดเริ่มทำข้อสอบแล้วเข้าหน้าข้อสอบ',
+    $('#homeView').classList.contains('hide') && !$('#examView').classList.contains('hide'), '');
+chk('เข้าหน้าข้อสอบแล้วปุ่มหน้าแรกโผล่', !$('#homeBtn').classList.contains('hide'), '');
+chk('เข้าตรงวิชาที่กด', $('#mainTitle').textContent.includes(firstCourseName),
+    $('#mainTitle').textContent);
 
 // จำนวนข้อสอบของ "วิชาที่เลือกอยู่" (ไม่ใช่ทั้งคลัง — คลังมีหลายวิชา)
 const TOTAL = count(items('unitList')[0]);
@@ -206,7 +242,7 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
 // ---------- โหลดข้อมูลที่บันทึกไว้กลับมาได้ ----------
 {
   const key = Object.keys(w.localStorage).find(k => PROGRESS.test(k));
-  const r = load({ key, value: { done: [0, 5], work: { 0: ['a', 'b', 'c'] }, finalAns: { 0: '42' }, checked: {} } });
+  const r = enterExam(load({ key, value: { done: [0, 5], work: { 0: ['a', 'b', 'c'] }, finalAns: { 0: '42' }, checked: {} } }));
   const rd = s => r.d.querySelector(s);
   chk('รีเฟรชแล้วกู้วิธีทำกลับมา', r.d.querySelectorAll('#workLines .work-line').length === 3,
       r.d.querySelectorAll('#workLines .work-line').length);
@@ -214,7 +250,7 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
   chk('รีเฟรชแล้วกู้จำนวนข้อที่ทำแล้ว', rd('#progressLabel').textContent.includes('ทำแล้ว 2'),
       rd('#progressLabel').textContent);
   chk('ข้อมูลที่บันทึกเสียหายก็ยังเปิดหน้าได้',
-      !!load({ key, value: 'ไม่ใช่ JSON' }).d.querySelector('#finalInput'));
+      !!enterExam(load({ key, value: 'ไม่ใช่ JSON' })).d.querySelector('#finalInput'));
 
   // การพับ/กางกลุ่มตัวกรองต้องอยู่ข้ามการรีเฟรช และไม่พังเมื่อข้อมูลเสียหาย
   const ui = load({ key: 'funnymath-ui-v1', value: { collapsed: { unit: true, sub: true, level: false, tag: false } } });
@@ -228,7 +264,7 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
 
 // ---------- แผงตัวกรอง: ซ่อนไว้เป็นค่าเริ่มต้น กาง/พับได้ทุกขนาดจอ ----------
 {
-  const r = load();
+  const r = enterExam(load());
   const rd = s => r.d.querySelector(s);
   const rclick = el => el.dispatchEvent(new r.w.Event('click'));
   const isOpen = () => rd('#sidebar').classList.contains('open');
@@ -252,7 +288,7 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
   const ui = JSON.parse(r.w.localStorage.getItem('funnymath-ui-v1') || '{}');
   chk('บันทึกสถานะกาง/พับของแผง', ui.sidebarOpen === true, JSON.stringify(ui));
   chk('รีเฟรชแล้วจำว่าแผงกางอยู่',
-      load({ key: 'funnymath-ui-v1', value: { sidebarOpen: true } })
+      enterExam(load({ key: 'funnymath-ui-v1', value: { sidebarOpen: true } }))
         .d.querySelector('#sidebar').classList.contains('open'));
 
   // แผงถูกซ่อนแล้วตัวกรองต้องไม่หายเงียบ ๆ — ปุ่มบอกจำนวนตัวกรองที่ใช้อยู่
@@ -268,7 +304,7 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
 
 // ---------- สลับวิชา ----------
 {
-  const r = load();
+  const r = enterExam(load());
   const rd = s => r.d.querySelector(s);
   const rall = s => [...r.d.querySelectorAll(s)];
   const rclick = el => el.dispatchEvent(new r.w.Event('click'));
@@ -319,7 +355,7 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
 
   // ทุกวิชาต้องเปิดได้และมีข้อสอบ
   for (let i = 0; i < cItems().length; i++) {
-    const rr = load();
+    const rr = enterExam(load());
     const rrclick = el => el.dispatchEvent(new rr.w.Event('click'));
     rrclick(rr.d.querySelectorAll('#courseList .fitem')[i]);
     const n = +(rr.d.querySelector('#navCenter').textContent.match(/\/\s*(\d+)/) || [0, 0])[1];
@@ -334,10 +370,10 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
   // ป้อนสถานะไว้ล่วงหน้า จะได้ตรวจสีของแต่ละสถานะได้แน่นอน
   //   ข้อ 1 ติ๊กว่าทำแล้วเอง · ข้อ 2 ทำแล้ว+ตอบถูก · ข้อ 3 ตอบผิด · ข้อ 4 ตรวจเองไม่ได้ · ข้อ 5 ยังไม่แตะ
   const key = Object.keys(w.localStorage).find(k => PROGRESS.test(k));
-  const r = load({ key, value: {
+  const r = enterExam(load({ key, value: {
     done: [0, 1], work: {}, finalAns: {},
     checked: { 1: 'ok', 2: 'no', 3: 'manual' }
-  }});
+  }}));
   const rd = s => r.d.querySelector(s);
   const rall = s => [...r.d.querySelectorAll(s)];
   const rclick = el => el.dispatchEvent(new r.w.Event('click'));
@@ -411,6 +447,72 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
   chk('กดเลขข้อในภาพรวมแล้วไปข้อนั้น', rd('.qnum-big').textContent.trim() === `ข้อที่ ${want}`,
       `${rd('.qnum-big').textContent.trim()} vs ข้อที่ ${want}`);
   chk('กดเลขข้อแล้วปิดภาพรวมให้เอง', !rd('#overviewOverlay').classList.contains('show'));
+}
+
+// ---------- หน้าแรก: ทางลัดไปหน่วย · ปุ่มทำต่อ · กลับหน้าแรก ----------
+{
+  const r = load();
+  const rd = s => r.d.querySelector(s);
+  const rall = s => [...r.d.querySelectorAll(s)];
+  const rclick = el => el.dispatchEvent(new r.w.Event('click'));
+
+  // ทางลัดของแต่ละวิชาต้องมีครบทุกหน่วย
+  const cards = rall('#courseGrid .course-card');
+  const chipCounts = cards.map(c => c.querySelectorAll('.c-units button').length);
+  chk('ทุกการ์ดมีทางลัดไปหน่วยครบ', chipCounts.every(n => n > 0), chipCounts.join('/'));
+  chk('ทางลัดหน่วยบอกทั้งเลขหน่วยและชื่อหน่วย',
+      !!rd('#courseGrid .c-units button .u-n') && !!rd('#courseGrid .c-units button .u-t'),
+      rd('#courseGrid .c-units button').textContent);
+
+  // กดทางลัดหน่วยที่ 3 ของวิชาที่สอง -> เข้าหน้าข้อสอบพร้อมตัวกรองหน่วยนั้น
+  const card2 = cards[1];
+  const wantCourse = card2.querySelector('.c-name').textContent;
+  const chip = card2.querySelectorAll('.c-units button')[2];
+  const wantUnit = chip.querySelector('.u-n').textContent;
+  rclick(chip);
+  chk('กดทางลัดหน่วยแล้วเข้าหน้าข้อสอบ', !rd('#examView').classList.contains('hide'), '');
+  chk('ทางลัดหน่วยพาไปวิชาที่ถูกต้อง', rd('#mainTitle').textContent.includes(wantCourse),
+      rd('#mainTitle').textContent);
+  chk('ทางลัดหน่วยตั้งตัวกรองหน่วยให้เลย',
+      rd('#group-unit .fhead .fsel').textContent === `หน่วย ${wantUnit}`,
+      rd('#group-unit .fhead .fsel').textContent);
+  chk('ทางลัดหน่วยไม่ติดตัวกรองอื่นมาด้วย', rd('#filterBadge').textContent === '1',
+      rd('#filterBadge').textContent);
+
+  // กลับหน้าแรกแล้วตัวเลขต้องอัปเดตตามที่เพิ่งทำไป
+  // ช่องติ๊กต้องตั้งค่าแล้วยิง change เอง — Event('click') เปล่า ๆ ไม่ toggle ให้
+  const dc = rd('#doneCheck');
+  dc.checked = true;
+  dc.dispatchEvent(new r.w.Event('change'));
+  rclick(rd('#homeBtn'));
+  chk('กดหน้าแรกแล้วกลับมาหน้าแรกได้',
+      !rd('#homeView').classList.contains('hide') && rd('#examView').classList.contains('hide'), '');
+  chk('กลับหน้าแรกแล้วตัวเลขความก้าวหน้าอัปเดต',
+      /ทำแล้ว 1 \//.test(rd('#progressLabel').textContent), rd('#progressLabel').textContent);
+  chk('การ์ดของวิชาที่เพิ่งทำนับเพิ่มให้',
+      /ทำแล้ว\s*1\s*\//.test(rall('#courseGrid .course-card')[1].querySelector('.c-stat').textContent),
+      rall('#courseGrid .course-card')[1].querySelector('.c-stat').textContent.replace(/\s+/g, ' '));
+
+  // เปิดข้อสอบแล้วต้องได้ปุ่ม "ทำต่อ" ที่พากลับไปข้อเดิม
+  chk('เคยเปิดข้อสอบแล้วจึงมีปุ่มทำต่อ', !!rd('#resumeBtn'), '');
+  const resumeLine = rd('.resume .r-main').textContent;
+  rclick(rd('#resumeBtn'));
+  chk('ปุ่มทำต่อพากลับเข้าหน้าข้อสอบ', !rd('#examView').classList.contains('hide'), '');
+  chk('ปุ่มทำต่อกลับไปข้อเดิม',
+      resumeLine.includes(rd('.qnum-big').textContent.trim().replace('ข้อที่ ', 'ข้อที่ ')),
+      `${resumeLine} vs ${rd('.qnum-big').textContent.trim()}`);
+
+  // ข้อล่าสุดต้องอยู่ข้ามการรีเฟรช
+  const ui = JSON.parse(r.w.localStorage.getItem('funnymath-ui-v1') || '{}');
+  chk('บันทึกข้อล่าสุดไว้', Number.isInteger(ui.lastGidx), JSON.stringify(ui.lastGidx));
+  const back = load({ key: 'funnymath-ui-v1', value: { lastGidx: 5 } });
+  chk('รีเฟรชแล้วยังมีปุ่มทำต่อ', !!back.d.querySelector('#resumeBtn'), '');
+  chk('ปุ่มทำต่อชี้ไปข้อที่บันทึกไว้',
+      /ข้อที่ 6/.test(back.d.querySelector('.resume .r-main').textContent),
+      back.d.querySelector('.resume .r-main').textContent);
+  const bad = load({ key: 'funnymath-ui-v1', value: { lastGidx: 999999 } });
+  chk('ข้อล่าสุดที่ไม่มีอยู่จริงไม่ทำให้หน้าแรกพัง',
+      !bad.d.querySelector('#resumeBtn') && !!bad.d.querySelector('#courseGrid .course-card'), '');
 }
 
 // ---------- ผลลัพธ์ ----------
