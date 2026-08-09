@@ -301,21 +301,61 @@
   }
   .modal h3{ margin:0 0 4px 0; font-size:16px; color:var(--navy-deep); }
   .modal .modal-sub{ font-size:12.5px; color:var(--ink-soft); margin-bottom:14px; }
+
+  /* ภาพรวมข้อสอบกินพื้นที่เกือบเต็มจอ — ต้องเห็นทุกข้อของทุกหน่วยพร้อมกัน
+     หัวเรื่องกับคำอธิบายสัญลักษณ์ตรึงไว้ ให้เลื่อนเฉพาะตารางข้อ */
+  .modal.overview{
+    max-width:1500px; width:96vw; height:94vh; max-height:94vh;
+    padding:0; overflow:hidden; display:flex; flex-direction:column;
+  }
+  .modal.overview .ov-head{ flex:0 0 auto; padding:18px 24px 12px 24px; border-bottom:1px solid var(--paper-line); }
+  .modal.overview .ov-head .modal-sub{ margin-bottom:0; }
+  .modal.overview .ov-body{ flex:1 1 auto; overflow-y:auto; padding:16px 24px 22px 24px; }
+  .modal.overview .ov-foot{
+    flex:0 0 auto; padding:11px 24px 14px 24px; border-top:1px solid var(--paper-line);
+    display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+  }
+  .modal.overview .ov-foot .legend{ margin:0; flex:1 1 auto; }
+  .modal.overview .modal-close{ margin:0; width:auto; flex:0 0 auto; }
+  .ov-sum b{ font-weight:600; }
+  .ov-sum .s-ok{ color:var(--green); }
+  .ov-sum .s-no{ color:var(--red); }
+
+  .ov-unit + .ov-unit{ margin-top:20px; }
+  .ov-unit-head{
+    display:flex; align-items:baseline; gap:9px; flex-wrap:wrap;
+    margin-bottom:9px; padding-bottom:6px; border-bottom:1px dashed var(--paper-line);
+  }
+  .ov-unit-head .u-num{
+    flex:0 0 auto; font-size:11px; font-weight:700; color:var(--navy);
+    background:#eef1f4; border-radius:5px; padding:1px 7px;
+  }
+  .ov-unit-head .u-name{ font-size:13.5px; font-weight:600; color:var(--navy-deep); }
+  .ov-unit-head .u-stat{ margin-left:auto; font-size:11.5px; color:var(--ink-soft); }
+  .ov-unit-head .u-stat b{ font-weight:600; color:var(--navy-deep); }
+
   .grid-nav{ display:grid; grid-template-columns:repeat(auto-fill, minmax(38px, 1fr)); gap:6px; }
   .grid-nav button{
     aspect-ratio:1; border-radius:7px; border:1px solid #ddd8c9; background:#fbfaf6;
     font-family:inherit; font-size:12px; font-weight:600; color:var(--ink-soft); cursor:pointer;
   }
-  .grid-nav button.gcur{ background:var(--navy); color:#fff; border-color:var(--navy); }
-  .grid-nav button.gdone{ background:#e4f2ec; color:var(--green); border-color:#bfe3d3; }
-  .grid-nav button.gdone.gcur{ background:var(--green); color:#fff; }
+  /* สถานะรายข้อ — เขียว = ตอบถูก · แดง = ตอบผิด · เหลือง = ตรวจอัตโนมัติไม่ได้ · น้ำเงิน = ติ๊กว่าทำแล้วเอง */
+  .grid-nav button.gok{ background:#e4f2ec; color:#1f6b52; border-color:#a9dcc6; }
+  .grid-nav button.gno{ background:#fbe6e3; color:#a32d1e; border-color:#eeb2a9; }
+  .grid-nav button.gmanual{ background:#fdf1dc; color:#8a6212; border-color:#f0d7a4; }
+  .grid-nav button.gdone{ background:#e8ecf1; color:var(--navy); border-color:#c6d1dd; }
+  /* ข้อปัจจุบันใช้กรอบ ไม่ทับสีสถานะ จะได้เห็นทั้งสองอย่างพร้อมกัน */
+  .grid-nav button.gcur{ border-color:var(--navy); box-shadow:0 0 0 2px var(--navy); }
   .modal-close{ margin-top:16px; width:100%; }
 
   .legend{ display:flex; gap:14px; font-size:11.5px; color:var(--ink-soft); margin-top:12px; flex-wrap:wrap;}
   .legend span{ display:inline-flex; align-items:center; gap:5px;}
-  .legend i{ width:11px; height:11px; border-radius:3px; display:inline-block; border:1px solid #ddd8c9;}
-  .legend i.done{ background:#e4f2ec; border-color:#bfe3d3;}
-  .legend i.cur{ background:var(--navy); border-color:var(--navy);}
+  .legend i{ width:11px; height:11px; border-radius:3px; display:inline-block; border:1px solid #ddd8c9; background:#fbfaf6;}
+  .legend i.ok{ background:#e4f2ec; border-color:#a9dcc6;}
+  .legend i.no{ background:#fbe6e3; border-color:#eeb2a9;}
+  .legend i.manual{ background:#fdf1dc; border-color:#f0d7a4;}
+  .legend i.done{ background:#e8ecf1; border-color:#c6d1dd;}
+  .legend i.cur{ border-color:var(--navy); box-shadow:0 0 0 2px var(--navy);}
 
   /* password modal */
   .pw-modal{ max-width:360px; text-align:center; }
@@ -370,6 +410,13 @@
     .progress-label{ min-width:0; }
     .add-line{ margin-left:0; }
     .work-line .ln{ display:none; }
+    /* จอเล็ก: ภาพรวมข้อสอบเต็มจอไปเลย และปุ่มปิดกินเต็มบรรทัด */
+    .overlay{ padding:8px; }
+    .modal.overview{ width:100%; height:100%; max-height:100%; }
+    .modal.overview .ov-head{ padding:14px 16px 10px 16px; }
+    .modal.overview .ov-body{ padding:14px 16px 18px 16px; }
+    .modal.overview .ov-foot{ padding:10px 16px 12px 16px; }
+    .modal.overview .modal-close{ width:100%; }
   }
 
   :focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
@@ -429,16 +476,23 @@
 
 <!-- overview modal -->
 <div class="overlay" id="overviewOverlay">
-  <div class="modal">
-    <h3>ภาพรวมข้อสอบ</h3>
-    <div class="modal-sub" id="overviewSub">แตะหมายเลขข้อที่ต้องการไปทำ</div>
-    <div class="grid-nav" id="gridNav"></div>
-    <div class="legend">
-      <span><i class="cur"></i> ข้อปัจจุบัน</span>
-      <span><i class="done"></i> ทำแล้ว</span>
-      <span><i></i> ยังไม่ทำ</span>
+  <div class="modal overview" role="dialog" aria-modal="true" aria-labelledby="overviewTitle">
+    <div class="ov-head">
+      <h3 id="overviewTitle">ภาพรวมข้อสอบ</h3>
+      <div class="modal-sub ov-sum" id="overviewSub">แตะหมายเลขข้อที่ต้องการไปทำ</div>
     </div>
-    <button class="btn light modal-close" id="closeOverviewBtn">ปิดหน้าต่างนี้</button>
+    <div class="ov-body" id="gridNav"></div>
+    <div class="ov-foot">
+      <div class="legend">
+        <span><i class="cur"></i> ข้อปัจจุบัน</span>
+        <span><i class="ok"></i> ตอบถูก</span>
+        <span><i class="no"></i> ตอบผิด</span>
+        <span><i class="manual"></i> ตรวจอัตโนมัติไม่ได้</span>
+        <span><i class="done"></i> ทำแล้ว (ติ๊กเอง)</span>
+        <span><i></i> ยังไม่ทำ</span>
+      </div>
+      <button class="btn light modal-close" id="closeOverviewBtn">ปิดหน้าต่างนี้</button>
+    </div>
   </div>
 </div>
 
@@ -1168,19 +1222,66 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
   }
 
   // ---------- overview modal ----------
+  // ผลตรวจคำตอบมาก่อนสถานะ "ทำแล้ว" เพราะบอกได้ละเอียดกว่าว่าถูกหรือผิด
+  const OV_STATE = {
+    ok:     ['gok',     'ตอบถูก'],
+    no:     ['gno',     'ตอบผิด'],
+    manual: ['gmanual', 'ตรวจอัตโนมัติไม่ได้']
+  };
+
   function openOverview(){
     const list = getFiltered();
-    overviewSub.textContent = `${filterLabel()} · ${list.length} ข้อ`;
-    gridNav.innerHTML = '';
+    const units = curCourse().units;
+    const tally = { ok:0, no:0, manual:0, done:0, todo:0 };
+
+    // จัดกลุ่มตามหน่วย — ข้อสอบเรียงตามหน่วยอยู่แล้ว จึงไล่ไปทีละข้อได้เลย
+    const groups = [];
     list.forEach((item, i) => {
-      const b = document.createElement('button');
-      const isCur = i === state.index;
-      const isDone = state.done.has(item.gidx);
-      b.className = (isDone ? 'gdone ' : '') + (isCur ? 'gcur' : '');
-      b.textContent = QNO[item.gidx];
-      b.onclick = () => { state.index = i; renderAll(); overviewOverlay.classList.remove('show'); };
-      gridNav.appendChild(b);
+      const last = groups[groups.length - 1];
+      if(!last || last.unit !== item.q.unit) groups.push({ unit:item.q.unit, items:[{item, i}] });
+      else last.items.push({ item, i });
     });
+
+    gridNav.innerHTML = '';
+    groups.forEach(g => {
+      const grid = document.createElement('div');
+      grid.className = 'grid-nav';
+      let done = 0;
+
+      g.items.forEach(({ item, i }) => {
+        const st = OV_STATE[state.checked[item.gidx]];
+        const isDone = state.done.has(item.gidx);
+        const b = document.createElement('button');
+        b.className = [st ? st[0] : (isDone ? 'gdone' : ''), i === state.index ? 'gcur' : '']
+          .filter(Boolean).join(' ');
+        b.textContent = QNO[item.gidx];
+        b.title = `ข้อที่ ${QNO[item.gidx]} · ${st ? st[1] : (isDone ? 'ทำแล้ว' : 'ยังไม่ทำ')}`;
+        b.onclick = () => { state.index = i; renderAll(); overviewOverlay.classList.remove('show'); };
+        grid.appendChild(b);
+
+        if(st) tally[state.checked[item.gidx]]++;
+        else if(isDone) tally.done++;
+        else tally.todo++;
+        if(isDone) done++;
+      });
+
+      const head = document.createElement('div');
+      head.className = 'ov-unit-head';
+      head.innerHTML = `<span class="u-num">${g.unit}</span>` +
+        `<span class="u-name">${units[g.unit]}</span>` +
+        `<span class="u-stat">ทำแล้ว <b>${done}</b> / ${g.items.length}</span>`;
+
+      const sec = document.createElement('section');
+      sec.className = 'ov-unit';
+      sec.append(head, grid);
+      gridNav.appendChild(sec);
+    });
+
+    const sum = [`<b class="s-ok">ถูก ${tally.ok}</b>`, `<b class="s-no">ผิด ${tally.no}</b>`];
+    if(tally.manual) sum.push(`ตรวจเองไม่ได้ ${tally.manual}`);
+    sum.push(`ทำแล้ว ${tally.done}`, `ยังไม่ทำ ${tally.todo}`);
+    overviewSub.innerHTML =
+      `${filterLabel()} · ${list.length} ข้อ · ${groups.length} หน่วย<br>` + sum.join(' · ');
     overviewOverlay.classList.add('show');
   }
   overviewBtn.onclick = openOverview;

@@ -329,6 +329,90 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
   }
 }
 
+// ---------- ภาพรวมข้อสอบ: เกือบเต็มจอ · แบ่งตามหน่วย · บอกสถานะรายข้อ ----------
+{
+  // ป้อนสถานะไว้ล่วงหน้า จะได้ตรวจสีของแต่ละสถานะได้แน่นอน
+  //   ข้อ 1 ติ๊กว่าทำแล้วเอง · ข้อ 2 ทำแล้ว+ตอบถูก · ข้อ 3 ตอบผิด · ข้อ 4 ตรวจเองไม่ได้ · ข้อ 5 ยังไม่แตะ
+  const key = Object.keys(w.localStorage).find(k => PROGRESS.test(k));
+  const r = load({ key, value: {
+    done: [0, 1], work: {}, finalAns: {},
+    checked: { 1: 'ok', 2: 'no', 3: 'manual' }
+  }});
+  const rd = s => r.d.querySelector(s);
+  const rall = s => [...r.d.querySelectorAll(s)];
+  const rclick = el => el.dispatchEvent(new r.w.Event('click'));
+
+  rclick(rd('#overviewBtn'));
+  chk('เปิดภาพรวมข้อสอบได้', rd('#overviewOverlay').classList.contains('show'));
+
+  // --- เกือบเต็มจอ ---
+  const modal = rd('#overviewOverlay .modal');
+  chk('ภาพรวมใช้กล่องแบบเต็มจอ', modal.classList.contains('overview'), modal.className);
+  chk('กล่องภาพรวมกว้างเกือบเต็มจอ', /\.modal\.overview\{[^}]*width:96vw/.test(html.replace(/\s/g, '')),
+      '');
+  chk('กล่องภาพรวมสูงเกือบเต็มจอ', /\.modal\.overview\{[^}]*height:94vh/.test(html.replace(/\s/g, '')),
+      '');
+  chk('ภาพรวมประกาศเป็น dialog', modal.getAttribute('role') === 'dialog'
+      && modal.getAttribute('aria-modal') === 'true', modal.getAttribute('role'));
+  chk('หัวเรื่องกับคำอธิบายสัญลักษณ์ตรึงไว้ เลื่อนเฉพาะตาราง',
+      !!rd('#overviewOverlay .ov-head') && !!rd('#overviewOverlay .ov-foot')
+      && rd('#gridNav').classList.contains('ov-body'), '');
+
+  // --- แบ่งตามหน่วยการเรียนรู้ ---
+  const UNITS_IN_COURSE = rall('#unitList .fitem').length - 1;
+  const secs = () => rall('#gridNav .ov-unit');
+  chk('แบ่งตามหน่วยการเรียนรู้ครบทุกหน่วย', secs().length === UNITS_IN_COURSE,
+      `${secs().length} กลุ่ม / ${UNITS_IN_COURSE} หน่วย`);
+  chk('ทุกกลุ่มมีเลขหน่วย ชื่อหน่วย และจำนวนที่ทำแล้ว',
+      secs().every(s => s.querySelector('.ov-unit-head .u-num')
+        && s.querySelector('.ov-unit-head .u-name')
+        && /ทำแล้ว/.test(s.querySelector('.ov-unit-head .u-stat').textContent)),
+      secs()[0].querySelector('.ov-unit-head').textContent.trim());
+  chk('เลขหน่วยของกลุ่มแรกคือหน่วย 1', secs()[0].querySelector('.u-num').textContent === '1',
+      secs()[0].querySelector('.u-num').textContent);
+  const btns = () => rall('#gridNav .grid-nav button');
+  chk('จำนวนปุ่มรวมเท่ากับจำนวนข้อทั้งวิชา', btns().length === TOTAL, `${btns().length} / ${TOTAL}`);
+  chk('กลุ่มหน่วย 1 มีข้อครบตามตัวกรอง',
+      secs()[0].querySelectorAll('button').length === +rall('#unitList .fitem')[1].querySelector('.cnt').textContent,
+      secs()[0].querySelectorAll('button').length);
+
+  // --- สถานะรายข้อ ---
+  const b = btns();
+  chk('ติ๊กว่าทำแล้วเอง -> สถานะ "ทำแล้ว"', b[0].classList.contains('gdone'), b[0].className);
+  chk('ตอบถูก -> สีเขียว', b[1].classList.contains('gok') && !b[1].classList.contains('gdone'),
+      b[1].className);
+  chk('ตอบผิด -> สีแดง', b[2].classList.contains('gno'), b[2].className);
+  chk('ตรวจอัตโนมัติไม่ได้ -> สถานะแยกต่างหาก', b[3].classList.contains('gmanual'), b[3].className);
+  chk('ยังไม่ทำ -> ไม่มีสีสถานะ',
+      !/gok|gno|gmanual|gdone/.test(b[4].className), b[4].className || '(ว่าง)');
+  chk('ข้อปัจจุบันมีกรอบไฮไลต์', b[0].classList.contains('gcur'), b[0].className);
+  chk('กรอบข้อปัจจุบันไม่ทับสีสถานะ', b[0].classList.contains('gdone'), b[0].className);
+  chk('ทุกปุ่มมี title บอกสถานะ',
+      b.every(e => /ยังไม่ทำ|ทำแล้ว|ตอบถูก|ตอบผิด|ตรวจอัตโนมัติไม่ได้/.test(e.title)), b[2].title);
+
+  // --- สรุปด้านบนและคำอธิบายสัญลักษณ์ ---
+  const sub = rd('#overviewSub').textContent;
+  chk('สรุปนับผลถูก-ผิดได้ถูกต้อง', /ถูก 1/.test(sub) && /ผิด 1/.test(sub), sub);
+  chk('สรุปนับข้อที่ยังไม่ทำ', new RegExp(`ยังไม่ทำ ${TOTAL - 4}`).test(sub), sub);
+  chk('คำอธิบายสัญลักษณ์ครบทุกสถานะ',
+      ['cur', 'ok', 'no', 'manual', 'done'].every(c => !!rd(`#overviewOverlay .legend i.${c}`)), '');
+
+  // --- ตัวกรองหน่วยแล้วเหลือกลุ่มเดียว · กดแล้วไปข้อนั้น ---
+  rclick(rd('#closeOverviewBtn'));
+  chk('ปิดภาพรวมได้', !rd('#overviewOverlay').classList.contains('show'));
+  rclick(rall('#unitList .fitem')[2]);          // เลือกหน่วยที่ 2
+  rclick(rd('#overviewBtn'));
+  chk('กรองหน่วยเดียวแล้วเหลือกลุ่มเดียว', secs().length === 1, secs().length);
+  chk('กลุ่มที่เหลือคือหน่วยที่เลือก', secs()[0].querySelector('.u-num').textContent === '2',
+      secs()[0].querySelector('.u-num').textContent);
+  const target = btns()[3];
+  const want = target.textContent;
+  rclick(target);
+  chk('กดเลขข้อในภาพรวมแล้วไปข้อนั้น', rd('.qnum-big').textContent.trim() === `ข้อที่ ${want}`,
+      `${rd('.qnum-big').textContent.trim()} vs ข้อที่ ${want}`);
+  chk('กดเลขข้อแล้วปิดภาพรวมให้เอง', !rd('#overviewOverlay').classList.contains('show'));
+}
+
 // ---------- ผลลัพธ์ ----------
 const failed = T.filter(t => t[0] === 'FAIL');
 console.log(T.map(([s, n, e]) => `${s}  ${n}${s === 'FAIL' ? '   << ' + e : ''}`).join('\n'));
