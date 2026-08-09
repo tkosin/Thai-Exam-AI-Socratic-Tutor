@@ -439,3 +439,231 @@ def cube_net(grid, caption=None, cell=44):
                  f'stroke="{NAVY}" stroke-width="1.4"/>')
         b.append(_t(x + cell / 2, y + cell / 2 + 6, lab, 17, "middle", NAVY, "700"))
     return _wrap(w, h, "".join(b), caption)
+
+
+# ------------------------------------------- รูปสามเหลี่ยมมุมฉาก (พีทาโกรัส)
+def right_triangle(base, height, base_label=None, height_label=None, hyp_label=None,
+                   names=("A", "B", "C"), caption=None, box=185):
+    """สามเหลี่ยมมุมฉาก วาดตามสัดส่วนจริงของ base:height
+
+    จุดยอด: A บนซ้าย · B ล่างซ้าย (มุมฉาก) · C ล่างขวา
+    ป้ายกำกับด้านรับสตริง จึงใส่ทั้งตัวเลข หน่วย หรือเครื่องหมาย ? ได้
+    """
+    pad_l, pad_r, pad_t, pad_b = 62, 58, 26, 36
+    s = box / max(base, height)
+    bw, bh = base * s, height * s
+    w, h = round(pad_l + bw + pad_r), round(pad_t + bh + pad_b)
+    ax, ay = pad_l, pad_t
+    bx, by = pad_l, pad_t + bh
+    cx, cy = pad_l + bw, pad_t + bh
+
+    b = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>',
+         f'<polygon points="{ax:.1f},{ay:.1f} {bx:.1f},{by:.1f} {cx:.1f},{cy:.1f}" '
+         f'fill="#eef1f4" stroke="{NAVY}" stroke-width="2" stroke-linejoin="round"/>']
+    m = 13                                   # เครื่องหมายมุมฉากที่จุด B
+    b.append(f'<path d="M {bx:.1f} {by-m:.1f} L {bx+m:.1f} {by-m:.1f} L {bx+m:.1f} {by:.1f}" '
+             f'fill="none" stroke="{NAVY}" stroke-width="1.6"/>')
+    b.append(_t(ax - 12, ay + 3, names[0], 13, "middle", NAVY, "700"))
+    b.append(_t(bx - 12, by + 14, names[1], 13, "middle", NAVY, "700"))
+    b.append(_t(cx + 12, cy + 14, names[2], 13, "middle", NAVY, "700"))
+    if height_label is not None:
+        b.append(_t(ax - 9, (ay + by) / 2 + 4, height_label, 13, "end", SERIES[3], "700"))
+    if base_label is not None:
+        b.append(_t((bx + cx) / 2, by + 21, base_label, 13, "middle", SERIES[3], "700"))
+    if hyp_label is not None:
+        b.append(_t((ax + cx) / 2 + 15, (ay + cy) / 2 - 5, hyp_label, 13, "middle",
+                    SERIES[3], "700"))
+    return _wrap(w, h, "".join(b), caption)
+
+
+# ------------------------------------------ ระนาบพิกัดฉากสำหรับการแปลงเรขาคณิต
+def transform_grid(shape, image=None, names=("A", "B", "C", "D", "E"),
+                   lo=-6, hi=6, caption=None, cell=21, extra_lines=()):
+    """รูปหลายเหลี่ยมต้นแบบและภาพที่ได้จากการแปลง บนระนาบพิกัดฉากเดียวกัน
+
+    shape/image เป็นลิสต์ของจุดยอด [(x, y), ...] · ภาพที่ได้ใช้ชื่อจุดติดเครื่องหมาย '
+    extra_lines ใช้วาดแกนสะท้อนที่ไม่ใช่แกน X หรือ Y เช่น (("x", 2),) คือเส้น x = 2
+    """
+    n = hi - lo
+    size = n * cell
+    pad = 20
+    w = h = size + pad * 2
+    px = lambda x: pad + (x - lo) * cell
+    py = lambda y: pad + (hi - y) * cell
+
+    b = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>']
+    for i in range(lo, hi + 1):
+        b.append(f'<line x1="{px(i)}" y1="{pad}" x2="{px(i)}" y2="{pad+size}" '
+                 f'stroke="{GRID}" stroke-width="1"/>')
+        b.append(f'<line x1="{pad}" y1="{py(i)}" x2="{pad+size}" y2="{py(i)}" '
+                 f'stroke="{GRID}" stroke-width="1"/>')
+    b.append(f'<line x1="{pad}" y1="{py(0)}" x2="{pad+size}" y2="{py(0)}" '
+             f'stroke="{INK}" stroke-width="1.6"/>')
+    b.append(f'<line x1="{px(0)}" y1="{pad}" x2="{px(0)}" y2="{pad+size}" '
+             f'stroke="{INK}" stroke-width="1.6"/>')
+    for i in range(lo, hi + 1):
+        if i == 0 or i % 2:
+            continue
+        b.append(_t(px(i), py(0) + 12, i, 9, "middle", SOFT))
+        b.append(_t(px(0) - 7, py(i) + 3.5, i, 9, "end", SOFT))
+    b.append(_t(pad + size + 8, py(0) + 4, "X", 12, "middle", NAVY, "700"))
+    b.append(_t(px(0), pad - 8, "Y", 12, "middle", NAVY, "700"))
+
+    for axis, at in extra_lines:                  # แกนสะท้อนที่กำหนดเอง
+        if axis == "x":
+            b.append(f'<line x1="{px(at)}" y1="{pad}" x2="{px(at)}" y2="{pad+size}" '
+                     f'stroke="{SERIES[4]}" stroke-width="1.8" stroke-dasharray="6 4"/>')
+            b.append(_t(px(at), pad - 8, f"x = {at}", 11, "middle", SERIES[4], "700"))
+        else:
+            b.append(f'<line x1="{pad}" y1="{py(at)}" x2="{pad+size}" y2="{py(at)}" '
+                     f'stroke="{SERIES[4]}" stroke-width="1.8" stroke-dasharray="6 4"/>')
+            b.append(_t(pad + size - 18, py(at) - 6, f"y = {at}", 11, "middle", SERIES[4], "700"))
+
+    def poly(pts, color, dashed, tag):
+        d = " ".join(f"{px(x):.1f},{py(y):.1f}" for x, y in pts)
+        dash = ' stroke-dasharray="7 4"' if dashed else ''
+        b.append(f'<polygon points="{d}" fill="{color}" fill-opacity="0.14" '
+                 f'stroke="{color}" stroke-width="2" stroke-linejoin="round"{dash}/>')
+        for i, (x, y) in enumerate(pts):
+            b.append(f'<circle cx="{px(x):.1f}" cy="{py(y):.1f}" r="3.4" fill="{color}"/>')
+            dx = 11 if x >= 0 else -11
+            dy = -8 if y >= 0 else 15
+            b.append(_t(px(x) + dx, py(y) + dy, names[i] + tag, 12, "middle", color, "700"))
+
+    poly(shape, NAVY, False, "")
+    if image:
+        poly(image, SERIES[3], True, "&#8242;")
+    return _wrap(w, h, "".join(b), caption)
+
+
+# ---------------------------------------- ทรงสี่เหลี่ยมมุมฉาก / ปริซึมสี่เหลี่ยม
+def prism_box(width_label=None, depth_label=None, height_label=None, caption=None,
+              fw=150, fh=100, dx=52, dy=36):
+    """ทรงสี่เหลี่ยมมุมฉากแบบภาพเฉียง — เส้นที่ถูกบังวาดเป็นเส้นประ"""
+    pad_l, pad_t, pad_r, pad_b = 68, 22, 52, 36
+    w, h = round(pad_l + fw + dx + pad_r), round(pad_t + dy + fh + pad_b)
+    x0, y0 = pad_l, pad_t + dy                       # มุมบนซ้ายของหน้าด้านหน้า
+    f = [(x0, y0), (x0 + fw, y0), (x0 + fw, y0 + fh), (x0, y0 + fh)]
+    k = [(x + dx, y - dy) for x, y in f]             # หน้าด้านหลัง
+
+    b = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>']
+    b.append(f'<polygon points="{f[0][0]},{f[0][1]} {k[0][0]},{k[0][1]} '
+             f'{k[1][0]},{k[1][1]} {f[1][0]},{f[1][1]}" fill="#dfe5ec" '
+             f'stroke="{NAVY}" stroke-width="1.8" stroke-linejoin="round"/>')
+    b.append(f'<polygon points="{f[1][0]},{f[1][1]} {k[1][0]},{k[1][1]} '
+             f'{k[2][0]},{k[2][1]} {f[2][0]},{f[2][1]}" fill="#cfd8e3" '
+             f'stroke="{NAVY}" stroke-width="1.8" stroke-linejoin="round"/>')
+    b.append(f'<polygon points="{f[0][0]},{f[0][1]} {f[1][0]},{f[1][1]} '
+             f'{f[2][0]},{f[2][1]} {f[3][0]},{f[3][1]}" fill="#eef1f4" '
+             f'stroke="{NAVY}" stroke-width="2" stroke-linejoin="round"/>')
+    hidden = (f'M {k[3][0]},{k[3][1]} L {k[0][0]},{k[0][1]} '
+              f'M {k[3][0]},{k[3][1]} L {k[2][0]},{k[2][1]} '
+              f'M {k[3][0]},{k[3][1]} L {f[3][0]},{f[3][1]}')
+    b.append(f'<path d="{hidden}" fill="none" stroke="{NAVY}" stroke-width="1.2" '
+             f'stroke-dasharray="5 4" opacity="0.55"/>')
+
+    if width_label is not None:
+        b.append(_t(x0 + fw / 2, y0 + fh + 21, width_label, 12.5, "middle", SERIES[3], "700"))
+    if height_label is not None:
+        b.append(_t(x0 - 8, y0 + fh / 2 + 4, height_label, 12.5, "end", SERIES[3], "700"))
+    if depth_label is not None:
+        b.append(_t(x0 + fw + dx / 2 + 16, y0 + fh - dy / 2 + 14, depth_label, 12.5,
+                    "middle", SERIES[3], "700"))
+    return _wrap(w, h, "".join(b), caption)
+
+
+# ------------------------------------------------------------------ ทรงกระบอก
+def cylinder_fig(radius_label=None, height_label=None, caption=None,
+                 rw=64, ry=20, ch=130):
+    """ทรงกระบอกตั้ง — ขอบฐานที่ถูกบังวาดเป็นเส้นประ · รัศมีชี้จากจุดศูนย์กลางฝาบน"""
+    pad_l, pad_t, pad_r, pad_b = 86, 34, 62, 32
+    w, h = round(pad_l + rw * 2 + pad_r), round(pad_t + ry + ch + ry + pad_b)
+    cx = pad_l + rw
+    ty = pad_t + ry
+    by = ty + ch
+
+    b = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>']
+    b.append(f'<path d="M {cx-rw},{ty} L {cx-rw},{by} A {rw},{ry} 0 0 0 {cx+rw},{by} '
+             f'L {cx+rw},{ty} Z" fill="#eef1f4" stroke="{NAVY}" stroke-width="2"/>')
+    b.append(f'<path d="M {cx-rw},{by} A {rw},{ry} 0 0 1 {cx+rw},{by}" fill="none" '
+             f'stroke="{NAVY}" stroke-width="1.2" stroke-dasharray="5 4" opacity="0.55"/>')
+    b.append(f'<ellipse cx="{cx}" cy="{ty}" rx="{rw}" ry="{ry}" fill="#dfe5ec" '
+             f'stroke="{NAVY}" stroke-width="2"/>')
+    if radius_label is not None:
+        b.append(f'<line x1="{cx}" y1="{ty}" x2="{cx+rw}" y2="{ty}" stroke="{SERIES[3]}" '
+                 f'stroke-width="1.8"/>')
+        b.append(f'<circle cx="{cx}" cy="{ty}" r="2.6" fill="{SERIES[3]}"/>')
+        b.append(_t(cx + rw / 2, ty - ry - 9, radius_label, 12.5, "middle", SERIES[3], "700"))
+    if height_label is not None:
+        b.append(f'<line x1="{cx-rw-13}" y1="{ty}" x2="{cx-rw-13}" y2="{by}" '
+                 f'stroke="{SERIES[3]}" stroke-width="1.4"/>')
+        b.append(_t(cx - rw - 17, (ty + by) / 2 + 4, height_label, 12.5, "end",
+                    SERIES[3], "700"))
+    return _wrap(w, h, "".join(b), caption)
+
+
+# ------------------------------------------------------------------ แผนภาพจุด
+def dot_plot(values, caption=None, x_title="", width=520):
+    """แผนภาพจุด — จุดหนึ่งจุดแทนข้อมูลหนึ่งค่า วางซ้อนขึ้นไปตามความถี่"""
+    lo, hi = min(values), max(values)
+    counts = {v: values.count(v) for v in range(lo, hi + 1)}
+    peak = max(counts.values())
+    pad_l, pad_r, pad_b = 26, 26, 40
+    plot_w = width - pad_l - pad_r
+    gap = plot_w / max(hi - lo, 1)
+    r, step = 5.2, 13
+    h = round(24 + peak * step + pad_b)
+    axis_y = h - pad_b
+    px = lambda v: pad_l + (v - lo) * gap
+
+    b = [f'<rect x="0" y="0" width="{width}" height="{h}" fill="#fff"/>',
+         f'<line x1="{pad_l-14}" y1="{axis_y}" x2="{pad_l+plot_w+14}" y2="{axis_y}" '
+         f'stroke="{INK}" stroke-width="1.5"/>']
+    for v in range(lo, hi + 1):
+        x = px(v)
+        b.append(f'<line x1="{x:.1f}" y1="{axis_y}" x2="{x:.1f}" y2="{axis_y+5}" '
+                 f'stroke="{INK}" stroke-width="1.2"/>')
+        b.append(_t(x, axis_y + 19, v, 11, "middle", SOFT))
+        for i in range(counts[v]):
+            b.append(f'<circle cx="{x:.1f}" cy="{axis_y-9-i*step:.1f}" r="{r}" '
+                     f'fill="{NAVY}"/>')
+    if x_title:
+        b.append(_t(pad_l + plot_w / 2, axis_y + 34, x_title, 11.5, "middle", SOFT, "600"))
+    return _wrap(width, h, "".join(b), caption)
+
+
+# ------------------------------------------------------------------ ฮิสโทแกรม
+def histogram(labels, freqs, y_title="", caption=None, x_title="", width=520):
+    """ฮิสโทแกรม — แท่งติดกันเพราะข้อมูลต่อเนื่อง ต่างจากแผนภูมิแท่งที่แท่งแยกกัน"""
+    pad_l, pad_r, pad_t, pad_b = 46, 16, 16, 52
+    plot_h, plot_w = 190, width - pad_l - pad_r
+    h = pad_t + plot_h + pad_b
+    vmax, step = _nice_ticks(max(freqs))
+
+    b = [f'<rect x="0" y="0" width="{width}" height="{h}" fill="#fff"/>']
+    v = 0
+    while v <= vmax:
+        y = pad_t + plot_h - (v / vmax) * plot_h
+        b.append(f'<line x1="{pad_l}" y1="{y:.1f}" x2="{pad_l+plot_w}" y2="{y:.1f}" '
+                 f'stroke="{GRID}" stroke-width="1"/>')
+        b.append(_t(pad_l - 7, y + 4, v, 11, "end"))
+        v += step
+    bw = plot_w / len(freqs)
+    for i, fq in enumerate(freqs):
+        bh = (fq / vmax) * plot_h
+        x = pad_l + i * bw
+        b.append(f'<rect x="{x:.1f}" y="{pad_t+plot_h-bh:.1f}" width="{bw:.1f}" '
+                 f'height="{bh:.1f}" fill="{NAVY}" fill-opacity="0.82" '
+                 f'stroke="#fff" stroke-width="1"/>')
+        b.append(_t(x + bw / 2, pad_t + plot_h - bh - 6, fq, 11, "middle", NAVY, "700"))
+        b.append(_t(x + bw / 2, pad_t + plot_h + 16, labels[i], 10.5, "middle", SOFT))
+    b.append(f'<line x1="{pad_l}" y1="{pad_t}" x2="{pad_l}" y2="{pad_t+plot_h}" '
+             f'stroke="{INK}" stroke-width="1.5"/>')
+    b.append(f'<line x1="{pad_l}" y1="{pad_t+plot_h}" x2="{pad_l+plot_w}" '
+             f'y2="{pad_t+plot_h}" stroke="{INK}" stroke-width="1.5"/>')
+    if y_title:
+        b.append(f'<g transform="translate(13,{pad_t+plot_h/2}) rotate(-90)">'
+                 f'{_t(0,0,y_title,11,"middle",SOFT,"600")}</g>')
+    if x_title:
+        b.append(_t(pad_l + plot_w / 2, h - 12, x_title, 11.5, "middle", SOFT, "600"))
+    return _wrap(width, h, "".join(b), caption)
