@@ -563,23 +563,50 @@ const waitFor = async (fn, n = 80) => { for (let i = 0; i < n && !fn(); i++) awa
 
   // ยังไม่ใส่คีย์ → ต้องชวนไปตั้งค่า ไม่ใช่ช่องพิมพ์
   const noKey = loadTutor([{ key: 'funnymath-ui-v1', value: { tutorOpen: true } }]);
-  chk('ยังไม่ใส่คีย์ → กล่องติวเตอร์ชวนไปตั้งค่า',
+  chk('ยังไม่ใส่คีย์ → แผงติวเตอร์ชวนไปตั้งค่า',
       !!noKey.d.querySelector('#tutorSetupBtn') && !noKey.d.querySelector('#tutorInput'), '');
   tclick(noKey, '#tutorSetupBtn');
   chk('กดตั้งค่าแล้วเปิดหน้าต่างใส่คีย์', noKey.d.querySelector('#aiOverlay').classList.contains('show'), '');
 
-  // ปุ่มกาง/พับ และการจำสถานะ
+  // แผงด้านขวา: กาง/พับ, ปุ่มปิดในแผง, Esc, และการจำสถานะ
   const t = loadTutor([KEY]);
-  chk('กล่องติวเตอร์พับไว้ตั้งแต่เริ่ม', !t.d.querySelector('#tutorBox').classList.contains('show'), '');
+  const panel = t.d.querySelector('#tutorPanel');
+  chk('แผงติวเตอร์อยู่นอกการ์ดข้อสอบ', !!panel && !t.d.querySelector('#examCard #tutorPanel'), '');
+  chk('แผงติวเตอร์พับไว้ตั้งแต่เริ่ม',
+      !panel.classList.contains('show') && panel.getAttribute('aria-hidden') === 'true', '');
+  chk('ยังไม่กางแผง → เนื้อหาไม่ถูกเบียด', !t.d.body.classList.contains('tutor-on'), '');
   tclick(t, '#tutorToggle');
-  chk('กดปุ่มแล้วกางกล่องติวเตอร์', t.d.querySelector('#tutorBox').classList.contains('show'), '');
-  chk('กางแล้วมีช่องพิมพ์ถาม', !!t.d.querySelector('#tutorInput'), '');
+  chk('กดปุ่มแล้วกางแผงด้านขวา',
+      panel.classList.contains('show') && panel.getAttribute('aria-hidden') === 'false', '');
+  chk('กางแผงแล้วเบียดเนื้อหาไปทางซ้าย', t.d.body.classList.contains('tutor-on'), '');
+  chk('กางแล้วมีช่องพิมพ์ถามอยู่ในแผง', !!t.d.querySelector('#tutorPanel #tutorInput'), '');
+  chk('หัวแผงบอกว่ากำลังติวข้อไหน', /ข้อที่ \d+/.test(t.d.querySelector('#tutorWhich').textContent),
+      t.d.querySelector('#tutorWhich').textContent);
+  chk('ปุ่มกางบอกสถานะด้วย aria-expanded',
+      t.d.querySelector('#tutorToggle').getAttribute('aria-expanded') === 'true', '');
   chk('จำสถานะกางไว้ใน localStorage',
       JSON.parse(t.w.localStorage.getItem('funnymath-ui-v1') || '{}').tutorOpen === true, '');
+  tclick(t, '#tutorClose');
+  chk('ปุ่ม ✕ ในแผงปิดแผงได้',
+      !panel.classList.contains('show') && !t.d.body.classList.contains('tutor-on'), '');
+  chk('ปิดแผงแล้วปุ่มในการ์ดกลับเป็น "ถามพี่หลวง"',
+      /ถามพี่หลวง/.test(t.d.querySelector('#tutorToggle').textContent),
+      t.d.querySelector('#tutorToggle').textContent);
+  tclick(t, '#tutorToggle');
+  t.d.dispatchEvent(new t.w.KeyboardEvent('keydown', { key: 'Escape' }));
+  chk('Esc ปิดแผงติวเตอร์', !panel.classList.contains('show'), '');
 
   const opened = [{ key: 'funnymath-ui-v1', value: { tutorOpen: true } }, KEY];
   const t2 = loadTutor(opened);
-  chk('เคยกางไว้ → เปิดข้อใหม่ก็กางให้เลย', !!t2.d.querySelector('#tutorInput'), '');
+  chk('เคยกางไว้ → เข้าข้อสอบก็กางให้เลย', !!t2.d.querySelector('#tutorInput'), '');
+  // หน้าแรกไม่มีข้อให้ติว แผงต้องไม่ค้างอยู่
+  const homeOpen = loadTutor(opened);
+  homeOpen.d.querySelector('#homeBtn').dispatchEvent(new homeOpen.w.Event('click'));
+  chk('กลับหน้าแรกแล้วซ่อนแผงติวเตอร์',
+      !homeOpen.d.querySelector('#tutorPanel').classList.contains('show')
+      && !homeOpen.d.body.classList.contains('tutor-on'), '');
+  chk('กลับหน้าแรกแล้วยังจำสถานะกางไว้',
+      JSON.parse(homeOpen.w.localStorage.getItem('funnymath-ui-v1') || '{}').tutorOpen === true, '');
   chk('เริ่มต้นอยู่คำใบ้ขั้นที่ 1',
       /ขั้นที่ 1 \/ 7/.test(t2.d.querySelector('.tutor-rung').textContent),
       t2.d.querySelector('.tutor-rung').textContent);
@@ -605,6 +632,14 @@ const waitFor = async (fn, n = 80) => { for (let i = 0; i < n && !fn(); i++) awa
         && /ขั้นที่ 1 จาก 7/.test(req.body.system), '');
     chk('พรอมป์ระบบสั่งห้ามบอกคำตอบในขั้นต้น',
         /ห้ามบอกคำตอบสุดท้ายเด็ดขาดในขั้นนี้/.test(req.body.system), '');
+    chk('พรอมป์ระบบตั้งบุคลิกเป็นพี่หลวง รุ่นพี่ผู้ชาย',
+        /คุณคือ "พี่หลวง"/.test(req.body.system) && /รุ่นพี่ผู้ชาย/.test(req.body.system), '');
+    chk('พรอมป์ระบบสั่งลงท้าย "ครับ" และห้าม "จ๊ะ"',
+        /"ครับ" หรือ "ครับน้อง"/.test(req.body.system) && /ห้ามใช้คำลงท้ายแบบผู้หญิง/.test(req.body.system)
+        && /"จ๊ะ"/.test(req.body.system), '');
+    chk('แผงและปุ่มเรียกชื่อพี่หลวงตรงกัน',
+        /พี่หลวง/.test(t2.d.querySelector('.tp-title').textContent)
+        && /พี่หลวง/.test(t2.d.querySelector('#tutorToggle').textContent), '');
     chk('พรอมป์ระบบไม่มีแท็ก HTML ของโจทย์ติดไปด้วย',
         !/<(div|span|svg|sup)\b/.test(req.body.system), '');
     chk('คำตอบติวเตอร์ขึ้นในกล่องแช็ต',
