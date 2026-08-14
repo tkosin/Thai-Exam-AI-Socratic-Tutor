@@ -343,10 +343,15 @@
     transition:transform .22s ease, visibility 0s linear .22s;
   }
   .tutor-panel.show{ transform:none; visibility:visible; transition:transform .22s ease, visibility 0s; }
-  /* เบียดเฉพาะ "เนื้อหา" ของกล่องที่จัดกลางไว้ พื้นหลังหัวเรื่องยังเต็มความกว้าง */
+  /* เบียดเฉพาะ "เนื้อหา" ของกล่องที่จัดกลางไว้ พื้นหลังหัวเรื่องยังเต็มความกว้าง
+     และขยายเพดานความกว้างขึ้นเท่าความกว้างแผง เพื่อให้เนื้อที่ของข้อสอบเท่าเดิม
+     (ถ้าไม่ขยาย ข้อสอบจะถูกบีบเพราะไปกินที่จากกล่อง --maxw เดิม) */
   body.tutor-on .header-inner,
   body.tutor-on .progress-wrap,
-  body.tutor-on .layout{ padding-right:calc(var(--tutorw) + 20px); }
+  body.tutor-on .layout{
+    max-width:calc(var(--maxw) + var(--tutorw) + 20px);
+    padding-right:calc(var(--tutorw) + 20px);
+  }
   .tp-head{
     flex:0 0 auto; display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
     padding:12px 14px 10px 16px; background:var(--navy); color:#fff;
@@ -377,6 +382,12 @@
   .bubble.me{ align-self:flex-end; background:var(--navy); color:#fff; border-bottom-right-radius:3px; }
   .bubble.ai{ align-self:flex-start; background:#fff; border:1px solid #dde5ec; border-bottom-left-radius:3px; }
   .bubble.ai code{ background:#f1efe6; padding:1px 4px; border-radius:4px; font-size:13px; }
+  /* ยกกำลัง/ตัวห้อยในคำตอบ — ตั้ง line-height:0 ไม่ให้บรรทัดที่มีเลขชี้กำลังถ่างกว่าบรรทัดอื่น */
+  .bubble sup, .bubble sub{ font-size:.72em; line-height:0; position:relative; vertical-align:baseline; }
+  .bubble sup{ top:-.5em; }
+  .bubble sub{ bottom:-.25em; }
+  .bubble .frac{ font-size:.95em; }
+  .bubble.me .frac .num{ border-bottom-color:currentColor; }
   .bubble.err{ align-self:stretch; max-width:100%; background:#fbf1ef; border:1px solid #e8cdc7; color:#8d3325; font-size:13px; }
   .bubble .caret{ display:inline-block; width:7px; height:15px; vertical-align:-2px; background:var(--navy); opacity:.5; animation:blink 1s steps(2) infinite; }
   @keyframes blink{ 50%{ opacity:0; } }
@@ -548,7 +559,7 @@
     .tutor-panel{ box-shadow:none; }
     body.tutor-on .header-inner,
     body.tutor-on .progress-wrap,
-    body.tutor-on .layout{ padding-right:20px; }
+    body.tutor-on .layout{ max-width:var(--maxw); padding-right:20px; }
   }
 
   /* tablet / mobile: แผงตัวกรองกางเป็นแถบเต็มความกว้างเหนือข้อสอบ (ไม่ sticky) */
@@ -1541,7 +1552,12 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
       '- ตอบเป็นภาษาไทย ภาษาพูดง่าย ๆ เป็นกันเอง ให้กำลังใจ เหมาะกับเด็ก ม.ต้น',
       '- สั้น ๆ 2–5 บรรทัด และปิดท้ายด้วยคำถามเพียง 1 ข้อ (ยกเว้นขั้นที่เฉลยเต็ม)',
       '- ถามครั้งละหนึ่งเรื่อง อย่ายิงคำถามหลายข้อรวดเดียว',
-      '- เขียนคณิตศาสตร์เป็นข้อความธรรมดา เช่น x^2, 3/4, √16, 12 ตร.ซม. · ห้ามใช้ LaTeX หรือ $...$',
+      // หน้าเว็บจัดรูปสัญกรณ์พวกนี้ให้เป็นสมการจริง (ยกกำลังเป็นตัวยก เศษส่วนเป็นชั้นบน/ล่าง)
+      // จึงต้องบอกให้เขียนตามนี้เท่านั้น ไม่ใช่ LaTeX
+      '- เขียนคณิตศาสตร์เป็นข้อความธรรมดาตามสัญกรณ์นี้ แล้วหน้าเว็บจะจัดรูปให้เป็นสมการเอง:',
+      '  ยกกำลังใช้ ^ (2^3, x^2, 10^(-2)) · ตัวห้อยใช้ _ (a_1) · รากใช้ √ (√16, √(x+1))',
+      '  เศษส่วนและการหารใช้ / (3/4, (x+1)/2) · คูณใช้ × หรือ * · ไม่เท่ากับ/มากกว่าเท่ากับ ใช้ ≠ ≥ ≤ (หรือ != >= <=)',
+      '- ห้ามใช้ LaTeX ทุกชนิด: ไม่ใช้ $...$, \\frac{}{}, \\sqrt{}, \\times',
       '- ถ้าน้องตอบถูก ให้ชมสั้น ๆ แล้วชวนต่อขั้นถัดไป · ถ้าผิด อย่าบอกว่าผิดเฉย ๆ ' +
         'ให้ถามคำถามที่ทำให้น้องเห็นเองว่าติดตรงไหน',
       '- ถ้าน้องถามเรื่องอื่นที่ไม่เกี่ยวกับโจทย์ข้อนี้ ให้ตอบสั้น ๆ แล้วพากลับมาที่โจทย์',
@@ -1637,11 +1653,39 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
     try{ return (JSON.parse(text).error || {}).message || ''; }catch(e){ return ''; }
   }
 
-  // โมเดลตอบเป็น Markdown อ่อน ๆ — รองรับเท่าที่จำเป็น ไม่ดึงไลบรารีเพิ่ม
+  // จัดรูปคำตอบของติวเตอร์ให้เป็นสมการจริง — ยกกำลังเป็น <sup> ตัวห้อยเป็น <sub>
+  // เศษส่วนเป็นชั้นบน/ล่างแบบเดียวกับในโจทย์ (.frac) และเครื่องหมายเป็นสัญลักษณ์คณิตศาสตร์
+  // ทำด้วย HTML ล้วน ไม่ดึง MathJax/KaTeX เพราะหน้านี้ต้องเปิดออฟไลน์ได้ด้วย
+  // ⚠️ ห้ามใช้ lookbehind ((?<=...)) ในนี้ — Safari รุ่นก่อน 16.4 จะ throw ตอน parse
+  //    ทำให้สคริปต์ทั้งไฟล์ไม่ทำงาน จึงจับตัวอักษรข้างหน้าเป็นกลุ่มแล้วใส่คืนแทน
+  const bare = s => /^\(.*\)$/.test(s) ? s.slice(1, -1) : s;
+  const frac = (a, b) => `<span class="frac"><span class="num">${bare(a)}</span>` +
+                         `<span class="den">${bare(b)}</span></span>`;
+
   function mdLite(s){
     return escAttr(s)
+      // เผื่อโมเดลหลุดไปเขียน LaTeX แม้จะสั่งห้ามไว้ — แปลงกลับเป็นสัญกรณ์ข้อความก่อน
+      .replace(/\\d?frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g, '($1)/($2)')
+      .replace(/\\sqrt\s*\{([^{}]*)\}/g, '√($1)')
+      .replace(/\\times/g, '×').replace(/\\div/g, '÷').replace(/\\cdot/g, '·')
+      .replace(/\\(?:left|right|displaystyle|,|;|!)/g, '')
+      .replace(/\$\$?|\\\(|\\\)|\\\[|\\\]/g, '')
+      // markdown เบา ๆ (ทำก่อนกฎ * = คูณ ไม่งั้นดอกจันของตัวหนาจะถูกกินไปด้วย)
       .replace(/\*\*([^*\n]+)\*\*/g, '<b>$1</b>')
-      .replace(/`([^`\n]+)`/g, '<code>$1</code>');
+      .replace(/`([^`\n]+)`/g, '<code>$1</code>')
+      // ข้อความถูก escape แล้ว เครื่องหมาย < จึงมาเป็น &lt;
+      .replace(/&lt;=/g, '≤').replace(/&gt;=/g, '≥').replace(/!=/g, '≠')
+      // เศษส่วน: เฉพาะรูปที่ชัดเจน (ตัวเลข/วงเล็บ ทั้งเศษและส่วน) จะได้ไม่ไปโดน "และ/หรือ" หรือ ม.2/1
+      .replace(/(^|[\s(=+×÷·-])(\d+|\([^()]{1,24}\))\/(\d+|\([^()]{1,24}\))(?=$|[\s).,=+×÷·-])/g,
+        (m, pre, a, b) => pre + frac(a, b))
+      // ยกกำลัง: 2^3 · x^(n+1) · 10^{-2}
+      .replace(/\^\{([^{}]+)\}|\^\(([^()]+)\)/g, (m, a, b) => `<sup>${a || b}</sup>`)
+      .replace(/\^(-?\d+(?:\.\d+)?|[A-Za-z])/g, '<sup>$1</sup>')
+      // ตัวห้อย: a_1 · x_{i+1}
+      .replace(/_\{([^{}]+)\}|_\(([^()]+)\)/g, (m, a, b) => `<sub>${a || b}</sub>`)
+      .replace(/([A-Za-z\d])_(\d+|[A-Za-z])/g, '$1<sub>$2</sub>')
+      // คูณ: 3*4 หรือ 3 * 4 (ต้องมีตัวเลข/วงเล็บปิดนำหน้า จะได้ไม่โดนหัวข้อแบบ "* ข้อ")
+      .replace(/(\d|\))\s*\*\s*(?=[\d(]|[A-Za-z])/g, '$1 × ');
   }
 
   // ---------- แผงติวเตอร์ (อยู่นอกการ์ด จึงผูกกับ "ข้อที่กำลังเปิด" แทน) ----------

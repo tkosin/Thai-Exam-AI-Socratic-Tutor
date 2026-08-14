@@ -579,6 +579,10 @@ const waitFor = async (fn, n = 80) => { for (let i = 0; i < n && !fn(); i++) awa
   chk('กดปุ่มแล้วกางแผงด้านขวา',
       panel.classList.contains('show') && panel.getAttribute('aria-hidden') === 'false', '');
   chk('กางแผงแล้วเบียดเนื้อหาไปทางซ้าย', t.d.body.classList.contains('tutor-on'), '');
+  // เบียดแล้วต้องขยายเพดานความกว้างขึ้นเท่าความกว้างแผง ไม่ใช่บีบพื้นที่ข้อสอบให้แคบลง
+  chk('กางแผงแล้วขยายเพดานความกว้างของเนื้อหาชดเชยให้',
+      /max-width:\s*calc\(var\(--maxw\)\s*\+\s*var\(--tutorw\)/.test(html)
+      && /body\.tutor-on \.layout\{/.test(html.replace(/\s*\n\s*/g, '')), '');
   chk('กางแล้วมีช่องพิมพ์ถามอยู่ในแผง', !!t.d.querySelector('#tutorPanel #tutorInput'), '');
   chk('หัวแผงบอกว่ากำลังติวข้อไหน', /ข้อที่ \d+/.test(t.d.querySelector('#tutorWhich').textContent),
       t.d.querySelector('#tutorWhich').textContent);
@@ -637,6 +641,8 @@ const waitFor = async (fn, n = 80) => { for (let i = 0; i < n && !fn(); i++) awa
     chk('พรอมป์ระบบสั่งลงท้าย "ครับ" และห้าม "จ๊ะ"',
         /"ครับ" หรือ "ครับน้อง"/.test(req.body.system) && /ห้ามใช้คำลงท้ายแบบผู้หญิง/.test(req.body.system)
         && /"จ๊ะ"/.test(req.body.system), '');
+    chk('พรอมป์ระบบบอกสัญกรณ์คณิตศาสตร์ที่หน้าเว็บจัดรูปได้ และห้าม LaTeX',
+        /ยกกำลังใช้ \^/.test(req.body.system) && /ห้ามใช้ LaTeX ทุกชนิด/.test(req.body.system), '');
     chk('แผงและปุ่มเรียกชื่อพี่หลวงตรงกัน',
         /พี่หลวง/.test(t2.d.querySelector('.tp-title').textContent)
         && /พี่หลวง/.test(t2.d.querySelector('#tutorToggle').textContent), '');
@@ -652,6 +658,32 @@ const waitFor = async (fn, n = 80) => { for (let i = 0; i < n && !fn(); i++) awa
     const first = saved[Object.keys(saved)[0]] || [];
     chk('บทสนทนาเก็บลง localStorage แยกตามข้อ',
         first.length === 2 && first[0].r === 'u' && first[1].r === 'a', JSON.stringify(first.length));
+
+    // คำตอบของติวเตอร์ต้องออกมาเป็นสมการจริง ไม่ใช่ข้อความ ^ กับ /
+    const math = loadTutor(opened,
+      'พื้นที่ = a^2 ครับ · 10^(-2) · a_1 · 3/4 · x >= 2 · 3*4 · $\\frac{1}{2}$ · \\sqrt{16}');
+    const mi = math.d.querySelector('#tutorInput');
+    mi.value = 'ขอสมการ';
+    tclick(math, '#tutorSend');
+    await waitFor(() => (math.d.querySelector('.bubble.ai') || {}).textContent);
+    const mathHtml = math.d.querySelector('.bubble.ai').innerHTML;
+    chk('ยกกำลังเรนเดอร์เป็น <sup> จริง', /a<sup>2<\/sup>/.test(mathHtml), mathHtml.slice(0, 60));
+    chk('ยกกำลังในวงเล็บก็เป็น <sup>', /10<sup>-2<\/sup>/.test(mathHtml), '');
+    chk('ตัวห้อยเรนเดอร์เป็น <sub>', /a<sub>1<\/sub>/.test(mathHtml), '');
+    chk('เศษส่วนเรนเดอร์เป็นชั้นบน/ล่าง (.frac)',
+        /<span class="frac"><span class="num">3<\/span><span class="den">4<\/span><\/span>/.test(mathHtml), '');
+    chk('เครื่องหมายเปรียบเทียบเป็นสัญลักษณ์', /x ≥ 2/.test(mathHtml), '');
+    chk('เครื่องหมายคูณเป็น ×', /3 × 4/.test(mathHtml), '');
+    chk('โมเดลหลุดไปเขียน LaTeX ก็ยังจัดรูปให้ได้',
+        /<span class="num">1<\/span>/.test(mathHtml) && /√\(16\)/.test(mathHtml) && !/frac\{/.test(mathHtml), '');
+    // ต้อง "ไม่" จับ / ที่ไม่ใช่เศษส่วน ไม่งั้นตัวชี้วัดกับคำว่า และ/หรือ จะเพี้ยน
+    const slash = loadTutor(opened, 'ตัวชี้วัด ค 2.1 ม.2/1 และ/หรือ เรื่องปริซึม');
+    slash.d.querySelector('#tutorInput').value = 'ถาม';
+    tclick(slash, '#tutorSend');
+    await waitFor(() => (slash.d.querySelector('.bubble.ai') || {}).textContent);
+    const plain = slash.d.querySelector('.bubble.ai').innerHTML;
+    chk('ไม่จับ / ที่ไม่ใช่เศษส่วน (ตัวชี้วัด · และ/หรือ)',
+        !/class="frac"/.test(plain) && /ม\.2\/1 และ\/หรือ/.test(plain), plain.slice(0, 60));
 
     // เพดานคำใบ้ต้องผูกกับรหัสผ่านเฉลย
     const chat = { 0: Array.from({ length: 12 }, (_, i) => ({ r: i % 2 ? 'a' : 'u', t: 'x' })) };
