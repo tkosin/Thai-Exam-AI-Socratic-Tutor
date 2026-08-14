@@ -1,4 +1,9 @@
-name: build & deploy
+name: ตรวจก่อน merge
+
+# เว็บนี้ไม่ deploy ผ่าน Actions แล้ว — GitHub Pages ตั้งเป็น "Deploy from a branch"
+# (main / root) ซึ่ง GitHub จัดการให้เองและไม่กินโควตา Actions ของบัญชี
+# workflow นี้จึงเหลือหน้าที่เดียวคือ "ตรวจ" ว่าคลังข้อสอบกับหน้าเว็บยังตรงกัน
+# ถ้า Actions ของบัญชีใช้ไม่ได้ ยังตรวจเองในเครื่องได้ด้วยคำสั่งชุดเดียวกัน (ดู README)
 
 on:
   pull_request:
@@ -8,11 +13,9 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages-${{ github.ref }}
+  group: check-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -44,20 +47,3 @@ jobs:
         run: |
           npm install jsdom --no-save --silent
           node tools/dom_test.cjs
-
-  deploy:
-    name: เผยแพร่ GitHub Pages
-    needs: validate
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-      - id: deployment
-        uses: actions/deploy-pages@v4

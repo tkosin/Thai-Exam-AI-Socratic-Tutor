@@ -334,15 +334,17 @@ npm install jsdom --no-save && node tools/dom_test.cjs
 
 ## ด่านตรวจอัตโนมัติ (CI)
 
-`.github/workflows/pages.yml` รันทุก pull request และทุกครั้งที่ push เข้า `main`
+`.github/workflows/check.yml` รันทุก pull request และทุกครั้งที่ push เข้า `main` (ตรวจอย่างเดียว ไม่ deploy)
 
 | ขั้น | ตรวจอะไร |
 | --- | --- |
 | `tools/build_figures.py` | `questions/figures.json` ต้องตรงกับผลลัพธ์ของสคริปต์ |
 | `tools/build.py --check` | `index.html` และสำเนาต้องตรงกับคลังข้อสอบของทุกวิชาใน `questions/` |
 | `tools/validate.py` | ฟิลด์ครบ · `level`/`tag`/`std` ถูกรูปแบบ · ตัวชี้วัดตรงกับวิชาและระดับชั้น · วิชาเรียงตรงกับ `courses.json` · เรียงตามหน่วยภายในวิชา · ไม่มีโจทย์ซ้ำ · ข้อปรนัยมี 4 ตัวเลือกและเฉลยเป็น ก-ง · SVG เป็น XML ที่ถูกต้อง · JS ไม่มี syntax error · **กรอกค่าตรงเฉลยทุกข้อต้องได้ “ถูกต้อง”** · สำเนาชื่อภาษาไทยตรงกับ `index.html` |
-| `tools/dom_test.cjs` | ตัวกรองวิชา + ตัวกรอง 4 ชั้น · ทุกหน่วยเปิดได้ · ช่องวิธีทำหลายบรรทัด · การตรวจคำตอบ · บันทึก/กู้คืน `localStorage` · เฉลยล็อกด้วยรหัสผ่าน |
-| เผยแพร่ | ถ้าผ่านทั้งหมดและอยู่บน `main` จะ deploy GitHub Pages ให้อัตโนมัติ |
+| `tools/dom_test.cjs` | ตัวกรองวิชา + ตัวกรอง 4 ชั้น · ทุกหน่วยเปิดได้ · ช่องวิธีทำหลายบรรทัด · การตรวจคำตอบ · บันทึก/กู้คืน `localStorage` · เฉลยล็อกด้วยรหัสผ่าน · แผงพี่หลวง (ติวเตอร์ AI) |
+
+การเผยแพร่ไม่ผ่าน Actions — Pages ตั้งเป็น **Deploy from a branch** (`main` / root)
+จึง deploy ได้แม้ Actions ของบัญชีใช้ไม่ได้ (ดู README หัวข้อ “การเผยแพร่”)
 
 `tools/svg_helpers.py` มีฟังก์ชันสร้างรูปทั้งหมด 9 แบบ ที่ `tools/build_figures.py` เรียกใช้
 
