@@ -332,6 +332,96 @@
   .answer.show{ display:block; }
   .answer .lbl{ font-weight:700; color:var(--red); margin-right:6px;}
 
+  /* ---------------- AI ติวเตอร์ (แบบโสกราตีส) ---------------- */
+  /* แผงเลื่อนออกจากขอบขวา · อยู่ใต้หัวเรื่อง และเบียดเนื้อหาไปทางซ้ายให้เห็นโจทย์ครบ */
+  :root{ --tutorw:400px; }
+  .tutor-panel{
+    position:fixed; z-index:35; top:var(--hh); right:0; bottom:0; width:var(--tutorw);
+    display:flex; flex-direction:column;
+    background:#f3f6f9; border-left:1px solid #dde5ec; box-shadow:-6px 0 22px rgba(20,20,20,.10);
+    transform:translateX(100%); visibility:hidden;
+    transition:transform .22s ease, visibility 0s linear .22s;
+  }
+  .tutor-panel.show{ transform:none; visibility:visible; transition:transform .22s ease, visibility 0s; }
+  /* เบียดเฉพาะ "เนื้อหา" ของกล่องที่จัดกลางไว้ พื้นหลังหัวเรื่องยังเต็มความกว้าง */
+  body.tutor-on .header-inner,
+  body.tutor-on .progress-wrap,
+  body.tutor-on .layout{ padding-right:calc(var(--tutorw) + 20px); }
+  .tp-head{
+    flex:0 0 auto; display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+    padding:12px 14px 10px 16px; background:var(--navy); color:#fff;
+  }
+  .tp-title{ display:block; font-size:13.5px; font-weight:700; }
+  .tp-sub{ display:block; font-size:11.5px; color:#cfdae6; margin-top:2px; }
+  .tp-close{
+    flex:0 0 auto; font-family:inherit; font-size:15px; line-height:1; cursor:pointer;
+    color:#fff; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.3);
+    border-radius:7px; padding:6px 9px;
+  }
+  .tp-close:hover{ background:rgba(255,255,255,.24); }
+  .tp-body{
+    flex:1 1 auto; min-height:0; display:flex; flex-direction:column;
+    padding:12px 14px 14px 16px;
+  }
+  .tutor-rung{ font-size:11.5px; color:var(--ink-soft); }
+  .tutor-rung b{ color:var(--navy); }
+  .tutor-hint{ font-size:11.5px; color:var(--ink-soft); margin:6px 0 10px 0; }
+  .tutor-log{
+    flex:1 1 auto; min-height:0; overflow-y:auto; scrollbar-width:thin;
+    display:flex; flex-direction:column; gap:9px; margin-bottom:11px;
+  }
+  .bubble{
+    max-width:92%; padding:9px 13px; border-radius:11px; font-size:14px; line-height:1.6;
+    white-space:pre-wrap; overflow-wrap:anywhere;
+  }
+  .bubble.me{ align-self:flex-end; background:var(--navy); color:#fff; border-bottom-right-radius:3px; }
+  .bubble.ai{ align-self:flex-start; background:#fff; border:1px solid #dde5ec; border-bottom-left-radius:3px; }
+  .bubble.ai code{ background:#f1efe6; padding:1px 4px; border-radius:4px; font-size:13px; }
+  .bubble.err{ align-self:stretch; max-width:100%; background:#fbf1ef; border:1px solid #e8cdc7; color:#8d3325; font-size:13px; }
+  .bubble .caret{ display:inline-block; width:7px; height:15px; vertical-align:-2px; background:var(--navy); opacity:.5; animation:blink 1s steps(2) infinite; }
+  @keyframes blink{ 50%{ opacity:0; } }
+  .tutor-ask{ display:flex; gap:8px; align-items:flex-end; }
+  .tutor-ask textarea{
+    flex:1; font-family:inherit; font-size:14px; line-height:1.6; resize:none; overflow:hidden;
+    padding:9px 12px; border:1px solid #d9e0e7; border-radius:8px; background:#fff; color:var(--ink);
+  }
+  .tutor-ask textarea:focus{ outline:2px solid var(--gold); outline-offset:1px; }
+  .tutor-send{
+    font-family:inherit; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap;
+    background:var(--navy); color:#fff; border:1px solid var(--navy); border-radius:8px; padding:9px 15px;
+  }
+  .tutor-send:hover{ background:var(--navy-deep); }
+  .tutor-send:disabled{ opacity:.45; cursor:not-allowed; }
+  .tutor-foot{ flex:0 0 auto; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:9px; }
+  .tutor-link{
+    font-family:inherit; font-size:11.5px; color:var(--ink-soft); background:none; border:none;
+    padding:0; cursor:pointer; text-decoration:underline;
+  }
+  .tutor-link:hover{ color:var(--navy); }
+  .tutor-setup{ font-size:13px; color:var(--ink-soft); line-height:1.65; }
+  .tutor-setup .btn.dark{ margin-top:9px; }
+  .tutor-btn{
+    font-family:inherit; font-size:13px; font-weight:600; cursor:pointer;
+    color:var(--navy); background:#eef1f4; border:1px solid #d9e0e7; border-radius:7px; padding:7px 13px;
+  }
+  .tutor-btn:hover{ background:#e2e8ee; }
+
+  .ai-modal{ max-width:460px; }
+  .ai-modal label{ display:block; font-size:12.5px; font-weight:700; color:var(--navy); margin:12px 0 5px 0; }
+  .ai-modal input, .ai-modal select{
+    width:100%; font-family:inherit; font-size:14px; padding:9px 12px;
+    border:1px solid #d9d3c2; border-radius:8px; background:#fff; color:var(--ink);
+  }
+  .ai-modal input:focus, .ai-modal select:focus{ outline:2px solid var(--gold); }
+  .ai-modal .note{ font-size:11.5px; color:var(--ink-soft); line-height:1.55; margin-top:6px; }
+  .ai-modal .note a{ color:var(--navy); }
+  .ai-modal .warn{
+    font-size:11.5px; line-height:1.55; margin-top:12px; padding:9px 12px;
+    background:#fdf6e6; border-left:3px solid var(--gold); border-radius:7px; color:#7a5a13;
+  }
+  .ai-actions{ display:flex; gap:8px; margin-top:16px; }
+  .ai-actions .btn{ flex:1; }
+
   /* nav row: prev / index / next */
   .navrow{ display:flex; align-items:center; justify-content:center; gap:14px; margin-top:22px; }
   .navbtn{
@@ -437,7 +527,7 @@
   #printOnly{ display:none; }
 
   @media print{
-    header, .navrow, footer, .modal, .overlay, .sidebar, .home{ display:none !important; }
+    header, .navrow, footer, .modal, .overlay, .sidebar, .home, .tutor-panel{ display:none !important; }
     body{ background:#fff; }
     main, .layout{ display:none !important; }
     #printOnly{
@@ -450,6 +540,15 @@
     #printOnly .p-qnum{ font-weight:700; margin-right:6px; }
     #printOnly .p-ans{ display:none; margin-top:6px; padding:6px 10px; border-left:2px solid #000; font-size:13.5px; color:#111;}
     body.print-with-answers #printOnly .p-ans{ display:block; }
+  }
+
+  /* จอไม่กว้างพอจะวางแผงติวเตอร์ข้าง ๆ ได้ — กางทับเต็มความกว้างแทน ไม่เบียดเนื้อหา */
+  @media (max-width:1100px){
+    :root{ --tutorw:100%; }
+    .tutor-panel{ box-shadow:none; }
+    body.tutor-on .header-inner,
+    body.tutor-on .progress-wrap,
+    body.tutor-on .layout{ padding-right:20px; }
   }
 
   /* tablet / mobile: แผงตัวกรองกางเป็นแถบเต็มความกว้างเหนือข้อสอบ (ไม่ sticky) */
@@ -494,6 +593,7 @@
         <button class="btn filter-toggle" id="filterToggle" aria-expanded="false" aria-controls="sidebar"
                 title="แสดงตัวกรอง"><span>🔍 ตัวกรอง</span><span class="fbadge" id="filterBadge"></span></button>
         <button class="btn" id="overviewBtn">📋 ภาพรวมข้อสอบ</button>
+        <button class="btn" id="aiSetupBtn">🤖 ตั้งค่าพี่หลวง</button>
         <button class="btn" id="printExamBtn">🖨️ พิมพ์ข้อสอบ (ไม่มีเฉลย)</button>
         <button class="btn gold" id="printAnswerBtn">🔒 พิมพ์เฉลย</button>
       </span>
@@ -541,6 +641,18 @@
   </main>
 </div>
 
+<!-- แผงติวเตอร์ AI — อยู่นอกการ์ดข้อสอบ จึงไม่ถูกวาดใหม่ทุกครั้งที่เปลี่ยนข้อ -->
+<aside class="tutor-panel" id="tutorPanel" aria-label="พี่หลวง ติวเตอร์ AI" aria-hidden="true">
+  <div class="tp-head">
+    <span>
+      <span class="tp-title">💬 พี่หลวง — ติวเตอร์ AI</span>
+      <span class="tp-sub" id="tutorWhich"></span>
+    </span>
+    <button class="tp-close" id="tutorClose" title="ปิดแผงพี่หลวง (Esc)" aria-label="ปิดแผงพี่หลวง">✕</button>
+  </div>
+  <div class="tp-body" id="tutorBody"></div>
+</aside>
+
 <footer>รหัสผ่านสำหรับดูเฉลยกำหนดไว้ล่วงหน้าโดยคุณครู/ผู้ปกครอง · ใช้ฟอนต์ IBM Plex Sans Thai Looped</footer>
 
 <!-- overview modal -->
@@ -576,6 +688,36 @@
     <div class="pw-actions">
       <button class="btn light" id="pwCancelBtn">ยกเลิก</button>
       <button class="btn dark" id="pwConfirmBtn">ยืนยัน</button>
+    </div>
+  </div>
+</div>
+
+<!-- AI tutor settings modal (คีย์เก็บในเครื่องผู้ใช้เท่านั้น) -->
+<div class="overlay" id="aiOverlay">
+  <div class="modal ai-modal" role="dialog" aria-modal="true" aria-labelledby="aiTitle">
+    <h3 id="aiTitle">🤖 ตั้งค่าพี่หลวง (ติวเตอร์ AI)</h3>
+    <div class="modal-sub">พี่หลวงจะถามคำถามนำให้น้องคิดเอง ไม่บอกคำตอบตรง ๆ</div>
+
+    <label for="aiKeyInput">Anthropic API key</label>
+    <input type="password" id="aiKeyInput" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
+    <div class="note">
+      ขอคีย์ได้ที่ <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>
+      · คีย์เก็บไว้ใน <code>localStorage</code> ของเบราว์เซอร์เครื่องนี้เท่านั้น ไม่ได้ส่งไปที่อื่น
+    </div>
+
+    <label for="aiModelSelect">โมเดล</label>
+    <select id="aiModelSelect"></select>
+    <div class="note" id="aiModelNote"></div>
+
+    <div class="warn">
+      ⚠️ เวลาถามพี่หลวง โจทย์ · เฉลย · วิธีทำที่นักเรียนเขียน จะถูกส่งไปที่ Anthropic API
+      และค่าใช้จ่ายเรียกเก็บจากคีย์ของคุณ · เครื่องที่ใช้ร่วมกันหลายคนไม่ควรใส่คีย์ไว้
+    </div>
+    <div class="pw-error" id="aiKeyError"></div>
+    <div class="ai-actions">
+      <button class="btn light" id="aiClearBtn">ลบคีย์ออก</button>
+      <button class="btn light" id="aiCancelBtn">ยกเลิก</button>
+      <button class="btn dark" id="aiSaveBtn">บันทึก</button>
     </div>
   </div>
 </div>
@@ -675,6 +817,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
   const collapsed = { course:false, unit:false, sub:false, level:true, tag:true };
   // แผงตัวกรองเริ่มต้นแบบซ่อน — เปิดหน้ามาเห็นข้อสอบเต็มความกว้างก่อน
   let sidebarOpen = false;
+  let tutorOpen = false;    // กล่องแช็ตติวเตอร์ AI กาง/พับ (จำไว้ข้ามข้อ)
   let lastGidx = null;      // ข้อล่าสุดที่เปิดค้างไว้ (ลำดับในอาร์เรย์รวม)
   try{
     const d = JSON.parse(localStorage.getItem(UI_KEY) || '{}');
@@ -684,6 +827,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
       });
     }
     if(d && typeof d.sidebarOpen === 'boolean') sidebarOpen = d.sidebarOpen;
+    if(d && typeof d.tutorOpen === 'boolean') tutorOpen = d.tutorOpen;
     // วิชาที่เลือกไว้ล่าสุดเป็นความชอบส่วนตัว ไม่ใช่ความก้าวหน้า จึงเก็บที่คีย์นี้
     if(d && COURSE_BY_KEY[d.course]) state.activeCourse = d.course;
     // ข้อล่าสุดที่เปิดค้างไว้ ใช้ทำปุ่ม "ทำต่อ" บนหน้าแรก
@@ -692,7 +836,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
   function saveUI(){
     try{
       localStorage.setItem(UI_KEY, JSON.stringify({
-        collapsed, sidebarOpen, course: state.activeCourse, lastGidx
+        collapsed, sidebarOpen, tutorOpen, course: state.activeCourse, lastGidx
       }));
     }catch(e){}
   }
@@ -725,6 +869,19 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
   const pwCancelBtn = document.getElementById('pwCancelBtn');
   const printExamBtn = document.getElementById('printExamBtn');
   const printAnswerBtn = document.getElementById('printAnswerBtn');
+  const tutorPanel = document.getElementById('tutorPanel');
+  const tutorBody = document.getElementById('tutorBody');
+  const tutorWhich = document.getElementById('tutorWhich');
+  const tutorClose = document.getElementById('tutorClose');
+  const aiSetupBtn = document.getElementById('aiSetupBtn');
+  const aiOverlay = document.getElementById('aiOverlay');
+  const aiKeyInput = document.getElementById('aiKeyInput');
+  const aiModelSelect = document.getElementById('aiModelSelect');
+  const aiModelNote = document.getElementById('aiModelNote');
+  const aiKeyError = document.getElementById('aiKeyError');
+  const aiSaveBtn = document.getElementById('aiSaveBtn');
+  const aiCancelBtn = document.getElementById('aiCancelBtn');
+  const aiClearBtn = document.getElementById('aiClearBtn');
 
   const subOf = q => q.sub || q.uname;
   const LEVEL_ORDER = ['ง่าย','กลาง','ยาก'];
@@ -1255,6 +1412,464 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
     {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
   ));
 
+  // ---------- ติวเตอร์ AI แบบโสกราตีส ----------
+  // หน้าเว็บนี้เป็นไฟล์เดียวเสิร์ฟจาก GitHub Pages ไม่มีเซิร์ฟเวอร์ของตัวเอง
+  // จึงเรียก Anthropic API ตรงจากเบราว์เซอร์ด้วยคีย์ของผู้ใช้เอง (bring your own key)
+  // ⚠️ ห้ามใส่คีย์ไว้ในซอร์สของไฟล์นี้ — ซอร์สของหน้าเว็บใครก็เปิดอ่านได้
+  //    (ต่างจาก ANSWER_PASSWORD ที่เป็นแค่ที่กั้นไม่ให้เผลอกดดูเฉลย)
+  const AI_NAME = 'พี่หลวง';            // ชื่อที่ติวเตอร์ใช้เรียกตัวเอง และที่โผล่บนหน้าเว็บ
+  const AI_KEY_STORE = 'funnymath-ai-v1';
+  const AI_CHAT_STORE = 'funnymath-chat-v1';
+  const AI_ENDPOINT = 'https://api.anthropic.com/v1/messages';
+  const AI_VERSION = '2023-06-01';
+  const CHAT_BUDGET = 180000;   // ตัวอักษรรวมของบทสนทนาที่เก็บไว้ (กัน localStorage เต็ม)
+  const CHAT_KEEP = 24;         // เก็บข้อความต่อข้อไว้ไม่เกินเท่านี้
+
+  // effort ใช้ได้กับโมเดลรุ่น 5 · Haiku 4.5 ไม่รับพารามิเตอร์นี้ (จะได้ error)
+  const AI_MODELS = [
+    { id:'claude-opus-5',   label:'Claude Opus 5 — เก่งที่สุด',        effort:true,
+      note:'อธิบายและวินิจฉัยจุดที่คิดผิดได้ละเอียดที่สุด · ค่าใช้จ่ายสูงสุด ($5/$25 ต่อล้านโทเคน)' },
+    { id:'claude-sonnet-5', label:'Claude Sonnet 5 — สมดุล',           effort:true,
+      note:'เก่งใกล้ Opus แต่ถูกและเร็วกว่า ($3/$15 ต่อล้านโทเคน)' },
+    { id:'claude-haiku-4-5', label:'Claude Haiku 4.5 — เร็วและถูกสุด', effort:false,
+      note:'เหมาะกับโจทย์ง่าย ๆ และการใช้จำนวนมาก ($1/$5 ต่อล้านโทเคน)' }
+  ];
+  const modelOf = id => AI_MODELS.find(m => m.id === id) || AI_MODELS[0];
+
+  const ai = { key:'', model:AI_MODELS[0].id, chats:{}, ctrl:null, busyGidx:null };
+
+  try{
+    const d = JSON.parse(localStorage.getItem(AI_KEY_STORE) || '{}');
+    if(d && typeof d.key === 'string') ai.key = d.key;
+    if(d && AI_MODELS.some(m => m.id === d.model)) ai.model = d.model;
+  }catch(e){/* ค่าที่เก็บไว้เสีย — เริ่มใหม่ */}
+  try{
+    const d = JSON.parse(localStorage.getItem(AI_CHAT_STORE) || '{}');
+    if(d && typeof d === 'object') ai.chats = d;
+  }catch(e){}
+
+  function saveAIConfig(){
+    try{ localStorage.setItem(AI_KEY_STORE, JSON.stringify({ key:ai.key, model:ai.model })); }catch(e){}
+  }
+  // บทสนทนายาวได้เรื่อย ๆ จึงตัดให้พอดีโควตา localStorage ก่อนเขียน
+  // (ตัดข้อความเก่าในแต่ละข้อก่อน ถ้ายังไม่พอค่อยทิ้งบทสนทนาของข้ออื่น)
+  function saveChats(){
+    const keys = Object.keys(ai.chats);
+    keys.forEach(k => {
+      if(!Array.isArray(ai.chats[k]) || !ai.chats[k].length) delete ai.chats[k];
+      else if(ai.chats[k].length > CHAT_KEEP) ai.chats[k] = ai.chats[k].slice(-CHAT_KEEP);
+    });
+    let payload = JSON.stringify(ai.chats);
+    const order = Object.keys(ai.chats).filter(k => Number(k) !== lastGidx);
+    while(payload.length > CHAT_BUDGET && order.length){
+      delete ai.chats[order.shift()];
+      payload = JSON.stringify(ai.chats);
+    }
+    try{ localStorage.setItem(AI_CHAT_STORE, payload); }catch(e){}
+  }
+
+  const chatOf = gidx => (ai.chats[gidx] = ai.chats[gidx] || []);
+  const askedCount = gidx => chatOf(gidx).filter(m => m.r === 'u').length;
+
+  // โจทย์เก็บเป็น HTML (มีเศษส่วน ยกกำลัง ตัวเลือกปรนัย และ SVG)
+  // ก่อนส่งให้โมเดลจึงแปลงเป็นข้อความล้วน โดยคงการขึ้นบรรทัดของตัวเลือกไว้
+  function promptText(html){
+    const marked = String(html)
+      .replace(/<svg[\s\S]*?<\/svg>/gi, '[[NL]]⟪รูปประกอบ⟫[[NL]]')
+      .replace(/<\/?(div|li|p|tr|table|ol|ul)\b[^>]*>/gi, '[[NL]]')
+      .replace(/<br\s*\/?>/gi, '[[NL]]');
+    return htmlToText(marked).split('[[NL]]').map(s => s.trim()).filter(Boolean).join('\n');
+  }
+
+  // บันไดคำใบ้ — ปล่อยทีละขั้นตามจำนวนครั้งที่ถาม ไม่เฉลยตั้งแต่คำถามแรก
+  const RUNGS = [
+    'ยังไม่บอกวิธีทำเลย · ถามว่าโจทย์ให้อะไรมาและกำลังหาอะไร เพื่อเช็กว่าน้องอ่านโจทย์เข้าใจตรงกัน',
+    'ยังไม่บอกวิธีทำ · ชวนน้องดูข้อมูล หน่วย หรือเงื่อนไขที่โจทย์ให้ แล้วถามว่านึกถึงเรื่องหรือหลักการอะไรที่เคยเรียนมา',
+    'บอก "ชื่อ" หลักการหรือสูตรที่เกี่ยวข้องได้ แต่ยังไม่แทนตัวเลขของโจทย์ให้ · ถามว่าจะเอาหลักการนั้นมาใช้กับโจทย์นี้อย่างไร',
+    'ชี้ให้เจาะจงว่าวิธีทำที่น้องเขียนไว้เริ่มพลาดที่บรรทัดไหน โดยใช้คำถามให้น้องเห็นเองว่าบรรทัดนั้นไม่ถูก (ยังไม่แก้ให้)',
+    'ทำขั้นแรกให้ดูเป็นตัวอย่างพร้อมอธิบายว่าทำไมต้องทำอย่างนั้น แล้วให้น้องทำขั้นต่อไปเอง · ยังไม่บอกคำตอบสุดท้าย',
+    'เดินวิธีทำให้เกือบครบทุกขั้น แต่เว้นการคำนวณขั้นสุดท้ายไว้ให้น้องทำเอง · ยังไม่บอกคำตอบสุดท้าย',
+    'อธิบายวิธีทำเต็มทุกขั้นพร้อมบอกคำตอบสุดท้าย · สรุปหลักการที่ใช้ แล้วแต่งโจทย์คล้าย ๆ ให้น้องลองทำอีก 1 ข้อ'
+  ];
+  const TOP_RUNG = RUNGS.length;              // ขั้นที่เฉลยเต็ม
+  const LOCKED_RUNG = TOP_RUNG - 1;           // เพดานเมื่อยังไม่ปลดล็อกเฉลย
+
+  // เพดานคำใบ้ผูกกับรหัสผ่านเฉลยเดียวกัน ไม่งั้นถามติวเตอร์ 7 ครั้งก็ข้ามรหัสผ่านได้
+  const rungCap = () => state.unlocked ? TOP_RUNG : LOCKED_RUNG;
+  const rungAt = n => Math.min(Math.max(n, 1), rungCap());
+  // ขั้นที่จะได้จากการถามครั้งถัดไป (ใช้แสดงบนหัวกล่อง)
+  const rungFor = gidx => rungAt(askedCount(gidx) + 1);
+  // ยังไม่ถึงเพดานสูงสุดเพราะยังไม่ได้ปลดล็อกเฉลย
+  const rungCapped = gidx => !state.unlocked && askedCount(gidx) + 1 > LOCKED_RUNG;
+
+  function buildSystem(q, gidx, rung){
+    const work = (state.work[gidx] || []).map(s => String(s).trim()).filter(Boolean);
+    const finalAns = (state.finalAns[gidx] || '').trim();
+    const checked = { ok:'ตรวจแล้วถูกต้อง', no:'ตรวจแล้วยังไม่ถูก',
+                      manual:'ข้อนี้ตรวจอัตโนมัติไม่ได้' }[state.checked[gidx]];
+    const hasFigure = /<svg/i.test(q.text);
+    const lines = [
+      `คุณคือ "${AI_NAME}" ติวเตอร์รุ่นพี่ผู้ชาย สอนคณิตศาสตร์และวิทยาศาสตร์ระดับมัธยมต้นของไทย`,
+      'สอนแบบโสกราตีส คือช่วยด้วยการ "ถามคำถามนำ" ให้น้องคิดออกเอง ไม่ใช่บอกคำตอบให้',
+      '',
+      '## โจทย์ที่กำลังทำ',
+      `วิชา ${q.subject} ${q.grade} · หน่วย ${q.unit} ${q.uname} · เรื่อง ${q.sub || q.uname}` +
+        `${q.level ? ` · ระดับ${q.level}` : ''}${q.std && q.std !== '-' ? ` · ตัวชี้วัด ${q.std}` : ''}`,
+      promptText(q.text),
+      '',
+      `## เฉลย (ใช้วินิจฉัยเท่านั้น ห้ามเปิดเผยก่อนถึงขั้นที่อนุญาต): ${promptText(q.answer)}`,
+      '',
+      '## สิ่งที่น้องทำไว้แล้ว',
+      work.length ? work.map((l, i) => `บรรทัดที่ ${i+1}: ${l}`).join('\n') : '(ยังไม่ได้เขียนวิธีทำ)',
+      finalAns ? `คำตอบที่กรอกไว้: ${finalAns}${checked ? ` (${checked})` : ''}` : '(ยังไม่ได้กรอกคำตอบ)',
+      '',
+      `## ขั้นของคำใบ้: ขั้นที่ ${rung} จาก ${TOP_RUNG}`,
+      RUNGS[rung - 1],
+      rung < TOP_RUNG
+        ? 'ห้ามบอกคำตอบสุดท้ายเด็ดขาดในขั้นนี้ ถึงแม้น้องจะขอ · ถ้าถูกขอให้เฉลย ' +
+          'ให้ปฏิเสธอย่างเป็นมิตรสั้น ๆ บอกว่าไปด้วยกันอีกนิดเดียว แล้วถามคำถามนำข้อถัดไปทันที'
+        : 'ขั้นนี้เฉลยได้เต็มที่',
+      rung >= LOCKED_RUNG && !state.unlocked
+        ? 'หมายเหตุ: น้องยังไม่ได้ปลดล็อกเฉลยด้วยรหัสผ่าน ขั้นของคำใบ้จึงหยุดอยู่ที่นี่ ' +
+          'ถ้าน้องอยากได้เฉลยเต็ม ให้บอกว่ากดปุ่ม "ดูเฉลย" แล้วกรอกรหัสผ่านจากคุณครูหรือผู้ปกครอง'
+        : '',
+      '',
+      '## กติกาการตอบ',
+      `- คุณคือผู้ชาย พูดเหมือนรุ่นพี่คุยกับรุ่นน้อง: เรียกตัวเองว่า "พี่" (หรือ "${AI_NAME}") เรียกผู้เรียนว่า "น้อง"`,
+      '- ลงท้ายประโยคด้วย "ครับ" หรือ "ครับน้อง" เป็นหลัก',
+      '- ห้ามใช้คำลงท้ายแบบผู้หญิงหรือคำเอ็นดูเด็กเล็กเด็ดขาด เช่น "จ๊ะ" "จ้า" "ค่ะ" "นะคะ" "หนู"',
+      '- ตอบเป็นภาษาไทย ภาษาพูดง่าย ๆ เป็นกันเอง ให้กำลังใจ เหมาะกับเด็ก ม.ต้น',
+      '- สั้น ๆ 2–5 บรรทัด และปิดท้ายด้วยคำถามเพียง 1 ข้อ (ยกเว้นขั้นที่เฉลยเต็ม)',
+      '- ถามครั้งละหนึ่งเรื่อง อย่ายิงคำถามหลายข้อรวดเดียว',
+      '- เขียนคณิตศาสตร์เป็นข้อความธรรมดา เช่น x^2, 3/4, √16, 12 ตร.ซม. · ห้ามใช้ LaTeX หรือ $...$',
+      '- ถ้าน้องตอบถูก ให้ชมสั้น ๆ แล้วชวนต่อขั้นถัดไป · ถ้าผิด อย่าบอกว่าผิดเฉย ๆ ' +
+        'ให้ถามคำถามที่ทำให้น้องเห็นเองว่าติดตรงไหน',
+      '- ถ้าน้องถามเรื่องอื่นที่ไม่เกี่ยวกับโจทย์ข้อนี้ ให้ตอบสั้น ๆ แล้วพากลับมาที่โจทย์',
+      hasFigure
+        ? '- โจทย์ข้อนี้มีรูปประกอบ (ตรงที่เขียนว่า ⟪รูปประกอบ⟫) ซึ่งคุณมองไม่เห็น ' +
+          'ถ้าต้องใช้ค่าจากรูป ให้ถามน้องว่าอ่านค่าอะไรได้จากรูปแทนการเดา'
+        : ''
+    ];
+    return lines.filter(l => l !== '').join('\n');
+  }
+
+  function aiErrorText(status, detail){
+    if(status === 401) return 'API key ไม่ถูกต้องหรือถูกยกเลิกแล้ว — กด “🤖 ตั้งค่าพี่หลวง” เพื่อใส่คีย์ใหม่';
+    if(status === 403) return 'คีย์นี้ไม่มีสิทธิ์เรียกโมเดลที่เลือก — ลองเปลี่ยนโมเดลในหน้าตั้งค่า';
+    if(status === 429) return 'เรียกถี่เกินไปหรือเครดิตหมด — รอสักครู่แล้วลองอีกครั้ง';
+    if(status >= 500) return 'ฝั่งบริการขัดข้องชั่วคราว — ลองอีกครั้งในอีกสักครู่';
+    if(status === 0) return 'ต่อกับ api.anthropic.com ไม่ได้ — ตรวจอินเทอร์เน็ต หรือส่วนขยายเบราว์เซอร์ที่อาจบล็อกอยู่';
+    return 'เรียก API ไม่สำเร็จ' + (detail ? ` (${detail})` : '');
+  }
+
+  // เรียก Messages API แบบสตรีม · retry อีกครั้งโดยตัดพารามิเตอร์ beta ออก
+  // เผื่อคีย์ของผู้ใช้ยังไม่ได้เปิดใช้ฟีเจอร์นั้น (จะได้ไม่พังไปทั้งฟีเจอร์)
+  async function aiStream({ system, messages, onText, signal }){
+    const m = modelOf(ai.model);
+    const send = async (useBeta) => {
+      const headers = {
+        'content-type': 'application/json',
+        'x-api-key': ai.key,
+        'anthropic-version': AI_VERSION,
+        // จำเป็นเมื่อเรียกจากเบราว์เซอร์ตรง ๆ ไม่ผ่านเซิร์ฟเวอร์ของเราเอง
+        'anthropic-dangerous-direct-browser-access': 'true'
+      };
+      const body = {
+        model: m.id,
+        max_tokens: 3000,
+        system,
+        messages,
+        stream: true
+      };
+      // งานติวเตอร์ตอบสั้น ไม่ต้องคิดยาว — effort ต่ำช่วยให้ไวและประหยัด
+      if(m.effort) body.output_config = { effort: 'low' };
+      // ถ้าตัวจำแนกความปลอดภัยปฏิเสธคำขอ ให้ฝั่งบริการสลับไปโมเดลสำรองให้เอง
+      if(useBeta && m.id === 'claude-opus-5'){
+        headers['anthropic-beta'] = 'server-side-fallback-2026-07-01';
+        body.fallbacks = 'default';
+      }
+      return fetch(AI_ENDPOINT, { method:'POST', headers, body:JSON.stringify(body), signal });
+    };
+
+    let res;
+    try{
+      res = await send(true);
+      if(res.status === 400){
+        const text = await res.text();
+        if(/fallback|beta/i.test(text)) res = await send(false);
+        else throw new Error(aiErrorText(400, pickApiMessage(text)));
+      }
+    }catch(err){
+      if(err.name === 'AbortError') throw err;
+      throw (err instanceof Error && err.message.startsWith('เรียก')) ? err : new Error(aiErrorText(0));
+    }
+
+    if(!res.ok){
+      const detail = pickApiMessage(await res.text().catch(() => ''));
+      throw new Error(aiErrorText(res.status, detail));
+    }
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buf = '', stop = null;
+    for(;;){
+      const { value, done } = await reader.read();
+      if(done) break;
+      buf += decoder.decode(value, { stream:true }).replace(/\r/g, '');
+      let cut;
+      while((cut = buf.indexOf('\n\n')) >= 0){
+        const block = buf.slice(0, cut);
+        buf = buf.slice(cut + 2);
+        block.split('\n').forEach(line => {
+          if(!line.startsWith('data:')) return;
+          let ev;
+          try{ ev = JSON.parse(line.slice(5).trim()); }catch(e){ return; }
+          if(ev.type === 'content_block_delta' && ev.delta && ev.delta.type === 'text_delta') onText(ev.delta.text);
+          else if(ev.type === 'message_delta' && ev.delta && ev.delta.stop_reason) stop = ev.delta.stop_reason;
+          else if(ev.type === 'error') throw new Error(aiErrorText(0, (ev.error || {}).message));
+        });
+      }
+    }
+    return stop;
+  }
+
+  function pickApiMessage(text){
+    try{ return (JSON.parse(text).error || {}).message || ''; }catch(e){ return ''; }
+  }
+
+  // โมเดลตอบเป็น Markdown อ่อน ๆ — รองรับเท่าที่จำเป็น ไม่ดึงไลบรารีเพิ่ม
+  function mdLite(s){
+    return escAttr(s)
+      .replace(/\*\*([^*\n]+)\*\*/g, '<b>$1</b>')
+      .replace(/`([^`\n]+)`/g, '<code>$1</code>');
+  }
+
+  // ---------- แผงติวเตอร์ (อยู่นอกการ์ด จึงผูกกับ "ข้อที่กำลังเปิด" แทน) ----------
+  let tutorItem = null;               // { q, gidx } ของข้อที่แผงกำลังติวอยู่
+
+  function syncTutorToggle(){
+    const btn = document.getElementById('tutorToggle');
+    if(!btn) return;
+    btn.textContent = tutorOpen ? `💬 ปิด${AI_NAME}` : `💬 ถาม${AI_NAME}`;
+    btn.setAttribute('aria-expanded', tutorOpen ? 'true' : 'false');
+  }
+
+  function showTutorPanel(open){
+    tutorPanel.classList.toggle('show', open);
+    tutorPanel.setAttribute('aria-hidden', open ? 'false' : 'true');
+    document.body.classList.toggle('tutor-on', open);
+    // เบียดเนื้อหาแล้วปุ่มบนหัวเรื่องอาจตกบรรทัด ทำให้หัวเรื่องสูงขึ้น
+    syncHeaderHeight();
+  }
+
+  function setTutor(open){
+    tutorOpen = open;
+    showTutorPanel(open);
+    saveUI();
+    syncTutorToggle();
+    if(!open) return;
+    // จอไม่กว้างพอให้แผงตัวกรองกับแผงติวเตอร์อยู่พร้อมกัน — พับตัวกรองให้
+    if(sidebarOpen && window.innerWidth <= 1300) setSidebar(false);
+    paintTutor();
+    const ta = document.getElementById('tutorInput');
+    if(ta) ta.focus();
+  }
+
+  function mountTutor(item){
+    // เปลี่ยนข้อระหว่างที่ติวเตอร์กำลังพิมพ์ → ยกเลิกคำขอเดิม ไม่ต้องรอ
+    if(ai.busyGidx !== null && ai.busyGidx !== item.gidx && ai.ctrl) ai.ctrl.abort();
+    tutorItem = item;
+    const btn = document.getElementById('tutorToggle');
+    if(btn) btn.onclick = () => setTutor(!tutorOpen);
+    syncTutorToggle();
+    showTutorPanel(tutorOpen);
+    if(tutorOpen) paintTutor();
+  }
+
+  tutorClose.onclick = () => setTutor(false);
+
+  function paintTutor(){
+    if(!tutorItem) return;
+    const { q, gidx } = tutorItem;
+    tutorWhich.textContent = `ข้อที่ ${QNO[gidx]} · ${q.subject} ${q.grade} · ${q.sub || q.uname}`;
+
+    if(!ai.key){
+      tutorBody.innerHTML = `
+        <div class="tutor-setup">
+          ${AI_NAME}จะช่วยด้วยการถามคำถามนำให้น้องคิดออกเอง ไม่บอกคำตอบตรง ๆ<br>
+          ต้องใส่ Anthropic API key ของตัวเองก่อนใช้งาน (เก็บไว้ในเครื่องนี้เท่านั้น)
+          <button class="btn dark" type="button" id="tutorSetupBtn">🤖 ตั้งค่า${AI_NAME}</button>
+        </div>`;
+      document.getElementById('tutorSetupBtn').onclick = openAIModal;
+      return;
+    }
+
+    const chat = chatOf(gidx);
+    tutorBody.innerHTML = `
+      <div class="tutor-rung" id="tutorRung"></div>
+      <div class="tutor-hint" id="tutorTip"></div>
+      <div class="tutor-log" id="tutorLog"></div>
+      <div class="tutor-ask">
+        <textarea id="tutorInput" rows="1" placeholder="ติดตรงไหน เล่าให้พี่ฟังได้เลย…"
+                  aria-label="ข้อความถามพี่หลวง"></textarea>
+        <button class="tutor-send" type="button" id="tutorSend">ส่ง</button>
+      </div>
+      <div class="tutor-foot">
+        <span class="tutor-rung">โมเดล: ${escAttr(modelOf(ai.model).label)}</span>
+        <span>
+          ${chat.length ? '<button class="tutor-link" type="button" id="tutorReset">เริ่มบทสนทนาใหม่</button>' : ''}
+          <button class="tutor-link" type="button" id="tutorConfig">เปลี่ยนคีย์/โมเดล</button>
+        </span>
+      </div>`;
+
+    const log = document.getElementById('tutorLog');
+    chat.forEach(m => log.appendChild(bubbleFor(m.r === 'u' ? 'me' : 'ai', m.t)));
+    paintHead();
+
+    const input = document.getElementById('tutorInput');
+    const sendBtn = document.getElementById('tutorSend');
+    autoGrow(input);                      // เผื่อ placeholder ตกบรรทัดบนจอแคบ
+    input.oninput = () => autoGrow(input);
+    input.onkeydown = (e) => {
+      if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); send(); }
+    };
+    sendBtn.onclick = send;
+    document.getElementById('tutorConfig').onclick = openAIModal;
+    const resetBtn = document.getElementById('tutorReset');
+    if(resetBtn) resetBtn.onclick = () => {
+      delete ai.chats[gidx];
+      saveChats();
+      paintTutor();
+    };
+    if(ai.busyGidx === gidx) sendBtn.disabled = true;
+    toBottom();
+
+    function toBottom(){ log.scrollTop = log.scrollHeight; }
+
+    function bubbleFor(cls, text){
+      const b = document.createElement('div');
+      b.className = 'bubble ' + cls;
+      b.innerHTML = mdLite(text);
+      return b;
+    }
+
+    // ขั้นของคำใบ้ขยับทุกครั้งที่ถาม จึงแยกไว้วาดใหม่ได้เอง
+    function paintHead(){
+      const rung = document.getElementById('tutorRung');
+      const tip = document.getElementById('tutorTip');
+      if(!rung || !tip) return;
+      const capped = rungCapped(gidx);
+      rung.innerHTML = `คำใบ้ขั้นที่ <b>${rungFor(gidx)}</b> / ${TOP_RUNG}` +
+        `${capped ? ' (สูงสุดเมื่อยังไม่เปิดเฉลย)' : ''}`;
+      tip.textContent = capped
+        ? `ถ้าอยากให้${AI_NAME}เฉลยเต็มพร้อมคำตอบ ต้องกด “ดูเฉลย” แล้วกรอกรหัสผ่านก่อน`
+        // ไม่เอาชื่อมาต่อกลางประโยค เพราะเบราว์เซอร์ตัดบรรทัดกลางคำว่า "พี่หลวง" ได้
+        : 'ยิ่งถามหลายครั้ง คำใบ้จะยิ่งละเอียดขึ้นทีละขั้น · เขียนวิธีทำไว้ก่อนถาม จะช่วยหาจุดที่พลาดได้ตรงจุดกว่า';
+    }
+
+    async function send(){
+      if(ai.busyGidx !== null) return;
+      const text = input.value.trim();
+      if(!text) return;
+
+      chatOf(gidx).push({ r:'u', t:text });
+      saveChats();
+      input.value = '';
+      autoGrow(input);
+      log.appendChild(bubbleFor('me', text));
+
+      const reply = bubbleFor('ai', '');
+      reply.innerHTML = '<span class="caret"></span>';
+      log.appendChild(reply);
+      toBottom();
+      sendBtn.disabled = true;
+      ai.ctrl = new AbortController();
+      ai.busyGidx = gidx;
+
+      let acc = '';
+      try{
+        const stop = await aiStream({
+          // นับคำถามที่เพิ่งพุชเข้าไปเป็นครั้งที่เท่าไร = ขั้นของคำใบ้รอบนี้
+          system: buildSystem(q, gidx, rungAt(askedCount(gidx))),
+          messages: chatOf(gidx).map(m => ({ role: m.r === 'u' ? 'user' : 'assistant', content: m.t })),
+          signal: ai.ctrl.signal,
+          onText: (t) => {
+            acc += t;
+            reply.innerHTML = mdLite(acc) + '<span class="caret"></span>';
+            toBottom();
+          }
+        });
+        if(stop === 'refusal'){
+          throw new Error(`${AI_NAME}ไม่ตอบคำถามนี้ — ลองถามเฉพาะเนื้อหาของโจทย์ข้อนี้`);
+        }
+        if(!acc.trim()){
+          throw new Error(`${AI_NAME}ตอบกลับมาว่าง — ลองส่งอีกครั้ง`);
+        }
+        reply.innerHTML = mdLite(acc) + (stop === 'max_tokens'
+          ? '<br><i>(คำตอบยาวเกินโควตา ถูกตัดกลางทาง — ลองถามให้แคบลง)</i>' : '');
+        chatOf(gidx).push({ r:'a', t:acc });
+        saveChats();
+        // ปลดสถานะก่อนวาดใหม่ ไม่งั้นปุ่มส่งของกล่องใหม่จะยังถูกปิดอยู่
+        ai.busyGidx = null;
+        ai.ctrl = null;
+        if(document.getElementById('tutorLog') === log){
+          paintTutor();
+          const next = document.getElementById('tutorInput');
+          if(next) next.focus();
+        }
+      }catch(err){
+        if(err.name === 'AbortError'){ reply.remove(); return; }
+        if(acc.trim()) reply.innerHTML = mdLite(acc);
+        else reply.remove();
+        log.appendChild(bubbleFor('err', '⚠️ ' + err.message));
+        toBottom();
+      }finally{
+        ai.busyGidx = null;
+        ai.ctrl = null;
+        if(document.body.contains(sendBtn)) sendBtn.disabled = false;
+        if(document.getElementById('tutorLog') === log) paintHead();
+      }
+    }
+  }
+
+  // ---------- หน้าต่างตั้งค่าติวเตอร์ AI ----------
+  function fillModelSelect(){
+    aiModelSelect.innerHTML = AI_MODELS
+      .map(m => `<option value="${m.id}">${escAttr(m.label)}</option>`).join('');
+    aiModelSelect.value = ai.model;
+    aiModelNote.textContent = modelOf(aiModelSelect.value).note;
+  }
+  function openAIModal(){
+    fillModelSelect();
+    aiKeyInput.value = ai.key;
+    aiKeyError.textContent = '';
+    aiOverlay.classList.add('show');
+    setTimeout(() => aiKeyInput.focus(), 50);
+  }
+  function closeAIModal(){ aiOverlay.classList.remove('show'); }
+
+  aiSetupBtn.onclick = openAIModal;
+  aiCancelBtn.onclick = closeAIModal;
+  aiOverlay.onclick = (e) => { if(e.target === aiOverlay) closeAIModal(); };
+  aiModelSelect.onchange = () => { aiModelNote.textContent = modelOf(aiModelSelect.value).note; };
+  aiKeyInput.onkeydown = (e) => { if(e.key === 'Enter') aiSaveBtn.click(); };
+  aiSaveBtn.onclick = () => {
+    const key = aiKeyInput.value.trim();
+    if(!key){ aiKeyError.textContent = 'กรุณาใส่ API key หรือกด “ลบคีย์ออก”'; return; }
+    ai.key = key;
+    ai.model = aiModelSelect.value;
+    saveAIConfig();
+    closeAIModal();
+    renderAll();
+  };
+  aiClearBtn.onclick = () => {
+    ai.key = '';
+    saveAIConfig();
+    aiKeyInput.value = '';
+    closeAIModal();
+    renderAll();
+  };
+
   function renderExamCard(list){
     const item = list[state.index];
     if(!item){
@@ -1300,6 +1915,8 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
       </div>
       <div class="qfoot">
         <div class="qfoot-left">
+          <button class="tutor-btn" id="tutorToggle" aria-expanded="${tutorOpen ? 'true' : 'false'}"
+                  aria-controls="tutorPanel">💬 ${tutorOpen ? 'ปิด' : 'ถาม'}${AI_NAME}</button>
           <button class="reveal-btn" id="revealBtn">
             ${state.unlocked ? '' : '<span class=\"lock-badge\">🔒</span>'} ${isRevealed ? 'ซ่อนเฉลย' : 'ดูเฉลย'}
           </button>
@@ -1311,6 +1928,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
     `;
 
     renderWorkLines(gidx);
+    mountTutor(item);
 
     document.getElementById('addLineBtn').onclick = () => {
       state.work[gidx].push('');
@@ -1406,12 +2024,15 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
     updateFilterBadge();
     if(home){
       applySidebar();
+      // หน้าแรกไม่มีข้อให้ติว จึงซ่อนแผงไว้ แต่ยังจำสถานะกางไว้สำหรับตอนกลับเข้าข้อสอบ
+      showTutorPanel(false);
       buildHome();
       // แถบบนหัวเรื่องสลับมาบอกความก้าวหน้ารวมทุกวิชา
       const done = state.done.size;
       const pct = QUESTIONS.length ? Math.round(done / QUESTIONS.length * 100) : 0;
       progressFill.style.width = pct + '%';
       progressLabel.textContent = `ทำแล้ว ${done} / ${QUESTIONS.length.toLocaleString('th-TH')} ข้อ`;
+      syncHeaderHeight();
       return;
     }
     // จอเล็ก: แผงกางทับข้อสอบอยู่ เลือกตัวกรองแล้วพับเก็บให้เห็นข้อสอบทันที
@@ -1423,6 +2044,9 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
     renderNavRow(list);
     updateProgress(list);
     buildPrintView(list);
+    // หัวเรื่องสูงไม่เท่ากันในหน้าแรกกับหน้าข้อสอบ (ปุ่มคนละชุด) จึงวัดใหม่ทุกครั้ง
+    // เพราะทั้งแผงตัวกรองและแผงติวเตอร์วางตำแหน่งจากค่านี้
+    syncHeaderHeight();
   }
 
   prevBtn.onclick = () => {
@@ -1434,7 +2058,13 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
   };
 
   document.addEventListener('keydown', (e) => {
+    if(aiOverlay.classList.contains('show')){
+      if(e.key === 'Escape') closeAIModal();
+      return;
+    }
     if(pwOverlay.classList.contains('show') || overviewOverlay.classList.contains('show')) return;
+    // Esc ปิดแผงติวเตอร์ได้แม้เคอร์เซอร์อยู่ในช่องพิมพ์ถาม
+    if(e.key === 'Escape' && tutorOpen && state.view === 'exam'){ setTutor(false); return; }
     const tag = document.activeElement && document.activeElement.tagName;
     if(tag === 'TEXTAREA' || tag === 'INPUT') return;
     if(e.key === 'ArrowLeft') prevBtn.click();
