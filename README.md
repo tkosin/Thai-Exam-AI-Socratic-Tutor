@@ -87,7 +87,20 @@ npm install jsdom --no-save && node tools/dom_test.cjs  # ทดสอบหน�
 จึงต่อท้ายได้โดยไม่ต้องยอมให้วิชาใหม่ไปอยู่ท้ายรายการในหน้าเว็บ
 
 ทุก pull request จะถูกตรวจด้วยชุดเดียวกันนี้ผ่าน GitHub Actions
-(`.github/workflows/pages.yml`) และเมื่อ merge เข้า `main` แล้วจะ deploy GitHub Pages ให้อัตโนมัติ
+(`.github/workflows/check.yml`) — เป็นการ **ตรวจอย่างเดียว ไม่ deploy**
+
+## การเผยแพร่ (GitHub Pages)
+
+Pages ตั้งเป็นแบบ **Deploy from a branch** → `main` / `/ (root)`
+push เข้า `main` แล้ว GitHub เอาไฟล์ในแบรนช์ไปเสิร์ฟให้เอง **ไม่ผ่าน Actions ของบัญชี
+จึงไม่กินโควตาและไม่ต้องมีวงเงิน** (ไฟล์ `.nojekyll` ที่ราก บอกให้เสิร์ฟไฟล์ตามจริงโดยไม่ผ่าน Jekyll)
+
+ตั้งค่าที่ **Settings → Pages → Build and deployment → Source: Deploy from a branch**
+เลือก `main` และโฟลเดอร์ `/ (root)`
+
+> เดิมเคย deploy ด้วย `actions/deploy-pages` ซึ่งต้องรัน job บน Actions — ถ้า Actions ของบัญชี
+> ใช้ไม่ได้ (โควตาหมด/ปัญหาการชำระเงิน) เว็บจะค้างเวอร์ชันเก่าทั้งที่โค้ดเข้า `main` แล้ว
+> แบบ branch จึง deploy ได้แม้ Actions ใช้ไม่ได้ · ถ้า Actions แดง ให้รันชุดตรวจในเครื่องแทน (ดูด้านบน)
 
 ดูรายละเอียดหัวข้อที่ยังต้องเพิ่มและหลักการเขียนเฉลยให้ระบบตรวจอัตโนมัติได้ที่
 [`docs/coverage-plan.md`](docs/coverage-plan.md)
