@@ -515,9 +515,154 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
       !bad.d.querySelector('#resumeBtn') && !!bad.d.querySelector('#courseGrid .course-card'), '');
 }
 
+// ---------- ติวเตอร์ AI ----------
+// ยัด fetch ปลอมที่คืนสตรีม SSE ให้ ไม่ต้องต่อเน็ตจริงและไม่ต้องมีคีย์จริง
+function loadTutor(seeds, reply = 'ลองอ่านโจทย์อีกครั้ง โจทย์ให้อะไรมาบ้าง?') {
+  const sent = [];
+  const sse = [
+    { type: 'message_start', message: { id: 'msg_1' } },
+    { type: 'content_block_start', index: 0, content_block: { type: 'text', text: '' } },
+    { type: 'content_block_delta', index: 0, delta: { type: 'text_delta', text: reply } },
+    { type: 'content_block_stop', index: 0 },
+    { type: 'message_delta', delta: { stop_reason: 'end_turn' } },
+    { type: 'message_stop' },
+  ].map(e => `event: ${e.type}\ndata: ${JSON.stringify(e)}\n\n`).join('');
+
+  const dom = new JSDOM(html, {
+    runScripts: 'dangerously',
+    pretendToBeVisual: true,
+    url: 'https://tkosin.github.io/math-is-fun/',
+    beforeParse(w) {
+      seeds.forEach(s => w.localStorage.setItem(s.key, JSON.stringify(s.value)));
+      w.fetch = (url, opt) => {
+        sent.push({ url, headers: opt.headers, body: JSON.parse(opt.body) });
+        const bytes = new w.TextEncoder().encode(sse);
+        let done = false;
+        return Promise.resolve({
+          ok: true, status: 200,
+          body: { getReader: () => ({
+            read: () => Promise.resolve(done ? { done: true } : (done = true, { value: bytes, done: false })),
+          }) },
+        });
+      };
+    },
+  });
+  dom.virtualConsole.on('jsdomError', e => errs.push(e.message));
+  const r = { dom, d: dom.window.document, w: dom.window, sent };
+  const go = [...r.d.querySelectorAll('#courseGrid .course-card .c-go')][0];
+  go.dispatchEvent(new r.w.Event('click'));
+  return r;
+}
+const tclick = (r, sel) => r.d.querySelector(sel).dispatchEvent(new r.w.Event('click'));
+const tick = () => new Promise(res => setTimeout(res, 0));
+// รอจนเงื่อนไขเป็นจริง (สตรีมคำตอบใช้หลาย microtask จึงรอด้วย setTimeout)
+const waitFor = async (fn, n = 80) => { for (let i = 0; i < n && !fn(); i++) await tick(); return fn(); };
+
+{
+  const KEY = { key: 'funnymath-ai-v1', value: { key: 'sk-ant-test', model: 'claude-opus-5' } };
+
+  // ยังไม่ใส่คีย์ → ต้องชวนไปตั้งค่า ไม่ใช่ช่องพิมพ์
+  const noKey = loadTutor([{ key: 'funnymath-ui-v1', value: { tutorOpen: true } }]);
+  chk('ยังไม่ใส่คีย์ → กล่องติวเตอร์ชวนไปตั้งค่า',
+      !!noKey.d.querySelector('#tutorSetupBtn') && !noKey.d.querySelector('#tutorInput'), '');
+  tclick(noKey, '#tutorSetupBtn');
+  chk('กดตั้งค่าแล้วเปิดหน้าต่างใส่คีย์', noKey.d.querySelector('#aiOverlay').classList.contains('show'), '');
+
+  // ปุ่มกาง/พับ และการจำสถานะ
+  const t = loadTutor([KEY]);
+  chk('กล่องติวเตอร์พับไว้ตั้งแต่เริ่ม', !t.d.querySelector('#tutorBox').classList.contains('show'), '');
+  tclick(t, '#tutorToggle');
+  chk('กดปุ่มแล้วกางกล่องติวเตอร์', t.d.querySelector('#tutorBox').classList.contains('show'), '');
+  chk('กางแล้วมีช่องพิมพ์ถาม', !!t.d.querySelector('#tutorInput'), '');
+  chk('จำสถานะกางไว้ใน localStorage',
+      JSON.parse(t.w.localStorage.getItem('funnymath-ui-v1') || '{}').tutorOpen === true, '');
+
+  const opened = [{ key: 'funnymath-ui-v1', value: { tutorOpen: true } }, KEY];
+  const t2 = loadTutor(opened);
+  chk('เคยกางไว้ → เปิดข้อใหม่ก็กางให้เลย', !!t2.d.querySelector('#tutorInput'), '');
+  chk('เริ่มต้นอยู่คำใบ้ขั้นที่ 1',
+      /ขั้นที่ 1 \/ 7/.test(t2.d.querySelector('.tutor-rung').textContent),
+      t2.d.querySelector('.tutor-rung').textContent);
+
+  (async () => {
+    // ถาม 1 ครั้ง → ต้องยิง request ที่มีเฮดเดอร์ครบและได้คำตอบขึ้นจอ
+    const input = t2.d.querySelector('#tutorInput');
+    input.value = 'ไม่รู้จะเริ่มยังไง';
+    input.dispatchEvent(new t2.w.Event('input'));
+    tclick(t2, '#tutorSend');
+    await waitFor(() => (t2.d.querySelector('.bubble.ai') || {}).textContent);
+
+    const req = t2.sent[0] || { headers: {}, body: {} };
+    chk('ถามแล้วยิงไปที่ Messages API', /api\.anthropic\.com\/v1\/messages$/.test(t2.sent[0] && t2.sent[0].url),
+        t2.sent[0] && t2.sent[0].url);
+    chk('ส่งเฮดเดอร์เรียกจากเบราว์เซอร์ตรง',
+        req.headers['anthropic-dangerous-direct-browser-access'] === 'true', '');
+    chk('ส่ง x-api-key และเวอร์ชัน API',
+        req.headers['x-api-key'] === 'sk-ant-test' && !!req.headers['anthropic-version'], '');
+    chk('เรียกแบบสตรีม', req.body.stream === true, '');
+    chk('พรอมป์ระบบมีทั้งโจทย์ เฉลย และขั้นของคำใบ้',
+        /## โจทย์ที่กำลังทำ/.test(req.body.system) && /## เฉลย/.test(req.body.system)
+        && /ขั้นที่ 1 จาก 7/.test(req.body.system), '');
+    chk('พรอมป์ระบบสั่งห้ามบอกคำตอบในขั้นต้น',
+        /ห้ามบอกคำตอบสุดท้ายเด็ดขาดในขั้นนี้/.test(req.body.system), '');
+    chk('พรอมป์ระบบไม่มีแท็ก HTML ของโจทย์ติดไปด้วย',
+        !/<(div|span|svg|sup)\b/.test(req.body.system), '');
+    chk('คำตอบติวเตอร์ขึ้นในกล่องแช็ต',
+        /ลองอ่านโจทย์อีกครั้ง/.test((t2.d.querySelector('.bubble.ai') || {}).textContent || ''), '');
+    chk('ถามแล้วขั้นคำใบ้ขยับเป็น 2',
+        /ขั้นที่ 2 \/ 7/.test(t2.d.querySelector('.tutor-rung').textContent),
+        t2.d.querySelector('.tutor-rung').textContent);
+
+    const saved = JSON.parse(t2.w.localStorage.getItem('funnymath-chat-v1') || '{}');
+    const first = saved[Object.keys(saved)[0]] || [];
+    chk('บทสนทนาเก็บลง localStorage แยกตามข้อ',
+        first.length === 2 && first[0].r === 'u' && first[1].r === 'a', JSON.stringify(first.length));
+
+    // เพดานคำใบ้ต้องผูกกับรหัสผ่านเฉลย
+    const chat = { 0: Array.from({ length: 12 }, (_, i) => ({ r: i % 2 ? 'a' : 'u', t: 'x' })) };
+    const many = loadTutor([...opened, { key: 'funnymath-chat-v1', value: chat }]);
+    chk('ยังไม่ปลดล็อกเฉลย → คำใบ้หยุดที่ขั้น 6',
+        /ขั้นที่ 6 \/ 7/.test(many.d.querySelector('.tutor-rung').textContent),
+        many.d.querySelector('.tutor-rung').textContent);
+    chk('บอกวิธีปลดล็อกให้ถึงขั้นเฉลยเต็ม',
+        /ดูเฉลย/.test(many.d.querySelector('.tutor-hint').textContent), '');
+    tclick(many, '#revealBtn');
+    const pw = many.d.querySelector('#pwInput');
+    pw.value = /const ANSWER_PASSWORD = "(.*?)"/.exec(html)[1];
+    tclick(many, '#pwConfirmBtn');
+    chk('ปลดล็อกเฉลยแล้วคำใบ้ขึ้นถึงขั้น 7',
+        /ขั้นที่ 7 \/ 7/.test(many.d.querySelector('.tutor-rung').textContent),
+        many.d.querySelector('.tutor-rung').textContent);
+
+    // เริ่มบทสนทนาใหม่แล้วต้องนับขั้นใหม่
+    tclick(many, '#tutorReset');
+    chk('เริ่มบทสนทนาใหม่แล้วกลับไปขั้นที่ 1',
+        /ขั้นที่ 1 \/ 7/.test(many.d.querySelector('.tutor-rung').textContent)
+        && !many.d.querySelector('.bubble'), '');
+
+    // Haiku ไม่รับ output_config.effort
+    const haiku = loadTutor([...opened, { key: 'funnymath-ai-v1', value: { key: 'k', model: 'claude-haiku-4-5' } }]);
+    const hi = haiku.d.querySelector('#tutorInput');
+    hi.value = 'ถาม';
+    tclick(haiku, '#tutorSend');
+    await waitFor(() => haiku.sent.length);
+    chk('เลือก Haiku 4.5 → ไม่ส่ง output_config ไปด้วย',
+        haiku.sent.length === 1 && !('output_config' in haiku.sent[0].body)
+        && haiku.sent[0].body.model === 'claude-haiku-4-5', JSON.stringify(Object.keys(haiku.sent[0].body)));
+
+    report();
+  })().catch(e => {
+    chk('ชุดเทสต์ติวเตอร์ AI ทำงานจบ', false, e && e.message);
+    report();
+  });
+}
+
 // ---------- ผลลัพธ์ ----------
-const failed = T.filter(t => t[0] === 'FAIL');
-console.log(T.map(([s, n, e]) => `${s}  ${n}${s === 'FAIL' ? '   << ' + e : ''}`).join('\n'));
-console.log(`\n${T.length - failed.length}/${T.length} ผ่าน`);
-if (errs.length) console.log('JS ERRORS:\n' + errs.join('\n'));
-process.exit(failed.length || errs.length ? 1 : 0);
+// เทสต์ของติวเตอร์ AI เป็น async (รอสตรีมคำตอบ) จึงสรุปผลเมื่อชุดนั้นจบ
+function report() {
+  const failed = T.filter(t => t[0] === 'FAIL');
+  console.log(T.map(([s, n, e]) => `${s}  ${n}${s === 'FAIL' ? '   << ' + e : ''}`).join('\n'));
+  console.log(`\n${T.length - failed.length}/${T.length} ผ่าน`);
+  if (errs.length) console.log('JS ERRORS:\n' + errs.join('\n'));
+  process.exit(failed.length || errs.length ? 1 : 0);
+}
