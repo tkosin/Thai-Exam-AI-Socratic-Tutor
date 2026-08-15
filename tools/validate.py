@@ -2,9 +2,11 @@
 # -*- coding: utf-8 -*-
 """ตรวจความถูกต้องของ index.html และคลังข้อสอบ — ใช้เป็นด่านตรวจใน CI
 
-รัน:  python3 tools/validate.py
+รัน:  python3 tools/validate.py             ตรวจทั้งหมด (รัน selftest ให้ก่อนเสมอ)
+      python3 tools/validate.py --selftest  ตรวจแต่ตัวด่านตรวจความครอบคลุมเอง
 ออกด้วยรหัส 1 ถ้าพบข้อผิดพลาด
 """
+import glob
 import json
 import os
 import re
@@ -17,6 +19,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HTML = os.path.join(ROOT, "index.html")
 COPY = os.path.join(ROOT, "ข้อสอบคณิตศาสตร์_ม1.html")
 COURSES = os.path.join(ROOT, "questions", "courses.json")
+TOPICS = os.path.join(ROOT, "questions", "topics.json")
+DATA = os.path.join(ROOT, "data")
 
 # แข่งขัน = โจทย์แนวสอบแข่งขัน (สพฐ./สสวท./TEDET) ยากกว่า "ยาก" และมักต้องใช้หลายหัวข้อร่วมกัน
 LEVELS = {"ง่าย", "กลาง", "ยาก", "แข่งขัน"}
@@ -34,12 +38,156 @@ def err(msg):
     errors.append(msg)
 
 
-def main():
-    html = open(HTML, encoding="utf-8").read()
+def coverage(qs, doc=None, courses=None):
+    """ด่านตรวจความครอบคลุม — เทียบคลังข้อสอบกับแผนที่หัวข้อใน questions/topics.json
 
-    m = re.search(r"const QUESTIONS = (\[.*?\]);", html, re.S)
+    แทนรายการตัวชี้วัดที่เคยฮาร์ดโค้ดไว้เฉพาะคณิตศาสตร์ ตอนนี้ใช้ได้กับทุกวิชา
+    เพิ่มระดับชั้นใหม่ = เพิ่มรายวิชาใน topics.json ไม่ต้องมาแก้โค้ดตรวจ
+
+    หัวข้อ status:
+      active  — ต้องมีข้อสอบแล้ว · ไม่มี = ผิด (กันไม่ให้ "ครอบคลุม" เป็นแค่คำพูด)
+      planned — ยังไม่มี ตั้งใจไว้ทำเฟสถัดไป · ถ้าดันมีข้อสอบแล้วก็ผิด (ลืมอัปเดตแผนที่)
+
+    doc/courses ใส่เองได้เพื่อให้ selftest ป้อนข้อมูลสมมุติเข้ามาตรวจว่าด่านนี้ดักได้จริง
+    """
+    if doc is None:
+        if not os.path.exists(TOPICS):
+            err("ไม่พบ questions/topics.json (แผนที่หัวข้อสำหรับตรวจความครอบคลุม)")
+            return
+        doc = json.load(open(TOPICS, encoding="utf-8"))
+    if courses is None:
+        courses = json.load(open(COURSES, encoding="utf-8"))
+    svg_types = set(doc["svg_types"])
+
+    # ---- 9.1 ตัว topics.json เองต้องสมเหตุสมผลก่อน ----
+    seen_id, by_course = {}, {}
+    for c in doc["courses"]:
+        key = (c["subject"], c["grade"])
+        if key in by_course:
+            err(f"topics.json: มีรายวิชา {c['subject']} {c['grade']} ซ้ำ")
+        by_course[key] = c
+        stds = set()
+        for t in c["topics"]:
+            where = f"topics.json {t['id']}"
+            if t["id"] in seen_id:
+                err(f"{where}: รหัสหัวข้อซ้ำกับ {seen_id[t['id']]}")
+            seen_id[t["id"]] = f"{c['slug']} {t['std']}"
+            if t["std"] in stds:
+                err(f"{where}: ตัวชี้วัด {t['std']} ซ้ำในวิชาเดียวกัน")
+            stds.add(t["std"])
+            if not STD_RE.match(t["std"]) or t["std"] == "-":
+                err(f"{where}: ตัวชี้วัด '{t['std']}' ไม่ตรงรูปแบบ")
+            elif f" {c['grade']}/" not in t["std"]:
+                err(f"{where}: ตัวชี้วัด '{t['std']}' ไม่ใช่ของชั้น {c['grade']}")
+            if t["status"] not in ("active", "planned"):
+                err(f"{where}: status '{t['status']}' ต้องเป็น active หรือ planned")
+            # กติกาจากสเปก: หัวข้อที่ต้องใช้รูป ต้องบอกด้วยว่าเป็นรูปแบบไหน
+            if t["needs_svg"] and not t["svg_type"]:
+                err(f"{where}: needs_svg เป็น true แต่ไม่ได้ระบุ svg_type")
+            if not t["needs_svg"] and t["svg_type"]:
+                err(f"{where}: needs_svg เป็น false แต่ระบุ svg_type '{t['svg_type']}'")
+            if t["svg_type"] and t["svg_type"] not in svg_types:
+                err(f"{where}: svg_type '{t['svg_type']}' ไม่อยู่ในรายการ svg_types")
+
+    # วิชาที่มีข้อสอบแล้ว ต้องมีแผนที่หัวข้อทุกวิชา ไม่งั้นด่านนี้ปล่อยผ่านไปเงียบ ๆ
+    for c in courses:
+        if (c["subject"], c["grade"]) not in by_course:
+            err(f"topics.json: ไม่มีรายวิชา {c['subject']} {c['grade']} ทั้งที่มีข้อสอบแล้ว")
+
+    # ---- 9.2 ตัวชี้วัดในคลัง ต้องมีที่อยู่ในแผนที่ ----
+    # ข้อ tag ทบทวน/ต่อยอด ตั้งใจให้ข้ามชั้น จึงเทียบกับทุกชั้นของวิชาเดียวกัน
+    known = {}
+    for (subj, grade), c in by_course.items():
+        for t in c["topics"]:
+            known.setdefault(subj, {})[t["std"]] = (grade, t)
+    have = {}
+    for q in qs:
+        if q["std"] == "-":
+            continue
+        have.setdefault((q["subject"], q["std"]), []).append(q)
+    for (subj, std), group in sorted(have.items()):
+        if std not in known.get(subj, {}):
+            err(f"{subj}: ตัวชี้วัด '{std}' มีข้อสอบ {len(group)} ข้อ "
+                "แต่ไม่มีในแผนที่หัวข้อ (เพิ่มใน questions/topics.json)")
+    blank = sum(1 for q in qs if q["std"] == "-")
+    if blank:
+        notes.append(f"ข้อที่ไม่ผูกกับตัวชี้วัด (โจทย์ประยุกต์/รวมหลายหัวข้อ) {blank} ข้อ")
+
+    # ---- 9.3 หัวข้อ active ต้องมีข้อสอบ · planned ต้องยังไม่มี ----
+    for (subj, grade), c in sorted(by_course.items()):
+        missing, early, nofig, waiting, done = [], [], [], [], 0
+        for t in c["topics"]:
+            n = len(have.get((subj, t["std"]), []))
+            if t["status"] == "active":
+                if n:
+                    done += 1
+                else:
+                    missing.append(t["std"])
+            elif n:
+                early.append(t["std"])
+            if t["needs_svg"] and not any("<svg" in q["text"]
+                                          for q in have.get((subj, t["std"]), [])):
+                nofig.append(t["std"])
+            waiting += check_subtopics(c, t, have.get((subj, t["std"]), []))
+        if waiting:
+            notes.append(f"หัวข้อย่อยที่ยังไม่มีข้อสอบใน {subj} {grade}: " + " · ".join(waiting))
+        if missing:
+            err(f"{subj} {grade}: หัวข้อ active ที่ยังไม่มีข้อสอบ — {', '.join(missing)}")
+        if early:
+            err(f"{subj} {grade}: หัวข้อ planned ที่มีข้อสอบแล้ว "
+                f"ให้เปลี่ยน status เป็น active — {', '.join(early)}")
+        plan = [t["std"] for t in c["topics"] if t["status"] == "planned"]
+        notes.append(f"หัวข้อ {subj} {grade}: มีข้อสอบ {done}/{len(c['topics'])}"
+                     + (f" · รอทำอีก {len(plan)}" if plan else "")
+                     # ไม่ใช่ข้อผิดพลาด แต่เป็นงานค้าง: หัวข้อที่ควรมีรูปประกอบแต่ยังไม่มีสักข้อ
+                     + (f" · ควรมีรูปแต่ยังไม่มี {len(nofig)} หัวข้อ" if nofig else ""))
+
+    later = doc.get("planned_courses", [])
+    if later:
+        notes.append(f"วิชาที่ยังไม่เริ่ม {len(later)} วิชา · "
+                     + " · ".join(f"{p['subject']} {p['grade']} (เฟส {p['phase']})"
+                                  for p in later[:4])
+                     + (" …" if len(later) > 4 else ""))
+
+
+def check_subtopics(course, topic, group):
+    """หัวข้อย่อย — ตรวจละเอียดกว่าระดับตัวชี้วัด
+
+    ตัวชี้วัดหนึ่งตัวมีหลายเรื่องย่อยได้ การมีข้อสอบของตัวชี้วัดนั้นแล้วจึงไม่ได้แปลว่าครบ
+    (เช่น ค 3.1 ม.3/1 มีควอร์ไทล์ครบ แต่ไม่มีแผนภาพกล่อง เปอร์เซ็นไทล์ ค่านอกเกณฑ์เลย)
+    นับด้วยคำสำคัญใน match ที่ต้องปรากฏในโจทย์หรือชื่อเรื่องย่อยของข้อ
+    คืนรายชื่อหัวข้อย่อยที่ยังรอทำ เพื่อเอาไปสรุปเป็นงานค้างให้เห็น
+    """
+    waiting = []
+    for sub in topic.get("subtopics", []):
+        n = sum(1 for q in group
+                if any(w in q["text"] or w in q["sub"] for w in sub["match"]))
+        where = f"{course['subject']} {course['grade']} {topic['std']} · {sub['name']}"
+        if sub["status"] not in ("active", "planned"):
+            err(f"{where}: status '{sub['status']}' ต้องเป็น active หรือ planned")
+        elif sub["status"] == "active" and not n:
+            err(f"{where}: หัวข้อย่อย active แต่ไม่มีข้อสอบสักข้อ")
+        elif sub["status"] == "planned":
+            if n:
+                err(f"{where}: หัวข้อย่อย planned แต่มีข้อสอบแล้ว {n} ข้อ "
+                    "ให้เปลี่ยน status เป็น active")
+            else:
+                waiting.append(f"{topic['std']} {sub['name']}")
+    return waiting
+
+
+def main():
+    # index.html เป็นแค่โค้ด ข้อสอบอยู่ใน data/*.json (ออนไลน์) และในสำเนาชื่อไทย (ออฟไลน์)
+    # ตรวจจากสำเนาที่รวมไฟล์เดียว เพราะนั่นคือ "ของที่ส่งถึงผู้เรียน" ครบทั้งก้อน
+    html = open(HTML, encoding="utf-8").read()
+    if not os.path.exists(COPY):
+        err("ไม่พบไฟล์สำเนา ข้อสอบคณิตศาสตร์_ม1.html")
+        return report()
+    bundled = open(COPY, encoding="utf-8").read()
+
+    m = re.search(r"const QUESTIONS = (\[.*?\]);", bundled, re.S)
     if not m:
-        err("ไม่พบ const QUESTIONS ใน index.html")
+        err("ไม่พบ const QUESTIONS ในสำเนาชื่อไทย")
         return report()
     try:
         qs = json.loads(m.group(1))
@@ -47,6 +195,36 @@ def main():
         err(f"QUESTIONS ไม่ใช่ JSON ที่ถูกต้อง: {e}")
         return report()
     notes.append(f"ข้อสอบทั้งหมด {len(qs)} ข้อ")
+
+    # ---- 0. ไฟล์ที่เสิร์ฟออนไลน์ต้องสอดคล้องกับสำเนา ----
+    if not re.search(r"const QUESTIONS = \[\];", html):
+        err("index.html ต้องไม่ฝังข้อสอบไว้ (ต้องเป็น const QUESTIONS = [];) — รัน tools/build.py")
+    mm = re.search(r"const MANIFEST = (\[.*?\]);", html, re.S)
+    if not mm:
+        err("ไม่พบ const MANIFEST ใน index.html")
+        return report()
+    manifest = json.loads(mm.group(1))
+
+    parts = []
+    for c in manifest:
+        path = os.path.join(DATA, c["slug"] + ".json")
+        if not os.path.exists(path):
+            err(f"ไม่พบไฟล์ข้อมูล data/{c['slug']}.json")
+            continue
+        part = json.load(open(path, encoding="utf-8"))
+        parts.extend(part)
+        if len(part) != c["count"]:
+            err(f"data/{c['slug']}.json มี {len(part)} ข้อ แต่ MANIFEST บอก {c['count']}")
+        want_units = sum(u["count"] for u in c["units"])
+        if want_units != c["count"]:
+            err(f"MANIFEST ของ {c['slug']}: จำนวนข้อรายหน่วยรวม {want_units} ไม่เท่ากับ {c['count']}")
+    if [q["id"] for q in parts] != [q["id"] for q in qs]:
+        err("data/*.json รวมกันแล้วไม่ตรงกับสำเนาชื่อไทย — รัน tools/build.py")
+    extra = sorted(set(os.path.basename(f)[:-5] for f in glob.glob(os.path.join(DATA, "*.json")))
+                   - {c["slug"] for c in manifest})
+    if extra:
+        err(f"มีไฟล์ข้อมูลที่ไม่มีวิชารองรับแล้ว: {', '.join(extra)}")
+    notes.append(f"ไฟล์ข้อมูลรายวิชา {len(manifest)} ไฟล์ · index.html {len(html.encode('utf-8'))/1024:.0f} KB")
 
     # ---- 1. ครบทุกฟิลด์และค่าถูกต้อง ----
     for i, q in enumerate(qs, 1):
@@ -180,41 +358,14 @@ console.log(JSON.stringify({{ bad, manual }}));
         notes.append(f"เฉลยที่ตรวจอัตโนมัติไม่ได้ {len(res['manual'])} ข้อ "
                      f"(คำตอบเชิงบรรยาย)")
 
-    # ---- 8. สำเนาชื่อภาษาไทยต้องตรงกับ index.html ----
-    if not os.path.exists(COPY):
-        err("ไม่พบไฟล์สำเนา ข้อสอบคณิตศาสตร์_ม1.html")
-    elif open(COPY, encoding="utf-8").read() != html:
-        err("สำเนา ข้อสอบคณิตศาสตร์_ม1.html ไม่ตรงกับ index.html (รัน: python3 tools/build.py)")
+    # ---- 8. สำเนาออฟไลน์ต้องเป็นไฟล์เดียวกับ index.html ต่างแค่ข้อมูลที่ฝังไว้ ----
+    strip = lambda t: re.sub(r"const QUESTIONS = \[.*?\];", "const QUESTIONS = [];", t, flags=re.S)
+    if strip(bundled) != strip(html):
+        err("สำเนา ข้อสอบคณิตศาสตร์_ม1.html มีโค้ดไม่ตรงกับ index.html "
+            "(รัน: python3 tools/build.py)")
 
-    # ---- 9. ตัวชี้วัดคณิตศาสตร์ ม.ต้น ต้องมีข้อสอบครบทุกตัว ----
-    # รายการตามหลักสูตรแกนกลาง 2551 (ปรับปรุง 2560) สาระการเรียนรู้คณิตศาสตร์
-    # ถ้าเพิ่มระดับชั้นใหม่ ต้องมาต่อรายการนี้ด้วย ไม่งั้น "ครอบคลุมทุกหัวข้อ" จะเป็นแค่คำพูด
-    MATH_STD = {
-        "ม.1": ["ค 1.1 ม.1/1", "ค 1.1 ม.1/2", "ค 1.1 ม.1/3",
-                "ค 1.3 ม.1/1", "ค 1.3 ม.1/2", "ค 1.3 ม.1/3",
-                "ค 2.2 ม.1/1", "ค 2.2 ม.1/2", "ค 3.1 ม.1/1"],
-        "ม.2": ["ค 1.1 ม.2/1", "ค 1.1 ม.2/2", "ค 1.2 ม.2/1", "ค 1.2 ม.2/2",
-                "ค 2.1 ม.2/1", "ค 2.1 ม.2/2",
-                "ค 2.2 ม.2/1", "ค 2.2 ม.2/2", "ค 2.2 ม.2/3", "ค 2.2 ม.2/4", "ค 2.2 ม.2/5",
-                "ค 3.1 ม.2/1"],
-        "ม.3": ["ค 1.2 ม.3/1", "ค 1.2 ม.3/2",
-                "ค 1.3 ม.3/1", "ค 1.3 ม.3/2", "ค 1.3 ม.3/3",
-                "ค 2.1 ม.3/1", "ค 2.1 ม.3/2",
-                "ค 2.2 ม.3/1", "ค 2.2 ม.3/2", "ค 2.2 ม.3/3",
-                "ค 3.1 ม.3/1", "ค 3.2 ม.3/1"],
-    }
-    have = {}
-    for q in qs:
-        if q.get("subject") == "คณิตศาสตร์":
-            have[q.get("std")] = have.get(q.get("std"), 0) + 1
-    for grade, stds in MATH_STD.items():
-        missing = [s for s in stds if s not in have]
-        if missing:
-            err(f"คณิตศาสตร์ {grade}: ยังไม่มีข้อสอบของตัวชี้วัด {', '.join(missing)}")
-        else:
-            notes.append(f"ตัวชี้วัดคณิตศาสตร์ {grade} ครบทั้ง {len(stds)} ตัว · "
-                         + " · ".join(f"{s.replace(' ' + grade + '/', '/')}:{have[s]}"
-                                      for s in stds))
+    # ---- 9. ความครอบคลุมหัวข้อ เทียบกับ questions/topics.json ----
+    coverage(qs)
 
     # ---- 10. ระดับความยากต้องมีครบทุกระดับในทุกวิชาคณิตศาสตร์ ----
     by_grade_level = {}
@@ -240,6 +391,81 @@ console.log(JSON.stringify({{ bad, manual }}));
     return report()
 
 
+def selftest():
+    """ตรวจตัวด่านตรวจเอง — ป้อนแผนที่หัวข้อสมมุติแล้วดูว่าดักผิดได้ครบไหม
+
+    ด่านที่ไม่เคยเห็นของผิดจริง ๆ ก็ไม่รู้ว่าตัวเองยังทำงานอยู่หรือเปล่า
+    """
+    def run(doc, qs, courses=()):
+        global errors, notes
+        keep_e, keep_n = errors, notes
+        errors, notes = [], []
+        try:
+            coverage(qs, doc, list(courses))
+            return list(errors)
+        finally:
+            errors, notes = keep_e, keep_n
+
+    Q = lambda **kw: dict({"subject": "คณิตศาสตร์", "std": "ค 1.1 ม.1/1",
+                           "text": "โจทย์", "sub": "เรื่องย่อย"}, **kw)
+
+    def topic(**kw):
+        return dict({"id": "T-1", "std": "ค 1.1 ม.1/1", "strand": "จำนวนและพีชคณิต",
+                     "topic": "จำนวนเต็ม", "needs_svg": False, "svg_type": None,
+                     "status": "active"}, **kw)
+
+    def doc(*topics, **kw):
+        return {"svg_types": ["number_line", "bar_chart"],
+                "courses": [dict({"slug": "math-m1", "subject": "คณิตศาสตร์",
+                                  "grade": "ม.1", "topics": list(topics)}, **kw)]}
+
+    ok = [Q()]
+    cases = [
+        ("หัวข้อครบ ไม่มีอะไรผิด", doc(topic()), ok, ()),
+        ("หัวข้อ active แต่ไม่มีข้อสอบ", doc(topic()), [], ("ยังไม่มีข้อสอบ",)),
+        ("หัวข้อ planned แต่มีข้อสอบแล้ว", doc(topic(status="planned")), ok,
+         ("เปลี่ยน status เป็น active",)),
+        ("ตัวชี้วัดในคลังไม่มีในแผนที่", doc(topic()),
+         ok + [Q(std="ค 9.9 ม.1/9")], ("ไม่มีในแผนที่หัวข้อ",)),
+        ("needs_svg true แต่ไม่มี svg_type", doc(topic(needs_svg=True)), ok,
+         ("ไม่ได้ระบุ svg_type",)),
+        ("needs_svg false แต่ใส่ svg_type", doc(topic(svg_type="number_line")), ok,
+         ("needs_svg เป็น false แต่ระบุ svg_type",)),
+        ("svg_type ไม่อยู่ในรายการ", doc(topic(needs_svg=True, svg_type="ไม่มีจริง")), ok,
+         ("ไม่อยู่ในรายการ svg_types",)),
+        ("รหัสหัวข้อซ้ำ", doc(topic(), topic(std="ค 1.1 ม.1/2")), ok + [Q(std="ค 1.1 ม.1/2")],
+         ("รหัสหัวข้อซ้ำ",)),
+        ("ตัวชี้วัดซ้ำในวิชาเดียวกัน", doc(topic(), topic(id="T-2")), ok, ("ซ้ำในวิชาเดียวกัน",)),
+        ("ตัวชี้วัดผิดชั้น", doc(topic(std="ค 1.1 ม.2/1")), [], ("ไม่ใช่ของชั้น ม.1",)),
+        ("status สะกดผิด", doc(topic(status="ทำแล้ว")), ok, ("ต้องเป็น active หรือ planned",)),
+        ("วิชาที่มีข้อสอบแล้วแต่ไม่มีในแผนที่", doc(topic()), ok, ("ทั้งที่มีข้อสอบแล้ว",),
+         [{"subject": "วิทยาศาสตร์", "grade": "ม.3"}]),
+        ("หัวข้อย่อย active แต่ไม่มีข้อสอบ",
+         doc(topic(subtopics=[{"name": "ก", "match": ["ไม่มีคำนี้"], "status": "active"}])),
+         ok, ("หัวข้อย่อย active แต่ไม่มีข้อสอบ",)),
+        ("หัวข้อย่อย planned แต่มีข้อสอบแล้ว",
+         doc(topic(subtopics=[{"name": "ก", "match": ["โจทย์"], "status": "planned"}])),
+         ok, ("หัวข้อย่อย planned แต่มีข้อสอบแล้ว",)),
+        ("หัวข้อย่อยจับคำจากฟิลด์ sub ได้ด้วย",
+         doc(topic(subtopics=[{"name": "ก", "match": ["เรื่องย่อย"], "status": "active"}])),
+         ok, ()),
+    ]
+    bad = []
+    for name, d, qs, want, *rest in cases:
+        got = run(d, qs, rest[0] if rest else [{"subject": "คณิตศาสตร์", "grade": "ม.1"}])
+        for w in want:
+            if not any(w in e for e in got):
+                bad.append(f"{name}: ควรดักได้ '{w}' แต่ได้ {got or 'ไม่มีข้อผิดพลาด'}")
+        if not want and got:
+            bad.append(f"{name}: ไม่ควรมีข้อผิดพลาด แต่ได้ {got}")
+    if bad:
+        print("❌ selftest ของด่านตรวจความครอบคลุมไม่ผ่าน")
+        for b in bad:
+            print(f"   - {b}")
+        return False
+    return True
+
+
 def report():
     for n in notes:
         print(f"  … {n}")
@@ -255,4 +481,9 @@ def report():
 
 
 if __name__ == "__main__":
+    if not selftest():
+        sys.exit(1)
+    if "--selftest" in sys.argv:
+        print("✅ ด่านตรวจความครอบคลุมยังดักของผิดได้ครบ")
+        sys.exit(0)
     sys.exit(main())

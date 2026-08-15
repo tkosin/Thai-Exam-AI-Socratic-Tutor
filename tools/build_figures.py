@@ -16,10 +16,52 @@ from svg_helpers import (bar_chart, line_chart, pie_chart, pictograph, iso_cubes
                          cube_net, number_line, coord_plane, intersecting_lines,
                          triangle_fig, parallel_lines, top_view_heights,
                          right_triangle, transform_grid, prism_box, cylinder_fig,
-                         dot_plot, histogram)
+                         dot_plot, histogram, box_plot, ineq_line, parabola,
+                         two_lines, pyramid_fig, cone_fig, sphere_fig,
+                         similar_triangles, circle_fig, trig_triangle,
+                         wave_fig, circuit_fig, lens_ray, mirror_ray,
+                         punnett, food_web, flow_chart, particle_model,
+                         force_diagram, reaction_model, em_spectrum,
+                         mirror_image, prism_fig, orbit_fig, moon_phase)
 
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                    "questions", "figures.json")
+
+# แผนภาพกล่อง ม.3 — เก็บค่าห้าค่าไว้ที่เดียว เพราะ tools/gen_math_m3.py ต้อง import
+# ไปคิดเฉลย ถ้าแยกกันเขียนเมื่อไหร่ รูปกับเฉลยจะเพี้ยนคนละทางโดยไม่มีใครรู้
+# ค่าทุกค่าเลือกให้ตกบนขีดของแกนพอดี ไม่งั้นอ่านจากรูปแล้วเดาได้หลายคำตอบ
+BOX_PLOTS = {
+    "m3-box-math-scores": {
+        "five": (10, 20, 25, 35, 45), "outliers": (),
+        "x_title": "คะแนน (เต็ม 50 คะแนน)",
+        "story": "แผนภาพกล่องแสดงคะแนนสอบคณิตศาสตร์ของนักเรียน 40 คน",
+    },
+    "m3-box-travel-time": {
+        "five": (20, 35, 45, 55, 80), "outliers": (),
+        "x_title": "เวลา (นาที)",
+        "story": "แผนภาพกล่องแสดงเวลาเดินทางมาโรงเรียนของนักเรียน 30 คน",
+    },
+    "m3-box-height": {
+        "five": (150, 155, 165, 170, 180), "outliers": (),
+        "x_title": "ส่วนสูง (เซนติเมตร)",
+        "story": "แผนภาพกล่องแสดงส่วนสูงของนักเรียน 36 คน",
+    },
+    "m3-box-price-outlier": {
+        "five": (20, 40, 50, 70, 90), "outliers": (110,),
+        "x_title": "ราคา (บาท)",
+        "story": "แผนภาพกล่องแสดงราคาสินค้า 25 ชิ้น (จุดที่อยู่นอกหนวดคือค่านอกเกณฑ์)",
+    },
+    "m3-box-room-a": {
+        "five": (40, 55, 65, 75, 90), "outliers": (),
+        "x_title": "คะแนน",
+        "story": "แผนภาพกล่องแสดงคะแนนสอบของนักเรียนห้อง ก",
+    },
+    "m3-box-room-b": {
+        "five": (40, 60, 70, 80, 90), "outliers": (),
+        "x_title": "คะแนน",
+        "story": "แผนภาพกล่องแสดงคะแนนสอบของนักเรียนห้อง ข",
+    },
+}
 
 CAP_PLAN = "แผนผังด้านบน — ตัวเลขคือจำนวนลูกบาศก์ที่วางซ้อนกันในแต่ละตำแหน่ง"
 CAP_CUBES = "ลูกบาศก์หนึ่งหน่วยวางซ้อนกัน"
@@ -143,6 +185,198 @@ FIGURES = {
     # ── หน่วย 8 · ความเท่ากันทุกประการ ──────────────────────────────────
     "m2-tri-55-65-60": triangle_fig(55, 65, 60, unknown="C", caption="รูปสามเหลี่ยม ABC"),
 }
+
+# ══ คณิตศาสตร์ ม.3 ═══════════════════════════════════════════════════════
+# ตัวเลขบนรูปต้องตรงกับตัวเลขในโจทย์เสมอ · ตัวสร้างโจทย์ (tools/gen_math_m3.py)
+# อ่านค่าจากตารางเดียวกันนี้ ไม่ได้พิมพ์ซ้ำเอง
+M3_SOLIDS = {
+    # ชื่อรูป: (ชนิด, ค่าที่เขียนกำกับบนรูป)
+    "m3-pyr-10-13": ("pyramid", {"base": 10, "slant": 13}),
+    "m3-pyr-12-10": ("pyramid", {"base": 12, "slant": 10}),
+    "m3-pyr-8-h3": ("pyramid", {"base": 8, "height": 3}),
+    "m3-pyr-6-h4": ("pyramid", {"base": 6, "height": 4}),
+    "m3-cone-7-25": ("cone", {"r": 7, "slant": 25}),
+    "m3-cone-6-10": ("cone", {"r": 6, "slant": 10}),
+    "m3-cone-7-h24": ("cone", {"r": 7, "height": 24}),
+    "m3-cone-3-h4": ("cone", {"r": 3, "height": 4}),
+    "m3-sphere-7": ("sphere", {"r": 7}),
+    "m3-sphere-21": ("sphere", {"r": 21}),
+}
+
+
+def _solid(kind, v):
+    cm = lambda x: f"{x} ซม."
+    if kind == "pyramid":
+        return pyramid_fig(cm(v["base"]), cm(v["slant"]) if "slant" in v else None,
+                           cm(v["height"]) if "height" in v else None)
+    if kind == "cone":
+        return cone_fig(cm(v["r"]), cm(v["height"]) if "height" in v else None,
+                        cm(v["slant"]) if "slant" in v else None)
+    return sphere_fig(cm(v["r"]))
+
+
+FIGURES.update({name: _solid(kind, v) for name, (kind, v) in M3_SOLIDS.items()})
+
+# ── หน่วย 1 · อสมการ — เส้นจำนวนแสดงช่วงคำตอบ ───────────────────────────
+M3_INEQ = {
+    "m3-ineq-ge3": (-4, 8, 3, "≥"), "m3-ineq-lt-2": (-6, 6, -2, "<"),
+    "m3-ineq-gt5": (-2, 10, 5, ">"), "m3-ineq-le-1": (-6, 6, -1, "≤"),
+}
+FIGURES.update({n: ineq_line(*a) for n, a in M3_INEQ.items()})
+
+# ── หน่วย 5 · กราฟฟังก์ชันกำลังสอง ─────────────────────────────────────
+M3_PARABOLA = {
+    "m3-par-1-m4-3": (1, -4, 3), "m3-par-1-0-m4": (1, 0, -4),
+    "m3-par-m1-2-3": (-1, 2, 3), "m3-par-1-m6-8": (1, -6, 8),
+    "m3-par-m2-4-1": (-2, 4, 1),
+}
+FIGURES.update({n: parabola(*a) for n, a in M3_PARABOLA.items()})
+
+# ── หน่วย 6 · ระบบสมการเชิงเส้นสองตัวแปร — จุดตัดคือคำตอบ ────────────────
+M3_SYSTEM = {
+    "m3-sys-a": ((1, 2), (-2, 5)), "m3-sys-b": ((2, -1), (-1, 5)),
+    "m3-sys-c": ((1, -3), (-3, 5)),
+}
+FIGURES.update({n: two_lines([(m1, c1, "ℓ₁"), (m2, c2, "ℓ₂")],
+                             "จุดตัดของกราฟทั้งสองคือคำตอบของระบบสมการ")
+                for n, ((m1, c1), (m2, c2)) in M3_SYSTEM.items()})
+
+# ── หน่วย 4 · ความคล้าย ────────────────────────────────────────────────
+M3_SIMILAR = {
+    # ชื่อรูป: (ฐานเล็ก, ด้านเล็ก, ฐานใหญ่, ด้านใหญ่ที่ถาม)
+    "m3-sim-6-8-9": (6, 8, 9), "m3-sim-4-6-10": (4, 6, 10),
+    "m3-sim-5-7-15": (5, 7, 15),
+}
+FIGURES.update({
+    n: similar_triangles((b1, s1 * 0.8), (b2, s1 * 0.8 * b2 / b1),
+                         (f"{b1} ซม.", f"{s1} ซม."), (f"{b2} ซม.", "?"),
+                         "รูปสามเหลี่ยม ABC คล้ายกับรูปสามเหลี่ยม DEF")
+    for n, (b1, s1, b2) in M3_SIMILAR.items()})
+
+# ── หน่วย 7 · วงกลม ────────────────────────────────────────────────────
+M3_CIRCLE = {
+    "m3-cir-central-110": ("central-inscribed", {"center": "110°", "inscribed": "?"},
+                           "มุม AOB เป็นมุมที่จุดศูนย์กลาง · มุม ACB เป็นมุมในส่วนโค้ง"),
+    "m3-cir-central-84": ("central-inscribed", {"center": "84°", "inscribed": "?"},
+                          "มุม AOB เป็นมุมที่จุดศูนย์กลาง · มุม ACB เป็นมุมในส่วนโค้ง"),
+    "m3-cir-chord-16-6": ("chord-perp", {"chord": "16 ซม.", "dist": "6 ซม."},
+                          "OM ตั้งฉากกับคอร์ด AB ที่จุด M"),
+    "m3-cir-chord-24-5": ("chord-perp", {"chord": "24 ซม.", "dist": "5 ซม."},
+                          "OM ตั้งฉากกับคอร์ด AB ที่จุด M"),
+    "m3-cir-tangent-8": ("tangent", {"radius": "8 ซม."},
+                         "เส้นสัมผัสวงกลมที่จุด P · OP เป็นรัศมี"),
+    "m3-cir-quad-95": ("cyclic-quad", {"A": "95°", "C": "?"},
+                       "รูปสี่เหลี่ยม ABCD แนบในวงกลม"),
+    "m3-cir-quad-118": ("cyclic-quad", {"A": "118°", "C": "?"},
+                        "รูปสี่เหลี่ยม ABCD แนบในวงกลม"),
+}
+FIGURES.update({n: circle_fig(k, lab, cap) for n, (k, lab, cap) in M3_CIRCLE.items()})
+
+# ── หน่วย 11 · อัตราส่วนตรีโกณมิติ ──────────────────────────────────────
+# (ด้านประชิด, ด้านตรงข้าม, ด้านตรงข้ามมุมฉาก) ของมุม θ ที่จุด C
+M3_TRIG = {
+    "m3-trig-12-5-13": (12, 5, 13), "m3-trig-8-15-17": (8, 15, 17),
+    "m3-trig-4-3-5": (4, 3, 5), "m3-trig-24-7-25": (24, 7, 25),
+}
+FIGURES.update({
+    n: trig_triangle(a, o, "θ", f"{a} ซม.", f"{o} ซม.", f"{h} ซม.",
+                     caption="θ คือมุมที่จุด C")
+    for n, (a, o, h) in M3_TRIG.items()})
+
+# ══ วิทยาศาสตร์ ═══════════════════════════════════════════════════════════
+# ค่าบนรูปเก็บไว้ที่นี่ที่เดียว โจทย์ในไฟล์ questions/science-*/ อ้างด้วย "ชื่อรูป"
+CIRCUITS = {
+    "sci-cir-series-4-6": ("series", {"v": "12 V", "r1": "4 &#937;", "r2": "6 &#937;"},
+                           "ตัวต้านทานสองตัวต่อแบบอนุกรมกับแบตเตอรี่"),
+    "sci-cir-series-5-15": ("series", {"v": "20 V", "r1": "5 &#937;", "r2": "15 &#937;"},
+                            "ตัวต้านทานสองตัวต่อแบบอนุกรมกับแบตเตอรี่"),
+    "sci-cir-parallel-3-6": ("parallel", {"v": "12 V", "r1": "3 &#937;", "r2": "6 &#937;"},
+                             "ตัวต้านทานสองตัวต่อแบบขนานกับแบตเตอรี่"),
+    "sci-cir-parallel-4-4": ("parallel", {"v": "8 V", "r1": "4 &#937;", "r2": "4 &#937;"},
+                             "ตัวต้านทานสองตัวต่อแบบขนานกับแบตเตอรี่"),
+    "sci-cir-meters": ("meters", {"r1": "R"},
+                       "A คือแอมมิเตอร์ · V คือโวลต์มิเตอร์"),
+}
+FIGURES.update({n: circuit_fig(k, lab, cap) for n, (k, lab, cap) in CIRCUITS.items()})
+
+FIGURES.update({
+    "sci-wave-parts": wave_fig(("crest", "trough", "wavelength", "amplitude"),
+                               "คลื่นรูปหนึ่ง — ก ข ค ง คือส่วนประกอบที่ทำเครื่องหมายไว้"),
+    "sci-lens-convex": lens_ray("convex", "แสงผ่านเลนส์นูน เมื่อวัตถุอยู่ไกลกว่า 2F"),
+    "sci-lens-concave": lens_ray("concave",
+                                 "แสงผ่านเลนส์เว้า — เส้นประคือรังสีที่ต่อย้อนกลับ"),
+    "sci-mirror-35": mirror_ray(35, "แสงตกกระทบกระจกเงาราบ · ก และ ข คือมุมที่ทำเครื่องหมายไว้"),
+    "sci-mirror-50": mirror_ray(50, "แสงตกกระทบกระจกเงาราบ · ก และ ข คือมุมที่ทำเครื่องหมายไว้"),
+})
+
+PUNNETT = {
+    "sci-pun-Tt-Tt": (["T", "t"], ["T", "t"], None,
+                      "ตารางพันเนตต์ของการผสม Tt กับ Tt"),
+    "sci-pun-Tt-tt": (["T", "t"], ["t", "t"], [[True, False], [True, True]],
+                      "ตารางพันเนตต์ของการผสม Tt กับ tt — ช่อง ? คือจีโนไทป์ที่ต้องหา"),
+    "sci-pun-TT-tt": (["T", "T"], ["t", "t"], None,
+                      "ตารางพันเนตต์ของการผสมพันธุ์แท้ TT กับพันธุ์แท้ tt"),
+}
+FIGURES.update({n: punnett(t, l, cap, show=sh) for n, (t, l, sh, cap) in PUNNETT.items()})
+
+CHAIN = {"หญ้า": (0, .5), "ตั๊กแตน": (.33, .5), "กบ": (.66, .5), "งู": (1, .5)}
+WEB = {"หญ้า": (0, .5), "ตั๊กแตน": (.35, .1), "หนู": (.35, .9),
+       "กบ": (.7, .1), "งู": (1, .5), "เหยี่ยว": (.7, .9)}
+FIGURES.update({
+    "sci-chain-4": food_web(CHAIN, [("หญ้า", "ตั๊กแตน"), ("ตั๊กแตน", "กบ"), ("กบ", "งู")],
+                            "โซ่อาหารในทุ่งหญ้า · ลูกศรชี้ทิศทางการถ่ายทอดพลังงาน",
+                            height=110),
+    "sci-web-6": food_web(WEB, [("หญ้า", "ตั๊กแตน"), ("หญ้า", "หนู"), ("ตั๊กแตน", "กบ"),
+                                ("กบ", "งู"), ("หนู", "เหยี่ยว"), ("หนู", "งู")],
+                          "สายใยอาหารในทุ่งหญ้า · ลูกศรชี้ทิศทางการถ่ายทอดพลังงาน"),
+})
+
+FIGURES.update({
+    "sci-particle-solid": particle_model("solid", "การจัดเรียงอนุภาคในภาชนะปิด — แบบ ก"),
+    "sci-particle-liquid": particle_model("liquid", "การจัดเรียงอนุภาคในภาชนะปิด — แบบ ข"),
+    "sci-particle-gas": particle_model("gas", "การจัดเรียงอนุภาคในภาชนะปิด — แบบ ค"),
+    "sci-particle-mixture": particle_model("mixture",
+                                           "แบบจำลองอนุภาคของสารในภาชนะหนึ่ง"),
+    "sci-force-12-8": force_diagram([("right", "12 N"), ("left", "8 N")],
+                                    "แรงสองแรงกระทำต่อวัตถุในแนวเดียวกัน", label="วัตถุ"),
+    "sci-force-20-20": force_diagram([("right", "20 N"), ("left", "20 N")],
+                                     "แรงสองแรงกระทำต่อกล่องในแนวเดียวกัน", label="กล่อง"),
+    "sci-force-float": force_diagram([("down", "น้ำหนัก"), ("up", "แรงพยุง")],
+                                     "วัตถุลอยนิ่งอยู่ในน้ำ", label="วัตถุ"),
+    "sci-force-friction": force_diagram([("right", "แรงดึง 30 N"),
+                                         ("left", "แรงเสียดทาน 30 N")],
+                                        "ลากกล่องบนพื้น แต่กล่องยังไม่ขยับ", label="กล่อง"),
+    "sci-flow-reflex": flow_chart(["สิ่งเร้า", "หน่วยรับความรู้สึก",
+                                   "เซลล์ประสาทรับความรู้สึก", "ไขสันหลัง",
+                                   "เซลล์ประสาทสั่งการ", "หน่วยปฏิบัติงาน"],
+                                  "ทางเดินของกระแสประสาทในการตอบสนองแบบรีเฟล็กซ์"),
+    "sci-flow-breath": flow_chart(["รูจมูก", "หลอดลม", "ขั้วปอด", "ถุงลมในปอด",
+                                   "หลอดเลือดฝอย", "เลือด"],
+                                  "ทางเดินของอากาศเข้าสู่ร่างกาย"),
+    "sci-reaction": reaction_model("แบบจำลองอนุภาคก่อนและหลังเกิดปฏิกิริยาเคมี"),
+    "sci-iv-graph": line_chart(["0", "1", "2", "3", "4"], [0, 3, 6, 9, 12],
+                               "ความต่างศักย์ (V)",
+                               "กราฟความสัมพันธ์ของตัวต้านทานตัวหนึ่ง",
+                               x_title="กระแสไฟฟ้า (A)"),
+    "sci-cir-diode": circuit_fig("electronic", {"r1": "R"},
+                                 "วงจรที่มีไดโอดเปล่งแสงต่ออยู่"),
+    "sci-em-spectrum": em_spectrum("สเปกตรัมคลื่นแม่เหล็กไฟฟ้า · ก ถึง ช คือช่วงคลื่น"),
+    "sci-mirror-image": mirror_image("วัตถุหน้ากระจกเงาราบและภาพที่เกิดขึ้น"),
+    "sci-prism": prism_fig("แสงขาวผ่านปริซึม"),
+    "sci-orbit": orbit_fig("ดาวเคราะห์โคจรรอบดวงอาทิตย์ · F คือแรงที่กระทำ"),
+    "sci-moon": moon_phase("ตำแหน่งดวงจันทร์รอบโลก · ส่วนสว่างคือด้านที่รับแสงอาทิตย์"),
+    "sci-flow-blood": flow_chart(["หัวใจห้องล่างซ้าย", "หลอดเลือดแดง", "หลอดเลือดฝอย",
+                                  "หลอดเลือดดำ", "หัวใจห้องบนขวา"],
+                                 "การไหลของเลือดออกจากหัวใจไปเลี้ยงร่างกายแล้วกลับเข้าหัวใจ",
+                                 per_row=3),
+})
+
+# ── หน่วย 10 · แผนภาพกล่อง (ค 3.1 ม.3/1) ───────────────────────────────
+FIGURES.update({
+    # ไม่ใส่คำบรรยายใต้รูป เพราะตัวโจทย์เล่าบริบทไว้แล้ว จะกลายเป็นอ่านซ้ำสองรอบ
+    name: box_plot(spec["five"], None, spec["x_title"], outliers=spec["outliers"])
+    for name, spec in BOX_PLOTS.items()
+})
 
 if __name__ == "__main__":
     os.makedirs(os.path.dirname(OUT), exist_ok=True)

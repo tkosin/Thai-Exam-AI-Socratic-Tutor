@@ -5,8 +5,9 @@
 อ่าน  questions/courses.json          (รายวิชา — ลำดับในไฟล์นี้คือลำดับที่ประกอบ)
   +   questions/<slug>/unit-*.json    (ข้อสอบ แยกตามหน่วยของแต่ละวิชา)
   +   questions/figures.json          (คลังรูป SVG ใช้ซ้ำได้)
-เขียน index.html                      (แทนที่ค่าของ const QUESTIONS)
-  +   ข้อสอบคณิตศาสตร์_ม1.html         (สำเนาชื่อภาษาไทย)
+เขียน index.html                      (โค้ด + MANIFEST · ไม่มีตัวข้อสอบ)
+  +   data/<slug>.json                  (ข้อสอบรายวิชา หน้าเว็บโหลดตอนกดเข้าวิชา)
+  +   ข้อสอบคณิตศาสตร์_ม1.html         (สำเนาชื่อไทย รวมทุกอย่างไว้ในไฟล์เดียว เปิดออฟไลน์ได้)
 
 ในฟิลด์ `text` ใช้ตัวคั่น [[fig]] เป็นตำแหน่งที่จะแทรกรูปที่อ้างด้วยฟิลด์ `figure`
 ถ้ามี `figure` แต่ไม่มี [[fig]] จะต่อรูปไว้ท้ายโจทย์
@@ -30,6 +31,7 @@ QDIR = os.path.join(ROOT, "questions")
 COURSES = os.path.join(QDIR, "courses.json")
 FIGURES = os.path.join(QDIR, "figures.json")
 LEGACY = os.path.join(QDIR, "legacy-order.json")
+DATA = os.path.join(ROOT, "data")
 HTML = os.path.join(ROOT, "index.html")
 COPY = os.path.join(ROOT, "ข้อสอบคณิตศาสตร์_ม1.html")
 
@@ -96,31 +98,75 @@ def load():
     return questions, per_course, unused
 
 
-def main(check_only):
-    questions, per_course, unused = load()
+def build_texts(questions, per_course):
+    """คืน (เนื้อ index.html แบบแยกข้อมูล, เนื้อสำเนาออฟไลน์แบบรวมไฟล์เดียว, ไฟล์ข้อมูลรายวิชา)
+
+    หน้าเว็บออนไลน์โหลดข้อสอบเฉพาะวิชาที่กด — index.html จึงมีแต่โค้ดกับ MANIFEST
+    (รายชื่อวิชา ชื่อหน่วย จำนวนข้อ) ที่พอให้หน้าแรกวาดได้โดยไม่ต้องโหลดข้อสอบเลย
+
+    ส่วนสำเนาชื่อไทยยังรวมทุกอย่างไว้ในไฟล์เดียวเหมือนเดิม เพราะเปิดจาก file://
+    แล้ว fetch() ถูก CORS บล็อก จะโหลดไฟล์ข้อมูลแยกไม่ได้
+    """
     html = open(HTML, encoding="utf-8").read()
-    m = re.search(r"(const QUESTIONS = )(\[.*?\]);", html, re.S)
-    if not m:
-        raise SystemExit("ไม่พบ const QUESTIONS ใน index.html")
 
-    payload = json.dumps(questions, ensure_ascii=False, separators=(", ", ": "))
-    rebuilt = html[:m.start(2)] + payload + html[m.end(2):]
+    def put(text, name, value):
+        m = re.search(r"(const %s = )(\[.*?\]);" % name, text, re.S)
+        if not m:
+            raise SystemExit(f"ไม่พบ const {name} ใน index.html")
+        return text[:m.start(2)] + value + text[m.end(2):]
 
-    # ตารางแปลง "ลำดับข้อแบบเก่า -> id" สำหรับผู้เรียนที่บันทึกไว้ก่อนเปลี่ยนมาใช้ id
+    # MANIFEST — พอสำหรับหน้าแรก: ชื่อวิชา จำนวนข้อ ชื่อหน่วยและจำนวนข้อรายหน่วย
+    manifest, data_files = [], {}
+    for course, _ in per_course:
+        mine = [q for q in questions
+                if q["subject"] == course["subject"] and q["grade"] == course["grade"]]
+        units, names = {}, {}
+        for q in mine:
+            units[q["unit"]] = units.get(q["unit"], 0) + 1
+            names[q["unit"]] = q["uname"]
+        manifest.append({
+            "slug": course["slug"], "subject": course["subject"], "grade": course["grade"],
+            "count": len(mine),
+            "units": [{"unit": u, "uname": names[u], "count": units[u]}
+                      for u in sorted(units)],
+        })
+        data_files[course["slug"]] = mine
+
     legacy = json.load(open(LEGACY, encoding="utf-8"))
     known = {q["id"] for q in questions}
     gone = [i for i in legacy if i not in known]
     if gone:
         print(f"⚠️  มี {len(gone)} ข้อในลำดับเดิมที่ถูกลบ/แก้โจทย์ไปแล้ว "
               f"ความก้าวหน้าของข้อเหล่านั้นจะย้ายไม่ได้ (เช่น {gone[0]})")
-    ml = re.search(r"(const LEGACY_IDS = )(\[.*?\]);", rebuilt, re.S)
-    if not ml:
-        raise SystemExit("ไม่พบ const LEGACY_IDS ใน index.html")
-    rebuilt = (rebuilt[:ml.start(2)]
-               + json.dumps(legacy, ensure_ascii=False, separators=(",", ":"))
-               + rebuilt[ml.end(2):])
-    same = rebuilt == html
-    copy_same = os.path.exists(COPY) and open(COPY, encoding="utf-8").read() == rebuilt
+
+    dump = lambda v: json.dumps(v, ensure_ascii=False, separators=(", ", ": "))
+    tight = lambda v: json.dumps(v, ensure_ascii=False, separators=(",", ":"))
+
+    shell = put(html, "LEGACY_IDS", tight(legacy))
+    shell = put(shell, "MANIFEST", dump(manifest))
+    split = put(shell, "QUESTIONS", "[]")            # ออนไลน์: โหลดข้อสอบทีหลัง
+    bundled = put(shell, "QUESTIONS", dump(questions))   # ออฟไลน์: รวมไว้ในไฟล์เดียว
+    return split, bundled, data_files
+
+
+def main(check_only):
+    questions, per_course, unused = load()
+    split, bundled, data_files = build_texts(questions, per_course)
+
+    same = split == open(HTML, encoding="utf-8").read()
+    copy_same = os.path.exists(COPY) and open(COPY, encoding="utf-8").read() == bundled
+    data_same = True
+    for slug, qs in data_files.items():
+        path = os.path.join(DATA, slug + ".json")
+        want = json.dumps(qs, ensure_ascii=False, separators=(",", ":"))
+        if not os.path.exists(path) or open(path, encoding="utf-8").read() != want:
+            data_same = False
+    # ไฟล์ข้อมูลของวิชาที่ถูกลบไปแล้วต้องไม่ค้างอยู่ ไม่งั้นเสิร์ฟของเก่าให้ผู้เรียน
+    stale = ([] if not os.path.isdir(DATA) else
+             sorted(set(os.path.basename(f)[:-5] for f in glob.glob(os.path.join(DATA, "*.json")))
+                    - set(data_files)))
+    if stale:
+        data_same = False
 
     print(f"ข้อสอบรวม {len(questions)} ข้อ · {len(per_course)} วิชา")
     for course, n in per_course:
@@ -132,19 +178,27 @@ def main(check_only):
               " · ".join(f"{u}:{c}" for u, c in sorted(units.items())))
     if unused:
         print(f"⚠️  รูปที่ไม่ได้ถูกใช้: {', '.join(unused)}")
+    if stale:
+        print(f"⚠️  ไฟล์ข้อมูลที่ไม่มีวิชารองรับแล้ว: {', '.join(stale)}")
 
     if check_only:
-        if same and copy_same:
-            print("✅ index.html และสำเนาตรงกับคลังข้อสอบแล้ว")
+        if same and copy_same and data_same:
+            print("✅ index.html · data/*.json และสำเนาตรงกับคลังข้อสอบแล้ว")
             return 0
         print("❌ ไฟล์ไม่ตรงกับคลังข้อสอบ — รัน: python3 tools/build.py")
         return 1
 
-    open(HTML, "w", encoding="utf-8").write(rebuilt)
-    open(COPY, "w", encoding="utf-8").write(rebuilt)
-    print("ไม่มีการเปลี่ยนแปลง" if same else "เขียน index.html ใหม่แล้ว"
-          + " (ถ้าลำดับข้อของวิชาเดิมขยับ อย่าลืมเพิ่มเลขเวอร์ชันของ STORE_KEY)")
-    print("ซิงค์สำเนา ข้อสอบคณิตศาสตร์_ม1.html แล้ว")
+    os.makedirs(DATA, exist_ok=True)
+    for slug in stale:
+        os.remove(os.path.join(DATA, slug + ".json"))
+    for slug, qs in data_files.items():
+        with open(os.path.join(DATA, slug + ".json"), "w", encoding="utf-8") as fh:
+            fh.write(json.dumps(qs, ensure_ascii=False, separators=(",", ":")))
+    open(HTML, "w", encoding="utf-8").write(split)
+    open(COPY, "w", encoding="utf-8").write(bundled)
+    print("ไม่มีการเปลี่ยนแปลง" if same and copy_same and data_same
+          else f"เขียน index.html + data/*.json ({len(data_files)} ไฟล์) ใหม่แล้ว")
+    print("ซิงค์สำเนา ข้อสอบคณิตศาสตร์_ม1.html (รวมไฟล์เดียว เปิดออฟไลน์ได้) แล้ว")
     return 0
 
 

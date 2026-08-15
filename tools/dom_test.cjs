@@ -8,10 +8,17 @@ const fs = require('fs');
 const path = require('path');
 const { JSDOM } = require('jsdom');
 
-const HTML = path.join(__dirname, '..', 'index.html');
+// index.html เสิร์ฟออนไลน์และโหลด data/*.json ทีหลัง ส่วนสำเนาชื่อไทยรวมทุกอย่างไว้ในไฟล์เดียว
+// jsdom ไม่มีเซิร์ฟเวอร์ให้ fetch เทสต์ส่วนใหญ่จึงรันบนสำเนา (โค้ดชุดเดียวกันเป๊ะ)
+// ส่วนเส้นทาง "โหลดรายวิชา" มีบล็อกทดสอบแยกที่ stub fetch ให้
+const SHELL_HTML = path.join(__dirname, '..', 'index.html');
+const HTML = path.join(__dirname, '..', 'ข้อสอบคณิตศาสตร์_ม1.html');
 const html = fs.readFileSync(HTML, 'utf8');
+const shellHtml = fs.readFileSync(SHELL_HTML, 'utf8');
+const DATA_DIR = path.join(__dirname, '..', 'data');
 
 const T = [];
+let LAZY = Promise.resolve();   // ชุดเทสต์ที่ต้องรอ fetch
 const chk = (name, cond, extra = '') => T.push([cond ? 'PASS' : 'FAIL', name, String(extra)]);
 
 function load(seed) {
@@ -1064,12 +1071,112 @@ const waitFor = async (fn, n = 80) => { for (let i = 0; i < n && !fn(); i++) awa
     chk('สลับผู้ให้บริการไปมาแล้วคีย์ของแต่ละเจ้าไม่หาย',
         ui.d.querySelector('#aiKeyInput').value === 'sk-ant-x', ui.d.querySelector('#aiKeyInput').value);
 
-    report();
+    // ชุดโหลดรายวิชาก็เป็น async เหมือนกัน ต้องรอให้จบก่อนสรุปผล
+    LAZY.then(report, e => { chk('ชุดเทสต์โหลดรายวิชาทำงานจบ', false, e && e.message); report(); });
   })().catch(e => {
     chk('ชุดเทสต์ติวเตอร์ AI ทำงานจบ', false, e && e.message);
-    report();
+    LAZY.then(report, report);
   });
 }
+
+// ---------- โหลดข้อสอบรายวิชา (index.html ตัวจริงที่เสิร์ฟออนไลน์) ----------
+// บล็อกนี้ใช้ shell จริงซึ่ง QUESTIONS ว่าง แล้ว stub fetch ให้คืน data/<slug>.json
+function loadShell({ fail = false, seeds = [] } = {}) {
+  const asked = [];
+  const dom = new JSDOM(shellHtml, {
+    runScripts: 'dangerously',
+    pretendToBeVisual: true,
+    url: 'https://tkosin.github.io/math-is-fun/',
+    beforeParse(w) {
+      seeds.forEach(x => w.localStorage.setItem(x.key, JSON.stringify(x.value)));
+      w.fetch = (url) => {
+        asked.push(url);
+        if (fail) return Promise.resolve({ ok: false, status: 503 });
+        const slug = String(url).replace(/^data\//, '').replace(/\.json$/, '');
+        const file = path.join(DATA_DIR, slug + '.json');
+        if (!fs.existsSync(file)) return Promise.resolve({ ok: false, status: 404 });
+        const body = JSON.parse(fs.readFileSync(file, 'utf8'));
+        return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(body) });
+      };
+    },
+  });
+  dom.virtualConsole.on('jsdomError', e => errs.push(e.message));
+  return { dom, d: dom.window.document, w: dom.window, asked };
+}
+
+// บล็อกนี้ต้องรอ fetch ที่ stub ไว้ จึงเป็น async แล้วค่อยเรียก report() ตอนจบ
+LAZY = (async () => {
+  const r = loadShell();
+  const rd = s => r.d.querySelector(s);
+  const rall = s => [...r.d.querySelectorAll(s)];
+  const MANIFEST = JSON.parse(shellHtml.match(/const MANIFEST = (\[[\s\S]*?\]);/)[1]);
+
+  // หน้าแรกต้องครบโดยยังไม่โหลดข้อสอบสักวิชา
+  chk('เปิดเว็บมาแล้วยังไม่โหลดข้อสอบสักไฟล์', r.asked.length === 0, r.asked.join());
+  const cards = rall('#courseGrid .course-card');
+  // นับจาก MANIFEST เหมือนกัน — คลังเพิ่มวิชาได้ ไม่ควรต้องมาแก้เลขในเทสต์
+  chk('หน้าแรกแสดงครบทุกวิชาจาก MANIFEST', cards.length === MANIFEST.length,
+      `${cards.length} จาก ${MANIFEST.length}`);
+  chk('การ์ดวิชาบอกจำนวนข้อและจำนวนหน่วยได้โดยไม่โหลดข้อสอบ',
+      /\d+ ข้อ · \d+ หน่วย/.test(cards[0].querySelector('.c-count').textContent),
+      cards[0].querySelector('.c-count').textContent);
+  const chips = cards[0].querySelectorAll('.c-units button');
+  chk('ทางลัดหน่วยและจำนวนข้อรายหน่วยมาจาก MANIFEST',
+      chips.length > 0 && +chips[0].querySelector('.u-c').textContent > 0,
+      chips.length + ' หน่วย');
+  // เทียบกับผลรวมของ MANIFEST ไม่ใช่ตัวเลขที่พิมพ์ไว้ตายตัว — คลังโตทุกเฟส
+  const manifestTotal = MANIFEST.reduce((n, c) => n + c.count, 0);
+  chk('ยอดรวมทุกวิชาบนหัวเรื่องถูกต้อง',
+      rd('#progressLabel').textContent.includes(manifestTotal.toLocaleString('en-US')),
+      rd('#progressLabel').textContent);
+
+  // กดเข้าวิชา -> โหลดเฉพาะไฟล์ของวิชานั้น
+  rall('#courseGrid .c-go')[0].dispatchEvent(new r.w.Event('click'));
+  chk('กดเข้าวิชาแล้วขึ้นสถานะกำลังโหลด', !!rd('.course-load'), '');
+  chk('ยิงคำขอไปไฟล์ของวิชานั้นไฟล์เดียว',
+      r.asked.length === 1 && /^data\/[a-z0-9-]+\.json$/.test(r.asked[0]), r.asked.join());
+  await waitFor(() => !!r.d.querySelector('#examCard .qtext'), 200);
+  chk('โหลดเสร็จแล้ววาดข้อสอบให้', !!rd('#examCard .qtext'), '');
+  chk('เลขข้อนับใหม่ถูกต้องหลังโหลด', /ข้อ 1 \/ \d+/.test(rd('#navCenter').textContent),
+      rd('#navCenter').textContent);
+  chk('กลับไปกดวิชาเดิมซ้ำไม่โหลดใหม่', (() => {
+      const before = r.asked.length;
+      rd('#homeBtn').dispatchEvent(new r.w.Event('click'));
+      rall('#courseGrid .c-go')[0].dispatchEvent(new r.w.Event('click'));
+      return r.asked.length === before;
+    })(), '');
+
+  // ความก้าวหน้าของวิชาที่ยังไม่โหลด ต้องนับได้จากรหัสข้อที่บันทึกไว้
+  const all = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'math-m3.json'), 'utf8'));
+  const prog = loadShell({ seeds: [{ key: 'funnymath-m1-v6', value: {
+    done: [all[0].id, all[1].id, all[2].id], work: {}, finalAns: {},
+    checked: { [all[0].id]: 'ok', [all[1].id]: 'no' } } }] });
+  chk('นับความก้าวหน้าของวิชาที่ยังไม่โหลดได้', prog.asked.length === 0
+      && /ทำแล้ว 3/.test(prog.d.querySelector('#progressLabel').textContent),
+      prog.d.querySelector('#progressLabel').textContent);
+  const m3 = [...prog.d.querySelectorAll('#courseGrid .course-card')]
+    .find(c => /ม\.3/.test(c.querySelector('.c-name').textContent));
+  chk('การ์ดวิชาบอกถูก/ผิดของวิชาที่ยังไม่โหลดได้',
+      /ทำแล้ว 3/.test(m3.querySelector('.c-stat').textContent)
+      && /ถูก 1/.test(m3.querySelector('.c-stat').textContent)
+      && /ผิด 1/.test(m3.querySelector('.c-stat').textContent),
+      m3.querySelector('.c-stat').textContent.replace(/\s+/g, ' '));
+  // ปุ่มทำต่อชี้ไปวิชาที่ยังไม่โหลดได้ เพราะอ่านวิชา/หน่วยจากตัวรหัสข้อ
+  const r2 = loadShell({ seeds: [{ key: 'funnymath-ui-v1',
+    value: { lastId: all[0].id, lastNo: 7 } }] });
+  chk('ปุ่มทำต่อชี้ไปข้อในวิชาที่ยังไม่โหลด',
+      !!r2.d.querySelector('#resumeBtn') && r2.asked.length === 0
+      && /ข้อที่ 7/.test(r2.d.querySelector('.resume .r-main').textContent),
+      r2.d.querySelector('.resume .r-main').textContent);
+
+  // โหลดไม่สำเร็จต้องบอกผู้เรียนและให้ลองใหม่ได้ ไม่ใช่ค้างอยู่ที่ "กำลังโหลด"
+  const bad = loadShell({ fail: true });
+  [...bad.d.querySelectorAll('#courseGrid .c-go')][0].dispatchEvent(new bad.w.Event('click'));
+  await waitFor(() => !!bad.d.querySelector('.course-load.bad'), 200);
+  chk('โหลดไม่สำเร็จ -> บอกผู้เรียนพร้อมปุ่มลองใหม่',
+      !!bad.d.querySelector('.course-load.bad') && !!bad.d.querySelector('#retryCourseBtn'),
+      (bad.d.querySelector('#examCard') || {}).textContent);
+})();
 
 // ---------- ผลลัพธ์ ----------
 // เทสต์ของติวเตอร์ AI เป็น async (รอสตรีมคำตอบ) จึงสรุปผลเมื่อชุดนั้นจบ
