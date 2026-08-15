@@ -18,8 +18,9 @@ HTML = os.path.join(ROOT, "index.html")
 COPY = os.path.join(ROOT, "ข้อสอบคณิตศาสตร์_ม1.html")
 COURSES = os.path.join(ROOT, "questions", "courses.json")
 
-LEVELS = {"ง่าย", "กลาง", "ยาก"}
-TAGS = {"ม.1", "ม.2", "ทบทวน ป.6", "ต่อยอด ม.2"}
+# แข่งขัน = โจทย์แนวสอบแข่งขัน (สพฐ./สสวท./TEDET) ยากกว่า "ยาก" และมักต้องใช้หลายหัวข้อร่วมกัน
+LEVELS = {"ง่าย", "กลาง", "ยาก", "แข่งขัน"}
+TAGS = {"ม.1", "ม.2", "ม.3", "ทบทวน ป.6", "ต่อยอด ม.2", "ต่อยอด ม.3", "ทบทวน ม.2"}
 # ค = คณิตศาสตร์ · ว = วิทยาศาสตร์ · ตัวชี้วัดวิทย์บางมาตรฐานมีถึงสองหลัก (เช่น ว 1.2 ม.2/17)
 STD_RE = re.compile(r"^([คว] \d\.\d ม\.\d/\d{1,2}|-)$")
 CHOICE_LETTERS = {"ก", "ข", "ค", "ง"}
@@ -93,7 +94,7 @@ def main():
         if want and std != "-" and not std.startswith(want + " "):
             err(f"ข้อ {i}: วิชา {q.get('subject')} แต่ตัวชี้วัดเป็น '{std}'")
         # ข้อที่ติด tag ทบทวน/ต่อยอด ตั้งใจให้ตัวชี้วัดข้ามชั้น จึงยกเว้นให้
-        on_grade = q.get("tag") in ("ม.1", "ม.2")
+        on_grade = q.get("tag") in ("ม.1", "ม.2", "ม.3")
         if std != "-" and on_grade and f" {q['grade']}/" not in std:
             err(f"ข้อ {i}: ระดับชั้น {q.get('grade')} tag '{q.get('tag')}' "
                 f"แต่ตัวชี้วัดเป็น '{std}'")
@@ -185,7 +186,51 @@ console.log(JSON.stringify({{ bad, manual }}));
     elif open(COPY, encoding="utf-8").read() != html:
         err("สำเนา ข้อสอบคณิตศาสตร์_ม1.html ไม่ตรงกับ index.html (รัน: python3 tools/build.py)")
 
-    # ---- 9. สรุปจำนวนข้อตามวิชาและหน่วย ----
+    # ---- 9. ตัวชี้วัดคณิตศาสตร์ ม.ต้น ต้องมีข้อสอบครบทุกตัว ----
+    # รายการตามหลักสูตรแกนกลาง 2551 (ปรับปรุง 2560) สาระการเรียนรู้คณิตศาสตร์
+    # ถ้าเพิ่มระดับชั้นใหม่ ต้องมาต่อรายการนี้ด้วย ไม่งั้น "ครอบคลุมทุกหัวข้อ" จะเป็นแค่คำพูด
+    MATH_STD = {
+        "ม.1": ["ค 1.1 ม.1/1", "ค 1.1 ม.1/2", "ค 1.1 ม.1/3",
+                "ค 1.3 ม.1/1", "ค 1.3 ม.1/2", "ค 1.3 ม.1/3",
+                "ค 2.2 ม.1/1", "ค 2.2 ม.1/2", "ค 3.1 ม.1/1"],
+        "ม.2": ["ค 1.1 ม.2/1", "ค 1.1 ม.2/2", "ค 1.2 ม.2/1", "ค 1.2 ม.2/2",
+                "ค 2.1 ม.2/1", "ค 2.1 ม.2/2",
+                "ค 2.2 ม.2/1", "ค 2.2 ม.2/2", "ค 2.2 ม.2/3", "ค 2.2 ม.2/4", "ค 2.2 ม.2/5",
+                "ค 3.1 ม.2/1"],
+        "ม.3": ["ค 1.2 ม.3/1", "ค 1.2 ม.3/2",
+                "ค 1.3 ม.3/1", "ค 1.3 ม.3/2", "ค 1.3 ม.3/3",
+                "ค 2.1 ม.3/1", "ค 2.1 ม.3/2",
+                "ค 2.2 ม.3/1", "ค 2.2 ม.3/2", "ค 2.2 ม.3/3",
+                "ค 3.1 ม.3/1", "ค 3.2 ม.3/1"],
+    }
+    have = {}
+    for q in qs:
+        if q.get("subject") == "คณิตศาสตร์":
+            have[q.get("std")] = have.get(q.get("std"), 0) + 1
+    for grade, stds in MATH_STD.items():
+        missing = [s for s in stds if s not in have]
+        if missing:
+            err(f"คณิตศาสตร์ {grade}: ยังไม่มีข้อสอบของตัวชี้วัด {', '.join(missing)}")
+        else:
+            notes.append(f"ตัวชี้วัดคณิตศาสตร์ {grade} ครบทั้ง {len(stds)} ตัว · "
+                         + " · ".join(f"{s.replace(' ' + grade + '/', '/')}:{have[s]}"
+                                      for s in stds))
+
+    # ---- 10. ระดับความยากต้องมีครบทุกระดับในทุกวิชาคณิตศาสตร์ ----
+    by_grade_level = {}
+    for q in qs:
+        if q.get("subject") == "คณิตศาสตร์":
+            by_grade_level.setdefault(q.get("grade"), {}).setdefault(q.get("level"), 0)
+            by_grade_level[q["grade"]][q["level"]] += 1
+    for grade in sorted(by_grade_level):
+        lv = by_grade_level[grade]
+        if "แข่งขัน" not in lv:
+            err(f"คณิตศาสตร์ {grade}: ยังไม่มีข้อสอบระดับ 'แข่งขัน'")
+        notes.append(f"ระดับความยากคณิตศาสตร์ {grade}: "
+                     + " · ".join(f"{k}:{lv[k]}" for k in ("ง่าย", "กลาง", "ยาก", "แข่งขัน")
+                                  if k in lv))
+
+    # ---- 11. สรุปจำนวนข้อตามวิชาและหน่วย ----
     for (subj, grade), cqs in by_course.items():
         per_unit = {}
         for q in cqs:

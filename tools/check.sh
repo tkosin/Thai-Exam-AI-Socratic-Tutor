@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# ชุดตรวจทั้งหมดของ repo นี้ — รันในเครื่อง ไม่ต้องพึ่ง GitHub Actions runner
+# ชุดตรวจทั้งหมดของ repo นี้ (5 ขั้น) — รันในเครื่อง ไม่ต้องพึ่ง GitHub Actions runner
 #
 #   bash tools/check.sh              ตรวจทั้งหมด
 #   bash tools/check.sh --install    ตั้ง git hook ให้ตรวจอัตโนมัติก่อน push
@@ -50,7 +50,10 @@ step "index.html ตรงกับคลังข้อสอบ" python3 tools
 # 3. schema, เฉลย, SVG, syntax, สำเนาชื่อไทย
 step "คลังข้อสอบและหน้าเว็บ (validate.py)" python3 tools/validate.py
 
-# 4. พฤติกรรมหน้าเว็บใน jsdom
+# 4. เฉลยคณิตศาสตร์ต้องถูกตามคณิตศาสตร์ ไม่ใช่แค่กรอกแล้วระบบว่าถูก
+step "เฉลยคณิตศาสตร์ (verify_math.py)" python3 tools/verify_math.py
+
+# 5. พฤติกรรมหน้าเว็บใน jsdom
 dom_test() {
   node -e "require.resolve('jsdom')" 2>/dev/null \
     || npm install jsdom --no-save --silent >/dev/null 2>&1 \

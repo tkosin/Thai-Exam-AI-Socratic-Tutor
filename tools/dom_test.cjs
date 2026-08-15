@@ -106,7 +106,8 @@ const UNITS = items('unitList').length - 1;      // ไม่นับปุ่�
 chk('มีตัวกรองหน่วยครบ (อ่านจากข้อมูล)', UNITS >= 9, UNITS + ' หน่วย');
 chk('ทุกปุ่มหน่วยมีเลขหน่วยกำกับ',
     items('unitList').slice(1).every(e => e.querySelector('.unum')), '');
-chk('มีตัวกรองระดับความยาก', items('levelList').map(label).join('/') === 'ทุกระดับ/ง่าย/กลาง/ยาก',
+chk('มีตัวกรองระดับความยาก ครบ 4 ระดับรวมแข่งขัน',
+    items('levelList').map(label).join('/') === 'ทุกระดับ/ง่าย/กลาง/ยาก/แข่งขัน',
     items('levelList').map(label).join('/'));
 chk('มีตัวกรองขอบเขตเนื้อหา',
     items('tagList').map(label).join('/') === 'ทุกขอบเขต/ม.1/ทบทวน ป.6/ต่อยอด ม.2',
@@ -159,7 +160,7 @@ chk('ค่าเริ่มต้น: ระดับและขอบเข�
 chk('กลุ่มที่พับไม่แสดงรายการ', !!d.querySelector('#group-level.collapsed .flist'), '');
 click(head('level'));
 chk('กดหัวกลุ่มแล้วกางออก', isOpen('level') && head('level').getAttribute('aria-expanded') === 'true', '');
-chk('กางแล้วเห็นรายการครบ', items('levelList').length === 4, items('levelList').length);
+chk('กางแล้วเห็นรายการครบ', items('levelList').length === 5, items('levelList').length);
 click(head('unit'));
 chk('กดอีกกลุ่มแล้วพับได้', !isOpen('unit'), '');
 chk('พับกลุ่มหน่วยไม่กระทบกลุ่มอื่น', isOpen('sub') && isOpen('level'), '');
@@ -221,6 +222,10 @@ chk('กลับมาแล้วผลตรวจยังอยู่', res
 
 // ---------- บันทึกลง localStorage ----------
 const PROGRESS = /^funnymath-m1-v\d+$/;          // คีย์ความก้าวหน้า (แยกจากคีย์ความชอบส่วนตัว)
+// ความก้าวหน้าอ้างด้วยรหัสประจำข้อ ไม่ใช่ลำดับ — เทสต์จึงต้องป้อนด้วย id เหมือนของจริง
+// QUESTIONS เป็น const ระดับสคริปต์ ไม่ได้อยู่บน window จึงอ่านจากตัวไฟล์แทน
+const ALL_Q = JSON.parse(/const QUESTIONS = (\[[\s\S]*?\]);/.exec(html)[1]);
+const QID = i => ALL_Q[i].id;
 const keys = Object.keys(w.localStorage);
 chk('บันทึกด้วยคีย์ที่มีเลขเวอร์ชัน', keys.some(k => PROGRESS.test(k)), keys.join());
 chk('ความชอบส่วนตัวเก็บแยกคีย์', keys.some(k => k === 'funnymath-ui-v1'), keys.join());
@@ -228,6 +233,11 @@ const saved = JSON.parse(w.localStorage.getItem(keys.find(k => PROGRESS.test(k))
 chk('บันทึกข้อที่ทำแล้วและคำตอบ',
     Array.isArray(saved.done) && saved.done.length === 1 && !!saved.finalAns,
     JSON.stringify(saved).slice(0, 90));
+// เก็บเป็นรหัสประจำข้อ ไม่ใช่ลำดับ ไม่งั้นแทรกข้อใหม่แล้วความก้าวหน้าไปทับข้ออื่น
+chk('บันทึกความก้าวหน้าด้วยรหัสประจำข้อ ไม่ใช่ลำดับ',
+    saved.done.every(k => typeof k === 'string' && /^[a-z0-9-]+-\d\d-[0-9a-f]{8}$/.test(k))
+    && Object.keys(saved.finalAns).every(k => typeof k === 'string' && !/^\d+$/.test(k)),
+    JSON.stringify(saved.done));
 
 // ---------- เฉลยล็อกด้วยรหัสผ่าน ----------
 click($('#revealBtn'));
@@ -242,7 +252,8 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
 // ---------- โหลดข้อมูลที่บันทึกไว้กลับมาได้ ----------
 {
   const key = Object.keys(w.localStorage).find(k => PROGRESS.test(k));
-  const r = enterExam(load({ key, value: { done: [0, 5], work: { 0: ['a', 'b', 'c'] }, finalAns: { 0: '42' }, checked: {} } }));
+  const r = enterExam(load({ key, value: {
+    done: [QID(0), QID(5)], work: { [QID(0)]: ['a', 'b', 'c'] }, finalAns: { [QID(0)]: '42' }, checked: {} } }));
   const rd = s => r.d.querySelector(s);
   chk('รีเฟรชแล้วกู้วิธีทำกลับมา', r.d.querySelectorAll('#workLines .work-line').length === 3,
       r.d.querySelectorAll('#workLines .work-line').length);
@@ -260,6 +271,25 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
   const uiBad = load({ key: 'funnymath-ui-v1', value: 'ไม่ใช่ JSON' });
   chk('ความชอบที่เสียหายกลับไปใช้ค่าเริ่มต้น',
       !cls('unit')(uiBad) && cls('level')(uiBad), '');
+}
+
+// ---------- ย้ายความก้าวหน้าแบบเก่า (อ้างลำดับข้อ) มาเป็นแบบอ้างรหัสประจำข้อ ----------
+{
+  // ผู้เรียนที่บันทึกไว้ก่อนเปลี่ยนระบบ ต้องไม่เสียงานที่ทำมา
+  const r = enterExam(load({ key: 'funnymath-m1-v5', value: {
+    done: [0, 5], work: { 0: ['เก่า1', 'เก่า2'] }, finalAns: { 0: '42' }, checked: { 0: 'ok' }
+  }}));
+  const rd = s => r.d.querySelector(s);
+  chk('ของเดิมย้ายมาแล้ว: วิธีทำครบ', r.d.querySelectorAll('#workLines .work-line').length === 2,
+      r.d.querySelectorAll('#workLines .work-line').length);
+  chk('ของเดิมย้ายมาแล้ว: คำตอบครบ', rd('#finalInput').value === '42', rd('#finalInput').value);
+  chk('ของเดิมย้ายมาแล้ว: นับข้อที่ทำแล้วถูก',
+      rd('#progressLabel').textContent.includes('ทำแล้ว 2'), rd('#progressLabel').textContent);
+  const now = JSON.parse(r.w.localStorage.getItem('funnymath-m1-v6') || '{}');
+  chk('ย้ายแล้วเขียนกลับเป็นรหัสประจำข้อ',
+      Array.isArray(now.done) && now.done.length === 2 && now.done.includes(QID(0)),
+      JSON.stringify(now.done));
+  chk('ไม่ลบของเดิมทิ้ง เผื่อกู้เอง', !!r.w.localStorage.getItem('funnymath-m1-v5'), '');
 }
 
 // ---------- แผงตัวกรอง: ซ่อนไว้เป็นค่าเริ่มต้น กาง/พับได้ทุกขนาดจอ ----------
@@ -371,8 +401,8 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
   //   ข้อ 1 ติ๊กว่าทำแล้วเอง · ข้อ 2 ทำแล้ว+ตอบถูก · ข้อ 3 ตอบผิด · ข้อ 4 ตรวจเองไม่ได้ · ข้อ 5 ยังไม่แตะ
   const key = Object.keys(w.localStorage).find(k => PROGRESS.test(k));
   const r = enterExam(load({ key, value: {
-    done: [0, 1], work: {}, finalAns: {},
-    checked: { 1: 'ok', 2: 'no', 3: 'manual' }
+    done: [QID(0), QID(1)], work: {}, finalAns: {},
+    checked: { [QID(1)]: 'ok', [QID(2)]: 'no', [QID(3)]: 'manual' }
   }}));
   const rd = s => r.d.querySelector(s);
   const rall = s => [...r.d.querySelectorAll(s)];
@@ -504,8 +534,9 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
 
   // ข้อล่าสุดต้องอยู่ข้ามการรีเฟรช
   const ui = JSON.parse(r.w.localStorage.getItem('funnymath-ui-v1') || '{}');
-  chk('บันทึกข้อล่าสุดไว้', Number.isInteger(ui.lastGidx), JSON.stringify(ui.lastGidx));
-  const back = load({ key: 'funnymath-ui-v1', value: { lastGidx: 5 } });
+  chk('บันทึกข้อล่าสุดไว้ด้วยรหัสประจำข้อ', typeof ui.lastId === 'string' && !!ui.lastId,
+      JSON.stringify(ui.lastId));
+  const back = load({ key: 'funnymath-ui-v1', value: { lastId: QID(5) } });
   chk('รีเฟรชแล้วยังมีปุ่มทำต่อ', !!back.d.querySelector('#resumeBtn'), '');
   chk('ปุ่มทำต่อชี้ไปข้อที่บันทึกไว้',
       /ข้อที่ 6/.test(back.d.querySelector('.resume .r-main').textContent),
@@ -714,7 +745,7 @@ const waitFor = async (fn, n = 80) => { for (let i = 0; i < n && !fn(); i++) awa
         /ขั้นที่ 2 \/ 7/.test(t2.d.querySelector('.tutor-rung').textContent),
         t2.d.querySelector('.tutor-rung').textContent);
 
-    const saved = JSON.parse(t2.w.localStorage.getItem('funnymath-chat-v1') || '{}');
+    const saved = JSON.parse(t2.w.localStorage.getItem('funnymath-chat-v2') || '{}');
     const first = saved[Object.keys(saved)[0]] || [];
     chk('บทสนทนาเก็บลง localStorage แยกตามข้อ',
         first.length === 2 && first[0].r === 'u' && first[1].r === 'a', JSON.stringify(first.length));
