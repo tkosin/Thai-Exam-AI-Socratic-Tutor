@@ -8,7 +8,8 @@
     "เพราะต้องเทียบหลักสูตรจริงตอนลงมือทำ ไม่ใช่เดาไว้ก่อน (ดู docs/roadmap.md)",
     "ตั้งต้นด้วยการอ่านตัวชี้วัดจากคลังที่มีอยู่ จากนั้นดูแลด้วยมือ — เพิ่มหัวข้อใหม่ได้เลย",
     "วิทย์ ม.3 มีตัวชี้วัด 59 ตัว แต่ 9 ตัวเป็นสาระ 4 เทคโนโลยี (ว 4.1/ว 4.2) ซึ่งแยกสอนเป็นวิชาต่างหาก จึงอยู่ใน planned_courses",
-    "needs_svg ของวิทย์ ม.3 ตั้งรายตัวชี้วัดจากข้อความตัวชี้วัดจริง ส่วน ม.1/ม.2 ยังตั้งรายหน่วยไว้ก่อน รอเทียบข้อความตัวชี้วัดของสองชั้นนั้น"
+    "needs_svg ของวิทย์ ม.3 ตั้งรายตัวชี้วัดจากข้อความตัวชี้วัดจริง ส่วน ม.1/ม.2 ยังตั้งรายหน่วยไว้ก่อน รอเทียบข้อความตัวชี้วัดของสองชั้นนั้น",
+    "ชีววิทยา (ว 1.1 · ว 1.2 · ว 1.3) ตั้ง needs_svg เป็น false ทั้งสาระ — โครงสร้างของสิ่งมีชีวิตวาดด้วย SVG แล้วไม่เหมือนของจริง จึงไม่นับเป็นงานค้าง (ตาราง/ผังลำดับที่ไม่ได้วาดของจริงยังใช้ได้)"
   ],
   "svg_types": [
     "geometry_figure",
@@ -150,8 +151,8 @@
           "std": "ว 1.2 ม.1/1",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "หน่วยพื้นฐานของสิ่งมีชีวิต",
-          "needs_svg": true,
-          "svg_type": "cell_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -159,8 +160,8 @@
           "std": "ว 1.2 ม.1/2",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "หน่วยพื้นฐานของสิ่งมีชีวิต",
-          "needs_svg": true,
-          "svg_type": "cell_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -168,8 +169,8 @@
           "std": "ว 1.2 ม.1/3",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "หน่วยพื้นฐานของสิ่งมีชีวิต",
-          "needs_svg": true,
-          "svg_type": "cell_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -177,8 +178,8 @@
           "std": "ว 1.2 ม.1/4",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "หน่วยพื้นฐานของสิ่งมีชีวิต",
-          "needs_svg": true,
-          "svg_type": "cell_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -186,8 +187,8 @@
           "std": "ว 1.2 ม.1/5",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "หน่วยพื้นฐานของสิ่งมีชีวิต",
-          "needs_svg": true,
-          "svg_type": "cell_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -195,8 +196,8 @@
           "std": "ว 1.2 ม.1/6",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": true,
-          "svg_type": "plant_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -204,8 +205,8 @@
           "std": "ว 1.2 ม.1/7",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": true,
-          "svg_type": "plant_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -213,8 +214,8 @@
           "std": "ว 1.2 ม.1/8",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": true,
-          "svg_type": "plant_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -222,8 +223,8 @@
           "std": "ว 1.2 ม.1/9",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": true,
-          "svg_type": "plant_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -231,8 +232,8 @@
           "std": "ว 1.2 ม.1/10",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": true,
-          "svg_type": "plant_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -240,8 +241,8 @@
           "std": "ว 1.2 ม.1/11",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": true,
-          "svg_type": "plant_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -249,8 +250,8 @@
           "std": "ว 1.2 ม.1/12",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": true,
-          "svg_type": "plant_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -258,8 +259,8 @@
           "std": "ว 1.2 ม.1/13",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": true,
-          "svg_type": "plant_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -267,8 +268,8 @@
           "std": "ว 1.2 ม.1/14",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": true,
-          "svg_type": "plant_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -276,8 +277,8 @@
           "std": "ว 1.2 ม.1/15",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": true,
-          "svg_type": "plant_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -285,8 +286,8 @@
           "std": "ว 1.2 ม.1/16",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": true,
-          "svg_type": "plant_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -294,8 +295,8 @@
           "std": "ว 1.2 ม.1/17",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": true,
-          "svg_type": "plant_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -519,8 +520,8 @@
           "std": "ว 1.2 ม.2/1",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบหายใจและระบบขับถ่าย",
-          "needs_svg": true,
-          "svg_type": "body_system",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -528,8 +529,8 @@
           "std": "ว 1.2 ม.2/2",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบหายใจและระบบขับถ่าย",
-          "needs_svg": true,
-          "svg_type": "body_system",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -537,8 +538,8 @@
           "std": "ว 1.2 ม.2/3",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบหายใจและระบบขับถ่าย",
-          "needs_svg": true,
-          "svg_type": "body_system",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -546,8 +547,8 @@
           "std": "ว 1.2 ม.2/4",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบหายใจและระบบขับถ่าย",
-          "needs_svg": true,
-          "svg_type": "body_system",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -555,8 +556,8 @@
           "std": "ว 1.2 ม.2/5",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบหายใจและระบบขับถ่าย",
-          "needs_svg": true,
-          "svg_type": "body_system",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -564,8 +565,8 @@
           "std": "ว 1.2 ม.2/6",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบหมุนเวียนเลือด",
-          "needs_svg": true,
-          "svg_type": "body_system",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -573,8 +574,8 @@
           "std": "ว 1.2 ม.2/7",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบหมุนเวียนเลือด",
-          "needs_svg": true,
-          "svg_type": "body_system",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -582,8 +583,8 @@
           "std": "ว 1.2 ม.2/8",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบหมุนเวียนเลือด",
-          "needs_svg": true,
-          "svg_type": "body_system",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -591,8 +592,8 @@
           "std": "ว 1.2 ม.2/9",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบหมุนเวียนเลือด",
-          "needs_svg": true,
-          "svg_type": "body_system",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -600,8 +601,8 @@
           "std": "ว 1.2 ม.2/10",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบประสาทและระบบสืบพันธุ์",
-          "needs_svg": true,
-          "svg_type": "body_system",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -609,8 +610,8 @@
           "std": "ว 1.2 ม.2/11",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบประสาทและระบบสืบพันธุ์",
-          "needs_svg": true,
-          "svg_type": "body_system",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -618,8 +619,8 @@
           "std": "ว 1.2 ม.2/12",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบประสาทและระบบสืบพันธุ์",
-          "needs_svg": true,
-          "svg_type": "body_system",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -627,8 +628,8 @@
           "std": "ว 1.2 ม.2/13",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบประสาทและระบบสืบพันธุ์",
-          "needs_svg": true,
-          "svg_type": "body_system",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -636,8 +637,8 @@
           "std": "ว 1.2 ม.2/14",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบประสาทและระบบสืบพันธุ์",
-          "needs_svg": true,
-          "svg_type": "body_system",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -645,8 +646,8 @@
           "std": "ว 1.2 ม.2/15",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบประสาทและระบบสืบพันธุ์",
-          "needs_svg": true,
-          "svg_type": "body_system",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -654,8 +655,8 @@
           "std": "ว 1.2 ม.2/16",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบประสาทและระบบสืบพันธุ์",
-          "needs_svg": true,
-          "svg_type": "body_system",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -663,8 +664,8 @@
           "std": "ว 1.2 ม.2/17",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบประสาทและระบบสืบพันธุ์",
-          "needs_svg": true,
-          "svg_type": "body_system",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -1307,8 +1308,8 @@
           "std": "ว 1.1 ม.3/3",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบนิเวศ",
-          "needs_svg": true,
-          "svg_type": "food_web",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -1316,8 +1317,8 @@
           "std": "ว 1.1 ม.3/4",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบนิเวศ",
-          "needs_svg": true,
-          "svg_type": "food_web",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -1325,8 +1326,8 @@
           "std": "ว 1.1 ม.3/5",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "ระบบนิเวศ",
-          "needs_svg": true,
-          "svg_type": "food_web",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -1343,8 +1344,8 @@
           "std": "ว 1.3 ม.3/1",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
-          "needs_svg": true,
-          "svg_type": "cell_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -1352,8 +1353,8 @@
           "std": "ว 1.3 ม.3/2",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
-          "needs_svg": true,
-          "svg_type": "punnett_square",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -1361,8 +1362,8 @@
           "std": "ว 1.3 ม.3/3",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
-          "needs_svg": true,
-          "svg_type": "punnett_square",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -1370,8 +1371,8 @@
           "std": "ว 1.3 ม.3/4",
           "strand": "วิทยาศาสตร์ชีวภาพ",
           "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
-          "needs_svg": true,
-          "svg_type": "cell_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {

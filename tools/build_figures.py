@@ -21,8 +21,7 @@ from svg_helpers import (bar_chart, line_chart, pie_chart, pictograph, iso_cubes
                          similar_triangles, circle_fig, trig_triangle,
                          wave_fig, circuit_fig, lens_ray, mirror_ray,
                          punnett, food_web, flow_chart, particle_model,
-                         cell_diagram, force_diagram, chromosome_model,
-                         cell_division, reaction_model, em_spectrum,
+                         force_diagram, reaction_model, em_spectrum,
                          mirror_image, prism_fig, orbit_fig, moon_phase)
 
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
@@ -338,8 +337,6 @@ FIGURES.update({
     "sci-particle-gas": particle_model("gas", "การจัดเรียงอนุภาคในภาชนะปิด — แบบ ค"),
     "sci-particle-mixture": particle_model("mixture",
                                            "แบบจำลองอนุภาคของสารในภาชนะหนึ่ง"),
-    "sci-cell-plant": cell_diagram("plant", "เซลล์ชนิดหนึ่งเมื่อส่องด้วยกล้องจุลทรรศน์"),
-    "sci-cell-animal": cell_diagram("animal", "เซลล์ชนิดหนึ่งเมื่อส่องด้วยกล้องจุลทรรศน์"),
     "sci-force-12-8": force_diagram([("right", "12 N"), ("left", "8 N")],
                                     "แรงสองแรงกระทำต่อวัตถุในแนวเดียวกัน", label="วัตถุ"),
     "sci-force-20-20": force_diagram([("right", "20 N"), ("left", "20 N")],
@@ -356,9 +353,6 @@ FIGURES.update({
     "sci-flow-breath": flow_chart(["รูจมูก", "หลอดลม", "ขั้วปอด", "ถุงลมในปอด",
                                    "หลอดเลือดฝอย", "เลือด"],
                                   "ทางเดินของอากาศเข้าสู่ร่างกาย"),
-    "sci-chromosome": chromosome_model("ก ข ค คือโครงสร้างที่ทำเครื่องหมายไว้"),
-    "sci-mitosis": cell_division("mitosis", "การแบ่งเซลล์แบบหนึ่ง"),
-    "sci-meiosis": cell_division("meiosis", "การแบ่งเซลล์อีกแบบหนึ่ง"),
     "sci-reaction": reaction_model("แบบจำลองอนุภาคก่อนและหลังเกิดปฏิกิริยาเคมี"),
     "sci-iv-graph": line_chart(["0", "1", "2", "3", "4"], [0, 3, 6, 9, 12],
                                "ความต่างศักย์ (V)",

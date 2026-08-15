@@ -1491,46 +1491,6 @@ def particle_model(kind, caption=None, width=170, height=170):
     return _wrap(width, height, "".join(g), caption)
 
 
-# ------------------------------------------------------------------- เซลล์
-def cell_diagram(kind, caption=None, width=300, height=230):
-    """เซลล์พืชหรือเซลล์สัตว์ · ส่วนประกอบทำเครื่องหมายเป็น ก ข ค ง"""
-    cx, cy = width / 2, height / 2 - 4
-    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>']
-    tag = lambda x, y, t: (f'<circle cx="{x:.1f}" cy="{y:.1f}" r="11" fill="#fff" '
-                           f'stroke="{SERIES[3]}" stroke-width="1.8"/>'
-                           + _t(x, y + 5, t, 13, "middle", SERIES[3], "700"))
-    if kind == "plant":
-        g += [f'<rect x="{cx-108}" y="{cy-78}" width="216" height="156" rx="6" '
-              f'fill="#e7efe9" stroke="{NAVY}" stroke-width="3"/>',           # ผนังเซลล์
-              f'<rect x="{cx-99}" y="{cy-69}" width="198" height="138" rx="5" '
-              f'fill="#f4f8f4" stroke="{NAVY}" stroke-width="1.6"/>',         # เยื่อหุ้มเซลล์
-              f'<ellipse cx="{cx+22}" cy="{cy+4}" rx="62" ry="42" fill="#dbe7f2" '
-              f'stroke="{NAVY}" stroke-width="1.6"/>',                        # แวคิวโอล
-              f'<circle cx="{cx-56}" cy="{cy-26}" r="20" fill="#cfd9e6" '
-              f'stroke="{NAVY}" stroke-width="1.8"/>']                        # นิวเคลียส
-        for x, y in ((cx - 62, cy + 34), (cx - 22, cy - 52), (cx + 62, cy - 48)):
-            g.append(f'<ellipse cx="{x}" cy="{y}" rx="13" ry="8" fill="#2F8F6F" '
-                     f'fill-opacity="0.8" stroke="#2F8F6F" stroke-width="1.2"/>')
-        # ป้ายวางเยื้องจากส่วนที่ชี้ ไม่ทับจนบังของที่ต้องดู
-        g += [tag(cx - 108, cy - 78, "ก"), tag(cx - 56, cy - 26, "ข"),
-              tag(cx + 22, cy + 4, "ค"), tag(cx - 62, cy + 56, "ง")]
-        g.append(f'<line x1="{cx-62}" y1="{cy+45}" x2="{cx-62}" y2="{cy+40}" '
-                 f'stroke="{SERIES[3]}" stroke-width="1.4"/>')
-    else:
-        g += [f'<ellipse cx="{cx}" cy="{cy}" rx="106" ry="76" fill="#f4f1ec" '
-              f'stroke="{NAVY}" stroke-width="2.4"/>',                        # เยื่อหุ้มเซลล์
-              f'<circle cx="{cx-24}" cy="{cy-8}" r="26" fill="#cfd9e6" '
-              f'stroke="{NAVY}" stroke-width="1.8"/>']                        # นิวเคลียส
-        for x, y in ((cx + 44, cy - 32), (cx + 56, cy + 22), (cx + 8, cy + 44)):
-            g.append(f'<ellipse cx="{x}" cy="{y}" rx="15" ry="8" fill="#C0392B" '
-                     f'fill-opacity="0.6" stroke="#C0392B" stroke-width="1.2"/>')
-        g += [tag(cx - 106, cy, "ก"), tag(cx - 24, cy - 8, "ข"),
-              tag(cx + 44, cy - 54, "ค"), tag(cx - 30, cy + 48, "ง")]
-        g.append(f'<line x1="{cx+44}" y1="{cy-43}" x2="{cx+44}" y2="{cy-38}" '
-                 f'stroke="{SERIES[3]}" stroke-width="1.4"/>')
-    return _wrap(width, height, "".join(g), caption)
-
-
 # ------------------------------------------------------------- แผนภาพแรง
 def force_diagram(forces, caption=None, width=380, height=200, label=None):
     """วัตถุกับแรงที่กระทำ · forces = [(ทิศ, ป้ายกำกับ)] ทิศ = 'left' 'right' 'up' 'down'"""
@@ -1567,76 +1527,6 @@ def force_diagram(forces, caption=None, width=380, height=200, label=None):
 # ============================================================================
 # วิทยาศาสตร์ ม.3 — โครโมโซม · การแบ่งเซลล์ · ปฏิกิริยา · สเปกตรัม · แสง · อวกาศ
 # ============================================================================
-
-def chromosome_model(caption=None, width=470, height=200):
-    """โครโมโซม → ดีเอ็นเอ → ยีน · ขยายให้เห็นว่าอันไหนอยู่ในอันไหน"""
-    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>']
-    cx, cy = 74, height / 2                      # โครโมโซมรูปตัว X
-    g.append(f'<path d="M {cx-20} {cy-52} Q {cx} {cy-14} {cx-20} {cy+52} '
-             f'M {cx+20} {cy-52} Q {cx} {cy-14} {cx+20} {cy+52}" fill="none" '
-             f'stroke="{NAVY}" stroke-width="13" stroke-linecap="round"/>')
-    g.append(_t(cx, cy + 78, "ก", 14, "middle", SERIES[3], "700"))
-    lx, ly = 214, cy                             # ดีเอ็นเอเกลียวคู่
-    for k in range(2):
-        pts = [(lx - 42 + i * 84 / 60,
-                ly + 26 * math.sin(2 * math.pi * i / 30 + k * math.pi)) for i in range(61)]
-        g.append('<polyline points="' + " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
-                 + f'" fill="none" stroke="{NAVY}" stroke-width="2.4"/>')
-    for i in range(0, 61, 6):
-        y1 = ly + 26 * math.sin(2 * math.pi * i / 30)
-        y2 = ly + 26 * math.sin(2 * math.pi * i / 30 + math.pi)
-        x = lx - 42 + i * 84 / 60
-        g.append(f'<line x1="{x:.1f}" y1="{y1:.1f}" x2="{x:.1f}" y2="{y2:.1f}" '
-                 f'stroke="{SOFT}" stroke-width="1.6"/>')
-    g.append(_t(lx, cy + 78, "ข", 14, "middle", SERIES[3], "700"))
-    gx = 372                                     # ยีน = ช่วงหนึ่งบนสายดีเอ็นเอ
-    g.append(f'<rect x="{gx-52}" y="{cy-16}" width="104" height="32" rx="6" '
-             f'fill="#eef1f4" stroke="{NAVY}" stroke-width="1.8"/>')
-    g.append(f'<rect x="{gx-22}" y="{cy-16}" width="42" height="32" '
-             f'fill="{SERIES[3]}" fill-opacity="0.35" stroke="{SERIES[3]}" '
-             f'stroke-width="1.8"/>')
-    g.append(_t(gx, cy + 78, "ค", 14, "middle", SERIES[3], "700"))
-    for x1, x2 in ((cx + 30, lx - 52), (lx + 52, gx - 62)):
-        g.append(f'<line x1="{x1}" y1="{cy}" x2="{x2}" y2="{cy}" stroke="{SOFT}" '
-                 f'stroke-width="1.6" stroke-dasharray="5 4"/>')
-        g.append(f'<polygon points="{x2+6},{cy} {x2-3},{cy-4.5} {x2-3},{cy+4.5}" '
-                 f'fill="{SOFT}"/>')
-    return _wrap(width, height, "".join(g), caption)
-
-
-def cell_division(kind, caption=None, width=470, height=180):
-    """เปรียบเทียบผลของการแบ่งเซลล์ · kind = 'mitosis' (ได้ 2 เซลล์) หรือ 'meiosis' (ได้ 4)"""
-    n_out = 2 if kind == "mitosis" else 4
-    keep = 4 if kind == "mitosis" else 2         # จำนวนโครโมโซมในเซลล์ลูก
-    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>']
-
-    def cell(cx, cy, r, bars):
-        out = [f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{r}" fill="#f4f1ec" '
-               f'stroke="{NAVY}" stroke-width="2"/>']
-        for i in range(bars):
-            bx = cx - (bars - 1) * 7 / 2 + i * 7
-            out.append(f'<line x1="{bx:.1f}" y1="{cy-r*0.42:.1f}" x2="{bx:.1f}" '
-                       f'y2="{cy+r*0.42:.1f}" stroke="{NAVY}" stroke-width="3.4" '
-                       f'stroke-linecap="round"/>')
-        return "".join(out)
-
-    cy = height / 2 - 6
-    g.append(cell(64, cy, 36, 4))
-    g.append(_t(64, cy + 58, "เซลล์ตั้งต้น", 11.5, "middle", SOFT))
-    ax = 118
-    g.append(f'<line x1="{ax}" y1="{cy}" x2="{ax+46}" y2="{cy}" stroke="{SOFT}" '
-             f'stroke-width="2"/>')
-    g.append(f'<polygon points="{ax+54},{cy} {ax+44},{cy-6} {ax+44},{cy+6}" fill="{SOFT}"/>')
-    r2 = 30 if n_out == 2 else 24
-    for i in range(n_out):
-        col = 2 if n_out == 2 else 2
-        x = 250 + (i % col) * (r2 * 2 + 26)
-        y = cy if n_out == 2 else cy - 40 + (i // col) * 80
-        g.append(cell(x, y, r2, keep))
-    g.append(_t(340, height - 10, f"ได้เซลล์ใหม่ {n_out} เซลล์ · โครโมโซมเซลล์ละ {keep} แท่ง",
-                11.5, "middle", SOFT))
-    return _wrap(width, height, "".join(g), caption)
-
 
 def reaction_model(caption=None, width=470, height=170):
     """แบบจำลองการจัดเรียงอะตอมใหม่ · 2H₂ + O₂ → 2H₂O (จำนวนอะตอมก่อนและหลังเท่ากัน)"""
