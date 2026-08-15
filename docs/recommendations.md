@@ -173,6 +173,10 @@ IBM Plex Sans Thai Looped จาก Google Fonts CDN — เปิดออฟ�
 
 ### 4.3 CI
 
+> **หมายเหตุ (ปรับแล้ว)** — repo นี้เลิกใช้ GitHub Actions ทั้งหมดแล้ว เพราะบัญชีเรียก runner
+> ไม่ได้ · การตรวจย้ายมาที่ `tools/check.sh` + git hook `.githooks/pre-push` และ Pages
+> เสิร์ฟจากแบรนช์ · ข้อเสนอด้านล่างเก็บไว้เผื่อวันที่กลับไปใช้ Actions ได้
+
 ```yaml
 permissions:          # อยู่ระดับ workflow — job "validate" ที่รันบน PR ได้สิทธิ์เกินจำเป็น
   contents: read
@@ -181,7 +185,8 @@ permissions:          # อยู่ระดับ workflow — job "validate" 
 ```
 
 - ย้าย `pages: write` / `id-token: write` ไปไว้ที่ job `deploy` เท่านั้น ให้ job `validate` มีแค่ `contents: read`
-- `npm install jsdom --no-save` ไม่ได้ pin เวอร์ชัน — jsdom ออก major ใหม่เมื่อไหร่ CI พังโดยไม่มีอะไรในโค้ดเปลี่ยน
+- `npm install jsdom --no-save` ไม่ได้ pin เวอร์ชัน — jsdom ออก major ใหม่เมื่อไหร่ชุดตรวจพังโดยไม่มีอะไรในโค้ดเปลี่ยน
+  (ยังค้างอยู่ · `tools/check.sh` ก็ใช้คำสั่งเดียวกัน)
   ควรใส่ `jsdom@^26` หรือทำ `package.json` + `package-lock.json` แล้วใช้ `npm ci` พร้อม `actions/setup-node` cache
 - เพิ่ม `actions/cache` สำหรับ npm และเพิ่ม **Dependabot** (`.github/dependabot.yml`) ให้อัปเดต GitHub Actions
 - พิจารณาเพิ่ม lint: `ruff` สำหรับ Python (4 ไฟล์) และ `eslint` หรืออย่างน้อย `prettier --check` สำหรับ JSON คลังข้อสอบ

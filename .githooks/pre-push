@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# ตรวจก่อน push — แทน GitHub Actions ที่ repo นี้ไม่ได้ใช้แล้ว
+# เปิดใช้ครั้งเดียวด้วย: bash tools/check.sh --install
+# ข้ามครั้งเดียวด้วย: git push --no-verify
+exec bash "$(git rev-parse --show-toplevel)/tools/check.sh"

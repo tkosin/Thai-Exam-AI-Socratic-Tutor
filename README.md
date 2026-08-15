@@ -68,7 +68,8 @@
 | [`docs/ai-tutor.md`](docs/ai-tutor.md) | พี่หลวง (ติวเตอร์ AI) — บุคลิก, วิธีใช้, บันไดคำใบ้ 7 ขั้น, เรื่องคีย์และความเป็นส่วนตัว |
 | `tools/build.py` | ประกอบคลังข้อสอบทุกวิชา + รูป เข้า `index.html` (และซิงค์สำเนา) |
 | `tools/build_figures.py` · `svg_helpers.py` | สร้างคลังรูป (แผนภูมิ, ภาพสามมิติ, ระนาบพิกัด ฯลฯ) |
-| `tools/validate.py` · `tools/dom_test.cjs` | ชุดตรวจที่ CI ใช้ (คลังข้อสอบ + พฤติกรรมหน้าเว็บ) |
+| `tools/validate.py` · `tools/dom_test.cjs` | ชุดตรวจ (คลังข้อสอบ + พฤติกรรมหน้าเว็บ) |
+| `tools/check.sh` · `.githooks/pre-push` | รันชุดตรวจทั้งหมดในเครื่อง แทน GitHub Actions |
 
 ## แก้ไขและเพิ่มข้อสอบ
 
@@ -78,6 +79,14 @@
 $EDITOR questions/science-m2/unit-05-force-motion.json
 python3 tools/build.py                                  # ประกอบเข้า index.html + ซิงค์สำเนา
 
+bash tools/check.sh                                      # ตรวจทั้งหมด (4 ขั้น)
+```
+
+`tools/check.sh` รวมทุกขั้นไว้ให้แล้ว — ตรวจว่าคลังรูปตรงกับสคริปต์ที่สร้างมัน ·
+`index.html` ตรงกับคลังข้อสอบ · `validate.py` · `dom_test.cjs` (ลง `jsdom` ให้เองครั้งแรก)
+ผ่านทุกขั้นถึงจะคืนสถานะ 0 · จะรันแยกทีละขั้นก็ได้
+
+```bash
 python3 tools/build.py --check                          # ตรวจว่าไฟล์ตรงกับคลังข้อสอบ
 python3 tools/validate.py                               # ตรวจคลังข้อสอบ
 npm install jsdom --no-save && node tools/dom_test.cjs  # ทดสอบหน้าเว็บ
@@ -88,8 +97,24 @@ npm install jsdom --no-save && node tools/dom_test.cjs  # ทดสอบหน�
 ลำดับที่ผู้เรียนเห็นในแผงตัวกรองเรียงตาม `SUBJECT_ORDER` ใน `index.html` แยกจากลำดับในไฟล์ manifest
 จึงต่อท้ายได้โดยไม่ต้องยอมให้วิชาใหม่ไปอยู่ท้ายรายการในหน้าเว็บ
 
-ทุก pull request จะถูกตรวจด้วยชุดเดียวกันนี้ผ่าน GitHub Actions
-(`.github/workflows/check.yml`) — เป็นการ **ตรวจอย่างเดียว ไม่ deploy**
+### ตรวจก่อน push โดยไม่ใช้ GitHub Actions
+
+repo นี้ **ไม่มี workflow ของ Actions เลย** — ทั้งการตรวจและการ deploy ไม่ต้องใช้ runner
+จึงไม่กินโควตาและไม่ต้องมีวงเงิน (Pages เสิร์ฟจากแบรนช์ ดูหัวข้อถัดไป)
+
+ให้ตรวจอัตโนมัติทุกครั้งที่ `git push` ด้วยการเปิด git hook ในเครื่องครั้งเดียว
+
+```bash
+bash tools/check.sh --install     # = git config core.hooksPath .githooks
+```
+
+จากนั้น `.githooks/pre-push` จะรัน `tools/check.sh` ให้ก่อนทุกครั้ง ถ้าไม่ผ่านจะไม่ push
+(ข้ามครั้งเดียวด้วย `git push --no-verify` · เลิกใช้ด้วย `git config --unset core.hooksPath`)
+
+ข้อแลกเปลี่ยนที่ต้องรู้: hook อยู่ในเครื่องของแต่ละคน ไม่ได้บังคับจากฝั่ง GitHub
+ใครยังไม่รัน `--install` ก็ push ได้โดยไม่ถูกตรวจ — เหมาะกับ repo ที่ดูแลกันไม่กี่คน
+ถ้าวันหนึ่ง Actions ของบัญชีใช้ได้แล้วและอยากบังคับจากฝั่งเซิร์ฟเวอร์ ค่อยเพิ่ม workflow
+ที่รัน `bash tools/check.sh` ขั้นเดียวก็พอ
 
 ## การเผยแพร่ (GitHub Pages)
 
@@ -101,8 +126,11 @@ push เข้า `main` แล้ว GitHub เอาไฟล์ในแบ�
 เลือก `main` และโฟลเดอร์ `/ (root)`
 
 > เดิมเคย deploy ด้วย `actions/deploy-pages` ซึ่งต้องรัน job บน Actions — ถ้า Actions ของบัญชี
-> ใช้ไม่ได้ (โควตาหมด/ปัญหาการชำระเงิน) เว็บจะค้างเวอร์ชันเก่าทั้งที่โค้ดเข้า `main` แล้ว
-> แบบ branch จึง deploy ได้แม้ Actions ใช้ไม่ได้ · ถ้า Actions แดง ให้รันชุดตรวจในเครื่องแทน (ดูด้านบน)
+> ใช้ไม่ได้ (โควตาหมด/ปัญหาการชำระเงิน/ถูกระงับ) เว็บจะค้างเวอร์ชันเก่าทั้งที่โค้ดเข้า `main` แล้ว
+> แบบ branch จึง deploy ได้แม้ Actions ใช้ไม่ได้
+>
+> งาน `pages build and deployment` ที่ขึ้นในแท็บ Actions หลัง push ไม่ใช่ workflow ของ repo
+> แต่เป็นของ GitHub เอง ลบไม่ได้และ**ไม่กินโควตาของบัญชี**
 
 ดูรายละเอียดหัวข้อที่ยังต้องเพิ่มและหลักการเขียนเฉลยให้ระบบตรวจอัตโนมัติได้ที่
 [`docs/coverage-plan.md`](docs/coverage-plan.md)
