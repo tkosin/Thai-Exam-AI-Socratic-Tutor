@@ -77,6 +77,7 @@
 | `questions/science-m1/unit-*.json` | คลังข้อสอบวิทยาศาสตร์ ม.1 แยกไฟล์ตามหน่วย |
 | `questions/science-m2/unit-*.json` | คลังข้อสอบวิทยาศาสตร์ ม.2 แยกไฟล์ตามหน่วย |
 | `questions/figures.json` | คลังรูป SVG อ้างด้วยชื่อ ใช้ซ้ำได้หลายข้อ |
+| [`docs/roadmap.md`](docs/roadmap.md) | **แผนขยายเป็น ป.5–ม.3 ครบ 7 วิชา** — ช่องว่างที่วัดได้ ลำดับเฟส และเหตุผล |
 | [`docs/coverage-plan.md`](docs/coverage-plan.md) | แผนขยายคลังข้อสอบเทียบตัวชี้วัด + ความคืบหน้า |
 | [`docs/recommendations.md`](docs/recommendations.md) | ผลวิเคราะห์ repo และข้อเสนอแนะสิ่งที่ควรเพิ่ม |
 | [`docs/ai-tutor.md`](docs/ai-tutor.md) | พี่หลวง (ติวเตอร์ AI) — บุคลิก, วิธีใช้, บันไดคำใบ้ 7 ขั้น, เรื่องคีย์และความเป็นส่วนตัว |
