@@ -602,9 +602,18 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
 
 // ---------- ติวเตอร์ AI ----------
 // ยัด fetch ปลอมที่คืนสตรีม SSE ให้ ไม่ต้องต่อเน็ตจริงและไม่ต้องมีคีย์จริง
-function loadTutor(seeds, reply = 'ลองอ่านโจทย์อีกครั้ง โจทย์ให้อะไรมาบ้าง?') {
+function loadTutor(seeds, reply = 'ลองอ่านโจทย์อีกครั้ง โจทย์ให้อะไรมาบ้าง?', wire = 'anthropic') {
   const sent = [];
-  const sse = [
+  // สตรีมคำตอบในรูปแบบ SSE ของแต่ละเจ้า — โครง JSON ต่างกันหมด
+  const sse = wire === 'openai'
+    ? [{ choices: [{ delta: { content: reply } }] },
+       { choices: [{ delta: {}, finish_reason: 'stop' }] }]
+        .map(e => `data: ${JSON.stringify(e)}\n\n`).join('') + 'data: [DONE]\n\n'
+    : wire === 'gemini'
+    ? [{ candidates: [{ content: { parts: [{ text: reply }] } }] },
+       { candidates: [{ content: { parts: [] }, finishReason: 'STOP' }] }]
+        .map(e => `data: ${JSON.stringify(e)}\n\n`).join('')
+    : [
     { type: 'message_start', message: { id: 'msg_1' } },
     { type: 'content_block_start', index: 0, content_block: { type: 'text', text: '' } },
     { type: 'content_block_delta', index: 0, delta: { type: 'text_delta', text: reply } },
@@ -881,6 +890,112 @@ const waitFor = async (fn, n = 80) => { for (let i = 0; i < n && !fn(); i++) awa
     chk('เลือก Haiku 4.5 → ไม่ส่ง output_config ไปด้วย',
         haiku.sent.length === 1 && !('output_config' in haiku.sent[0].body)
         && haiku.sent[0].body.model === 'claude-haiku-4-5', JSON.stringify(Object.keys(haiku.sent[0].body)));
+
+    // ---------- หลายผู้ให้บริการ: OpenAI · Gemini · OpenAI-compatible ----------
+    // คีย์เก็บแยกเจ้าในรูปแบบใหม่ ของเก่า {key, model} ต้องย้ายให้เองตาม prefix ของคีย์
+    const NEWKEY = cfg => ({ key: 'funnymath-ai-v1', value: cfg });
+
+    // OpenAI: Chat Completions + Bearer + system เป็นข้อความแรก + max_completion_tokens
+    const oa = loadTutor([...opened, NEWKEY({
+      provider: 'openai', keys: { openai: 'sk-openai-test' },
+      models: { openai: 'gpt-5-mini' } })], 'คำถามนำจาก GPT', 'openai');
+    oa.d.querySelector('#tutorInput').value = 'ถาม GPT';
+    tclick(oa, '#tutorSend');
+    await waitFor(() => oa.sent.length);
+    const oaReq = oa.sent[0];
+    chk('OpenAI → เรียก /v1/chat/completions ด้วย Bearer key',
+        oaReq.url === 'https://api.openai.com/v1/chat/completions'
+        && oaReq.headers.authorization === 'Bearer sk-openai-test'
+        && !('x-api-key' in oaReq.headers) && !('anthropic-version' in oaReq.headers),
+        oaReq.url);
+    chk('OpenAI → system เป็นข้อความแรก และใช้ max_completion_tokens',
+        oaReq.body.messages[0].role === 'system'
+        && /พี่หลวง/.test(oaReq.body.messages[0].content)
+        && oaReq.body.max_completion_tokens === 4000 && !('max_tokens' in oaReq.body)
+        && oaReq.body.model === 'gpt-5-mini' && oaReq.body.reasoning_effort === 'low',
+        JSON.stringify(Object.keys(oaReq.body)));
+    await waitFor(() => /คำถามนำจาก GPT/.test(oa.d.querySelector('.bubble.ai')?.textContent || ''));
+    chk('OpenAI → สตรีมรูปแบบ delta.content ขึ้นเป็นคำตอบ',
+        /คำถามนำจาก GPT/.test(oa.d.querySelector('.bubble.ai').textContent), '');
+
+    // Gemini: streamGenerateContent + x-goog-api-key + systemInstruction + role user/model
+    const gm = loadTutor([...opened, NEWKEY({
+      provider: 'gemini', keys: { gemini: 'AIza-test' },
+      models: { gemini: 'gemini-2.5-flash' } })], 'คำถามนำจาก Gemini', 'gemini');
+    gm.d.querySelector('#tutorInput').value = 'ถาม Gemini';
+    tclick(gm, '#tutorSend');
+    await waitFor(() => gm.sent.length);
+    const gmReq = gm.sent[0];
+    chk('Gemini → เรียก streamGenerateContent ของโมเดลที่เลือกแบบ SSE',
+        /generativelanguage\.googleapis\.com\/v1beta\/models\/gemini-2\.5-flash:streamGenerateContent\?alt=sse/.test(gmReq.url)
+        && gmReq.headers['x-goog-api-key'] === 'AIza-test', gmReq.url);
+    chk('Gemini → ส่ง systemInstruction แยก และปิด thinking ของ Flash',
+        /พี่หลวง/.test(gmReq.body.systemInstruction.parts[0].text)
+        && gmReq.body.contents[0].role === 'user'
+        && gmReq.body.generationConfig.maxOutputTokens === 4000
+        && gmReq.body.generationConfig.thinkingConfig.thinkingBudget === 0,
+        JSON.stringify(Object.keys(gmReq.body)));
+    await waitFor(() => /คำถามนำจาก Gemini/.test(gm.d.querySelector('.bubble.ai')?.textContent || ''));
+    chk('Gemini → สตรีมรูปแบบ candidates/parts ขึ้นเป็นคำตอบ',
+        /คำถามนำจาก Gemini/.test(gm.d.querySelector('.bubble.ai').textContent), '');
+    // ประวัติฝั่งเราเป็น user/assistant ต้องแปลงเป็น user/model ก่อนส่งให้ Gemini
+    gm.d.querySelector('#tutorInput').value = 'ถามต่อ';
+    tclick(gm, '#tutorSend');
+    await waitFor(() => gm.sent.length === 2);
+    chk('Gemini → บทบาท assistant ถูกแปลงเป็น model',
+        gm.sent[1].body.contents.map(c => c.role).join(',') === 'user,model,user',
+        gm.sent[1].body.contents.map(c => c.role).join(','));
+
+    // OpenAI-compatible: base URL ของผู้ใช้ + max_tokens (ไม่ใช่ max_completion_tokens)
+    const cu = loadTutor([...opened, NEWKEY({
+      provider: 'custom', keys: { custom: 'k-any' },
+      customBase: 'http://localhost:11434/v1/', customModel: 'llama3.3' })],
+      'คำถามนำจากโมเดลในเครื่อง', 'openai');
+    cu.d.querySelector('#tutorInput').value = 'ถามในเครื่อง';
+    tclick(cu, '#tutorSend');
+    await waitFor(() => cu.sent.length);
+    const cuReq = cu.sent[0];
+    chk('Custom → ต่อ /chat/completions ท้าย base URL (ตัด / ซ้ำ) และใช้ max_tokens',
+        cuReq.url === 'http://localhost:11434/v1/chat/completions'
+        && cuReq.body.model === 'llama3.3'
+        && cuReq.body.max_tokens === 4000 && !('max_completion_tokens' in cuReq.body)
+        && !('reasoning_effort' in cuReq.body),
+        cuReq.url);
+
+    // ย้ายค่าที่เก็บแบบเก่า — คีย์ OpenAI ที่เคยใส่ไว้ต้องไปอยู่เจ้า openai ไม่ใช่ anthropic
+    const mig = loadTutor([...opened,
+      { key: 'funnymath-ai-v1', value: { key: 'sk-proj-old', model: 'claude-opus-5' } }],
+      'ok', 'openai');
+    mig.d.querySelector('#tutorInput').value = 'ถาม';
+    tclick(mig, '#tutorSend');
+    await waitFor(() => mig.sent.length);
+    chk('คีย์แบบเก่าที่เป็นของ OpenAI → ย้ายไปเรียก OpenAI ให้เอง',
+        mig.sent[0].url.includes('api.openai.com')
+        && mig.sent[0].headers.authorization === 'Bearer sk-proj-old', mig.sent[0].url);
+
+    // หน้าต่างตั้งค่า: มีตัวเลือกผู้ให้บริการครบ และสลับแล้วรายการโมเดลเปลี่ยนตาม
+    const ui = loadTutor([...opened, NEWKEY({ provider: 'anthropic',
+      keys: { anthropic: 'sk-ant-x' }, models: {} })]);
+    tclick(ui, '#aiSetupBtn');
+    const provSel = ui.d.querySelector('#aiProviderSelect');
+    chk('หน้าตั้งค่ามีผู้ให้บริการครบ 4 เจ้า',
+        [...provSel.options].map(o => o.value).join(',') === 'anthropic,openai,gemini,custom',
+        [...provSel.options].map(o => o.value).join(','));
+    provSel.value = 'gemini';
+    provSel.dispatchEvent(new ui.w.Event('change'));
+    chk('สลับเป็น Gemini → รายการโมเดลเป็นของ Gemini และช่องคีย์บอก AIza',
+        [...ui.d.querySelector('#aiModelSelect').options].every(o => o.value.startsWith('gemini-'))
+        && ui.d.querySelector('#aiKeyInput').placeholder === 'AIza...', '');
+    provSel.value = 'custom';
+    provSel.dispatchEvent(new ui.w.Event('change'));
+    chk('สลับเป็น custom → โชว์ช่อง Base URL/ชื่อโมเดล แทนรายการโมเดล',
+        ui.d.querySelector('#aiCustomFields').style.display !== 'none'
+        && ui.d.querySelector('#aiStdFields').style.display === 'none', '');
+    // สลับกลับมา — คีย์ Anthropic ที่ใส่ไว้ต้องยังอยู่
+    provSel.value = 'anthropic';
+    provSel.dispatchEvent(new ui.w.Event('change'));
+    chk('สลับผู้ให้บริการไปมาแล้วคีย์ของแต่ละเจ้าไม่หาย',
+        ui.d.querySelector('#aiKeyInput').value === 'sk-ant-x', ui.d.querySelector('#aiKeyInput').value);
 
     report();
   })().catch(e => {
