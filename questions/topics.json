@@ -1245,14 +1245,14 @@
               "match": [
                 "แผนภาพกล่อง"
               ],
-              "status": "planned"
+              "status": "active"
             },
             {
               "name": "เปอร์เซ็นไทล์",
               "match": [
                 "เปอร์เซ็นไทล์"
               ],
-              "status": "planned"
+              "status": "active"
             },
             {
               "name": "ค่านอกเกณฑ์",
@@ -1260,7 +1260,7 @@
                 "ค่านอกเกณฑ์",
                 "นอกเกณฑ์"
               ],
-              "status": "planned"
+              "status": "active"
             }
           ]
         },

@@ -16,10 +16,46 @@ from svg_helpers import (bar_chart, line_chart, pie_chart, pictograph, iso_cubes
                          cube_net, number_line, coord_plane, intersecting_lines,
                          triangle_fig, parallel_lines, top_view_heights,
                          right_triangle, transform_grid, prism_box, cylinder_fig,
-                         dot_plot, histogram)
+                         dot_plot, histogram, box_plot)
 
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                    "questions", "figures.json")
+
+# แผนภาพกล่อง ม.3 — เก็บค่าห้าค่าไว้ที่เดียว เพราะ tools/gen_math_m3.py ต้อง import
+# ไปคิดเฉลย ถ้าแยกกันเขียนเมื่อไหร่ รูปกับเฉลยจะเพี้ยนคนละทางโดยไม่มีใครรู้
+# ค่าทุกค่าเลือกให้ตกบนขีดของแกนพอดี ไม่งั้นอ่านจากรูปแล้วเดาได้หลายคำตอบ
+BOX_PLOTS = {
+    "m3-box-math-scores": {
+        "five": (10, 20, 25, 35, 45), "outliers": (),
+        "x_title": "คะแนน (เต็ม 50 คะแนน)",
+        "story": "แผนภาพกล่องแสดงคะแนนสอบคณิตศาสตร์ของนักเรียน 40 คน",
+    },
+    "m3-box-travel-time": {
+        "five": (20, 35, 45, 55, 80), "outliers": (),
+        "x_title": "เวลา (นาที)",
+        "story": "แผนภาพกล่องแสดงเวลาเดินทางมาโรงเรียนของนักเรียน 30 คน",
+    },
+    "m3-box-height": {
+        "five": (150, 155, 165, 170, 180), "outliers": (),
+        "x_title": "ส่วนสูง (เซนติเมตร)",
+        "story": "แผนภาพกล่องแสดงส่วนสูงของนักเรียน 36 คน",
+    },
+    "m3-box-price-outlier": {
+        "five": (20, 40, 50, 70, 90), "outliers": (110,),
+        "x_title": "ราคา (บาท)",
+        "story": "แผนภาพกล่องแสดงราคาสินค้า 25 ชิ้น (จุดที่อยู่นอกหนวดคือค่านอกเกณฑ์)",
+    },
+    "m3-box-room-a": {
+        "five": (40, 55, 65, 75, 90), "outliers": (),
+        "x_title": "คะแนน",
+        "story": "แผนภาพกล่องแสดงคะแนนสอบของนักเรียนห้อง ก",
+    },
+    "m3-box-room-b": {
+        "five": (40, 60, 70, 80, 90), "outliers": (),
+        "x_title": "คะแนน",
+        "story": "แผนภาพกล่องแสดงคะแนนสอบของนักเรียนห้อง ข",
+    },
+}
 
 CAP_PLAN = "แผนผังด้านบน — ตัวเลขคือจำนวนลูกบาศก์ที่วางซ้อนกันในแต่ละตำแหน่ง"
 CAP_CUBES = "ลูกบาศก์หนึ่งหน่วยวางซ้อนกัน"
@@ -143,6 +179,13 @@ FIGURES = {
     # ── หน่วย 8 · ความเท่ากันทุกประการ ──────────────────────────────────
     "m2-tri-55-65-60": triangle_fig(55, 65, 60, unknown="C", caption="รูปสามเหลี่ยม ABC"),
 }
+
+# ── คณิต ม.3 หน่วย 10 · แผนภาพกล่อง (ค 3.1 ม.3/1) ───────────────────────
+FIGURES.update({
+    # ไม่ใส่คำบรรยายใต้รูป เพราะตัวโจทย์เล่าบริบทไว้แล้ว จะกลายเป็นอ่านซ้ำสองรอบ
+    name: box_plot(spec["five"], None, spec["x_title"], outliers=spec["outliers"])
+    for name, spec in BOX_PLOTS.items()
+})
 
 if __name__ == "__main__":
     os.makedirs(os.path.dirname(OUT), exist_ok=True)

@@ -1121,8 +1121,12 @@ LAZY = (async () => {
   chk('ทางลัดหน่วยและจำนวนข้อรายหน่วยมาจาก MANIFEST',
       chips.length > 0 && +chips[0].querySelector('.u-c').textContent > 0,
       chips.length + ' หน่วย');
+  // เทียบกับผลรวมของ MANIFEST ไม่ใช่ตัวเลขที่พิมพ์ไว้ตายตัว — คลังโตทุกเฟส
+  const manifestTotal = JSON.parse(shellHtml.match(/const MANIFEST = (\[[\s\S]*?\]);/)[1])
+    .reduce((n, c) => n + c.count, 0);
   chk('ยอดรวมทุกวิชาบนหัวเรื่องถูกต้อง',
-      /3,015/.test(rd('#progressLabel').textContent), rd('#progressLabel').textContent);
+      rd('#progressLabel').textContent.includes(manifestTotal.toLocaleString('en-US')),
+      rd('#progressLabel').textContent);
 
   // กดเข้าวิชา -> โหลดเฉพาะไฟล์ของวิชานั้น
   rall('#courseGrid .c-go')[0].dispatchEvent(new r.w.Event('click'));

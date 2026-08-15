@@ -667,3 +667,66 @@ def histogram(labels, freqs, y_title="", caption=None, x_title="", width=520):
     if x_title:
         b.append(_t(pad_l + plot_w / 2, h - 12, x_title, 11.5, "middle", SOFT, "600"))
     return _wrap(width, h, "".join(b), caption)
+
+
+# --------------------------------------------------------------- แผนภาพกล่อง
+def _axis_span(vmin, vmax):
+    """เลือกช่วงและระยะขีดของแกนให้ครอบข้อมูล โดยขีดเป็นเลขกลมและมี 5-12 ช่อง"""
+    for step in (1, 2, 5, 10, 20, 25, 50, 100, 200, 250, 500, 1000):
+        lo = (vmin // step) * step
+        hi = -((-vmax) // step) * step
+        if lo == hi:
+            hi = lo + step
+        if 5 <= (hi - lo) / step <= 12:
+            return lo, hi, step
+    step = 10 ** max(len(str(int(vmax))) - 1, 1)
+    return (vmin // step) * step, -((-vmax) // step) * step + step, step
+
+
+def box_plot(five, caption=None, x_title="", width=520, outliers=()):
+    """แผนภาพกล่อง — ค่าต่ำสุด, Q1, มัธยฐาน, Q3, ค่าสูงสุด บนแกนเดียวกัน
+
+    ตั้งใจ**ไม่**พิมพ์ตัวเลขห้าค่ากำกับไว้บนรูป เพราะโจทย์ ม.3 คือการอ่านค่าจากแกน
+    ถ้าเขียนคำตอบไว้บนรูปเสียแล้วก็ไม่เหลืออะไรให้อ่าน
+    ค่านอกเกณฑ์วาดเป็นจุดแยกออกมา หนวดจึงลากถึงแค่ค่าสุดท้ายที่ยังอยู่ในเกณฑ์
+    """
+    lo_v, q1, med, q3, hi_v = five
+    pad_l, pad_r, pad_t, pad_b = 30, 30, 22, 46
+    plot_w = width - pad_l - pad_r
+    box_h, h = 44, 22 + 44 + 46
+    mid = pad_t + box_h / 2
+    axis_y = h - pad_b + 6
+    lo, hi, step = _axis_span(min([lo_v] + list(outliers)), max([hi_v] + list(outliers)))
+    px = lambda v: pad_l + (v - lo) / (hi - lo) * plot_w
+
+    b = [f'<rect x="0" y="0" width="{width}" height="{h}" fill="#fff"/>']
+    v = lo
+    while v <= hi:                              # เส้นตารางแนวตั้งช่วยกวาดสายตาจากแกนขึ้นมา
+        b.append(f'<line x1="{px(v):.1f}" y1="{pad_t-6}" x2="{px(v):.1f}" y2="{axis_y}" '
+                 f'stroke="{GRID}" stroke-width="1"/>')
+        v += step
+    for a, z in ((lo_v, q1), (q3, hi_v)):       # หนวดซ้าย-ขวา
+        b.append(f'<line x1="{px(a):.1f}" y1="{mid:.1f}" x2="{px(z):.1f}" y2="{mid:.1f}" '
+                 f'stroke="{INK}" stroke-width="1.5"/>')
+    for v in (lo_v, hi_v):                      # ขีดปิดปลายหนวด
+        b.append(f'<line x1="{px(v):.1f}" y1="{pad_t+9:.1f}" x2="{px(v):.1f}" '
+                 f'y2="{pad_t+box_h-9:.1f}" stroke="{INK}" stroke-width="1.5"/>')
+    b.append(f'<rect x="{px(q1):.1f}" y="{pad_t}" width="{px(q3)-px(q1):.1f}" '
+             f'height="{box_h}" fill="{NAVY}" fill-opacity="0.16" stroke="{NAVY}" '
+             f'stroke-width="1.6"/>')
+    b.append(f'<line x1="{px(med):.1f}" y1="{pad_t}" x2="{px(med):.1f}" '
+             f'y2="{pad_t+box_h}" stroke="{NAVY}" stroke-width="2.6"/>')
+    for v in outliers:
+        b.append(f'<circle cx="{px(v):.1f}" cy="{mid:.1f}" r="4" fill="#fff" '
+                 f'stroke="{INK}" stroke-width="1.4"/>')
+    b.append(f'<line x1="{pad_l-10}" y1="{axis_y}" x2="{pad_l+plot_w+10}" y2="{axis_y}" '
+             f'stroke="{INK}" stroke-width="1.5"/>')
+    v = lo
+    while v <= hi:
+        b.append(f'<line x1="{px(v):.1f}" y1="{axis_y}" x2="{px(v):.1f}" y2="{axis_y+5}" '
+                 f'stroke="{INK}" stroke-width="1.2"/>')
+        b.append(_t(px(v), axis_y + 19, v, 11, "middle", SOFT))
+        v += step
+    if x_title:
+        b.append(_t(pad_l + plot_w / 2, h - 4, x_title, 11.5, "middle", SOFT, "600"))
+    return _wrap(width, h, "".join(b), caption)
