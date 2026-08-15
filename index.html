@@ -388,6 +388,15 @@
   .bubble sub{ bottom:-.25em; }
   .bubble .frac{ font-size:.95em; }
   .bubble.me .frac .num{ border-bottom-color:currentColor; }
+  /* รูปที่ติวเตอร์วาดประกอบคำอธิบาย */
+  .bubble-fig{
+    margin:9px 0 3px 0; padding:8px; background:#fff;
+    border:1px solid #e2e8ee; border-radius:8px;
+  }
+  .bubble-fig svg{ display:block; width:100%; height:auto; max-height:260px; }
+  .bubble-fig.bad{ font-size:12px; color:#8d3325; background:#fbf1ef; border-color:#e8cdc7; }
+  .bubble.me .bubble-fig{ background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.3); }
+  .fig-wait{ display:block; font-size:12px; color:var(--ink-soft); margin-top:4px; }
   .bubble.err{ align-self:stretch; max-width:100%; background:#fbf1ef; border:1px solid #e8cdc7; color:#8d3325; font-size:13px; }
   .bubble .caret{ display:inline-block; width:7px; height:15px; vertical-align:-2px; background:var(--navy); opacity:.5; animation:blink 1s steps(2) infinite; }
   @keyframes blink{ 50%{ opacity:0; } }
@@ -1564,7 +1573,25 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
       hasFigure
         ? '- โจทย์ข้อนี้มีรูปประกอบ (ตรงที่เขียนว่า ⟪รูปประกอบ⟫) ซึ่งคุณมองไม่เห็น ' +
           'ถ้าต้องใช้ค่าจากรูป ให้ถามน้องว่าอ่านค่าอะไรได้จากรูปแทนการเดา'
-        : ''
+        : '',
+      '',
+      '## วาดรูปประกอบได้ (ใช้เมื่อจำเป็นเท่านั้น)',
+      'ถ้ารูปจะทำให้น้องเห็นภาพชัดขึ้นจริง ๆ ให้แนบ SVG มาในคำตอบ 1 รูป',
+      'เหมาะกับ: รูปเรขาคณิตและการแบ่งส่วน · เส้นจำนวน · เศษส่วนเป็นรูป · มุมและเส้นขนาน ·',
+      'กราฟ/ระนาบพิกัด · รูปคลี่ของทรงสามมิติ · แผนภาพแสดงความสัมพันธ์',
+      'ไม่ต้องวาดถ้าเป็นการคำนวณล้วน ๆ ถามสั้น ๆ หรือรูปไม่ได้ช่วยให้เข้าใจขึ้น — ' +
+        'ส่วนใหญ่ไม่ต้องวาด และห้ามวาดซ้ำรูปที่โจทย์มีอยู่แล้ว',
+      'รูปเป็นของประกอบเท่านั้น ต้องมีคำอธิบายเป็นข้อความควบคู่เสมอ และห้ามใส่คำตอบสุดท้ายลงในรูป',
+      'เขียนเป็นบล็อกแบบนี้:',
+      '```svg',
+      '<svg viewBox="0 0 320 180">…</svg>',
+      '```',
+      'กติกาของรูป (ถ้าผิดจะถูกตัดทิ้งทั้งรูป):',
+      '- ใส่ viewBox เสมอ ขนาดราว 320x180 และห้ามใส่ width/height',
+      '- ใช้ได้เฉพาะแท็ก svg g line polyline polygon rect circle ellipse path text tspan defs marker title desc',
+      '- ห้าม script, style, image, use, foreignObject, a, animate, แอตทริบิวต์ on* และลิงก์ทุกชนิด',
+      '- สี: เส้นหลัก #1E3A5F · เน้น #C0392B · พื้นอ่อน #eef1f4 · ตัวอักษร #232323 · font-size 12–14',
+      '- ป้ายกำกับสั้น ๆ เป็นภาษาไทยได้ ใส่เท่าที่จำเป็น'
     ];
     return lines.filter(l => l !== '').join('\n');
   }
@@ -1592,7 +1619,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
       };
       const body = {
         model: m.id,
-        max_tokens: 3000,
+        max_tokens: 4000,   // เผื่อคำตอบที่แนบรูป SVG มาด้วย
         system,
         messages,
         stream: true
@@ -1686,6 +1713,114 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
       .replace(/([A-Za-z\d])_(\d+|[A-Za-z])/g, '$1<sub>$2</sub>')
       // คูณ: 3*4 หรือ 3 * 4 (ต้องมีตัวเลข/วงเล็บปิดนำหน้า จะได้ไม่โดนหัวข้อแบบ "* ข้อ")
       .replace(/(\d|\))\s*\*\s*(?=[\d(]|[A-Za-z])/g, '$1 × ');
+  }
+
+  // ---------- รูปที่ติวเตอร์วาดเอง (SVG) ----------
+  // ⚠️ SVG ที่โมเดลสร้างถือเป็นข้อมูลจากภายนอก จะเอาใส่ innerHTML ตรง ๆ ไม่ได้เด็ดขาด
+  //    เพราะ SVG รัน JS ได้ (<script>, on*, xlink:href="javascript:", <use>, <foreignObject>)
+  //    และหน้านี้เก็บ API key ไว้ใน localStorage โดเมนเดียวกัน — ถ้าโดนแทรกโค้ดคือคีย์รั่ว
+  //    จึง parse แล้ว "สร้างโหนดใหม่เอง" โดยอนุญาตเฉพาะแท็ก/แอตทริบิวต์ในรายการนี้เท่านั้น
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  const SVG_TAGS = new Set(['svg', 'g', 'title', 'desc', 'defs', 'marker', 'line', 'polyline',
+                            'polygon', 'rect', 'circle', 'ellipse', 'path', 'text', 'tspan']);
+  const SVG_ATTRS = new Set([
+    'viewbox', 'preserveaspectratio', 'x', 'y', 'dx', 'dy', 'x1', 'y1', 'x2', 'y2',
+    'cx', 'cy', 'r', 'rx', 'ry', 'width', 'height', 'd', 'points', 'transform',
+    'fill', 'fill-opacity', 'fill-rule', 'stroke', 'stroke-width', 'stroke-opacity',
+    'stroke-dasharray', 'stroke-dashoffset', 'stroke-linecap', 'stroke-linejoin',
+    'opacity', 'font-size', 'font-family', 'font-weight', 'font-style', 'letter-spacing',
+    'text-anchor', 'dominant-baseline', 'alignment-baseline', 'class', 'id',
+    'marker-start', 'marker-mid', 'marker-end', 'orient', 'refx', 'refy',
+    'markerwidth', 'markerheight', 'markerunits'
+  ]);
+  const SVG_URL_OK = /^url\(\s*#[A-Za-z][\w-]*\s*\)$/;   // อ้าง marker ในรูปเดียวกันเท่านั้น
+  const SVG_MAX_CHARS = 8000;
+  const SVG_MAX_NODES = 400;
+
+  function sanitizeSvg(src){
+    if(!src || src.length > SVG_MAX_CHARS) return null;
+    let doc;
+    try{ doc = new DOMParser().parseFromString(src, 'image/svg+xml'); }catch(e){ return null; }
+    const root = doc.documentElement;
+    if(!root || root.localName !== 'svg' || doc.getElementsByTagName('parsererror').length) return null;
+
+    let nodes = 0;
+    const copy = (from, to) => {
+      for(const child of [...from.childNodes]){
+        if(child.nodeType === 3){ to.appendChild(document.createTextNode(child.nodeValue)); continue; }
+        if(child.nodeType !== 1) continue;                       // ตัดคอมเมนต์/CDATA/PI ทิ้ง
+        if(!SVG_TAGS.has(child.localName) || ++nodes > SVG_MAX_NODES) continue;
+        const el = document.createElementNS(SVG_NS, child.localName);
+        for(const at of [...child.attributes]){
+          // ใช้ชื่อเดิมตอน set เพราะ SVG แยกตัวพิมพ์ (viewBox, refX, markerWidth)
+          if(at.namespaceURI) continue;                          // xlink:* / xml:* ไม่รับ
+          if(!SVG_ATTRS.has(at.localName.toLowerCase())) continue;
+          const v = at.value.trim();
+          if(/[<>]/.test(v)) continue;
+          if(/url\(/i.test(v) && !SVG_URL_OK.test(v)) continue;
+          el.setAttribute(at.name, at.value);
+        }
+        to.appendChild(el);
+        copy(child, el);
+      }
+    };
+
+    const out = document.createElementNS(SVG_NS, 'svg');
+    const vb = (root.getAttribute('viewBox') || '').trim();
+    out.setAttribute('viewBox', /^-?[\d.]+(\s+-?[\d.]+){3}$/.test(vb) ? vb : '0 0 320 180');
+    out.setAttribute('role', 'img');
+    copy(root, out);
+    return nodes ? out : null;
+  }
+
+  // คำตอบหนึ่งข้อความ = ข้อความสลับกับบล็อก SVG · โมเดลถูกสั่งให้ล้อมด้วย ```svg
+  // แต่บางทีก็ส่ง <svg> มาดื้อ ๆ จึงรับทั้งสองแบบ
+  const SVG_BLOCK = /```(?:svg|xml|html)?\s*(<svg[\s\S]*?<\/svg>)\s*```|(<svg[\s\S]*?<\/svg>)/gi;
+
+  function splitSvg(text){
+    const parts = [];
+    let last = 0, m;
+    SVG_BLOCK.lastIndex = 0;
+    while((m = SVG_BLOCK.exec(text))){
+      if(m.index > last) parts.push({ text: text.slice(last, m.index) });
+      parts.push({ svg: m[1] || m[2] });
+      last = m.index + m[0].length;
+    }
+    if(last < text.length) parts.push({ text: text.slice(last) });
+    return parts;
+  }
+
+  // ระหว่างสตรีม รูปยังวาดไม่จบ — ตัดหางที่ยังไม่ปิดออกแล้วขึ้นว่ากำลังวาดแทน
+  function trimPartialSvg(text){
+    const open = text.lastIndexOf('<svg');
+    if(open === -1 || text.indexOf('</svg>', open) !== -1) return { text };
+    const fence = text.lastIndexOf('```', open);
+    return { text: text.slice(0, fence !== -1 && fence > open - 12 ? fence : open), drawing: true };
+  }
+
+  function renderRich(el, text, { partial } = {}){
+    el.textContent = '';
+    const body = partial ? trimPartialSvg(text) : { text };
+    splitSvg(body.text).forEach(part => {
+      if(part.svg !== undefined){
+        const fig = document.createElement('div');
+        const node = sanitizeSvg(part.svg);
+        if(node){ fig.className = 'bubble-fig'; fig.appendChild(node); }
+        else { fig.className = 'bubble-fig bad'; fig.textContent = '⚠️ รูปประกอบไม่ถูกต้อง จึงไม่แสดง'; }
+        el.appendChild(fig);
+      } else if(part.text){
+        const span = document.createElement('span');
+        span.innerHTML = mdLite(part.text);
+        el.appendChild(span);
+      }
+    });
+    if(body.drawing){
+      const wait = document.createElement('span');
+      wait.className = 'fig-wait';
+      wait.textContent = '🖊️ กำลังวาดรูป…';
+      el.appendChild(wait);
+    }
+    return el;
   }
 
   // ---------- แผงติวเตอร์ (อยู่นอกการ์ด จึงผูกกับ "ข้อที่กำลังเปิด" แทน) ----------
@@ -1793,8 +1928,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
     function bubbleFor(cls, text){
       const b = document.createElement('div');
       b.className = 'bubble ' + cls;
-      b.innerHTML = mdLite(text);
-      return b;
+      return renderRich(b, text);
     }
 
     // ขั้นของคำใบ้ขยับทุกครั้งที่ถาม จึงแยกไว้วาดใหม่ได้เอง
@@ -1823,7 +1957,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
       log.appendChild(bubbleFor('me', text));
 
       const reply = bubbleFor('ai', '');
-      reply.innerHTML = '<span class="caret"></span>';
+      reply.innerHTML = '<span class="caret"></span>';   // ยังไม่มีเนื้อหา — โชว์เคอร์เซอร์ก่อน
       log.appendChild(reply);
       toBottom();
       sendBtn.disabled = true;
@@ -1839,7 +1973,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
           signal: ai.ctrl.signal,
           onText: (t) => {
             acc += t;
-            reply.innerHTML = mdLite(acc) + '<span class="caret"></span>';
+            renderRich(reply, acc, { partial: true }).insertAdjacentHTML('beforeend', '<span class="caret"></span>');
             toBottom();
           }
         });
@@ -1849,8 +1983,11 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
         if(!acc.trim()){
           throw new Error(`${AI_NAME}ตอบกลับมาว่าง — ลองส่งอีกครั้ง`);
         }
-        reply.innerHTML = mdLite(acc) + (stop === 'max_tokens'
-          ? '<br><i>(คำตอบยาวเกินโควตา ถูกตัดกลางทาง — ลองถามให้แคบลง)</i>' : '');
+        renderRich(reply, acc);
+        if(stop === 'max_tokens'){
+          reply.insertAdjacentHTML('beforeend',
+            '<br><i>(คำตอบยาวเกินโควตา ถูกตัดกลางทาง — ลองถามให้แคบลง)</i>');
+        }
         chatOf(gidx).push({ r:'a', t:acc });
         saveChats();
         // ปลดสถานะก่อนวาดใหม่ ไม่งั้นปุ่มส่งของกล่องใหม่จะยังถูกปิดอยู่
@@ -1863,7 +2000,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
         }
       }catch(err){
         if(err.name === 'AbortError'){ reply.remove(); return; }
-        if(acc.trim()) reply.innerHTML = mdLite(acc);
+        if(acc.trim()) renderRich(reply, acc);
         else reply.remove();
         log.appendChild(bubbleFor('err', '⚠️ ' + err.message));
         toBottom();
