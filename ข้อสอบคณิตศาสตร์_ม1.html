@@ -123,6 +123,11 @@
   .course-card .c-units button:hover{ background:#eef1f4; color:var(--navy); border-color:#c8d2dd; }
   .course-card .c-units button .u-n{ font-weight:700; color:var(--navy); }
   .course-card .c-units button .u-t{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .course-card .c-units button .u-c{
+    flex:none; font-size:11px; font-weight:600; color:var(--ink-soft);
+    background:#eeebe0; border-radius:4px; padding:1px 6px; margin-left:2px;
+  }
+  .course-card .c-units button:hover .u-c{ background:#dde5ec; color:var(--navy); }
   .course-card .c-go{ margin-top:14px; align-self:flex-start; }
 
   /* ---------------- Layout: left filters + exam ---------------- */
@@ -802,11 +807,13 @@ const LEGACY_IDS = ["math-m1-01-4aac3e8b","math-m1-01-b619d996","math-m1-01-ef30
   QUESTIONS.forEach(q => {
     const key = courseKey(q);
     if(!COURSE_BY_KEY[key]){
-      COURSE_BY_KEY[key] = { key, subject:q.subject, grade:q.grade, units:{}, count:0 };
+      COURSE_BY_KEY[key] = { key, subject:q.subject, grade:q.grade,
+                             units:{}, unitCount:{}, count:0 };
       COURSES.push(COURSE_BY_KEY[key]);
     }
     const c = COURSE_BY_KEY[key];
     c.units[q.unit] = q.uname;
+    c.unitCount[q.unit] = (c.unitCount[q.unit] || 0) + 1;
     c.count++;
   });
   // ลำดับที่ผู้เรียนเห็นแยกจากลำดับที่ประกอบไฟล์ — courses.json ต่อท้ายได้อย่างเดียว
@@ -1165,8 +1172,9 @@ const LEGACY_IDS = ["math-m1-01-4aac3e8b","math-m1-01-b619d996","math-m1-01-ef30
       Object.keys(c.units).map(Number).sort((a, b) => a - b).forEach(u => {
         const b = document.createElement('button');
         b.type = 'button';
-        b.title = `${c.subject} ${c.grade} · หน่วยที่ ${u}: ${c.units[u]}`;
-        b.innerHTML = `<span class="u-n">${u}</span><span class="u-t">${c.units[u]}</span>`;
+        b.title = `${c.subject} ${c.grade} · หน่วยที่ ${u}: ${c.units[u]} · ${c.unitCount[u]} ข้อ`;
+        b.innerHTML = `<span class="u-n">${u}</span><span class="u-t">${escAttr(c.units[u])}</span>` +
+                      `<span class="u-c">${c.unitCount[u]}</span>`;
         b.onclick = () => openCourse(c.key, u);
         units.appendChild(b);
       });

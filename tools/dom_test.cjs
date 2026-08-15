@@ -493,6 +493,27 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
   chk('ทางลัดหน่วยบอกทั้งเลขหน่วยและชื่อหน่วย',
       !!rd('#courseGrid .c-units button .u-n') && !!rd('#courseGrid .c-units button .u-t'),
       rd('#courseGrid .c-units button').textContent);
+  // จำนวนข้อรายหน่วยต้องตรงกับคลังจริง และรวมกันต้องเท่ากับยอดของวิชานั้น
+  {
+    const card = rall('#courseGrid .course-card')[0];
+    const name = card.querySelector('.c-name').textContent.trim();
+    const [subject, grade] = [name.slice(0, name.lastIndexOf(' ')), name.slice(name.lastIndexOf(' ') + 1)];
+    const mine = ALL_Q.filter(q => q.subject === subject && q.grade === grade);
+    const want = {};
+    mine.forEach(q => { want[q.unit] = (want[q.unit] || 0) + 1; });
+    const got = [...card.querySelectorAll('.c-units button')]
+      .map(b => +b.querySelector('.u-c').textContent);
+    const wantList = Object.keys(want).map(Number).sort((a, b) => a - b).map(u => want[u]);
+    chk('ทางลัดหน่วยบอกจำนวนข้อของหน่วยนั้น',
+        got.length === wantList.length && got.every((n, i) => n === wantList[i]),
+        `${got.join('/')} vs ${wantList.join('/')}`);
+    chk('จำนวนข้อรายหน่วยรวมกันเท่ากับยอดของวิชา',
+        got.reduce((a, b) => a + b, 0) === mine.length,
+        `${got.reduce((a, b) => a + b, 0)} vs ${mine.length}`);
+    chk('title ของทางลัดบอกทั้งชื่อหน่วยและจำนวนข้อ',
+        /หน่วยที่ \d+: .+ · \d+ ข้อ$/.test(card.querySelector('.c-units button').title),
+        card.querySelector('.c-units button').title);
+  }
 
   // กดทางลัดหน่วยที่ 3 ของวิชาที่สอง -> เข้าหน้าข้อสอบพร้อมตัวกรองหน่วยนั้น
   const card2 = cards[1];
