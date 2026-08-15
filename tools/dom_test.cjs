@@ -515,6 +515,60 @@ chk('รหัสถูกเปิดเฉลย', $('.answer').classList.cont
       !bad.d.querySelector('#resumeBtn') && !!bad.d.querySelector('#courseGrid .course-card'), '');
 }
 
+// ---------- จอมือถือ: เมนู ☰ และการไม่ล้นแนวนอน ----------
+{
+  const r = load();
+  const rd = s => r.d.querySelector(s);
+  const rclick = el => el.dispatchEvent(new r.w.Event('click'));
+  // สองเคสล่างพึ่งการ bubble ของอีเวนต์ (ตัวดักอยู่ที่ #headerActions และ document)
+  // Event ธรรมดาไม่ bubble ต่างจากการคลิกจริงในเบราว์เซอร์ จึงต้องสั่งให้ bubble
+  const rclickUp = el => el.dispatchEvent(new r.w.Event('click', { bubbles: true }));
+  const navOpen = () => r.d.body.classList.contains('nav-open');
+  const nav = rd('#navToggle');
+
+  // การ์ดวิชาเคยล็อกความกว้างขั้นต่ำไว้ 420px จอ 390px จึงเลื่อนแนวนอนได้
+  chk('คอลัมน์การ์ดวิชาไม่กว้างเกินจอ',
+      /grid-template-columns:\s*repeat\(auto-fit,\s*minmax\(min\(420px,\s*100%\)/.test(html), '');
+  chk('มีชุดกฎสำหรับจอแคบที่ยุบปุ่มเป็นเมนู',
+      /@media \(max-width:760px\)/.test(html) && /body\.nav-open \.header-actions\{/.test(html.replace(/\s*\n\s*/g, '')), '');
+
+  chk('มีปุ่ม ☰ ในหัวเรื่อง', !!nav && nav.getAttribute('aria-controls') === 'headerActions', '');
+  chk('หน้าแรกซ่อนปุ่ม ☰ ไว้ (เมนูจะว่าง)', nav.classList.contains('hide'), nav.className);
+
+  enterExam(r);
+  chk('เข้าหน้าข้อสอบแล้วปุ่ม ☰ โผล่', !nav.classList.contains('hide'), nav.className);
+  chk('ยังไม่กดเมนู → ยังไม่กาง',
+      !navOpen() && nav.getAttribute('aria-expanded') === 'false', '');
+
+  rclick(nav);
+  chk('กด ☰ แล้วกางเมนู',
+      navOpen() && nav.getAttribute('aria-expanded') === 'true', '');
+  chk('กางแล้วไอคอนเปลี่ยนเป็น ✕', nav.textContent.trim() === '✕', nav.textContent);
+  // ปุ่มในเมนูต้องเป็นชุดเดียวกับเดิม ไม่ใช่ปุ่มก๊อปที่ทำให้ id ซ้ำ
+  const ids = ['homeBtn', 'filterToggle', 'overviewBtn', 'aiSetupBtn', 'printExamBtn', 'printAnswerBtn'];
+  chk('เมนูใช้ปุ่มชุดเดิมครบ 6 ปุ่ม ไม่มี id ซ้ำ',
+      ids.every(id => r.d.querySelectorAll('#' + id).length === 1
+                   && rd('#headerActions #' + id)), '');
+
+  rclickUp(rd('#overviewBtn'));
+  chk('กดปุ่มในเมนูแล้วเมนูปิดเอง', !navOpen(), '');
+  chk('และคำสั่งนั้นทำงานจริง', rd('#overviewOverlay').classList.contains('show'), '');
+  rclick(rd('#overviewOverlay .modal-close'));
+
+  rclick(nav);
+  r.d.dispatchEvent(new r.w.KeyboardEvent('keydown', { key: 'Escape' }));
+  chk('Esc ปิดเมนู', !navOpen() && nav.textContent.trim() === '☰', '');
+
+  rclick(nav);
+  rclickUp(rd('#examCard'));
+  chk('กดนอกหัวเรื่องปิดเมนู', !navOpen(), '');
+
+  rclick(nav);
+  rclick(rd('#homeBtn'));
+  chk('กลับหน้าแรกแล้วเมนูปิดและซ่อนปุ่ม ☰',
+      !navOpen() && nav.classList.contains('hide'), '');
+}
+
 // ---------- ติวเตอร์ AI ----------
 // ยัด fetch ปลอมที่คืนสตรีม SSE ให้ ไม่ต้องต่อเน็ตจริงและไม่ต้องมีคีย์จริง
 function loadTutor(seeds, reply = 'ลองอ่านโจทย์อีกครั้ง โจทย์ให้อะไรมาบ้าง?') {

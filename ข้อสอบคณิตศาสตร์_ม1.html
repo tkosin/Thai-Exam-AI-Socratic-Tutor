@@ -46,6 +46,8 @@
   }
   .header-inner{ max-width:var(--maxw); margin:0 auto; padding:16px 20px 0 20px; }
   .title-row{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .title-row .t-text{ min-width:0; }
+  .nav-toggle{ display:none; flex:none; font-size:18px; line-height:1; padding:8px 12px; }
   .eyebrow{ display:block; font-size:11.5px; font-weight:600; letter-spacing:1.5px; color:var(--gold); text-transform:uppercase; margin-bottom:3px;}
   .title-row h1{ margin:0; font-size:19px; font-weight:700; }
   .header-actions{ display:flex; gap:8px; align-items:center; padding:10px 0 14px 0; flex-wrap:wrap; }
@@ -92,7 +94,8 @@
   .home-bar{ height:8px; border-radius:6px; background:#e6e2d6; overflow:hidden; margin-bottom:26px; }
   .home-bar i{ display:block; height:100%; background:linear-gradient(90deg, var(--green), #58b894); }
 
-  .course-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(420px, 1fr)); gap:18px; }
+  /* min() กันคอลัมน์กว้างค้างที่ 420px บนจอที่แคบกว่านั้น ซึ่งจะดันหน้าให้เลื่อนแนวนอน */
+  .course-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap:18px; }
   .course-card{
     background:var(--card); border:1px solid var(--paper-line); border-radius:var(--radius);
     padding:18px 20px 16px 20px; box-shadow:0 2px 8px rgba(0,0,0,.05);
@@ -578,6 +581,22 @@
     .flist.scroll{ max-height:220px; }
   }
 
+  /* จอแคบ: ปุ่มทั้ง 6 ห่อลงมา 3-4 แถว กินความสูงจอไปเกือบ 35% ก่อนจะเห็นโจทย์
+     จึงยุบทั้งชุดเป็นเมนู ☰ — ใช้ปุ่มชุดเดิมทั้งหมด ไม่ได้สร้างซ้ำ id จึงไม่ซ้ำกัน */
+  @media (max-width:760px){
+    .header-inner{ padding:12px 16px 0 16px; }
+    .title-row{ align-items:center; flex-wrap:nowrap; }
+    .nav-toggle{ display:block; }
+    .header-actions{
+      display:none; flex-direction:column; align-items:stretch; gap:6px;
+      padding:10px 0 12px 0; margin-top:10px; border-top:1px solid rgba(255,255,255,.16);
+    }
+    body.nav-open .header-actions{ display:flex; }
+    .header-actions .btn{ width:100%; text-align:left; font-size:13.5px; padding:10px 12px; }
+    .exam-actions{ flex-direction:column; align-items:stretch; gap:6px; }
+    .progress-wrap{ padding:0 16px 12px 16px; }
+  }
+
   @media (max-width:600px){
     .title-row h1{ font-size:17px; }
     .qtext{ font-size:15.5px; }
@@ -602,12 +621,14 @@
 <header>
   <div class="header-inner">
     <div class="title-row">
-      <div>
+      <div class="t-text">
         <span class="eyebrow" id="eyebrow">สสวท. · ระดับมัธยมศึกษาปีที่ 1</span>
         <h1 id="mainTitle">ข้อสอบคณิตศาสตร์ ม.1</h1>
       </div>
+      <button class="btn nav-toggle" id="navToggle" aria-expanded="false" aria-controls="headerActions"
+              aria-label="เปิดเมนู" title="เมนู">☰</button>
     </div>
-    <div class="header-actions">
+    <div class="header-actions" id="headerActions">
       <button class="btn" id="homeBtn">🏠 หน้าแรก</button>
       <span class="exam-actions" id="examActions">
         <button class="btn filter-toggle" id="filterToggle" aria-expanded="false" aria-controls="sidebar"
@@ -2199,6 +2220,9 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
     examView.classList.toggle('hide', home);
     examActions.classList.toggle('hide', home);
     homeBtn.classList.toggle('hide', home);
+    // หน้าแรกไม่มีปุ่มไหนอยู่ในเมนูเลย ปุ่ม ☰ จึงไม่ควรโผล่ให้กดแล้วได้เมนูเปล่า
+    navToggle.classList.toggle('hide', home);
+    if(home) setNav(false);
     applyCourseTitle();
     // สร้างแผงตัวกรองไว้เสมอ แม้อยู่หน้าแรก จะได้พร้อมใช้ทันทีที่เข้าหน้าข้อสอบ
     buildSidebar();
@@ -2244,6 +2268,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
       return;
     }
     if(pwOverlay.classList.contains('show') || overviewOverlay.classList.contains('show')) return;
+    if(e.key === 'Escape' && document.body.classList.contains('nav-open')){ setNav(false); return; }
     // Esc ปิดแผงติวเตอร์ได้แม้เคอร์เซอร์อยู่ในช่องพิมพ์ถาม
     if(e.key === 'Escape' && tutorOpen && state.view === 'exam'){ setTutor(false); return; }
     const tag = document.activeElement && document.activeElement.tagName;
@@ -2261,6 +2286,31 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
   window.addEventListener('resize', syncHeaderHeight);
   window.addEventListener('load', syncHeaderHeight);
   syncHeaderHeight();
+
+  /* ----- เมนู ☰ สำหรับจอแคบ ----- */
+  const navToggle = document.getElementById('navToggle');
+  const headerActions = document.getElementById('headerActions');
+  function setNav(open){
+    document.body.classList.toggle('nav-open', open);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    navToggle.setAttribute('aria-label', open ? 'ปิดเมนู' : 'เปิดเมนู');
+    navToggle.textContent = open ? '✕' : '☰';
+    // แผงตัวกรองกับแผงพี่หลวงวางตำแหน่งจาก --hh หัวเรื่องสูงเปลี่ยนแล้วต้องวัดใหม่
+    syncHeaderHeight();
+  }
+  navToggle.onclick = () => setNav(!document.body.classList.contains('nav-open'));
+  // กดปุ่มอะไรในเมนูแล้วปิดให้เอง จะได้เห็นสิ่งที่เพิ่งสั่งทันที ไม่ต้องกดปิดเอง
+  headerActions.addEventListener('click', e => {
+    if(e.target.closest('.btn')) setNav(false);
+  });
+  // กดนอกหัวเรื่องแล้วปิด — บนมือถือเมนูบังเนื้อหาอยู่
+  document.addEventListener('click', e => {
+    if(document.body.classList.contains('nav-open') && !headerEl.contains(e.target)) setNav(false);
+  });
+  // กลับมาจอกว้างแล้วปุ่มกางเต็มแถวเหมือนเดิม ไม่ต้องค้างสถานะเมนูไว้
+  window.addEventListener('resize', () => {
+    if(window.innerWidth > 760 && document.body.classList.contains('nav-open')) setNav(false);
+  });
 
   function filterLabel(){
     const units = curCourse().units;
