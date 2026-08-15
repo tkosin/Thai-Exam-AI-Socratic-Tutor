@@ -81,6 +81,7 @@
 | `tools/validate.py` · `tools/dom_test.cjs` | ชุดตรวจ (คลังข้อสอบ + พฤติกรรมหน้าเว็บ) |
 | `tools/gen_math_m3.py` · `gen_math_extra.py` | ตัวสร้างข้อสอบคณิตศาสตร์ ม.3 และหน่วยที่เติมช่องว่างของ ม.1/ม.2 |
 | `tools/verify_math.py` | ตรวจว่าเฉลยคณิตศาสตร์ถูกตามคณิตศาสตร์จริง (คิดใหม่จากตัวโจทย์) |
+| `tools/responsive_check.js` | ตรวจเลย์เอาต์บนขนาดจอจริง 8 แบบด้วยเบราว์เซอร์ (ทางเลือก ต้องมี Playwright) |
 | `tools/check.sh` · `.githooks/pre-push` | รันชุดตรวจทั้งหมด (5 ขั้น) ในเครื่อง แทน GitHub Actions |
 
 ## แก้ไขและเพิ่มข้อสอบ
@@ -111,8 +112,19 @@ bash tools/check.sh                                      # ตรวจทั้
 ```bash
 python3 tools/build.py --check                          # ตรวจว่าไฟล์ตรงกับคลังข้อสอบ
 python3 tools/validate.py                               # ตรวจคลังข้อสอบ
+python3 tools/verify_math.py                            # ตรวจว่าเฉลยคณิตถูกจริง
 npm install jsdom --no-save && node tools/dom_test.cjs  # ทดสอบหน้าเว็บ
 ```
+
+**ตรวจเลย์เอาต์บนขนาดจอจริง** (ไม่ได้อยู่ใน `check.sh` เพราะต้องลงเบราว์เซอร์ ~100 MB)
+
+```bash
+npm install playwright --no-save && npx playwright install chromium
+node tools/responsive_check.js        # 8 ขนาดจอ ตั้งแต่ 360px ถึง 1920px
+```
+
+`dom_test.cjs` รันบน jsdom ซึ่ง**ไม่จัดเลย์เอาต์** จึงวัดความกว้าง/ตำแหน่งไม่ได้เลย
+ตรวจได้แค่ว่ากฎ CSS ยังอยู่ครบ · ไฟล์นี้เปิดหน้าจริงแล้ววัดของจริง
 
 **เพิ่มวิชาใหม่** — สร้างโฟลเดอร์ `questions/<slug>/` ใส่ไฟล์ `unit-*.json`
 แล้ว**ต่อท้าย** `questions/courses.json` (ห้ามแทรกไว้ก่อนวิชาเดิม ดูหัวข้อถัดไป)

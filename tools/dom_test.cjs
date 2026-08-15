@@ -668,6 +668,15 @@ const waitFor = async (fn, n = 80) => { for (let i = 0; i < n && !fn(); i++) awa
   chk('กางแผงแล้วขยายเพดานความกว้างของเนื้อหาชดเชยให้',
       /max-width:\s*calc\(var\(--maxw\)\s*\+\s*var\(--tutorw\)/.test(html)
       && /body\.tutor-on \.layout\{/.test(html.replace(/\s*\n\s*/g, '')), '');
+  // jsdom จัดเลย์เอาต์ไม่ได้ จึงตรวจที่ "กฎ CSS" แทน — เคยพลาดตอนวัดจริงเพราะแผงยังเลื่อนไม่จบ
+  // (transform:translateX(100%) -> none ใช้เวลา .22s) จึงกันไว้ว่ากฎยังอยู่ครบ
+  const css = html.replace(/\s*\n\s*/g, ' ');
+  chk('จอแคบกว่า 1100px แผงพี่หลวงกางเต็มความกว้าง',
+      /@media \(max-width:1100px\)\{ :root\{ --tutorw:100%; \}/.test(css), '');
+  chk('แผงตรึงขอบขวาและซ่อนด้วยการเลื่อนออกนอกจอ',
+      /\.tutor-panel\{[^}]*position:fixed[^}]*right:0[^}]*width:var\(--tutorw\)/.test(css)
+      && /\.tutor-panel\{[^}]*transform:translateX\(100%\)/.test(css)
+      && /\.tutor-panel\.show\{ transform:none;/.test(css), '');
   chk('กางแล้วมีช่องพิมพ์ถามอยู่ในแผง', !!t.d.querySelector('#tutorPanel #tutorInput'), '');
   chk('หัวแผงบอกว่ากำลังติวข้อไหน', /ข้อที่ \d+/.test(t.d.querySelector('#tutorWhich').textContent),
       t.d.querySelector('#tutorWhich').textContent);
