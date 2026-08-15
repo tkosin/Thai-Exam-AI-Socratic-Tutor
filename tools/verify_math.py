@@ -1050,9 +1050,6 @@ def poly(src):
             if eat() != ")":
                 raise NotPoly("วงเล็บไม่ครบ")
             return v
-        if t == "-":
-            eat()
-            return _padd({}, atom(), -1)
         if t and t.isdigit():
             eat()
             return {(): Fraction(int(t))}
@@ -1062,6 +1059,11 @@ def poly(src):
         raise NotPoly(str(t))
 
     def power():
+        # เครื่องหมายลบต้องคลุมทั้งเลขยกกำลัง — -x^2 คือ -(x^2) ไม่ใช่ (-x)^2
+        # เดิมจัดการลบไว้ใน atom() ทำให้ -x^2 กลายเป็น +x^2 เงียบ ๆ (เลขชี้กำลังคู่เท่านั้น)
+        if peek() == "-":
+            eat()
+            return _padd({}, power(), -1)
         base = atom()
         while peek() in ("^", "**"):
             eat()
@@ -1579,7 +1581,14 @@ def selftest():
                         ("(x + 2)(x + 3) หรือ (x + 3)(x + 2)",
                          {X2: Fraction(1), X1: Fraction(5), (): Fraction(6)}),
                         ("3a + 2b", {(("a", 1),): Fraction(3), (("b", 1),): Fraction(2)}),
-                        ("7x + 3", {X1: Fraction(7), (): Fraction(3)})]:
+                        ("7x + 3", {X1: Fraction(7), (): Fraction(3)}),
+                        # เครื่องหมายลบหน้าเลขยกกำลัง — เลขชี้กำลังคู่คือจุดที่เคยพลาด
+                        ("-x^2", {X2: Fraction(-1)}),
+                        ("-x^2 + 2x + 3", {X2: Fraction(-1), X1: Fraction(2),
+                                           (): Fraction(3)}),
+                        ("-2x^2 + 4x", {X2: Fraction(-2), X1: Fraction(4)}),
+                        ("(-x)^2", {X2: Fraction(1)}),
+                        ("5 - x^2", {X2: Fraction(-1), (): Fraction(5)})]:
         try:
             got = poly_of(src)
         except NotPoly as e:
@@ -2422,6 +2431,183 @@ def _(q, m):
 @rule(r"ใช้สมบัติการสลับที่และการเปลี่ยนกลุ่มหาค่าของ ([-\d(][^ก-๛]*)$")
 def _(q, m):
     want(q, arith(m[1]), "บวกตามลำดับเดิม")
+
+
+# ---------- ม.3 · ข้อที่มีรูปประกอบ ----------
+# ตัวเลขอยู่ในตัวโจทย์ด้วย (รูปเป็นตัวอธิบายว่าเส้นไหนคืออะไร) จึงคิดใหม่จากข้อความได้
+OPS = {"&ge;": "≥", "&le;": "≤", "&lt;": "<", "&gt;": ">"}
+
+
+@rule(r"เส้นจำนวนข้างต้นแสดงคำตอบของอสมการ (-?\d*)x ([+-]) (\d+) "
+      r"(&ge;|&le;|&lt;|&gt;) (-?\d+) (.+)$")
+def _(q, m):
+    a = int(m[1] or 1)
+    b = int(m[3]) if m[2] == "+" else -int(m[3])
+    pt = Fraction(int(m[5]) - b, a)
+    op = OPS[m[4]]
+    if a < 0:                                  # หารด้วยจำนวนลบ เครื่องหมายกลับข้าง
+        op = {"≥": "≤", "≤": "≥", ">": "<", "<": ">"}[op]
+    ask = m[6]
+    if "จุดปลายของช่วงคำตอบ" in ask:
+        return want(q, pt, "แก้อสมการหาจุดปลาย")
+    if "จงหาจำนวนเต็มที่" in ask:
+        big = "มากที่สุด" in ask
+        if pt.denominator != 1:
+            return want(q, math.floor(pt) if big else math.ceil(pt), "จำนวนเต็มที่ติดขอบ")
+        pt = int(pt)
+        return want(q, pt if op in ("≥", "≤") else (pt - 1 if big else pt + 1),
+                    "จำนวนเต็มที่ติดขอบ")
+    if "มีจำนวนเต็มกี่จำนวน" in ask:
+        # ช่วงของเส้นจำนวนอ่านจากป้ายขีดที่วาดไว้จริงในรูป ไม่ได้เดาเอง
+        head = re.match(r"^((?:-?\d+ )+)เส้นจำนวนข้างต้น", txt(q))
+        if not head:
+            raise NotPlainData("อ่านช่วงของเส้นจำนวนจากรูปไม่ได้")
+        ticks = [int(x) for x in head[1].split()]
+        keep = (lambda x: x >= pt) if op == "≥" else (lambda x: x > pt) \
+            if op == ">" else (lambda x: x <= pt) if op == "≤" else (lambda x: x < pt)
+        return want(q, sum(1 for x in range(min(ticks), max(ticks) + 1) if keep(x)),
+                    "นับจำนวนเต็มในช่วงที่รูปครอบไว้")
+    raise NotPlainData(ask[:40])
+
+
+def _quad(src):
+    """แยก y = ax² + bx + c ออกเป็นสัมประสิทธิ์ (ปฏิเสธถ้าไม่ใช่กำลังสองตัวแปรเดียว)"""
+    p = poly_of(src)
+    for k in p:
+        if k and (len(k) != 1 or k[0][0] != "x" or k[0][1] > 2):
+            raise NotPoly("ไม่ใช่พหุนามกำลังสองตัวแปรเดียว")
+    a = p.get((("x", 2),), Fraction(0))
+    if not a:
+        raise NotPoly("ไม่มีพจน์กำลังสอง")
+    return a, p.get((("x", 1),), Fraction(0)), p.get((), Fraction(0))
+
+
+@rule(r"กราฟข้างต้นคือกราฟของ y = (.+?) (จงหา.+|กราฟตัดแกน.+)$")
+def _(q, m):
+    a, b, c = _quad(m[1])
+    vx = -b / (2 * a)
+    ask = m[2]
+    if "พิกัด x ของจุดยอด" in ask:
+        return want(q, vx, "x ของจุดยอด = −b/2a")
+    if "ค่าต่ำสุดของ y" in ask or "ค่าสูงสุดของ y" in ask:
+        if ("ต่ำ" in ask) != (a > 0):
+            raise NotPlainData("ถามค่าต่ำสุด/สูงสุดไม่ตรงกับทิศทางของกราฟ")
+        return want(q, a * vx * vx + b * vx + c, "ค่าที่จุดยอด")
+    if "ตัดแกน y" in ask:
+        return want(q, c, "ค่าคงตัวคือจุดตัดแกน y")
+    if "ตัดแกน x" in ask:
+        d = b * b - 4 * a * c
+        if d < 0:
+            raise NotPlainData("ไม่ตัดแกน x")
+        r = math.isqrt(int(d)) if d.denominator == 1 else -1
+        if r < 0 or r * r != d:
+            raise NotPlainData("รากไม่เป็นจำนวนตรรกยะ")
+        return want(q, max((-b + r) / (2 * a), (-b - r) / (2 * a)), "รากที่มากกว่า")
+    raise NotPlainData(ask[:40])
+
+
+@rule(r"กราฟข้างต้นคือกราฟของ y = (.+?) \(เส้น &#8467;_1\) กับ y = (.+?) "
+      r"\(เส้น &#8467;_2\) จงหา(ค่า x|ค่า y|ผลบวกของ x และ y)")
+def _(q, m):
+    (a1, b1), (a2, b2) = (poly_of(m[1]), poly_of(m[2]))
+    lin = lambda p: (p.get((("x", 1),), Fraction(0)), p.get((), Fraction(0)))
+    (m1, c1), (m2, c2) = lin(poly_of(m[1])), lin(poly_of(m[2]))
+    if m1 == m2:
+        raise NotPlainData("เส้นขนานกัน ไม่มีจุดตัด")
+    x = (c2 - c1) / (m1 - m2)
+    y = m1 * x + c1
+    want(q, x if m[3] == "ค่า x" else y if m[3] == "ค่า y" else x + y, "จุดตัดของสองเส้น")
+
+
+@rule(r"โดย AB ยาว (\d+) เซนติเมตร AC ยาว (\d+) เซนติเมตร และ DE ยาว (\d+) เซนติเมตร "
+      r"(จงหาความยาว DF|อัตราส่วน(?:ความยาวด้าน|พื้นที่)ของ DEF)")
+def _(q, m):
+    ab, ac, de = map(int, (m[1], m[2], m[3]))
+    k = Fraction(de, ab)
+    if m[4] == "จงหาความยาว DF":
+        return want(q, ac * k, "ด้านที่สมนัยกันมีอัตราส่วนเท่ากัน")
+    want(q, k * k if "พื้นที่" in m[4] else k,
+         "อัตราส่วนพื้นที่เป็นกำลังสองของอัตราส่วนด้าน")
+
+
+@rule(r"จากรูป มุม AOB ซึ่งเป็นมุมที่จุดศูนย์กลางมีขนาด (\d+) องศา จงหาขนาดของมุม ACB")
+def _(q, m):
+    want(q, Fraction(int(m[1]), 2), "มุมในส่วนโค้งเป็นครึ่งหนึ่งของมุมที่จุดศูนย์กลาง")
+
+
+@rule(r"จากรูป มุม AOB มีขนาด (\d+) องศา จงหาขนาดของมุมที่จุดศูนย์กลาง "
+      r"ซึ่งรองรับส่วนโค้ง AB อีกด้านหนึ่ง")
+def _(q, m):
+    want(q, 360 - int(m[1]), "มุมรอบจุดศูนย์กลางรวมกันได้ 360°")
+
+
+@rule(r"OM ตั้งฉากกับคอร์ด AB ที่จุด M โดย AB ยาว (\d+) เซนติเมตร จงหาความยาว AM")
+def _(q, m):
+    want(q, Fraction(int(m[1]), 2), "เส้นตั้งฉากจากจุดศูนย์กลางแบ่งครึ่งคอร์ด")
+
+
+@rule(r"โดย AB ยาว (\d+) เซนติเมตร และ OM ยาว (\d+) เซนติเมตร จงหารัศมีของวงกลม")
+def _(q, m):
+    want(q, isqrt_exact((int(m[1]) // 2) ** 2 + int(m[2]) ** 2), "พีทาโกรัสใน OMA")
+
+
+@rule(r"จงหาขนาดของมุมระหว่างรัศมี OP กับเส้นสัมผัส")
+def _(q, m):
+    want(q, 90, "เส้นสัมผัสตั้งฉากกับรัศมีที่จุดสัมผัส")
+
+
+@rule(r"รัศมี OP ยาว (\d+) เซนติเมตร ถ้าจุด Q อยู่บนเส้นสัมผัสและ PQ ยาว (\d+) เซนติเมตร "
+      r"จงหาความยาว OQ")
+def _(q, m):
+    want(q, isqrt_exact(int(m[1]) ** 2 + int(m[2]) ** 2), "พีทาโกรัสใน OPQ")
+
+
+@rule(r"รูปสี่เหลี่ยม ABCD แนบในวงกลม โดยมุม A มีขนาด (\d+) องศา จงหาขนาดของมุม C")
+def _(q, m):
+    want(q, 180 - int(m[1]), "มุมตรงข้ามของสี่เหลี่ยมแนบในวงกลมรวมกันได้ 180°")
+
+
+@rule(r"พีระมิดฐานสี่เหลี่ยมจัตุรัส ฐานยาวด้านละ (\d+) เซนติเมตร และสูงเอียง (\d+) "
+      r"เซนติเมตร จงหาพื้นที่ผิว(ข้าง|ทั้งหมด)")
+def _(q, m):
+    b, l = int(m[1]), int(m[2])
+    side = 4 * Fraction(b * l, 2)                       # สามเหลี่ยมสี่หน้า
+    want(q, side + (0 if m[3] == "ข้าง" else b * b), f"พื้นที่ผิว{m[3]}ของพีระมิด")
+
+
+@rule(r"พีระมิดฐานสี่เหลี่ยมจัตุรัส ฐานยาวด้านละ (\d+) เซนติเมตร และสูง (\d+) เซนติเมตร "
+      r"จงหาปริมาตร")
+def _(q, m):
+    want(q, Fraction(int(m[1]) ** 2 * int(m[2]), 3), "⅓ × พื้นที่ฐาน × สูง")
+
+
+@rule(r"กรวยกลมตรง รัศมีฐาน (\d+) เซนติเมตร และสูงเอียง (\d+) เซนติเมตร .*?"
+      r"จงหาพื้นที่ผิว(ข้าง|ทั้งหมด)")
+def _(q, m):
+    r, l = int(m[1]), int(m[2])
+    want(q, PI * r * l + (0 if m[3] == "ข้าง" else PI * r * r), f"พื้นที่ผิว{m[3]}ของกรวย")
+
+
+@rule(r"กรวยกลมตรง รัศมีฐาน (\d+) เซนติเมตร และสูง (\d+) เซนติเมตร .*?จงหาปริมาตร")
+def _(q, m):
+    want(q, PI * int(m[1]) ** 2 * int(m[2]) / 3, "⅓πr²h")
+
+
+@rule(r"ทรงกลมรัศมี (\d+) เซนติเมตร กำหนดให้ &pi; เท่ากับ 22/7 จงหา(พื้นที่ผิว|ปริมาตร)")
+def _(q, m):
+    r = int(m[1])
+    want(q, 4 * PI * r * r if m[2] == "พื้นที่ผิว" else Fraction(4, 3) * PI * r ** 3,
+         f"{m[2]}ทรงกลม")
+
+
+@rule(r"โดย BC ยาว (\d+) เซนติเมตร AB ยาว (\d+) เซนติเมตร และ AC ยาว (\d+) เซนติเมตร "
+      r"จงหาค่าของ (sin|cos|tan) &theta;")
+def _(q, m):
+    adj, opp, hyp = map(int, (m[1], m[2], m[3]))
+    if adj * adj + opp * opp != hyp * hyp:
+        raise NotPlainData("ด้านทั้งสามไม่เป็นสามเหลี่ยมมุมฉาก")
+    want(q, {"sin": Fraction(opp, hyp), "cos": Fraction(adj, hyp),
+             "tan": Fraction(opp, adj)}[m[4]], f"{m[4]} θ จากด้านของสามเหลี่ยม")
 
 
 def bucket(course, q):

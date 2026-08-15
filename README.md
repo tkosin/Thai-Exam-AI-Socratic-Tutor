@@ -92,7 +92,7 @@
 | `questions/legacy-order.json` | ลำดับข้อเดิมก่อนเปลี่ยนมาอ้างด้วยรหัสประจำข้อ · **ห้ามแก้** |
 | `questions/science-m1/unit-*.json` | คลังข้อสอบวิทยาศาสตร์ ม.1 แยกไฟล์ตามหน่วย |
 | `questions/science-m2/unit-*.json` | คลังข้อสอบวิทยาศาสตร์ ม.2 แยกไฟล์ตามหน่วย |
-| `questions/figures.json` | คลังรูป SVG อ้างด้วยชื่อ ใช้ซ้ำได้หลายข้อ |
+| `questions/figures.json` | คลังรูป SVG อ้างด้วยชื่อ ใช้ซ้ำได้หลายข้อ · สร้างจาก `tools/build_figures.py` |
 | `questions/topics.json` | **แผนที่หัวข้อ** — ตัวชี้วัดที่ต้องมีข้อสอบ · หัวข้อที่ยังไม่ทำ · รูปที่ควรมี |
 | [`docs/roadmap.md`](docs/roadmap.md) | **แผนขยายเป็น ป.5–ม.3 ครบ 7 วิชา** — ช่องว่างที่วัดได้ ลำดับเฟส และเหตุผล |
 | [`docs/coverage-plan.md`](docs/coverage-plan.md) | แผนขยายคลังข้อสอบเทียบตัวชี้วัด + ความคืบหน้า |

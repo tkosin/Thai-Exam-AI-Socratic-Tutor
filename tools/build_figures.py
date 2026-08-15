@@ -16,7 +16,9 @@ from svg_helpers import (bar_chart, line_chart, pie_chart, pictograph, iso_cubes
                          cube_net, number_line, coord_plane, intersecting_lines,
                          triangle_fig, parallel_lines, top_view_heights,
                          right_triangle, transform_grid, prism_box, cylinder_fig,
-                         dot_plot, histogram, box_plot)
+                         dot_plot, histogram, box_plot, ineq_line, parabola,
+                         two_lines, pyramid_fig, cone_fig, sphere_fig,
+                         similar_triangles, circle_fig, trig_triangle)
 
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                    "questions", "figures.json")
@@ -180,7 +182,104 @@ FIGURES = {
     "m2-tri-55-65-60": triangle_fig(55, 65, 60, unknown="C", caption="รูปสามเหลี่ยม ABC"),
 }
 
-# ── คณิต ม.3 หน่วย 10 · แผนภาพกล่อง (ค 3.1 ม.3/1) ───────────────────────
+# ══ คณิตศาสตร์ ม.3 ═══════════════════════════════════════════════════════
+# ตัวเลขบนรูปต้องตรงกับตัวเลขในโจทย์เสมอ · ตัวสร้างโจทย์ (tools/gen_math_m3.py)
+# อ่านค่าจากตารางเดียวกันนี้ ไม่ได้พิมพ์ซ้ำเอง
+M3_SOLIDS = {
+    # ชื่อรูป: (ชนิด, ค่าที่เขียนกำกับบนรูป)
+    "m3-pyr-10-13": ("pyramid", {"base": 10, "slant": 13}),
+    "m3-pyr-12-10": ("pyramid", {"base": 12, "slant": 10}),
+    "m3-pyr-8-h3": ("pyramid", {"base": 8, "height": 3}),
+    "m3-pyr-6-h4": ("pyramid", {"base": 6, "height": 4}),
+    "m3-cone-7-25": ("cone", {"r": 7, "slant": 25}),
+    "m3-cone-6-10": ("cone", {"r": 6, "slant": 10}),
+    "m3-cone-7-h24": ("cone", {"r": 7, "height": 24}),
+    "m3-cone-3-h4": ("cone", {"r": 3, "height": 4}),
+    "m3-sphere-7": ("sphere", {"r": 7}),
+    "m3-sphere-21": ("sphere", {"r": 21}),
+}
+
+
+def _solid(kind, v):
+    cm = lambda x: f"{x} ซม."
+    if kind == "pyramid":
+        return pyramid_fig(cm(v["base"]), cm(v["slant"]) if "slant" in v else None,
+                           cm(v["height"]) if "height" in v else None)
+    if kind == "cone":
+        return cone_fig(cm(v["r"]), cm(v["height"]) if "height" in v else None,
+                        cm(v["slant"]) if "slant" in v else None)
+    return sphere_fig(cm(v["r"]))
+
+
+FIGURES.update({name: _solid(kind, v) for name, (kind, v) in M3_SOLIDS.items()})
+
+# ── หน่วย 1 · อสมการ — เส้นจำนวนแสดงช่วงคำตอบ ───────────────────────────
+M3_INEQ = {
+    "m3-ineq-ge3": (-4, 8, 3, "≥"), "m3-ineq-lt-2": (-6, 6, -2, "<"),
+    "m3-ineq-gt5": (-2, 10, 5, ">"), "m3-ineq-le-1": (-6, 6, -1, "≤"),
+}
+FIGURES.update({n: ineq_line(*a) for n, a in M3_INEQ.items()})
+
+# ── หน่วย 5 · กราฟฟังก์ชันกำลังสอง ─────────────────────────────────────
+M3_PARABOLA = {
+    "m3-par-1-m4-3": (1, -4, 3), "m3-par-1-0-m4": (1, 0, -4),
+    "m3-par-m1-2-3": (-1, 2, 3), "m3-par-1-m6-8": (1, -6, 8),
+    "m3-par-m2-4-1": (-2, 4, 1),
+}
+FIGURES.update({n: parabola(*a) for n, a in M3_PARABOLA.items()})
+
+# ── หน่วย 6 · ระบบสมการเชิงเส้นสองตัวแปร — จุดตัดคือคำตอบ ────────────────
+M3_SYSTEM = {
+    "m3-sys-a": ((1, 2), (-2, 5)), "m3-sys-b": ((2, -1), (-1, 5)),
+    "m3-sys-c": ((1, -3), (-3, 5)),
+}
+FIGURES.update({n: two_lines([(m1, c1, "ℓ₁"), (m2, c2, "ℓ₂")],
+                             "จุดตัดของกราฟทั้งสองคือคำตอบของระบบสมการ")
+                for n, ((m1, c1), (m2, c2)) in M3_SYSTEM.items()})
+
+# ── หน่วย 4 · ความคล้าย ────────────────────────────────────────────────
+M3_SIMILAR = {
+    # ชื่อรูป: (ฐานเล็ก, ด้านเล็ก, ฐานใหญ่, ด้านใหญ่ที่ถาม)
+    "m3-sim-6-8-9": (6, 8, 9), "m3-sim-4-6-10": (4, 6, 10),
+    "m3-sim-5-7-15": (5, 7, 15),
+}
+FIGURES.update({
+    n: similar_triangles((b1, s1 * 0.8), (b2, s1 * 0.8 * b2 / b1),
+                         (f"{b1} ซม.", f"{s1} ซม."), (f"{b2} ซม.", "?"),
+                         "รูปสามเหลี่ยม ABC คล้ายกับรูปสามเหลี่ยม DEF")
+    for n, (b1, s1, b2) in M3_SIMILAR.items()})
+
+# ── หน่วย 7 · วงกลม ────────────────────────────────────────────────────
+M3_CIRCLE = {
+    "m3-cir-central-110": ("central-inscribed", {"center": "110°", "inscribed": "?"},
+                           "มุม AOB เป็นมุมที่จุดศูนย์กลาง · มุม ACB เป็นมุมในส่วนโค้ง"),
+    "m3-cir-central-84": ("central-inscribed", {"center": "84°", "inscribed": "?"},
+                          "มุม AOB เป็นมุมที่จุดศูนย์กลาง · มุม ACB เป็นมุมในส่วนโค้ง"),
+    "m3-cir-chord-16-6": ("chord-perp", {"chord": "16 ซม.", "dist": "6 ซม."},
+                          "OM ตั้งฉากกับคอร์ด AB ที่จุด M"),
+    "m3-cir-chord-24-5": ("chord-perp", {"chord": "24 ซม.", "dist": "5 ซม."},
+                          "OM ตั้งฉากกับคอร์ด AB ที่จุด M"),
+    "m3-cir-tangent-8": ("tangent", {"radius": "8 ซม."},
+                         "เส้นสัมผัสวงกลมที่จุด P · OP เป็นรัศมี"),
+    "m3-cir-quad-95": ("cyclic-quad", {"A": "95°", "C": "?"},
+                       "รูปสี่เหลี่ยม ABCD แนบในวงกลม"),
+    "m3-cir-quad-118": ("cyclic-quad", {"A": "118°", "C": "?"},
+                        "รูปสี่เหลี่ยม ABCD แนบในวงกลม"),
+}
+FIGURES.update({n: circle_fig(k, lab, cap) for n, (k, lab, cap) in M3_CIRCLE.items()})
+
+# ── หน่วย 11 · อัตราส่วนตรีโกณมิติ ──────────────────────────────────────
+# (ด้านประชิด, ด้านตรงข้าม, ด้านตรงข้ามมุมฉาก) ของมุม θ ที่จุด C
+M3_TRIG = {
+    "m3-trig-12-5-13": (12, 5, 13), "m3-trig-8-15-17": (8, 15, 17),
+    "m3-trig-4-3-5": (4, 3, 5), "m3-trig-24-7-25": (24, 7, 25),
+}
+FIGURES.update({
+    n: trig_triangle(a, o, "θ", f"{a} ซม.", f"{o} ซม.", f"{h} ซม.",
+                     caption="θ คือมุมที่จุด C")
+    for n, (a, o, h) in M3_TRIG.items()})
+
+# ── หน่วย 10 · แผนภาพกล่อง (ค 3.1 ม.3/1) ───────────────────────────────
 FIGURES.update({
     # ไม่ใส่คำบรรยายใต้รูป เพราะตัวโจทย์เล่าบริบทไว้แล้ว จะกลายเป็นอ่านซ้ำสองรอบ
     name: box_plot(spec["five"], None, spec["x_title"], outliers=spec["outliers"])

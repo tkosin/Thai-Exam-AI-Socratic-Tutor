@@ -6,6 +6,8 @@
 ไม่พึ่งไฟล์หรือฟอนต์ภายนอก และไม่ใช้ CSS จากหน้าเว็บ (กำหนดสีในแท็กเลย)
 """
 
+import math
+
 INK = "#232323"
 SOFT = "#5b5952"
 NAVY = "#1E3A5F"
@@ -730,3 +732,401 @@ def box_plot(five, caption=None, x_title="", width=520, outliers=()):
     if x_title:
         b.append(_t(pad_l + plot_w / 2, h - 4, x_title, 11.5, "middle", SOFT, "600"))
     return _wrap(width, h, "".join(b), caption)
+
+
+# ============================================================================
+# คณิตศาสตร์ ม.3 — อสมการ · กราฟ · รูปทรงสามมิติ · ความคล้าย · วงกลม
+# ============================================================================
+
+DASH = 'stroke-dasharray="5 4"'
+FILL = f'fill="#eef1f4" stroke="{NAVY}" stroke-width="2" stroke-linejoin="round"'
+
+
+def _dim_v(x, y0, y1, label):
+    """เส้นบอกระยะแนวตั้งพร้อมขีดปิดหัวท้าย — ใช้บอกความสูงของรูปทรงสามมิติ
+
+    ความสูงของพีระมิด/กรวยเป็นเส้นที่อยู่ "ข้างใน" รูป ป้ายกำกับจึงชนเส้นอื่นเสมอ
+    วาดเป็นเส้นบอกระยะไว้ข้างนอกแบบหนังสือเรียนแทน
+    """
+    t = 5
+    return (f'<line x1="{x:.1f}" y1="{y0:.1f}" x2="{x:.1f}" y2="{y1:.1f}" '
+            f'stroke="{SERIES[3]}" stroke-width="1.4"/>'
+            + "".join(f'<line x1="{x-t:.1f}" y1="{yy:.1f}" x2="{x+t:.1f}" y2="{yy:.1f}" '
+                      f'stroke="{SERIES[3]}" stroke-width="1.4"/>' for yy in (y0, y1))
+            + _lab(x - 8, (y0 + y1) / 2 + 4, label, anchor="end"))
+
+
+def _lab(x, y, s, size=13, anchor="middle"):
+    """ป้ายกำกับความยาว/มุม ใช้สีเดียวกันทุกรูปเพื่อให้ผู้เรียนจับได้ว่าอันไหนคือ "ตัวเลขที่ให้มา" """
+    return _t(x, y, s, size, anchor, SERIES[3], "700")
+
+
+# ------------------------------------------------- เส้นจำนวนแสดงคำตอบของอสมการ
+def ineq_line(lo, hi, point, op, caption=None, width=520, step=1):
+    """เส้นจำนวนที่แรเงาช่วงคำตอบของอสมการ · op = '<' '≤' '>' '≥'
+
+    จุดปลายเป็นวงกลมโปร่ง = ไม่รวมค่านั้น (< >) · ทึบ = รวม (≤ ≥)
+    ซึ่งเป็นจุดที่ผู้เรียน ม.3 พลาดบ่อยที่สุดของหน่วยนี้
+    """
+    pad, h, y = 30, 82, 42
+    sx = lambda v: pad + (v - lo) / (hi - lo) * (width - pad * 2)
+    right = op in (">", "≥")
+    closed = op in ("≤", "≥")
+    x0, end = sx(point), (width - pad + 12) if right else (pad - 12)
+
+    b = [f'<rect x="0" y="0" width="{width}" height="{h}" fill="#fff"/>']
+    b.append(f'<line x1="{x0:.1f}" y1="{y}" x2="{end:.1f}" y2="{y}" '
+             f'stroke="{SERIES[3]}" stroke-width="5" stroke-opacity="0.45"/>')
+    b.append(f'<line x1="{pad-16}" y1="{y}" x2="{width-pad+16}" y2="{y}" '
+             f'stroke="{INK}" stroke-width="1.6"/>')
+    for x1, d in ((pad - 16, -1), (width - pad + 16, 1)):
+        b.append(f'<polygon points="{x1},{y} {x1-6*d},{y-4} {x1-6*d},{y+4}" fill="{INK}"/>')
+    v = lo
+    while v <= hi:
+        x = sx(v)
+        b.append(f'<line x1="{x:.1f}" y1="{y-6}" x2="{x:.1f}" y2="{y+6}" '
+                 f'stroke="{INK}" stroke-width="1"/>')
+        b.append(_t(x, y + 22, v, 11.5, "middle", SOFT))
+        v += step
+    b.append(f'<circle cx="{x0:.1f}" cy="{y}" r="6" '
+             + (f'fill="{SERIES[3]}"/>' if closed
+                else f'fill="#fff" stroke="{SERIES[3]}" stroke-width="2.4"/>'))
+    return _wrap(width, h, "".join(b), caption)
+
+
+# ------------------------------------------------------- กราฟฟังก์ชันกำลังสอง
+def parabola(a, b, c, caption=None, lo=None, hi=None, cell=24, mark_vertex=True):
+    """กราฟ y = ax² + bx + c พร้อมทำเครื่องหมายจุดยอด
+
+    ช่วงแกน x เลือกจากความชันของกราฟเอง — พาราโบลาที่ |a| มาก ชันเร็ว ต้องมองช่วงแคบ
+    ไม่งั้นได้กราฟผอมสูงที่ดูไม่ออกว่าจุดยอดอยู่ตรงไหน
+    """
+    vx0 = -b / (2 * a)
+    if lo is None or hi is None:
+        d = max(3, min(7, round(math.sqrt(9 / abs(a)))))
+        lo, hi = round(vx0) - d, round(vx0) + d
+    xs = [lo + i / 8 for i in range(int((hi - lo) * 8) + 1)]
+    f = lambda x: a * x * x + b * x + c
+    vx = -b / (2 * a)
+    # ตรึงกรอบไว้ 12 ช่องแล้ววางให้จุดยอดอยู่ใกล้ขอบด้านที่กราฟเปิดออก
+    # ถ้าปล่อยให้กรอบยืดตามค่าสูงสุดจริง กราฟที่ |a| มากจะกลายเป็นเส้นผอมสูงจนดูไม่ออก
+    vy = f(vx)
+    if a > 0:
+        ylo = math.floor(vy) - 1
+        yhi = ylo + 12
+    else:
+        yhi = math.ceil(vy) + 1
+        ylo = yhi - 12
+
+    pad = 24
+    w = (hi - lo) * cell + pad * 2
+    h = (yhi - ylo) * cell + pad * 2
+    px = lambda x: pad + (x - lo) * cell
+    py = lambda y: pad + (yhi - y) * cell
+
+    g = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>']
+    for i in range(lo, hi + 1):
+        g.append(f'<line x1="{px(i):.1f}" y1="{pad}" x2="{px(i):.1f}" y2="{h-pad}" '
+                 f'stroke="{GRID}" stroke-width="1"/>')
+    for j in range(ylo, yhi + 1):
+        g.append(f'<line x1="{pad}" y1="{py(j):.1f}" x2="{w-pad}" y2="{py(j):.1f}" '
+                 f'stroke="{GRID}" stroke-width="1"/>')
+    if ylo <= 0 <= yhi:
+        g.append(f'<line x1="{pad}" y1="{py(0):.1f}" x2="{w-pad}" y2="{py(0):.1f}" '
+                 f'stroke="{INK}" stroke-width="1.6"/>')
+    if lo <= 0 <= hi:
+        g.append(f'<line x1="{px(0):.1f}" y1="{pad}" x2="{px(0):.1f}" y2="{h-pad}" '
+                 f'stroke="{INK}" stroke-width="1.6"/>')
+    for i in range(lo, hi + 1):
+        if i and ylo <= 0 <= yhi:
+            g.append(_t(px(i), py(0) + 13, i, 9.5, "middle", SOFT))
+    for j in range(ylo, yhi + 1):
+        if j and lo <= 0 <= hi:
+            g.append(_t(px(0) - 7, py(j) + 3.5, j, 9.5, "end", SOFT))
+
+    pts = [(px(x), py(f(x))) for x in xs if ylo - 0.5 <= f(x) <= yhi + 0.5]
+    g.append('<polyline points="' + " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+             + f'" fill="none" stroke="{NAVY}" stroke-width="2.4" stroke-linejoin="round"/>')
+    if mark_vertex and lo <= vx <= hi and ylo <= f(vx) <= yhi:
+        g.append(f'<circle cx="{px(vx):.1f}" cy="{py(f(vx)):.1f}" r="4.5" fill="{SERIES[3]}"/>')
+    return _wrap(round(w), round(h), "".join(g), caption)
+
+
+# --------------------------------------------- เส้นตรงสองเส้นบนระนาบเดียวกัน
+def two_lines(lines, caption=None, lo=-6, hi=6, cell=24, mark_cross=True):
+    """lines = [(m, c, 'ชื่อเส้น'), ...] วาด y = mx + c หลายเส้นบนระนาบเดียวกัน
+
+    ใช้กับระบบสมการเชิงเส้นสองตัวแปร — จุดตัดคือคำตอบของระบบ
+    """
+    pad = 26
+    size = (hi - lo) * cell
+    w = h = size + pad * 2
+    px = lambda x: pad + (x - lo) * cell
+    py = lambda y: pad + (hi - y) * cell
+    clip = lambda y: max(lo, min(hi, y))
+
+    g = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>']
+    for i in range(lo, hi + 1):
+        g.append(f'<line x1="{px(i)}" y1="{pad}" x2="{px(i)}" y2="{pad+size}" '
+                 f'stroke="{GRID}" stroke-width="1"/>')
+        g.append(f'<line x1="{pad}" y1="{py(i)}" x2="{pad+size}" y2="{py(i)}" '
+                 f'stroke="{GRID}" stroke-width="1"/>')
+    g.append(f'<line x1="{pad}" y1="{py(0)}" x2="{pad+size}" y2="{py(0)}" '
+             f'stroke="{INK}" stroke-width="1.6"/>')
+    g.append(f'<line x1="{px(0)}" y1="{pad}" x2="{px(0)}" y2="{pad+size}" '
+             f'stroke="{INK}" stroke-width="1.6"/>')
+    for i in range(lo, hi + 1):
+        if i:
+            g.append(_t(px(i), py(0) + 13, i, 9.5, "middle", SOFT))
+            g.append(_t(px(0) - 7, py(i) + 3.5, i, 9.5, "end", SOFT))
+    g.append(_t(pad + size + 9, py(0) + 4, "X", 12, "middle", NAVY, "700"))
+    g.append(_t(px(0), pad - 9, "Y", 12, "middle", NAVY, "700"))
+
+    for k, (m, c, name) in enumerate(lines):
+        col = SERIES[k % len(SERIES)]
+        pts = [(x / 4, m * x / 4 + c) for x in range(lo * 4, hi * 4 + 1)]
+        pts = [(px(x), py(y)) for x, y in pts if lo <= y <= hi]
+        if not pts:
+            continue
+        g.append('<polyline points="' + " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+                 + f'" fill="none" stroke="{col}" stroke-width="2.4"/>')
+        ex, ey = pts[-1]
+        g.append(_t(min(ex + 4, w - 12), max(ey - 7, pad + 10), name, 12, "middle", col, "700"))
+
+    if mark_cross and len(lines) == 2:
+        (m1, c1, _), (m2, c2, _) = lines
+        if m1 != m2:
+            x = (c2 - c1) / (m1 - m2)
+            y = m1 * x + c1
+            if lo <= x <= hi and lo <= y <= hi:
+                g.append(f'<circle cx="{px(x):.1f}" cy="{py(y):.1f}" r="5" fill="#fff" '
+                         f'stroke="{INK}" stroke-width="2.2"/>')
+    return _wrap(w, h, "".join(g), caption)
+
+
+# ------------------------------------------------------ พีระมิด กรวย ทรงกลม
+def pyramid_fig(base_label=None, slant_label=None, height_label=None, caption=None,
+                height=230):
+    """พีระมิดฐานสี่เหลี่ยมจัตุรัส · เส้นที่ถูกบัง (ขอบหลังกับสันสูงตรง) วาดเป็นเส้นประ"""
+    bw, ox, oy, top = 150, 52, 34, 34
+    left = 96 if height_label else 46      # เผื่อที่ให้เส้นบอกระยะความสูงด้านซ้าย
+    width = 254 + left
+    x0, y0 = left, height - 46
+    A, B = (x0, y0), (x0 + bw, y0)
+    C, D = (x0 + bw + ox, y0 - oy), (x0 + ox, y0 - oy)
+    cx, cy = (A[0] + C[0]) / 2, (A[1] + C[1]) / 2
+    E = (cx, top)
+
+    line = lambda p, q, extra="": (f'<line x1="{p[0]:.1f}" y1="{p[1]:.1f}" '
+                                   f'x2="{q[0]:.1f}" y2="{q[1]:.1f}" stroke="{NAVY}" '
+                                   f'stroke-width="2" {extra}/>')
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>',
+         f'<polygon points="{A[0]:.0f},{A[1]:.0f} {B[0]:.0f},{B[1]:.0f} {E[0]:.0f},{E[1]:.0f}" '
+         f'{FILL}/>',
+         f'<polygon points="{B[0]:.0f},{B[1]:.0f} {C[0]:.0f},{C[1]:.0f} {E[0]:.0f},{E[1]:.0f}" '
+         f'fill="#dde3ea" stroke="{NAVY}" stroke-width="2" stroke-linejoin="round"/>']
+    g += [line(A, D, DASH), line(D, C, DASH), line(D, E, DASH),
+          line(A, B), line(B, C), line(A, E), line(C, E)]
+    g.append(line((cx, cy), E, DASH))                       # ความสูงของพีระมิด
+    g.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="2.6" fill="{NAVY}"/>')
+    if height_label:                      # เส้นบอกระยะนอกตัวรูป — ในรูปมันชนเส้นประเสมอ
+        g.append(_dim_v(A[0] - 28, top, cy, height_label))
+    if base_label:
+        g.append(_lab((A[0] + B[0]) / 2, y0 + 20, base_label))
+    if slant_label:                       # สันเอียงอยู่ขอบขวาของรูป วางป้ายไว้นอกตัวพีระมิด
+        g.append(_lab(C[0] + 4, (B[1] + E[1]) / 2 - 4, slant_label, anchor="start"))
+    return _wrap(width, height, "".join(g), caption)
+
+
+def cone_fig(radius_label=None, height_label=None, slant_label=None, caption=None,
+             height=240):
+    """กรวยกลมตรง · ครึ่งหลังของฐานเป็นเส้นประเพราะถูกตัวกรวยบัง"""
+    rx, ry, top = 78, 24, 30
+    left = 92 if height_label else 30      # เผื่อที่ให้เส้นบอกระยะความสูงด้านซ้าย
+    width = left + rx * 2 + 58
+    cx, cy = left + rx, height - 62
+    L, R, T = (cx - rx, cy), (cx + rx, cy), (cx, top)
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>',
+         f'<path d="M {L[0]:.1f} {L[1]:.1f} L {T[0]:.1f} {T[1]:.1f} L {R[0]:.1f} {R[1]:.1f} '
+         f'A {rx} {ry} 0 0 1 {L[0]:.1f} {L[1]:.1f} Z" {FILL}/>',
+         f'<path d="M {L[0]:.1f} {L[1]:.1f} A {rx} {ry} 0 0 1 {R[0]:.1f} {R[1]:.1f}" '
+         f'fill="none" stroke="{NAVY}" stroke-width="1.6" {DASH}/>',
+         f'<line x1="{cx}" y1="{cy}" x2="{cx}" y2="{top}" stroke="{NAVY}" '
+         f'stroke-width="1.6" {DASH}/>',
+         f'<line x1="{cx}" y1="{cy}" x2="{R[0]:.1f}" y2="{cy}" stroke="{NAVY}" '
+         f'stroke-width="1.6" {DASH}/>']
+    m = 11
+    g.append(f'<path d="M {cx} {cy-m} L {cx+m} {cy-m} L {cx+m} {cy}" fill="none" '
+             f'stroke="{NAVY}" stroke-width="1.4"/>')
+    if radius_label:                      # ใต้ฐาน ไม่ให้ทับเส้นวงรี
+        g.append(_lab(cx + rx / 2, cy + ry + 18, radius_label))
+    if height_label:
+        g.append(_dim_v(cx - rx - 20, top, cy, height_label))
+    if slant_label:                       # สันเอียงอยู่ขอบขวา วางป้ายนอกตัวกรวย
+        g.append(_lab(R[0] - 2, (cy + top) / 2 + 6, slant_label, anchor="start"))
+    return _wrap(width, height, "".join(g), caption)
+
+
+def sphere_fig(radius_label=None, caption=None, width=250, height=220):
+    """ทรงกลม · เส้นศูนย์สูตรวาดครึ่งหน้าทึบ ครึ่งหลังประ ให้เห็นว่าเป็นทรงกลมไม่ใช่วงกลม"""
+    cx, cy, r = width / 2, height / 2, 78
+    ry = r * 0.3
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>',
+         f'<circle cx="{cx}" cy="{cy}" r="{r}" {FILL}/>',
+         f'<path d="M {cx-r} {cy} A {r} {ry} 0 0 0 {cx+r} {cy}" fill="none" '
+         f'stroke="{NAVY}" stroke-width="1.6"/>',
+         f'<path d="M {cx-r} {cy} A {r} {ry} 0 0 1 {cx+r} {cy}" fill="none" '
+         f'stroke="{NAVY}" stroke-width="1.6" {DASH}/>',
+         f'<line x1="{cx}" y1="{cy}" x2="{cx+r*0.71:.1f}" y2="{cy-r*0.71:.1f}" '
+         f'stroke="{SERIES[3]}" stroke-width="2"/>',
+         f'<circle cx="{cx}" cy="{cy}" r="2.8" fill="{NAVY}"/>']
+    if radius_label:                      # ดันออกไปนอกวงกลม ไม่ให้ทับเส้นศูนย์สูตร
+        g.append(_lab(cx + r * 0.71 + 20, cy - r * 0.71 - 8, radius_label))
+    return _wrap(width, height, "".join(g), caption)
+
+
+# -------------------------------------------------------------------- ความคล้าย
+def similar_triangles(sides_a, sides_b, labels_a, labels_b, caption=None,
+                      names=("A", "B", "C"), names2=("D", "E", "F"), box=120):
+    """รูปสามเหลี่ยมคล้ายสองรูปวางเทียบกัน — sides = (ฐาน, สูง) ใช้กำหนดรูปร่างที่วาด
+
+    วาดสองรูปด้วยสัดส่วนจริง ผู้เรียนจึงเห็นได้เองว่า "รูปร่างเดียวกัน ขนาดต่างกัน"
+    """
+    gap, pad_t, pad_b, pad_x = 54, 30, 40, 40
+    scale = box / max(max(sides_a), max(sides_b))
+    tri = lambda s: (s[0] * scale, s[1] * scale)
+    (w1, h1), (w2, h2) = tri(sides_a), tri(sides_b)
+    w = round(pad_x * 2 + w1 + gap + w2)
+    h = round(pad_t + max(h1, h2) + pad_b)
+    base_y = h - pad_b
+
+    g = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>']
+    for x0, (bw, bh), nm, labs in ((pad_x, (w1, h1), names, labels_a),
+                                   (pad_x + w1 + gap, (w2, h2), names2, labels_b)):
+        apex = (x0 + bw * 0.34, base_y - bh)
+        p = [(x0, base_y), (x0 + bw, base_y), apex]
+        g.append('<polygon points="' + " ".join(f"{x:.1f},{y:.1f}" for x, y in p)
+                 + f'" {FILL}/>')
+        g.append(_t(p[0][0] - 11, base_y + 14, nm[0], 13, "middle", NAVY, "700"))
+        g.append(_t(p[1][0] + 11, base_y + 14, nm[1], 13, "middle", NAVY, "700"))
+        g.append(_t(apex[0], apex[1] - 9, nm[2], 13, "middle", NAVY, "700"))
+        if labs[0]:                       # ป้ายฐาน
+            g.append(_lab((p[0][0] + p[1][0]) / 2, base_y + 21, labs[0]))
+        if len(labs) > 1 and labs[1]:     # ป้ายด้านซ้าย
+            g.append(_lab((p[0][0] + apex[0]) / 2 - 16, (base_y + apex[1]) / 2, labs[1]))
+    return _wrap(w, h, "".join(g), caption)
+
+
+# --------------------------------------------------------------------- วงกลม
+def circle_fig(kind, labels=None, caption=None, size=250):
+    """วงกลมพร้อมองค์ประกอบตามทฤษฎีบทที่ต้องใช้
+
+    kind = 'central-inscribed' มุมที่จุดศูนย์กลางกับมุมในส่วนโค้งที่รองรับส่วนโค้งเดียวกัน
+           'chord-perp'        คอร์ดกับเส้นตั้งฉากจากจุดศูนย์กลาง (แบ่งครึ่งคอร์ด)
+           'tangent'           เส้นสัมผัสตั้งฉากกับรัศมี ณ จุดสัมผัส
+           'cyclic-quad'       สี่เหลี่ยมแนบในวงกลม (มุมตรงข้ามรวมกันได้ 180°)
+    """
+    labels = labels or {}
+    cx = cy = size / 2
+    r = size * 0.34
+    at = lambda deg: (cx + r * math.cos(math.radians(deg)),
+                      cy - r * math.sin(math.radians(deg)))
+    g = [f'<rect x="0" y="0" width="{size}" height="{size}" fill="#fff"/>',
+         f'<circle cx="{cx}" cy="{cy}" r="{r:.1f}" fill="none" stroke="{NAVY}" '
+         f'stroke-width="2"/>']
+    seg = lambda p, q, col=NAVY, wd=1.8: (f'<line x1="{p[0]:.1f}" y1="{p[1]:.1f}" '
+                                          f'x2="{q[0]:.1f}" y2="{q[1]:.1f}" '
+                                          f'stroke="{col}" stroke-width="{wd}"/>')
+    dot = lambda p, col=NAVY: f'<circle cx="{p[0]:.1f}" cy="{p[1]:.1f}" r="3.4" fill="{col}"/>'
+    name = lambda p, s, dx=0, dy=0: _t(p[0] + dx, p[1] + dy, s, 12.5, "middle", NAVY, "700")
+
+    if kind == "central-inscribed":
+        A, B, C = at(210), at(330), at(80)
+        g += [seg((cx, cy), A), seg((cx, cy), B), seg(C, A), seg(C, B),
+              dot((cx, cy)), dot(A), dot(B), dot(C),
+              name((cx, cy), "O", -12, 4), name(A, "A", -12, 6),
+              name(B, "B", 12, 6), name(C, "C", 0, -9)]
+        if labels.get("center"):
+            g.append(_lab(cx, cy + 26, labels["center"], 12))
+        if labels.get("inscribed"):
+            g.append(_lab(C[0], C[1] + 26, labels["inscribed"], 12))
+    elif kind == "chord-perp":
+        A, B = at(205), at(335)
+        M = ((A[0] + B[0]) / 2, (A[1] + B[1]) / 2)
+        g += [seg(A, B), seg((cx, cy), M, SERIES[3], 2), dot((cx, cy)), dot(A), dot(B), dot(M),
+              name((cx, cy), "O", 0, -10), name(A, "A", -12, 4), name(B, "B", 12, 4),
+              name(M, "M", 0, 17)]
+        m = 10
+        g.append(f'<path d="M {M[0]-m} {M[1]-m*0.2} L {M[0]-m*0.8} {M[1]-m} L {M[0]+0.2} '
+                 f'{M[1]-m*0.9}" fill="none" stroke="{SERIES[3]}" stroke-width="1.5"/>')
+        if labels.get("chord"):
+            g.append(_lab((A[0] + B[0]) / 2, A[1] + 30, labels["chord"], 12))
+        if labels.get("dist"):
+            g.append(_lab(cx + 16, (cy + M[1]) / 2, labels["dist"], 12))
+    elif kind == "tangent":
+        P = at(270)
+        g += [seg((P[0] - r * 1.05, P[1]), (P[0] + r * 1.05, P[1]), SERIES[3], 2.2),
+              seg((cx, cy), P), dot((cx, cy)), dot(P),
+              name((cx, cy), "O", 0, -10), name(P, "P", -14, 6)]
+        m = 11
+        g.append(f'<path d="M {P[0]+2} {P[1]-m} L {P[0]+m} {P[1]-m} L {P[0]+m} {P[1]-2}" '
+                 f'fill="none" stroke="{NAVY}" stroke-width="1.5"/>')
+        if labels.get("radius"):
+            g.append(_lab(cx + 12, (cy + P[1]) / 2 + 4, labels["radius"], 12, "start"))
+    elif kind == "cyclic-quad":
+        pts = [at(d) for d in (150, 40, 320, 220)]
+        g.append('<polygon points="' + " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+                 + f'" fill="#eef1f4" stroke="{NAVY}" stroke-width="1.8"/>')
+        for p, nm, (dx, dy) in zip(pts, "ABCD", ((-13, -2), (13, -4), (13, 10), (-13, 10))):
+            g += [dot(p), name(p, nm, dx, dy)]
+        if labels.get("A"):
+            g.append(_lab(pts[0][0] + 22, pts[0][1] + 18, labels["A"], 12))
+        if labels.get("C"):
+            g.append(_lab(pts[2][0] - 24, pts[2][1] - 14, labels["C"], 12))
+    else:
+        raise ValueError(f"ไม่รู้จักรูปวงกลมชนิด {kind}")
+    return _wrap(size, size, "".join(g), caption)
+
+
+# ------------------------------------------- สามเหลี่ยมมุมฉากที่ทำเครื่องหมายมุม
+def trig_triangle(base, height, angle_label, base_label=None, height_label=None,
+                  hyp_label=None, at_vertex="C", caption=None, box=170):
+    """สามเหลี่ยมมุมฉากพร้อมส่วนโค้งกำกับมุมที่โจทย์อ้างถึง
+
+    A บนซ้าย · B ล่างซ้าย (มุมฉาก) · C ล่างขวา — ทำเครื่องหมายมุมที่ A หรือ C
+    """
+    pad_l, pad_r, pad_t, pad_b = 58, 56, 28, 38
+    s = box / max(base, height)
+    bw, bh = base * s, height * s
+    w, h = round(pad_l + bw + pad_r), round(pad_t + bh + pad_b)
+    A, B, C = (pad_l, pad_t), (pad_l, pad_t + bh), (pad_l + bw, pad_t + bh)
+
+    g = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>',
+         f'<polygon points="{A[0]:.1f},{A[1]:.1f} {B[0]:.1f},{B[1]:.1f} '
+         f'{C[0]:.1f},{C[1]:.1f}" {FILL}/>']
+    m = 13
+    g.append(f'<path d="M {B[0]:.1f} {B[1]-m:.1f} L {B[0]+m:.1f} {B[1]-m:.1f} '
+             f'L {B[0]+m:.1f} {B[1]:.1f}" fill="none" stroke="{NAVY}" stroke-width="1.6"/>')
+    for p, nm, (dx, dy) in ((A, "A", (-12, 3)), (B, "B", (-12, 14)), (C, "C", (12, 14))):
+        g.append(_t(p[0] + dx, p[1] + dy, nm, 13, "middle", NAVY, "700"))
+    if at_vertex == "C":
+        rr = min(44, bw * 0.5)
+        g.append(f'<path d="M {C[0]-rr:.1f} {C[1]:.1f} A {rr} {rr} 0 0 1 '
+                 f'{C[0]-rr*bw/math.hypot(bw,bh):.1f} '
+                 f'{C[1]-rr*bh/math.hypot(bw,bh):.1f}" fill="none" '
+                 f'stroke="{SERIES[3]}" stroke-width="2"/>')
+        g.append(_lab(C[0] - rr * 0.72, C[1] - 12, angle_label, 12.5))
+    else:
+        rr = min(44, bh * 0.5)
+        g.append(f'<path d="M {A[0]:.1f} {A[1]+rr:.1f} A {rr} {rr} 0 0 0 '
+                 f'{A[0]+rr*bw/math.hypot(bw,bh):.1f} '
+                 f'{A[1]+rr*bh/math.hypot(bw,bh):.1f}" fill="none" '
+                 f'stroke="{SERIES[3]}" stroke-width="2"/>')
+        g.append(_lab(A[0] + 16, A[1] + rr * 0.78, angle_label, 12.5, "start"))
+    if height_label:
+        g.append(_lab(A[0] - 9, (A[1] + B[1]) / 2, height_label, anchor="end"))
+    if base_label:
+        g.append(_lab((B[0] + C[0]) / 2, B[1] + 22, base_label))
+    if hyp_label:
+        g.append(_lab((A[0] + C[0]) / 2 + 18, (A[1] + C[1]) / 2 - 6, hyp_label))
+    return _wrap(w, h, "".join(g), caption)
