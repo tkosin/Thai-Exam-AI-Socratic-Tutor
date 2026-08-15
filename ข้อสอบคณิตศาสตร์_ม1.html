@@ -123,6 +123,11 @@
   .course-card .c-units button:hover{ background:#eef1f4; color:var(--navy); border-color:#c8d2dd; }
   .course-card .c-units button .u-n{ font-weight:700; color:var(--navy); }
   .course-card .c-units button .u-t{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .course-card .c-units button .u-c{
+    flex:none; font-size:11px; font-weight:600; color:var(--ink-soft);
+    background:#eeebe0; border-radius:4px; padding:1px 6px; margin-left:2px;
+  }
+  .course-card .c-units button:hover .u-c{ background:#dde5ec; color:var(--navy); }
   .course-card .c-go{ margin-top:14px; align-self:flex-start; }
 
   /* ---------------- Layout: left filters + exam ---------------- */
@@ -399,6 +404,12 @@
     border:1px solid #e2e8ee; border-radius:8px;
   }
   .bubble-fig svg{ display:block; width:100%; height:auto; max-height:260px; }
+  /* ติวเตอร์ทักว่าโจทย์หรือเฉลยของข้อนี้น่าจะผิด — ต้องสะดุดตากว่าเนื้อหาปกติ */
+  .bubble-flaw{
+    background:#fbf1ef; border-left:3px solid var(--red); border-radius:6px;
+    padding:8px 10px; margin-bottom:8px; font-size:13.5px; color:#8d3325;
+  }
+  .bubble-flaw b{ color:var(--red); }
   .bubble-fig.bad{ font-size:12px; color:#8d3325; background:#fbf1ef; border-color:#e8cdc7; }
   .bubble.me .bubble-fig{ background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.3); }
   .fig-wait{ display:block; font-size:12px; color:var(--ink-soft); margin-top:4px; }
@@ -802,11 +813,13 @@ const LEGACY_IDS = ["math-m1-01-4aac3e8b","math-m1-01-b619d996","math-m1-01-ef30
   QUESTIONS.forEach(q => {
     const key = courseKey(q);
     if(!COURSE_BY_KEY[key]){
-      COURSE_BY_KEY[key] = { key, subject:q.subject, grade:q.grade, units:{}, count:0 };
+      COURSE_BY_KEY[key] = { key, subject:q.subject, grade:q.grade,
+                             units:{}, unitCount:{}, count:0 };
       COURSES.push(COURSE_BY_KEY[key]);
     }
     const c = COURSE_BY_KEY[key];
     c.units[q.unit] = q.uname;
+    c.unitCount[q.unit] = (c.unitCount[q.unit] || 0) + 1;
     c.count++;
   });
   // ลำดับที่ผู้เรียนเห็นแยกจากลำดับที่ประกอบไฟล์ — courses.json ต่อท้ายได้อย่างเดียว
@@ -1165,8 +1178,9 @@ const LEGACY_IDS = ["math-m1-01-4aac3e8b","math-m1-01-b619d996","math-m1-01-ef30
       Object.keys(c.units).map(Number).sort((a, b) => a - b).forEach(u => {
         const b = document.createElement('button');
         b.type = 'button';
-        b.title = `${c.subject} ${c.grade} · หน่วยที่ ${u}: ${c.units[u]}`;
-        b.innerHTML = `<span class="u-n">${u}</span><span class="u-t">${c.units[u]}</span>`;
+        b.title = `${c.subject} ${c.grade} · หน่วยที่ ${u}: ${c.units[u]} · ${c.unitCount[u]} ข้อ`;
+        b.innerHTML = `<span class="u-n">${u}</span><span class="u-t">${escAttr(c.units[u])}</span>` +
+                      `<span class="u-c">${c.unitCount[u]}</span>`;
         b.onclick = () => openCourse(c.key, u);
         units.appendChild(b);
       });
@@ -1519,6 +1533,9 @@ const LEGACY_IDS = ["math-m1-01-4aac3e8b","math-m1-01-b619d996","math-m1-01-ef30
   const AI_CHAT_STORE_OLD = 'funnymath-chat-v1';
   const AI_ENDPOINT = 'https://api.anthropic.com/v1/messages';
   const AI_VERSION = '2023-06-01';
+  // ตัวคั่นที่ติวเตอร์ใช้บอกว่า "ข้อนี้โจทย์หรือเฉลยมีปัญหา" — หน้าเว็บดึงออกมาแสดงเป็นกล่องเตือน
+  // ใช้อักขระที่ไม่มีทางโผล่ในคำตอบปกติ จะได้ไม่ตัดข้อความของติวเตอร์ผิดที่
+  const FLAW_TAG = '⟪ตรวจพบปัญหาในข้อสอบ⟫';
   const CHAT_BUDGET = 180000;   // ตัวอักษรรวมของบทสนทนาที่เก็บไว้ (กัน localStorage เต็ม)
   const CHAT_KEEP = 24;         // เก็บข้อความต่อข้อไว้ไม่เกินเท่านี้
 
@@ -1706,6 +1723,21 @@ const LEGACY_IDS = ["math-m1-01-4aac3e8b","math-m1-01-b619d996","math-m1-01-ef30
         : []),
       '',
       `## เฉลย (ใช้วินิจฉัยเท่านั้น ห้ามเปิดเผยก่อนถึงขั้นที่อนุญาต): ${promptText(q.answer)}`,
+      '',
+      /* คลังข้อสอบเป็นของที่คนทำ ย่อมมีพลาดได้ · verify_math.py ตรวจซ้ำได้แค่บางส่วน
+         ที่เหลือจึงให้ติวเตอร์ช่วยเป็นด่านสุดท้ายตอนใช้งานจริง — เงียบถ้าถูก บอกถ้าผิด */
+      '## ตรวจโจทย์กับเฉลยก่อนตอบทุกครั้ง (สำคัญ)',
+      'ก่อนจะสอน ให้ลองแก้โจทย์ข้อนี้ด้วยตัวเองเงียบ ๆ ก่อน แล้วเทียบกับเฉลยที่ให้ไว้ข้างบน',
+      '- ถ้าโจทย์ชัดเจนและเฉลยถูกต้อง: ไม่ต้องพูดถึงเรื่องนี้เลย สอนตามปกติ',
+      '- ถ้าพบว่าเฉลยผิด โจทย์ให้ข้อมูลไม่ครบ โจทย์ขัดแย้งกันเอง หรือโจทย์ไม่มีคำตอบ:',
+      `  ให้ขึ้นบรรทัดแรกสุดของคำตอบด้วย ${FLAW_TAG} ตามด้วยคำอธิบายสั้น ๆ ว่าอะไรผิดและผิดอย่างไร`,
+      '  แล้วขึ้นบรรทัดใหม่ค่อยสอนต่อตามปกติโดยยึดสิ่งที่ถูกต้องเป็นหลัก',
+      `  เขียน ${FLAW_TAG} ได้เฉพาะบรรทัดแรกเท่านั้น และเขียนได้ครั้งเดียว`,
+      '- ต้องมั่นใจจริง ๆ ถึงจะทัก ถ้าแค่สงสัยหรือเป็นเรื่องรูปแบบการเขียน (เช่น เฉลยเป็นเศษส่วน ' +
+        'แต่คิดได้เป็นทศนิยมที่มีค่าเท่ากัน หรือหน่วยเขียนต่างกัน) ถือว่าเฉลยถูก ไม่ต้องทัก',
+      '- ข้อที่โจทย์อ้างถึงรูปประกอบ คุณไม่เห็นรูป จึงห้ามตัดสินว่าโจทย์/เฉลยผิด',
+      '- การทักว่าเฉลยผิด ไม่ใช่ข้ออ้างให้บอกคำตอบก่อนถึงขั้นที่อนุญาต ' +
+        'บอกได้แค่ว่าผิดตรงไหน แต่ค่าที่ถูกยังต้องรอตามบันไดคำใบ้เหมือนเดิม',
       '',
       '## สิ่งที่น้องทำไว้แล้ว',
       work.length ? work.map((l, i) => `บรรทัดที่ ${i+1}: ${l}`).join('\n') : '(ยังไม่ได้เขียนวิธีทำ)',
@@ -2083,9 +2115,28 @@ const LEGACY_IDS = ["math-m1-01-4aac3e8b","math-m1-01-b619d996","math-m1-01-ef30
     return { text: text.slice(0, fence !== -1 && fence > open - 12 ? fence : open), drawing: true };
   }
 
+  /* ติวเตอร์ทักว่าโจทย์/เฉลยข้อนี้มีปัญหา — ตัดบรรทัดแรกออกมาแสดงเป็นกล่องเตือน
+     ต้องอยู่บรรทัดแรกเท่านั้น ถ้าโผล่กลางคำตอบถือว่าเป็นข้อความธรรมดา จะได้ไม่ถูกหลอกง่าย ๆ */
+  function splitFlaw(text){
+    const t = text.replace(/^\s+/, '');
+    if(!t.startsWith(FLAW_TAG)) return { note:'', rest:text };
+    const cut = t.indexOf('\n');
+    return cut < 0
+      ? { note: t.slice(FLAW_TAG.length).trim(), rest: '' }
+      : { note: t.slice(FLAW_TAG.length, cut).trim(), rest: t.slice(cut + 1) };
+  }
+
   function renderRich(el, text, { partial } = {}){
     el.textContent = '';
-    const body = partial ? trimPartialSvg(text) : { text };
+    const flaw = splitFlaw(text);
+    if(flaw.note){
+      const warn = document.createElement('div');
+      warn.className = 'bubble-flaw';
+      // ข้อความมาจากโมเดล จึงต้องผ่าน mdLite ที่ escape ให้แล้วเหมือนเนื้อหาส่วนอื่น
+      warn.innerHTML = '<b>⚠️ ข้อนี้อาจมีข้อผิดพลาด</b><br>' + mdLite(flaw.note);
+      el.appendChild(warn);
+    }
+    const body = partial ? trimPartialSvg(flaw.rest) : { text: flaw.rest };
     splitSvg(body.text).forEach(part => {
       if(part.svg !== undefined){
         const fig = document.createElement('div');
