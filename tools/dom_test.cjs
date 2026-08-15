@@ -1109,11 +1109,14 @@ LAZY = (async () => {
   const r = loadShell();
   const rd = s => r.d.querySelector(s);
   const rall = s => [...r.d.querySelectorAll(s)];
+  const MANIFEST = JSON.parse(shellHtml.match(/const MANIFEST = (\[[\s\S]*?\]);/)[1]);
 
   // หน้าแรกต้องครบโดยยังไม่โหลดข้อสอบสักวิชา
   chk('เปิดเว็บมาแล้วยังไม่โหลดข้อสอบสักไฟล์', r.asked.length === 0, r.asked.join());
   const cards = rall('#courseGrid .course-card');
-  chk('หน้าแรกแสดงครบทุกวิชาจาก MANIFEST', cards.length === 5, cards.length);
+  // นับจาก MANIFEST เหมือนกัน — คลังเพิ่มวิชาได้ ไม่ควรต้องมาแก้เลขในเทสต์
+  chk('หน้าแรกแสดงครบทุกวิชาจาก MANIFEST', cards.length === MANIFEST.length,
+      `${cards.length} จาก ${MANIFEST.length}`);
   chk('การ์ดวิชาบอกจำนวนข้อและจำนวนหน่วยได้โดยไม่โหลดข้อสอบ',
       /\d+ ข้อ · \d+ หน่วย/.test(cards[0].querySelector('.c-count').textContent),
       cards[0].querySelector('.c-count').textContent);
@@ -1122,8 +1125,7 @@ LAZY = (async () => {
       chips.length > 0 && +chips[0].querySelector('.u-c').textContent > 0,
       chips.length + ' หน่วย');
   // เทียบกับผลรวมของ MANIFEST ไม่ใช่ตัวเลขที่พิมพ์ไว้ตายตัว — คลังโตทุกเฟส
-  const manifestTotal = JSON.parse(shellHtml.match(/const MANIFEST = (\[[\s\S]*?\]);/)[1])
-    .reduce((n, c) => n + c.count, 0);
+  const manifestTotal = MANIFEST.reduce((n, c) => n + c.count, 0);
   chk('ยอดรวมทุกวิชาบนหัวเรื่องถูกต้อง',
       rd('#progressLabel').textContent.includes(manifestTotal.toLocaleString('en-US')),
       rd('#progressLabel').textContent);

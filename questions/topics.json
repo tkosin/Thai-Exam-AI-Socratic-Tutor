@@ -6,7 +6,8 @@
     "needs_svg เป็นค่าตั้งต้นระดับหัวข้อ ข้อแต่ละข้อกำหนดเองได้ · needs_svg true ต้องมี svg_type",
     "วิชาที่ยังไม่มีในคลังอยู่ใน planned_courses — ไม่ใส่ตัวชี้วัดไว้ล่วงหน้า",
     "เพราะต้องเทียบหลักสูตรจริงตอนลงมือทำ ไม่ใช่เดาไว้ก่อน (ดู docs/roadmap.md)",
-    "ตั้งต้นด้วยการอ่านตัวชี้วัดจากคลังที่มีอยู่ จากนั้นดูแลด้วยมือ — เพิ่มหัวข้อใหม่ได้เลย"
+    "ตั้งต้นด้วยการอ่านตัวชี้วัดจากคลังที่มีอยู่ จากนั้นดูแลด้วยมือ — เพิ่มหัวข้อใหม่ได้เลย",
+    "วิทย์ ม.3 มีตัวชี้วัด 59 ตัว แต่ 9 ตัวเป็นสาระ 4 เทคโนโลยี (ว 4.1/ว 4.2) ซึ่งแยกสอนเป็นวิชาต่างหาก จึงอยู่ใน planned_courses"
   ],
   "svg_types": [
     "geometry_figure",
@@ -1274,13 +1275,472 @@
           "status": "active"
         }
       ]
+    },
+    {
+      "slug": "science-m3",
+      "subject": "วิทยาศาสตร์",
+      "grade": "ม.3",
+      "status": "active",
+      "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560)",
+      "topics": [
+        {
+          "id": "SCI-M3-BIO-001",
+          "std": "ว 1.1 ม.3/1",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "ระบบนิเวศ",
+          "needs_svg": true,
+          "svg_type": "food_web",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-BIO-002",
+          "std": "ว 1.1 ม.3/2",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "ระบบนิเวศ",
+          "needs_svg": true,
+          "svg_type": "food_web",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-BIO-003",
+          "std": "ว 1.1 ม.3/3",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "ระบบนิเวศ",
+          "needs_svg": true,
+          "svg_type": "food_web",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-BIO-004",
+          "std": "ว 1.1 ม.3/4",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "ระบบนิเวศ",
+          "needs_svg": true,
+          "svg_type": "food_web",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-BIO-005",
+          "std": "ว 1.1 ม.3/5",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "ระบบนิเวศ",
+          "needs_svg": true,
+          "svg_type": "food_web",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-BIO-006",
+          "std": "ว 1.1 ม.3/6",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "ระบบนิเวศ",
+          "needs_svg": true,
+          "svg_type": "food_web",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-BIO-007",
+          "std": "ว 1.3 ม.3/1",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+          "needs_svg": true,
+          "svg_type": "punnett_square",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-BIO-008",
+          "std": "ว 1.3 ม.3/2",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+          "needs_svg": true,
+          "svg_type": "punnett_square",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-BIO-009",
+          "std": "ว 1.3 ม.3/3",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+          "needs_svg": true,
+          "svg_type": "punnett_square",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-BIO-010",
+          "std": "ว 1.3 ม.3/4",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+          "needs_svg": true,
+          "svg_type": "punnett_square",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-BIO-011",
+          "std": "ว 1.3 ม.3/5",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+          "needs_svg": true,
+          "svg_type": "punnett_square",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-BIO-012",
+          "std": "ว 1.3 ม.3/6",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+          "needs_svg": true,
+          "svg_type": "punnett_square",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-BIO-013",
+          "std": "ว 1.3 ม.3/7",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+          "needs_svg": true,
+          "svg_type": "punnett_square",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-BIO-014",
+          "std": "ว 1.3 ม.3/8",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+          "needs_svg": true,
+          "svg_type": "punnett_square",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-BIO-015",
+          "std": "ว 1.3 ม.3/9",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+          "needs_svg": true,
+          "svg_type": "punnett_square",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-BIO-016",
+          "std": "ว 1.3 ม.3/10",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+          "needs_svg": true,
+          "svg_type": "punnett_square",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-BIO-017",
+          "std": "ว 1.3 ม.3/11",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+          "needs_svg": true,
+          "svg_type": "punnett_square",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-001",
+          "std": "ว 2.1 ม.3/1",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "วัสดุและปฏิกิริยาเคมี",
+          "needs_svg": true,
+          "svg_type": "particle_model",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-002",
+          "std": "ว 2.1 ม.3/2",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "วัสดุและปฏิกิริยาเคมี",
+          "needs_svg": true,
+          "svg_type": "particle_model",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-003",
+          "std": "ว 2.1 ม.3/3",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "วัสดุและปฏิกิริยาเคมี",
+          "needs_svg": true,
+          "svg_type": "particle_model",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-004",
+          "std": "ว 2.1 ม.3/4",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "วัสดุและปฏิกิริยาเคมี",
+          "needs_svg": true,
+          "svg_type": "particle_model",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-005",
+          "std": "ว 2.1 ม.3/5",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "วัสดุและปฏิกิริยาเคมี",
+          "needs_svg": true,
+          "svg_type": "particle_model",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-006",
+          "std": "ว 2.1 ม.3/6",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "วัสดุและปฏิกิริยาเคมี",
+          "needs_svg": true,
+          "svg_type": "particle_model",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-007",
+          "std": "ว 2.1 ม.3/7",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "วัสดุและปฏิกิริยาเคมี",
+          "needs_svg": true,
+          "svg_type": "particle_model",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-008",
+          "std": "ว 2.1 ม.3/8",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "วัสดุและปฏิกิริยาเคมี",
+          "needs_svg": true,
+          "svg_type": "particle_model",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-009",
+          "std": "ว 2.3 ม.3/1",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+          "needs_svg": true,
+          "svg_type": "circuit_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-010",
+          "std": "ว 2.3 ม.3/2",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+          "needs_svg": true,
+          "svg_type": "circuit_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-011",
+          "std": "ว 2.3 ม.3/3",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+          "needs_svg": true,
+          "svg_type": "circuit_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-012",
+          "std": "ว 2.3 ม.3/4",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+          "needs_svg": true,
+          "svg_type": "circuit_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-013",
+          "std": "ว 2.3 ม.3/5",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+          "needs_svg": true,
+          "svg_type": "circuit_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-014",
+          "std": "ว 2.3 ม.3/6",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+          "needs_svg": true,
+          "svg_type": "circuit_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-015",
+          "std": "ว 2.3 ม.3/7",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+          "needs_svg": true,
+          "svg_type": "circuit_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-016",
+          "std": "ว 2.3 ม.3/8",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+          "needs_svg": true,
+          "svg_type": "circuit_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-017",
+          "std": "ว 2.3 ม.3/9",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+          "needs_svg": true,
+          "svg_type": "circuit_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-018",
+          "std": "ว 2.3 ม.3/10",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "คลื่นและคลื่นแม่เหล็กไฟฟ้า",
+          "needs_svg": true,
+          "svg_type": "wave",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-019",
+          "std": "ว 2.3 ม.3/11",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "คลื่นและคลื่นแม่เหล็กไฟฟ้า",
+          "needs_svg": true,
+          "svg_type": "wave",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-020",
+          "std": "ว 2.3 ม.3/12",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "คลื่นและคลื่นแม่เหล็กไฟฟ้า",
+          "needs_svg": true,
+          "svg_type": "wave",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-021",
+          "std": "ว 2.3 ม.3/13",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "แสงและทัศนอุปกรณ์",
+          "needs_svg": true,
+          "svg_type": "ray_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-022",
+          "std": "ว 2.3 ม.3/14",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "แสงและทัศนอุปกรณ์",
+          "needs_svg": true,
+          "svg_type": "ray_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-023",
+          "std": "ว 2.3 ม.3/15",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "แสงและทัศนอุปกรณ์",
+          "needs_svg": true,
+          "svg_type": "ray_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-024",
+          "std": "ว 2.3 ม.3/16",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "แสงและทัศนอุปกรณ์",
+          "needs_svg": true,
+          "svg_type": "ray_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-025",
+          "std": "ว 2.3 ม.3/17",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "แสงและทัศนอุปกรณ์",
+          "needs_svg": true,
+          "svg_type": "ray_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-026",
+          "std": "ว 2.3 ม.3/18",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "แสงและทัศนอุปกรณ์",
+          "needs_svg": true,
+          "svg_type": "ray_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-027",
+          "std": "ว 2.3 ม.3/19",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "แสงและทัศนอุปกรณ์",
+          "needs_svg": true,
+          "svg_type": "ray_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-028",
+          "std": "ว 2.3 ม.3/20",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "แสงและทัศนอุปกรณ์",
+          "needs_svg": true,
+          "svg_type": "ray_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-PHY-029",
+          "std": "ว 2.3 ม.3/21",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "แสงและทัศนอุปกรณ์",
+          "needs_svg": true,
+          "svg_type": "ray_diagram",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-EAR-001",
+          "std": "ว 3.1 ม.3/1",
+          "strand": "วิทยาศาสตร์โลกและอวกาศ",
+          "topic": "ระบบสุริยะและเทคโนโลยีอวกาศ",
+          "needs_svg": true,
+          "svg_type": "solar_system",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-EAR-002",
+          "std": "ว 3.1 ม.3/2",
+          "strand": "วิทยาศาสตร์โลกและอวกาศ",
+          "topic": "ระบบสุริยะและเทคโนโลยีอวกาศ",
+          "needs_svg": true,
+          "svg_type": "solar_system",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-EAR-003",
+          "std": "ว 3.1 ม.3/3",
+          "strand": "วิทยาศาสตร์โลกและอวกาศ",
+          "topic": "ระบบสุริยะและเทคโนโลยีอวกาศ",
+          "needs_svg": true,
+          "svg_type": "solar_system",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M3-EAR-004",
+          "std": "ว 3.1 ม.3/4",
+          "strand": "วิทยาศาสตร์โลกและอวกาศ",
+          "topic": "ระบบสุริยะและเทคโนโลยีอวกาศ",
+          "needs_svg": true,
+          "svg_type": "solar_system",
+          "status": "active"
+        }
+      ]
     }
   ],
   "planned_courses": [
     {
-      "subject": "วิทยาศาสตร์",
+      "subject": "เทคโนโลยี",
       "grade": "ม.3",
-      "phase": 2
+      "phase": 5
     },
     {
       "subject": "คณิตศาสตร์",
