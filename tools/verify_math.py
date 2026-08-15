@@ -13,6 +13,7 @@ validate.py ตรวจได้แค่ว่ากรอกค่าตร�
 
 รัน:  python3 tools/verify_math.py
 """
+import ast
 import glob
 import json
 import math
@@ -46,10 +47,23 @@ def txt(q):
     return re.sub(r"\s+", " ", s.replace("−", "-").replace(",", "")).strip()
 
 
+# หน่วยที่ผู้เขียนโจทย์อาจติดมากับเฉลย — ตัดออกก่อนเทียบตัวเลข (ชุดเดียวกับ NOISE_WORDS ในหน้าเว็บ)
+UNIT_RE = re.compile(
+    r"ลูกบาศก์เซนติเมตร|ตารางเซนติเมตร|เซนติเมตร|กิโลเมตร|มิลลิเมตร|กิโลกรัม|ชั่วโมง|"
+    r"ลบ\.ซม\.|ตร\.ซม\.|ลบ\.ม\.|ตร\.ม\.|องศา|หน่วย|บาท|เมตร|ลิตร|นาที|วินาที|"
+    r"ซม\.|กม\.|มม\.|กก\.|ข้อ|คน|ปี|วัน|เล่ม|ด้าม|ชิ้น|ลูก|ใบ|ตัว|เท่า|จำนวน|ส่วน|%")
+
+
 def num(s):
-    s = str(s).strip()
-    if re.fullmatch(r"-?\d+/-?\d+", s):
-        return Fraction(s)
+    """เฉลยอาจเป็น HTML (เศษส่วนซ้อน) หรือมีหน่วยติดมา — ทำให้เหลือแต่ตัวเลขก่อนเทียบ"""
+    s = re.sub(r'<span class="frac"><span class="num">(.*?)</span>'
+               r'<span class="den">(.*?)</span></span>', r"\1/\2", str(s))
+    s = re.sub(r"<[^>]+>", "", s)
+    if "=" in s:
+        s = s.split("=")[-1]
+    s = UNIT_RE.sub(" ", s).replace(",", "").replace("−", "-").strip()
+    if re.fullmatch(r"-?\d+\s*/\s*-?\d+", s):
+        return Fraction(s.replace(" ", ""))
     if re.fullmatch(r"-?\d+(\.\d+)?", s):
         return Fraction(s)
     return None
@@ -61,6 +75,97 @@ def want(q, value, why):
     got = num(q["answer"])
     if got is None or Fraction(value) != got:
         bad.append((q["id"], why, q["answer"], str(Fraction(value)), txt(q)[:95]))
+
+
+# ---------- ตัวประเมินนิพจน์เลขคณิต ----------
+# ใช้ ast แทน eval — โจทย์มาจากไฟล์ในโปรเจกต์ก็จริง แต่ตัวตรวจไม่ควรรันอะไรก็ได้ที่อ่านเจอ
+_OPS = {
+    ast.Add: lambda a, b: a + b,
+    ast.Sub: lambda a, b: a - b,
+    ast.Mult: lambda a, b: a * b,
+    ast.Div: lambda a, b: a / b,
+    ast.Pow: lambda a, b: a ** b,
+}
+
+
+class NotArithmetic(Exception):
+    """ไม่ใช่นิพจน์เลขคณิตล้วน — ตรวจซ้ำแบบคิดเลขไม่ได้"""
+
+
+def _walk(node):
+    if isinstance(node, ast.Expression):
+        return _walk(node.body)
+    if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
+        # ผ่าน str() เพื่อให้ 0.2 เป็น 1/5 พอดี ไม่ใช่ค่าประมาณของ float
+        return Fraction(str(node.value))
+    if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub)):
+        v = _walk(node.operand)
+        return v if isinstance(node.op, ast.UAdd) else -v
+    if isinstance(node, ast.BinOp) and type(node.op) in _OPS:
+        a, b = _walk(node.left), _walk(node.right)
+        if isinstance(node.op, ast.Div) and b == 0:
+            raise NotArithmetic("หารด้วยศูนย์")
+        if isinstance(node.op, ast.Pow) and (b.denominator != 1 or b < 0 or b > 64):
+            raise NotArithmetic("เลขชี้กำลังไม่เหมาะ")
+        return _OPS[type(node.op)](a, b)
+    raise NotArithmetic(ast.dump(node)[:40])
+
+
+def _split_top(expr, ops):
+    """แยกนิพจน์ที่ตัวดำเนินการระดับนอกสุด -> ([ตัวถูกดำเนินการ], [ตัวดำเนินการ])"""
+    parts, seps, buf, depth = [], [], "", 0
+    for ch in expr:
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth -= 1
+        if depth == 0 and ch in ops and buf.strip():
+            parts.append(buf)
+            seps.append(ch)
+            buf = ""
+            continue
+        buf += ch
+    parts.append(buf)
+    return parts, seps
+
+
+def _group(expr):
+    """ครอบวงเล็บรอบตัวถูกดำเนินการของ × ÷ ที่ระดับนอกสุด
+
+    โจทย์ "3/4 ÷ 6/9" ที่มาจากเศษส่วนซ้อน ถ้าแปลงตรง ๆ จะกลายเป็น 3/4/6/9 ซึ่งผิดความหมาย
+
+    ทำเฉพาะเมื่อ *ทั้งนิพจน์* เป็นการคูณ/หารล้วน และมีตัวถูกดำเนินการที่เป็นเศษส่วนอยู่จริง
+    ถ้ามี + หรือ - ระดับนอกสุดด้วย ห้ามครอบเด็ดขาด ไม่งั้นลำดับการดำเนินการเพี้ยน
+    (เช่น "9 + (-2) × 2 - (-3)" ต้องได้ 8 ไม่ใช่ (9 + (-2)) × (2 - (-3)) = 35)
+    """
+    parts, seps = _split_top(expr, "×÷")
+    if not seps:
+        return expr
+    if _split_top(expr, "+")[1] or _split_top(expr.lstrip(" -"), "-")[1]:
+        return expr
+    if not any("/" in p for p in parts):
+        return expr
+    out = f"({parts[0]})"
+    for sep, part in zip(seps, parts[1:]):
+        out += ("*" if sep == "×" else "/") + f"({part})"
+    return out
+
+
+def arith(expr):
+    """'(-52) - (-74)' -> Fraction(22) · รับเฉพาะ + - × ÷ ^ วงเล็บ และจำนวนเต็ม"""
+    e = _group(expr.replace("✕", "×"))
+    e = (e.replace("×", "*").replace("÷", "/")
+          .replace("^", "**").replace("−", "-").replace(",", "").strip())
+    e = e.rstrip(" .")
+    if not re.fullmatch(r"[-+*/() \d.]+", e) or not re.search(r"\d", e):
+        raise NotArithmetic(e[:40])
+    try:
+        return _walk(ast.parse(e, mode="eval"))
+    except NotArithmetic:
+        raise
+    except (SyntaxError, ValueError, TypeError, ZeroDivisionError, MemoryError,
+            RecursionError, OverflowError):
+        raise NotArithmetic(e[:40])
 
 
 # ---------- อสมการ ----------
@@ -570,8 +675,476 @@ def _(q, m):
     want(q, Fraction(math.isqrt(c * c - a * a), c), "cos จาก sin")
 
 
+# ---------- นิพจน์เลขคณิตล้วน (ครอบคลุมโจทย์คิดเลขของ ม.1/ม.2 จำนวนมาก) ----------
+@rule(r"^จงหาผลลัพธ์ของ (.+?)\s*$")
+def _(q, m):
+    want(q, arith(m[1]), "คิดเลขตามนิพจน์")
+
+
+@rule(r"^จงหาค่าของ ((?:[-+*/()\d.,×÷^ ])+)\s*$")
+def _(q, m):
+    want(q, arith(m[1]), "คิดเลขตามนิพจน์")
+
+
+# ---------- รูปหลายเหลี่ยมด้านเท่ามุมเท่า ----------
+@rule(r"สร้างรูป (\d+) เหลี่ยมด้านเท่ามุมเท่า จงหาขนาดของมุมภายในแต่ละมุม")
+def _(q, m):
+    n = int(m[1])
+    want(q, Fraction(180 * (n - 2), n), "มุมภายในรูป n เหลี่ยม")
+
+
+@rule(r"แบ่งมุมรอบจุดศูนย์กลางออกเป็น (\d+) ส่วนเท่า ๆ กัน จงหาขนาดของมุมที่จุดศูนย์กลาง")
+def _(q, m):
+    want(q, Fraction(360, int(m[1])), "มุมที่จุดศูนย์กลาง")
+
+
+@rule(r"^รูป (\d+) เหลี่ยมด้านเท่ามุมเท่า จงหาจำนวนเส้นทแยงมุมทั้งหมด")
+def _(q, m):
+    n = int(m[1])
+    want(q, Fraction(n * (n - 3), 2), "จำนวนเส้นทแยงมุม")
+
+
+@rule(r"มุมภายในของรูปหลายเหลี่ยมด้านเท่ามุมเท่ารูปหนึ่งมีขนาด (\d+) องศา จงหาจำนวนด้าน")
+def _(q, m):
+    inner = int(m[1])
+    # ไล่หา n ที่ทำให้มุมภายในตรงตามโจทย์ ไม่ใช้สูตรย้อน
+    ns = [n for n in range(3, 400) if Fraction(180 * (n - 2), n) == inner]
+    if not ns:
+        bad.append((q["id"], "หาจำนวนด้านจากมุมภายใน", q["answer"],
+                    "ไม่มีรูปหลายเหลี่ยมที่มุมภายในเท่านี้", txt(q)[:95]))
+        return
+    want(q, ns[0], "หาจำนวนด้านจากมุมภายใน")
+
+
+# ---------- การสร้างทางเรขาคณิต ----------
+@rule(r"สร้างเส้นแบ่งครึ่งมุมของมุมขนาด (\d+) องศา จงหาขนาดของมุมที่ได้แต่ละมุม")
+def _(q, m):
+    want(q, Fraction(int(m[1]), 2), "แบ่งครึ่งมุม")
+
+
+@rule(r"สร้างเส้นแบ่งครึ่งมุมของมุมขนาด (\d+) องศา แล้วแบ่งครึ่งมุมที่ได้อีกครั้งหนึ่ง")
+def _(q, m):
+    want(q, Fraction(int(m[1]), 4), "แบ่งครึ่งมุมสองครั้ง")
+
+
+@rule(r"แบ่งครึ่งส่วนของเส้นตรง AB ที่ยาว (\d+) เซนติเมตร ที่จุด M จงหาความยาว AM")
+def _(q, m):
+    want(q, Fraction(int(m[1]), 2), "แบ่งครึ่งส่วนของเส้นตรง")
+
+
+@rule(r"แบ่งส่วนของเส้นตรงยาว (\d+) เซนติเมตร ออกเป็น (\d+) ส่วนเท่า ๆ กัน")
+def _(q, m):
+    want(q, Fraction(int(m[1]), int(m[2])), "แบ่งส่วนของเส้นตรง")
+
+
+@rule(r"สร้างรูปสามเหลี่ยมมุมฉากที่มีด้านประกอบมุมฉากยาว (\d+) และ (\d+) เซนติเมตร")
+def _(q, m):
+    a, b = int(m[1]), int(m[2])
+    want(q, math.isqrt(a * a + b * b), "ด้านตรงข้ามมุมฉาก")
+
+
+# ---------- กราฟฟังก์ชันกำลังสอง: จุดยอด ----------
+@rule(r"กราฟของ y = -?\d*\(x ([+-]) (\d+)\)\^2 [+-] \d+ มีจุดยอดที่ \(h k\) จงหาค่าของ h")
+def _(q, m):
+    want(q, -int(m[2]) * (1 if m[1] == "+" else -1), "จุดยอด h")
+
+
+@rule(r"กราฟของ y = -?\d*\(x [+-] \d+\)\^2 ([+-]) (\d+) มีจุดยอดที่ \(h k\) จงหาค่าของ k")
+def _(q, m):
+    want(q, int(m[2]) * (1 if m[1] == "+" else -1), "จุดยอด k")
+
+
+@rule(r"จงหาค่าสูงสุดของ y = -\d*\(x [+-] \d+\)\^2 \+ (\d+)")
+def _(q, m):
+    want(q, int(m[1]), "ค่าสูงสุด")
+
+
+# ---------- ความเท่ากันทุกประการ ----------
+@rule(r"เท่ากันทุกประการกับรูปสามเหลี่ยม DEF ถ้า (?:AB|BC|CA) ยาว (\d+) เซนติเมตร")
+def _(q, m):
+    want(q, int(m[1]), "ด้านสมนัยของรูปที่เท่ากันทุกประการ")
+
+
+# ---------- รากที่สอง / รากที่สาม ----------
+@rule(r"^จงหารากที่สองที่เป็นบวกของ (\d+)\s*$")
+def _(q, m):
+    n = int(m[1])
+    want(q, next(k for k in range(0, 10001) if k * k == n), "รากที่สอง")
+
+
+@rule(r"^จงหารากที่สามของ (\d+)\s*$")
+def _(q, m):
+    n = int(m[1])
+    want(q, next(k for k in range(0, 1001) if k ** 3 == n), "รากที่สาม")
+
+
+# ---------- ปริมาตรทรงสี่เหลี่ยมมุมฉาก ----------
+@rule(r"ทรงสี่เหลี่ยมมุมฉากมีความกว้าง (\d+) ซม. ยาว (\d+) ซม. สูง (\d+) ซม. จงหาปริมาตร")
+def _(q, m):
+    w, l, h = map(int, m.groups())
+    want(q, w * l * h, "ปริมาตรทรงสี่เหลี่ยมมุมฉาก")
+
+
+# ---------- สัญกรณ์วิทยาศาสตร์ ----------
+@rule(r"^จงเขียน (\d+) ในรูปสัญกรณ์วิทยาศาสตร์ โดยตอบเฉพาะเลขชี้กำลังของ 10")
+def _(q, m):
+    want(q, len(m[1].lstrip("0")) - 1, "เลขชี้กำลังสัญกรณ์วิทยาศาสตร์")
+
+
+# ---------- พหุนามตัวแปรเดียว ----------
+# เก็บเป็น dict {เลขชี้กำลัง: สัมประสิทธิ์} เพื่อเทียบว่า "เฉลยที่แยกตัวประกอบแล้ว"
+# กระจายออกมาแล้วตรงกับโจทย์จริงหรือไม่ — เป็นการตรวจที่ไม่พึ่งตัวสร้างเลย
+class NotPoly(Exception):
+    pass
+
+
+_TOK = re.compile(r"\s*(\*\*|[-+*()^]|\d+|[a-zA-Z])")
+
+
+def _tokens(src):
+    out, i = [], 0
+    while i < len(src):
+        m = _TOK.match(src, i)
+        if not m:
+            if src[i].isspace():
+                i += 1
+                continue
+            raise NotPoly(src[i:i + 12])
+        out.append(m.group(1))
+        i = m.end()
+    return out
+
+
+def _mono(k1, k2):
+    d = dict(k1)
+    for v, e in k2:
+        d[v] = d.get(v, 0) + e
+    return tuple(sorted((v, e) for v, e in d.items() if e))
+
+
+def _pmul(a, b):
+    out = {}
+    for k1, c1 in a.items():
+        for k2, c2 in b.items():
+            k = _mono(k1, k2)
+            out[k] = out.get(k, Fraction(0)) + c1 * c2
+    return {k: c for k, c in out.items() if c}
+
+
+def _padd(a, b, sign=1):
+    out = dict(a)
+    for k, c in b.items():
+        out[k] = out.get(k, Fraction(0)) + sign * c
+    return {k: c for k, c in out.items() if c}
+
+
+def poly(src):
+    """'(x + 2)(x + 3)' -> {(('x',2),):1, (('x',1),):5, ():6}
+
+    รับหลายตัวแปร (เช่น 3a + 2b) และเลขชี้กำลังจำนวนเต็มไม่ติดลบเท่านั้น
+    """
+    toks = _tokens(src)
+    pos = [0]
+
+    def peek():
+        return toks[pos[0]] if pos[0] < len(toks) else None
+
+    def eat():
+        t = peek()
+        pos[0] += 1
+        return t
+
+    def atom():
+        t = peek()
+        if t == "(":
+            eat()
+            v = expr()
+            if eat() != ")":
+                raise NotPoly("วงเล็บไม่ครบ")
+            return v
+        if t == "-":
+            eat()
+            return _padd({}, atom(), -1)
+        if t and t.isdigit():
+            eat()
+            return {(): Fraction(int(t))}
+        if t and t.isalpha():
+            eat()
+            return {((t, 1),): Fraction(1)}
+        raise NotPoly(str(t))
+
+    def power():
+        base = atom()
+        while peek() in ("^", "**"):
+            eat()
+            e = peek()
+            neg = False
+            if e == "-":
+                eat()
+                neg = True
+                e = peek()
+            if not (e and e.isdigit()):
+                raise NotPoly("เลขชี้กำลังไม่ใช่จำนวนเต็ม")
+            eat()
+            n = int(e)
+            if neg or n > 12:
+                raise NotPoly("เลขชี้กำลังไม่เหมาะ")
+            out = {(): Fraction(1)}
+            for _ in range(n):
+                out = _pmul(out, base)
+            base = out
+        return base
+
+    def term():
+        v = power()
+        while True:
+            t = peek()
+            if t == "*":
+                eat()
+                v = _pmul(v, power())
+            elif t == "(" or (t and (t.isdigit() or t.isalpha())):
+                v = _pmul(v, power())          # คูณโดยละเครื่องหมาย เช่น 3x หรือ (x+1)(x+2)
+            else:
+                return v
+
+    def expr():
+        v = term()
+        while peek() in ("+", "-"):
+            op = eat()
+            v = _padd(v, term(), 1 if op == "+" else -1)
+        return v
+
+    v = expr()
+    if pos[0] != len(toks):
+        raise NotPoly("อ่านไม่หมด: " + " ".join(toks[pos[0]:])[:20])
+    return v
+
+
+def poly_of(src):
+    """เตรียมข้อความก่อนแยกวิเคราะห์ — ถอด HTML, แปลง × ÷ และ ^ ให้เป็นรูปที่ parser รับ"""
+    t = (src.replace("−", "-").replace("×", "*").replace("✕", "*")
+            .replace("·", "*").replace(",", ""))
+    t = re.sub(r"<sup>(.*?)</sup>", r"^\1", t)
+    t = re.sub(r"<[^>]+>", "", t)
+    t = t.split("หรือ")[0]        # เฉลยอาจให้หลายรูปแบบ ใช้แบบแรกพอ
+    if "/" in t or "÷" in t or "√" in t:
+        raise NotPoly("มีการหาร/ราก")
+    return poly(t.strip())
+
+
+# ---------- พหุนาม: กระจายเฉลยแล้วต้องตรงกับโจทย์ ----------
+@rule(r"^จงแยกตัวประกอบของ (.+?)\s*$")
+def _(q, m):
+    global checks
+    checks += 1
+    try:
+        want_p, got_p = poly_of(m[1]), poly_of(q["answer"])
+    except NotPoly:
+        checks -= 1
+        raise NotPlainData("แยกวิเคราะห์พหุนามไม่ได้")
+    if want_p != got_p:
+        bad.append((q["id"], "แยกตัวประกอบ", q["answer"],
+                    "กระจายแล้วไม่ตรงกับโจทย์", txt(q)[:95]))
+
+
+@rule(r"^จงหาผล(คูณ|บวก|ลบ)ของ (.+?) กับ (.+?) ในรูปผลสำเร็จ")
+def _(q, m):
+    global checks
+    checks += 1
+    try:
+        a, b_, got = poly_of(m[2]), poly_of(m[3]), poly_of(q["answer"])
+    except NotPoly:
+        checks -= 1
+        raise NotPlainData("แยกวิเคราะห์พหุนามไม่ได้")
+    exp = {"คูณ": _pmul(a, b_), "บวก": _padd(a, b_), "ลบ": _padd(a, b_, -1)}[m[1]]
+    if exp != got:
+        bad.append((q["id"], "พหุนาม" + m[1], q["answer"],
+                    "คิดเองแล้วไม่ตรง", txt(q)[:95]))
+
+
+@rule(r"ถ้า \(x - (\d+)\)\(x - (\d+)\) เท่ากับ 0 คำตอบของสมการคือ x เท่ากับ \d+ และเท่าใด")
+def _(q, m):
+    a, b_ = int(m[1]), int(m[2])
+    roots = [x for x in range(-500, 501) if (x - a) * (x - b_) == 0]
+    want(q, max(roots), "รากอีกตัวของสมการ")
+
+
+# ---------- ความเท่ากันทุกประการ: มุมสมนัย ----------
+@rule(r"เท่ากันทุกประการกับรูปสามเหลี่ยม DEF ถ้ามุม [ABC] มีขนาด (\d+) องศา")
+def _(q, m):
+    want(q, int(m[1]), "มุมสมนัยของรูปที่เท่ากันทุกประการ")
+
+
+# ---------- การแปลงทางเรขาคณิตบนระนาบพิกัด ----------
+def want_pair(q, xy, why):
+    """เฉลยเป็นพิกัด เช่น "(3, -5)" — เทียบเป็นคู่อันดับ ไม่ใช่ตัวเลขเดี่ยว"""
+    global checks
+    checks += 1
+    raw = re.sub(r"<[^>]+>", "", str(q["answer"])).replace("−", "-").split("หรือ")[0]
+    nums = re.findall(r"-?\d+", raw)
+    got = tuple(int(n) for n in nums)
+    if got != tuple(xy):
+        bad.append((q["id"], why, q["answer"], str(tuple(xy)), txt(q)[:95]))
+
+
+@rule(r"จุด [A-Z]\((-?\d+) (-?\d+)\) สะท้อนข้ามแกน ([XY]) ภาพที่ได้มีพิกัดใด")
+def _(q, m):
+    x, y = int(m[1]), int(m[2])
+    want_pair(q, (x, -y) if m[3] == "X" else (-x, y), "สะท้อนข้ามแกน")
+
+
+@rule(r"จุด [A-Z]\((-?\d+) (-?\d+)\) หมุนรอบจุดกำเนิด 180 องศา")
+def _(q, m):
+    want_pair(q, (-int(m[1]), -int(m[2])), "หมุน 180 องศา")
+
+
+@rule(r"จุด [A-Z]\((-?\d+) (-?\d+)\) เลื่อนขนานไปทาง(ขวา|ซ้าย) (\d+) หน่วย "
+      r"และ(ขึ้นบน|ลงล่าง) (\d+) หน่วย")
+def _(q, m):
+    x = int(m[1]) + (int(m[4]) if m[3] == "ขวา" else -int(m[4]))
+    y = int(m[2]) + (int(m[6]) if m[5] == "ขึ้นบน" else -int(m[6]))
+    want_pair(q, (x, y), "เลื่อนขนาน")
+
+
+# ---------- โจทย์ปัญหาพีทาโกรัส (ตัวเลขอยู่ในข้อความ) ----------
+@rule(r"สูง (\d+) เมตร มีเชือกยึดจากยอดเสามายังหมุดบนพื้นที่ห่างโคนเสา (\d+) เมตร")
+def _(q, m):
+    a, b_ = int(m[1]), int(m[2])
+    want(q, math.isqrt(a * a + b_ * b_), "ความยาวเชือก")
+
+
+@rule(r"ฐานบันไดห่างจากกำแพง (\d+) เมตร และปลายบันไดอยู่สูงจากพื้น (\d+) เมตร")
+def _(q, m):
+    a, b_ = int(m[1]), int(m[2])
+    want(q, math.isqrt(a * a + b_ * b_), "ความยาวบันได")
+
+
+# ---------- ปริซึมสามเหลี่ยม ----------
+@rule(r"ปริซึมสามเหลี่ยมมีฐานเป็นรูปสามเหลี่ยมที่มีความยาวฐาน (\d+) ซม. สูง (\d+) ซม."
+      r".*?ยาว (\d+) ซม. จงหาปริมาตร")
+def _(q, m):
+    b_, h, l = map(int, m.groups())
+    want(q, Fraction(b_ * h, 2) * l, "ปริมาตรปริซึมสามเหลี่ยม")
+
+
+# ---------- สมการกำลังสองจากการแยกตัวประกอบ ----------
+@rule(r"จงหาคำตอบที่เป็นบวกของสมการ x\^2 ([+-]) (\d+)x ([+-]) (\d+) เท่ากับ 0 ที่มีค่ามากกว่า")
+def _(q, m):
+    b_ = int(m[2]) * (1 if m[1] == "+" else -1)
+    c = int(m[4]) * (1 if m[3] == "+" else -1)
+    roots = [x for x in range(-500, 501) if x * x + b_ * x + c == 0]
+    want(q, max(roots), "รากที่มากกว่า")
+
+
+# ---------- เลขยกกำลังฐานเดียว ----------
+@rule(r"จงเขียน (\d+)\^(\d+) ([×÷]) \1\^(\d+) ให้อยู่ในรูปเลขยกกำลังฐานเดียว")
+def _(q, m):
+    e1, op, e2 = int(m[2]), m[3], int(m[4])
+    exp = e1 + e2 if op == "×" else e1 - e2
+    got = re.findall(r"-?\d+", re.sub(r"<[^>]+>", "^", str(q["answer"])))
+    global checks
+    checks += 1
+    if len(got) < 2 or int(got[0]) != int(m[1]) or int(got[1]) != exp:
+        bad.append((q["id"], "เลขยกกำลังฐานเดียว", q["answer"],
+                    f"{m[1]}^{exp}", txt(q)[:95]))
+
+
+# ---------- คูณพหุนามที่เขียนติดกัน ----------
+@rule(r"^จงหาผลคูณของ (\(.+?\)\(.+?\)) ในรูปผลสำเร็จ")
+def _(q, m):
+    global checks
+    checks += 1
+    try:
+        exp, got = poly_of(m[1]), poly_of(q["answer"])
+    except NotPoly:
+        checks -= 1
+        raise NotPlainData("แยกวิเคราะห์พหุนามไม่ได้")
+    if exp != got:
+        bad.append((q["id"], "คูณพหุนาม", q["answer"], "กระจายแล้วไม่ตรง", txt(q)[:95]))
+
+
+def selftest():
+    """ตัวตรวจเองก็เคยพลาดมาแล้ว (ครอบวงเล็บจนลำดับการดำเนินการเพี้ยน) จึงต้องมีเทสต์ของตัวเอง"""
+    cases = [
+        ("9 + (-2) × 2 - (-3)", Fraction(8)),      # ต้องคูณก่อนบวก
+        ("(-2) + 3 × 6 - (-8)", Fraction(24)),
+        ("(-52) - (-74)", Fraction(22)),
+        ("(5)/(8) ÷ (6)/(9)", Fraction(15, 16)),   # เศษส่วนหารเศษส่วน ต้องครอบวงเล็บให้
+        ("(1)/(3) × (1)/(5)", Fraction(1, 15)),
+        ("-(3)/(12) + (2)/(5)", Fraction(3, 20)),
+        ("3^4 ÷ 3^3", Fraction(3)),
+        ("((-2)^2)^2", Fraction(16)),
+        ("2 × 3 × 4", Fraction(24)),
+    ]
+    fails = []
+    for expr, expect in cases:
+        try:
+            got = arith(expr)
+        except NotArithmetic as e:
+            got = f"NotArithmetic({e})"
+        if got != expect:
+            fails.append(f"{expr!r} -> {got} (ต้องได้ {expect})")
+    # ค่าที่ไม่ใช่เลขคณิตต้องถูกปฏิเสธ ไม่ใช่เดาเอา
+    for expr in ["x + 1", "__import__('os')", "2 ** 999999", "5/0"]:
+        try:
+            arith(expr)
+            fails.append(f"{expr!r} ควรถูกปฏิเสธแต่ผ่าน")
+        except NotArithmetic:
+            pass
+    # เฉลยที่มี HTML / หน่วย / เครื่องหมายเท่ากับ ต้องอ่านเป็นตัวเลขได้
+    for raw, expect in [('<span class="frac"><span class="num">3</span>'
+                         '<span class="den">4</span></span>', Fraction(3, 4)),
+                        ("588 ลบ.ซม.", Fraction(588)),
+                        ("3<sup>1</sup> = 3", Fraction(3)),
+                        ("-19/40", Fraction(-19, 40)),
+                        ("4.8", Fraction(24, 5))]:
+        if num(raw) != expect:
+            fails.append(f"num({raw[:30]!r}) -> {num(raw)} (ต้องได้ {expect})")
+    X2, X1 = (("x", 2),), (("x", 1),)
+    for src, expect in [("(x + 2)(x + 3)", {X2: Fraction(1), X1: Fraction(5), (): Fraction(6)}),
+                        ("x^2 + 5x + 6", {X2: Fraction(1), X1: Fraction(5), (): Fraction(6)}),
+                        ("3x", {X1: Fraction(3)}),
+                        ("(x - 2)(x + 2)", {X2: Fraction(1), (): Fraction(-4)}),
+                        ("(x + 2)(x + 3) หรือ (x + 3)(x + 2)",
+                         {X2: Fraction(1), X1: Fraction(5), (): Fraction(6)}),
+                        ("3a + 2b", {(("a", 1),): Fraction(3), (("b", 1),): Fraction(2)}),
+                        ("7x + 3", {X1: Fraction(7), (): Fraction(3)})]:
+        try:
+            got = poly_of(src)
+        except NotPoly as e:
+            got = f"NotPoly({e})"
+        if got != expect:
+            fails.append(f"poly_of({src!r}) -> {got} (ต้องได้ {expect})")
+    for src in ["3/x", "x^-2", "x^99"]:
+        try:
+            poly_of(src)
+            fails.append(f"poly_of({src!r}) ควรถูกปฏิเสธแต่ผ่าน")
+        except NotPoly:
+            pass
+    if fails:
+        print("❌ ตัวตรวจเองทำงานผิด")
+        for f in fails:
+            print("   -", f)
+        return 1
+    return 0
+
+
+def bucket(course, q):
+    """จัดกลุ่มข้อที่ตรวจซ้ำไม่ได้ เพื่อให้เห็นชัดว่าเหลืออะไรที่ยังต้องเชื่อตัวสร้าง"""
+    if course["subject"] != "คณิตศาสตร์":
+        return "วิชาอื่น (ตัวตรวจนี้ดูเฉพาะคณิตศาสตร์)"
+    if "figure" in q or "[[fig]]" in q["text"]:
+        return "ตัวเลขอยู่ในรูป อ่านจากข้อความไม่ได้"
+    if 'class="choices' in q["text"]:
+        return "ปรนัยเชิงนิยาม/แนวคิด ไม่มีเลขให้คิด"
+    return "คณิตศาสตร์ที่ยังไม่มีกฎรองรับ"
+
+
 def main():
     global skipped
+    if selftest():
+        return 1
+    buckets = {}
     for course in json.load(open(os.path.join(QDIR, "courses.json"), encoding="utf-8")):
         for path in sorted(glob.glob(os.path.join(QDIR, course["slug"], "unit-*.json"))):
             data = json.load(open(path, encoding="utf-8"))
@@ -583,13 +1156,18 @@ def main():
                     if mt:
                         try:
                             fn(q, mt)
-                        except NotPlainData:
-                            skipped += 1
+                        except (NotPlainData, NotArithmetic, NotPoly):
+                            k = bucket(course, q)
+                            buckets[k] = buckets.get(k, 0) + 1
                         break
                 else:
-                    skipped += 1
+                    k = bucket(course, q)
+                    buckets[k] = buckets.get(k, 0) + 1
 
-    print(f"  ตรวจซ้ำด้วยการคิดใหม่ {checks} ข้อ · ไม่เข้ารูปแบบที่ตรวจได้ {skipped} ข้อ")
+    tot = sum(buckets.values()) + checks
+    print(f"  ตรวจซ้ำด้วยการคิดใหม่ {checks} ข้อ จาก {tot} ข้อ")
+    for k, n in sorted(buckets.items(), key=lambda kv: -kv[1]):
+        print(f"    ยังไม่ได้ตรวจ {n:>4} ข้อ — {k}")
     if bad:
         print(f"\n❌ เฉลยไม่ตรงกับที่คิดใหม่ {len(bad)} ข้อ")
         for row in bad[:25]:
