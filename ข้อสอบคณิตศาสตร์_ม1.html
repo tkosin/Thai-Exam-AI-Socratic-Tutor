@@ -343,10 +343,15 @@
     transition:transform .22s ease, visibility 0s linear .22s;
   }
   .tutor-panel.show{ transform:none; visibility:visible; transition:transform .22s ease, visibility 0s; }
-  /* เบียดเฉพาะ "เนื้อหา" ของกล่องที่จัดกลางไว้ พื้นหลังหัวเรื่องยังเต็มความกว้าง */
+  /* เบียดเฉพาะ "เนื้อหา" ของกล่องที่จัดกลางไว้ พื้นหลังหัวเรื่องยังเต็มความกว้าง
+     และขยายเพดานความกว้างขึ้นเท่าความกว้างแผง เพื่อให้เนื้อที่ของข้อสอบเท่าเดิม
+     (ถ้าไม่ขยาย ข้อสอบจะถูกบีบเพราะไปกินที่จากกล่อง --maxw เดิม) */
   body.tutor-on .header-inner,
   body.tutor-on .progress-wrap,
-  body.tutor-on .layout{ padding-right:calc(var(--tutorw) + 20px); }
+  body.tutor-on .layout{
+    max-width:calc(var(--maxw) + var(--tutorw) + 20px);
+    padding-right:calc(var(--tutorw) + 20px);
+  }
   .tp-head{
     flex:0 0 auto; display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
     padding:12px 14px 10px 16px; background:var(--navy); color:#fff;
@@ -377,6 +382,21 @@
   .bubble.me{ align-self:flex-end; background:var(--navy); color:#fff; border-bottom-right-radius:3px; }
   .bubble.ai{ align-self:flex-start; background:#fff; border:1px solid #dde5ec; border-bottom-left-radius:3px; }
   .bubble.ai code{ background:#f1efe6; padding:1px 4px; border-radius:4px; font-size:13px; }
+  /* ยกกำลัง/ตัวห้อยในคำตอบ — ตั้ง line-height:0 ไม่ให้บรรทัดที่มีเลขชี้กำลังถ่างกว่าบรรทัดอื่น */
+  .bubble sup, .bubble sub{ font-size:.72em; line-height:0; position:relative; vertical-align:baseline; }
+  .bubble sup{ top:-.5em; }
+  .bubble sub{ bottom:-.25em; }
+  .bubble .frac{ font-size:.95em; }
+  .bubble.me .frac .num{ border-bottom-color:currentColor; }
+  /* รูปที่ติวเตอร์วาดประกอบคำอธิบาย */
+  .bubble-fig{
+    margin:9px 0 3px 0; padding:8px; background:#fff;
+    border:1px solid #e2e8ee; border-radius:8px;
+  }
+  .bubble-fig svg{ display:block; width:100%; height:auto; max-height:260px; }
+  .bubble-fig.bad{ font-size:12px; color:#8d3325; background:#fbf1ef; border-color:#e8cdc7; }
+  .bubble.me .bubble-fig{ background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.3); }
+  .fig-wait{ display:block; font-size:12px; color:var(--ink-soft); margin-top:4px; }
   .bubble.err{ align-self:stretch; max-width:100%; background:#fbf1ef; border:1px solid #e8cdc7; color:#8d3325; font-size:13px; }
   .bubble .caret{ display:inline-block; width:7px; height:15px; vertical-align:-2px; background:var(--navy); opacity:.5; animation:blink 1s steps(2) infinite; }
   @keyframes blink{ 50%{ opacity:0; } }
@@ -548,7 +568,7 @@
     .tutor-panel{ box-shadow:none; }
     body.tutor-on .header-inner,
     body.tutor-on .progress-wrap,
-    body.tutor-on .layout{ padding-right:20px; }
+    body.tutor-on .layout{ max-width:var(--maxw); padding-right:20px; }
   }
 
   /* tablet / mobile: แผงตัวกรองกางเป็นแถบเต็มความกว้างเหนือข้อสอบ (ไม่ sticky) */
@@ -1541,14 +1561,37 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
       '- ตอบเป็นภาษาไทย ภาษาพูดง่าย ๆ เป็นกันเอง ให้กำลังใจ เหมาะกับเด็ก ม.ต้น',
       '- สั้น ๆ 2–5 บรรทัด และปิดท้ายด้วยคำถามเพียง 1 ข้อ (ยกเว้นขั้นที่เฉลยเต็ม)',
       '- ถามครั้งละหนึ่งเรื่อง อย่ายิงคำถามหลายข้อรวดเดียว',
-      '- เขียนคณิตศาสตร์เป็นข้อความธรรมดา เช่น x^2, 3/4, √16, 12 ตร.ซม. · ห้ามใช้ LaTeX หรือ $...$',
+      // หน้าเว็บจัดรูปสัญกรณ์พวกนี้ให้เป็นสมการจริง (ยกกำลังเป็นตัวยก เศษส่วนเป็นชั้นบน/ล่าง)
+      // จึงต้องบอกให้เขียนตามนี้เท่านั้น ไม่ใช่ LaTeX
+      '- เขียนคณิตศาสตร์เป็นข้อความธรรมดาตามสัญกรณ์นี้ แล้วหน้าเว็บจะจัดรูปให้เป็นสมการเอง:',
+      '  ยกกำลังใช้ ^ (2^3, x^2, 10^(-2)) · ตัวห้อยใช้ _ (a_1) · รากใช้ √ (√16, √(x+1))',
+      '  เศษส่วนและการหารใช้ / (3/4, (x+1)/2) · คูณใช้ × หรือ * · ไม่เท่ากับ/มากกว่าเท่ากับ ใช้ ≠ ≥ ≤ (หรือ != >= <=)',
+      '- ห้ามใช้ LaTeX ทุกชนิด: ไม่ใช้ $...$, \\frac{}{}, \\sqrt{}, \\times',
       '- ถ้าน้องตอบถูก ให้ชมสั้น ๆ แล้วชวนต่อขั้นถัดไป · ถ้าผิด อย่าบอกว่าผิดเฉย ๆ ' +
         'ให้ถามคำถามที่ทำให้น้องเห็นเองว่าติดตรงไหน',
       '- ถ้าน้องถามเรื่องอื่นที่ไม่เกี่ยวกับโจทย์ข้อนี้ ให้ตอบสั้น ๆ แล้วพากลับมาที่โจทย์',
       hasFigure
         ? '- โจทย์ข้อนี้มีรูปประกอบ (ตรงที่เขียนว่า ⟪รูปประกอบ⟫) ซึ่งคุณมองไม่เห็น ' +
           'ถ้าต้องใช้ค่าจากรูป ให้ถามน้องว่าอ่านค่าอะไรได้จากรูปแทนการเดา'
-        : ''
+        : '',
+      '',
+      '## วาดรูปประกอบได้ (ใช้เมื่อจำเป็นเท่านั้น)',
+      'ถ้ารูปจะทำให้น้องเห็นภาพชัดขึ้นจริง ๆ ให้แนบ SVG มาในคำตอบ 1 รูป',
+      'เหมาะกับ: รูปเรขาคณิตและการแบ่งส่วน · เส้นจำนวน · เศษส่วนเป็นรูป · มุมและเส้นขนาน ·',
+      'กราฟ/ระนาบพิกัด · รูปคลี่ของทรงสามมิติ · แผนภาพแสดงความสัมพันธ์',
+      'ไม่ต้องวาดถ้าเป็นการคำนวณล้วน ๆ ถามสั้น ๆ หรือรูปไม่ได้ช่วยให้เข้าใจขึ้น — ' +
+        'ส่วนใหญ่ไม่ต้องวาด และห้ามวาดซ้ำรูปที่โจทย์มีอยู่แล้ว',
+      'รูปเป็นของประกอบเท่านั้น ต้องมีคำอธิบายเป็นข้อความควบคู่เสมอ และห้ามใส่คำตอบสุดท้ายลงในรูป',
+      'เขียนเป็นบล็อกแบบนี้:',
+      '```svg',
+      '<svg viewBox="0 0 320 180">…</svg>',
+      '```',
+      'กติกาของรูป (ถ้าผิดจะถูกตัดทิ้งทั้งรูป):',
+      '- ใส่ viewBox เสมอ ขนาดราว 320x180 และห้ามใส่ width/height',
+      '- ใช้ได้เฉพาะแท็ก svg g line polyline polygon rect circle ellipse path text tspan defs marker title desc',
+      '- ห้าม script, style, image, use, foreignObject, a, animate, แอตทริบิวต์ on* และลิงก์ทุกชนิด',
+      '- สี: เส้นหลัก #1E3A5F · เน้น #C0392B · พื้นอ่อน #eef1f4 · ตัวอักษร #232323 · font-size 12–14',
+      '- ป้ายกำกับสั้น ๆ เป็นภาษาไทยได้ ใส่เท่าที่จำเป็น'
     ];
     return lines.filter(l => l !== '').join('\n');
   }
@@ -1576,7 +1619,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
       };
       const body = {
         model: m.id,
-        max_tokens: 3000,
+        max_tokens: 4000,   // เผื่อคำตอบที่แนบรูป SVG มาด้วย
         system,
         messages,
         stream: true
@@ -1637,11 +1680,147 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
     try{ return (JSON.parse(text).error || {}).message || ''; }catch(e){ return ''; }
   }
 
-  // โมเดลตอบเป็น Markdown อ่อน ๆ — รองรับเท่าที่จำเป็น ไม่ดึงไลบรารีเพิ่ม
+  // จัดรูปคำตอบของติวเตอร์ให้เป็นสมการจริง — ยกกำลังเป็น <sup> ตัวห้อยเป็น <sub>
+  // เศษส่วนเป็นชั้นบน/ล่างแบบเดียวกับในโจทย์ (.frac) และเครื่องหมายเป็นสัญลักษณ์คณิตศาสตร์
+  // ทำด้วย HTML ล้วน ไม่ดึง MathJax/KaTeX เพราะหน้านี้ต้องเปิดออฟไลน์ได้ด้วย
+  // ⚠️ ห้ามใช้ lookbehind ((?<=...)) ในนี้ — Safari รุ่นก่อน 16.4 จะ throw ตอน parse
+  //    ทำให้สคริปต์ทั้งไฟล์ไม่ทำงาน จึงจับตัวอักษรข้างหน้าเป็นกลุ่มแล้วใส่คืนแทน
+  const bare = s => /^\(.*\)$/.test(s) ? s.slice(1, -1) : s;
+  const frac = (a, b) => `<span class="frac"><span class="num">${bare(a)}</span>` +
+                         `<span class="den">${bare(b)}</span></span>`;
+
   function mdLite(s){
     return escAttr(s)
+      // เผื่อโมเดลหลุดไปเขียน LaTeX แม้จะสั่งห้ามไว้ — แปลงกลับเป็นสัญกรณ์ข้อความก่อน
+      .replace(/\\d?frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g, '($1)/($2)')
+      .replace(/\\sqrt\s*\{([^{}]*)\}/g, '√($1)')
+      .replace(/\\times/g, '×').replace(/\\div/g, '÷').replace(/\\cdot/g, '·')
+      .replace(/\\(?:left|right|displaystyle|,|;|!)/g, '')
+      .replace(/\$\$?|\\\(|\\\)|\\\[|\\\]/g, '')
+      // markdown เบา ๆ (ทำก่อนกฎ * = คูณ ไม่งั้นดอกจันของตัวหนาจะถูกกินไปด้วย)
       .replace(/\*\*([^*\n]+)\*\*/g, '<b>$1</b>')
-      .replace(/`([^`\n]+)`/g, '<code>$1</code>');
+      .replace(/`([^`\n]+)`/g, '<code>$1</code>')
+      // ข้อความถูก escape แล้ว เครื่องหมาย < จึงมาเป็น &lt;
+      .replace(/&lt;=/g, '≤').replace(/&gt;=/g, '≥').replace(/!=/g, '≠')
+      // เศษส่วน: เฉพาะรูปที่ชัดเจน (ตัวเลข/วงเล็บ ทั้งเศษและส่วน) จะได้ไม่ไปโดน "และ/หรือ" หรือ ม.2/1
+      .replace(/(^|[\s(=+×÷·-])(\d+|\([^()]{1,24}\))\/(\d+|\([^()]{1,24}\))(?=$|[\s).,=+×÷·-])/g,
+        (m, pre, a, b) => pre + frac(a, b))
+      // ยกกำลัง: 2^3 · x^(n+1) · 10^{-2}
+      .replace(/\^\{([^{}]+)\}|\^\(([^()]+)\)/g, (m, a, b) => `<sup>${a || b}</sup>`)
+      .replace(/\^(-?\d+(?:\.\d+)?|[A-Za-z])/g, '<sup>$1</sup>')
+      // ตัวห้อย: a_1 · x_{i+1}
+      .replace(/_\{([^{}]+)\}|_\(([^()]+)\)/g, (m, a, b) => `<sub>${a || b}</sub>`)
+      .replace(/([A-Za-z\d])_(\d+|[A-Za-z])/g, '$1<sub>$2</sub>')
+      // คูณ: 3*4 หรือ 3 * 4 (ต้องมีตัวเลข/วงเล็บปิดนำหน้า จะได้ไม่โดนหัวข้อแบบ "* ข้อ")
+      .replace(/(\d|\))\s*\*\s*(?=[\d(]|[A-Za-z])/g, '$1 × ');
+  }
+
+  // ---------- รูปที่ติวเตอร์วาดเอง (SVG) ----------
+  // ⚠️ SVG ที่โมเดลสร้างถือเป็นข้อมูลจากภายนอก จะเอาใส่ innerHTML ตรง ๆ ไม่ได้เด็ดขาด
+  //    เพราะ SVG รัน JS ได้ (<script>, on*, xlink:href="javascript:", <use>, <foreignObject>)
+  //    และหน้านี้เก็บ API key ไว้ใน localStorage โดเมนเดียวกัน — ถ้าโดนแทรกโค้ดคือคีย์รั่ว
+  //    จึง parse แล้ว "สร้างโหนดใหม่เอง" โดยอนุญาตเฉพาะแท็ก/แอตทริบิวต์ในรายการนี้เท่านั้น
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  const SVG_TAGS = new Set(['svg', 'g', 'title', 'desc', 'defs', 'marker', 'line', 'polyline',
+                            'polygon', 'rect', 'circle', 'ellipse', 'path', 'text', 'tspan']);
+  const SVG_ATTRS = new Set([
+    'viewbox', 'preserveaspectratio', 'x', 'y', 'dx', 'dy', 'x1', 'y1', 'x2', 'y2',
+    'cx', 'cy', 'r', 'rx', 'ry', 'width', 'height', 'd', 'points', 'transform',
+    'fill', 'fill-opacity', 'fill-rule', 'stroke', 'stroke-width', 'stroke-opacity',
+    'stroke-dasharray', 'stroke-dashoffset', 'stroke-linecap', 'stroke-linejoin',
+    'opacity', 'font-size', 'font-family', 'font-weight', 'font-style', 'letter-spacing',
+    'text-anchor', 'dominant-baseline', 'alignment-baseline', 'class', 'id',
+    'marker-start', 'marker-mid', 'marker-end', 'orient', 'refx', 'refy',
+    'markerwidth', 'markerheight', 'markerunits'
+  ]);
+  const SVG_URL_OK = /^url\(\s*#[A-Za-z][\w-]*\s*\)$/;   // อ้าง marker ในรูปเดียวกันเท่านั้น
+  const SVG_MAX_CHARS = 8000;
+  const SVG_MAX_NODES = 400;
+
+  function sanitizeSvg(src){
+    if(!src || src.length > SVG_MAX_CHARS) return null;
+    let doc;
+    try{ doc = new DOMParser().parseFromString(src, 'image/svg+xml'); }catch(e){ return null; }
+    const root = doc.documentElement;
+    if(!root || root.localName !== 'svg' || doc.getElementsByTagName('parsererror').length) return null;
+
+    let nodes = 0;
+    const copy = (from, to) => {
+      for(const child of [...from.childNodes]){
+        if(child.nodeType === 3){ to.appendChild(document.createTextNode(child.nodeValue)); continue; }
+        if(child.nodeType !== 1) continue;                       // ตัดคอมเมนต์/CDATA/PI ทิ้ง
+        if(!SVG_TAGS.has(child.localName) || ++nodes > SVG_MAX_NODES) continue;
+        const el = document.createElementNS(SVG_NS, child.localName);
+        for(const at of [...child.attributes]){
+          // ใช้ชื่อเดิมตอน set เพราะ SVG แยกตัวพิมพ์ (viewBox, refX, markerWidth)
+          if(at.namespaceURI) continue;                          // xlink:* / xml:* ไม่รับ
+          if(!SVG_ATTRS.has(at.localName.toLowerCase())) continue;
+          const v = at.value.trim();
+          if(/[<>]/.test(v)) continue;
+          if(/url\(/i.test(v) && !SVG_URL_OK.test(v)) continue;
+          el.setAttribute(at.name, at.value);
+        }
+        to.appendChild(el);
+        copy(child, el);
+      }
+    };
+
+    const out = document.createElementNS(SVG_NS, 'svg');
+    const vb = (root.getAttribute('viewBox') || '').trim();
+    out.setAttribute('viewBox', /^-?[\d.]+(\s+-?[\d.]+){3}$/.test(vb) ? vb : '0 0 320 180');
+    out.setAttribute('role', 'img');
+    copy(root, out);
+    return nodes ? out : null;
+  }
+
+  // คำตอบหนึ่งข้อความ = ข้อความสลับกับบล็อก SVG · โมเดลถูกสั่งให้ล้อมด้วย ```svg
+  // แต่บางทีก็ส่ง <svg> มาดื้อ ๆ จึงรับทั้งสองแบบ
+  const SVG_BLOCK = /```(?:svg|xml|html)?\s*(<svg[\s\S]*?<\/svg>)\s*```|(<svg[\s\S]*?<\/svg>)/gi;
+
+  function splitSvg(text){
+    const parts = [];
+    let last = 0, m;
+    SVG_BLOCK.lastIndex = 0;
+    while((m = SVG_BLOCK.exec(text))){
+      if(m.index > last) parts.push({ text: text.slice(last, m.index) });
+      parts.push({ svg: m[1] || m[2] });
+      last = m.index + m[0].length;
+    }
+    if(last < text.length) parts.push({ text: text.slice(last) });
+    return parts;
+  }
+
+  // ระหว่างสตรีม รูปยังวาดไม่จบ — ตัดหางที่ยังไม่ปิดออกแล้วขึ้นว่ากำลังวาดแทน
+  function trimPartialSvg(text){
+    const open = text.lastIndexOf('<svg');
+    if(open === -1 || text.indexOf('</svg>', open) !== -1) return { text };
+    const fence = text.lastIndexOf('```', open);
+    return { text: text.slice(0, fence !== -1 && fence > open - 12 ? fence : open), drawing: true };
+  }
+
+  function renderRich(el, text, { partial } = {}){
+    el.textContent = '';
+    const body = partial ? trimPartialSvg(text) : { text };
+    splitSvg(body.text).forEach(part => {
+      if(part.svg !== undefined){
+        const fig = document.createElement('div');
+        const node = sanitizeSvg(part.svg);
+        if(node){ fig.className = 'bubble-fig'; fig.appendChild(node); }
+        else { fig.className = 'bubble-fig bad'; fig.textContent = '⚠️ รูปประกอบไม่ถูกต้อง จึงไม่แสดง'; }
+        el.appendChild(fig);
+      } else if(part.text){
+        const span = document.createElement('span');
+        span.innerHTML = mdLite(part.text);
+        el.appendChild(span);
+      }
+    });
+    if(body.drawing){
+      const wait = document.createElement('span');
+      wait.className = 'fig-wait';
+      wait.textContent = '🖊️ กำลังวาดรูป…';
+      el.appendChild(wait);
+    }
+    return el;
   }
 
   // ---------- แผงติวเตอร์ (อยู่นอกการ์ด จึงผูกกับ "ข้อที่กำลังเปิด" แทน) ----------
@@ -1749,8 +1928,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
     function bubbleFor(cls, text){
       const b = document.createElement('div');
       b.className = 'bubble ' + cls;
-      b.innerHTML = mdLite(text);
-      return b;
+      return renderRich(b, text);
     }
 
     // ขั้นของคำใบ้ขยับทุกครั้งที่ถาม จึงแยกไว้วาดใหม่ได้เอง
@@ -1779,7 +1957,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
       log.appendChild(bubbleFor('me', text));
 
       const reply = bubbleFor('ai', '');
-      reply.innerHTML = '<span class="caret"></span>';
+      reply.innerHTML = '<span class="caret"></span>';   // ยังไม่มีเนื้อหา — โชว์เคอร์เซอร์ก่อน
       log.appendChild(reply);
       toBottom();
       sendBtn.disabled = true;
@@ -1795,7 +1973,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
           signal: ai.ctrl.signal,
           onText: (t) => {
             acc += t;
-            reply.innerHTML = mdLite(acc) + '<span class="caret"></span>';
+            renderRich(reply, acc, { partial: true }).insertAdjacentHTML('beforeend', '<span class="caret"></span>');
             toBottom();
           }
         });
@@ -1805,8 +1983,11 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
         if(!acc.trim()){
           throw new Error(`${AI_NAME}ตอบกลับมาว่าง — ลองส่งอีกครั้ง`);
         }
-        reply.innerHTML = mdLite(acc) + (stop === 'max_tokens'
-          ? '<br><i>(คำตอบยาวเกินโควตา ถูกตัดกลางทาง — ลองถามให้แคบลง)</i>' : '');
+        renderRich(reply, acc);
+        if(stop === 'max_tokens'){
+          reply.insertAdjacentHTML('beforeend',
+            '<br><i>(คำตอบยาวเกินโควตา ถูกตัดกลางทาง — ลองถามให้แคบลง)</i>');
+        }
         chatOf(gidx).push({ r:'a', t:acc });
         saveChats();
         // ปลดสถานะก่อนวาดใหม่ ไม่งั้นปุ่มส่งของกล่องใหม่จะยังถูกปิดอยู่
@@ -1819,7 +2000,7 @@ const QUESTIONS = [{"subject": "คณิตศาสตร์", "grade": "ม.1
         }
       }catch(err){
         if(err.name === 'AbortError'){ reply.remove(); return; }
-        if(acc.trim()) reply.innerHTML = mdLite(acc);
+        if(acc.trim()) renderRich(reply, acc);
         else reply.remove();
         log.appendChild(bubbleFor('err', '⚠️ ' + err.message));
         toBottom();

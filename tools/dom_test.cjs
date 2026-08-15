@@ -579,6 +579,10 @@ const waitFor = async (fn, n = 80) => { for (let i = 0; i < n && !fn(); i++) awa
   chk('กดปุ่มแล้วกางแผงด้านขวา',
       panel.classList.contains('show') && panel.getAttribute('aria-hidden') === 'false', '');
   chk('กางแผงแล้วเบียดเนื้อหาไปทางซ้าย', t.d.body.classList.contains('tutor-on'), '');
+  // เบียดแล้วต้องขยายเพดานความกว้างขึ้นเท่าความกว้างแผง ไม่ใช่บีบพื้นที่ข้อสอบให้แคบลง
+  chk('กางแผงแล้วขยายเพดานความกว้างของเนื้อหาชดเชยให้',
+      /max-width:\s*calc\(var\(--maxw\)\s*\+\s*var\(--tutorw\)/.test(html)
+      && /body\.tutor-on \.layout\{/.test(html.replace(/\s*\n\s*/g, '')), '');
   chk('กางแล้วมีช่องพิมพ์ถามอยู่ในแผง', !!t.d.querySelector('#tutorPanel #tutorInput'), '');
   chk('หัวแผงบอกว่ากำลังติวข้อไหน', /ข้อที่ \d+/.test(t.d.querySelector('#tutorWhich').textContent),
       t.d.querySelector('#tutorWhich').textContent);
@@ -637,11 +641,19 @@ const waitFor = async (fn, n = 80) => { for (let i = 0; i < n && !fn(); i++) awa
     chk('พรอมป์ระบบสั่งลงท้าย "ครับ" และห้าม "จ๊ะ"',
         /"ครับ" หรือ "ครับน้อง"/.test(req.body.system) && /ห้ามใช้คำลงท้ายแบบผู้หญิง/.test(req.body.system)
         && /"จ๊ะ"/.test(req.body.system), '');
+    chk('พรอมป์ระบบบอกกติกาการวาดรูป และย้ำว่าวาดเฉพาะเมื่อจำเป็น',
+        /## วาดรูปประกอบได้ \(ใช้เมื่อจำเป็นเท่านั้น\)/.test(req.body.system)
+        && /ส่วนใหญ่ไม่ต้องวาด/.test(req.body.system)
+        && /```svg/.test(req.body.system), '');
+    chk('พรอมป์ระบบบอกสัญกรณ์คณิตศาสตร์ที่หน้าเว็บจัดรูปได้ และห้าม LaTeX',
+        /ยกกำลังใช้ \^/.test(req.body.system) && /ห้ามใช้ LaTeX ทุกชนิด/.test(req.body.system), '');
     chk('แผงและปุ่มเรียกชื่อพี่หลวงตรงกัน',
         /พี่หลวง/.test(t2.d.querySelector('.tp-title').textContent)
         && /พี่หลวง/.test(t2.d.querySelector('#tutorToggle').textContent), '');
+    // ตรวจเฉพาะ "ส่วนโจทย์" — ท้ายพรอมป์มีตัวอย่าง <svg> ของกติกาการวาดรูปอยู่ด้วย
+    const qBlock = (req.body.system.split('## เฉลย')[0] || '');
     chk('พรอมป์ระบบไม่มีแท็ก HTML ของโจทย์ติดไปด้วย',
-        !/<(div|span|svg|sup)\b/.test(req.body.system), '');
+        !/<(div|span|svg|sup|br|table)\b/.test(qBlock), qBlock.slice(-80));
     chk('คำตอบติวเตอร์ขึ้นในกล่องแช็ต',
         /ลองอ่านโจทย์อีกครั้ง/.test((t2.d.querySelector('.bubble.ai') || {}).textContent || ''), '');
     chk('ถามแล้วขั้นคำใบ้ขยับเป็น 2',
@@ -652,6 +664,97 @@ const waitFor = async (fn, n = 80) => { for (let i = 0; i < n && !fn(); i++) awa
     const first = saved[Object.keys(saved)[0]] || [];
     chk('บทสนทนาเก็บลง localStorage แยกตามข้อ',
         first.length === 2 && first[0].r === 'u' && first[1].r === 'a', JSON.stringify(first.length));
+
+    // คำตอบของติวเตอร์ต้องออกมาเป็นสมการจริง ไม่ใช่ข้อความ ^ กับ /
+    const math = loadTutor(opened,
+      'พื้นที่ = a^2 ครับ · 10^(-2) · a_1 · 3/4 · x >= 2 · 3*4 · $\\frac{1}{2}$ · \\sqrt{16}');
+    const mi = math.d.querySelector('#tutorInput');
+    mi.value = 'ขอสมการ';
+    tclick(math, '#tutorSend');
+    await waitFor(() => (math.d.querySelector('.bubble.ai') || {}).textContent);
+    const mathHtml = math.d.querySelector('.bubble.ai').innerHTML;
+    chk('ยกกำลังเรนเดอร์เป็น <sup> จริง', /a<sup>2<\/sup>/.test(mathHtml), mathHtml.slice(0, 60));
+    chk('ยกกำลังในวงเล็บก็เป็น <sup>', /10<sup>-2<\/sup>/.test(mathHtml), '');
+    chk('ตัวห้อยเรนเดอร์เป็น <sub>', /a<sub>1<\/sub>/.test(mathHtml), '');
+    chk('เศษส่วนเรนเดอร์เป็นชั้นบน/ล่าง (.frac)',
+        /<span class="frac"><span class="num">3<\/span><span class="den">4<\/span><\/span>/.test(mathHtml), '');
+    chk('เครื่องหมายเปรียบเทียบเป็นสัญลักษณ์', /x ≥ 2/.test(mathHtml), '');
+    chk('เครื่องหมายคูณเป็น ×', /3 × 4/.test(mathHtml), '');
+    chk('โมเดลหลุดไปเขียน LaTeX ก็ยังจัดรูปให้ได้',
+        /<span class="num">1<\/span>/.test(mathHtml) && /√\(16\)/.test(mathHtml) && !/frac\{/.test(mathHtml), '');
+    // ---------- รูป SVG ที่ติวเตอร์วาด ----------
+    // sanitizer พลาดเมื่อไร = โค้ดของโมเดลรันในโดเมนเดียวกับที่เก็บ API key
+    // เทสต์ชุดนี้จึงยิงเพย์โหลดโจมตีจริง แล้วตรวจว่าไม่มีอะไรรอด
+    const drawn = async (reply) => {
+      const r = loadTutor(opened, reply);
+      r.d.querySelector('#tutorInput').value = 'ขอรูป';
+      tclick(r, '#tutorSend');
+      await waitFor(() => (r.d.querySelector('.bubble.ai') || {}).textContent
+        || r.d.querySelector('.bubble.ai .bubble-fig'));
+      const bubble = r.d.querySelector('.bubble.ai');
+      const svg = bubble.querySelector('svg');
+      return {
+        html: bubble.innerHTML,
+        svg,
+        bad: !!bubble.querySelector('.bubble-fig.bad'),
+        tags: svg ? [...svg.querySelectorAll('*')].map(e => e.localName) : [],
+        attrs: svg ? [...svg.querySelectorAll('*')].concat(svg)
+          .flatMap(e => [...e.attributes].map(a => a.name)) : [],
+      };
+    };
+
+    const ok = await drawn('ดูรูปนี้ครับ\n```svg\n<svg viewBox="0 0 320 120">' +
+      '<defs><marker id="a" refX="6" refY="3" markerWidth="8" markerHeight="6" orient="auto">' +
+      '<polygon points="0 0, 8 3, 0 6" fill="#C0392B"/></marker></defs>' +
+      '<line x1="20" y1="60" x2="300" y2="60" stroke="#1E3A5F" stroke-width="2" marker-end="url(#a)"/>' +
+      '<text x="86" y="45" font-size="13">-2</text></svg>\n```\nเห็นภาพไหมครับ');
+    chk('ติวเตอร์แนบรูปได้ และรูปขึ้นเป็น <svg> จริง', !!ok.svg && !ok.bad, ok.tags.join(','));
+    chk('รูปเก็บแท็กที่อนุญาตไว้ครบ',
+        ['marker', 'polygon', 'line', 'text'].every(t => ok.tags.includes(t)), ok.tags.join(','));
+    chk('แอตทริบิวต์ที่แยกตัวพิมพ์ไม่เพี้ยน (viewBox/refX/markerWidth)',
+        ok.attrs.includes('viewBox') && ok.attrs.includes('refX') && ok.attrs.includes('markerWidth'),
+        ok.attrs.join(','));
+    chk('อนุญาต marker-end ที่อ้างในรูปเดียวกัน', ok.attrs.includes('marker-end'), '');
+    chk('ข้อความรอบรูปยังแสดงตามปกติ', /ดูรูปนี้ครับ/.test(ok.html) && /เห็นภาพไหมครับ/.test(ok.html), '');
+
+    const ATTACKS = [
+      ['script ในรูป', '<svg viewBox="0 0 10 10"><script>window.__pwned=1<\/script><rect width="5" height="5"/></svg>', 'script'],
+      ['onload บน svg', '<svg viewBox="0 0 10 10" onload="window.__pwned=1"><rect width="5" height="5"/></svg>', 'onload'],
+      ['onclick บนรูปทรง', '<svg viewBox="0 0 10 10"><rect width="9" height="9" onclick="window.__pwned=1"/></svg>', 'onclick'],
+      ['foreignObject', '<svg viewBox="0 0 10 10"><foreignObject><img src=x onerror="window.__pwned=1"></foreignObject></svg>', 'foreignobject'],
+      ['xlink:href javascript:', '<svg viewBox="0 0 10 10"><a xlink:href="javascript:window.__pwned=1"><text x="1" y="5">กด</text></a></svg>', 'javascript:'],
+      ['use ดึงจากภายนอก', '<svg viewBox="0 0 10 10"><use href="https://evil.test/x.svg#a"/></svg>', 'evil.test'],
+      ['animate เปลี่ยน href', '<svg viewBox="0 0 10 10"><animate attributeName="href" values="javascript:1"/></svg>', 'animate'],
+      ['style/fill url() ภายนอก', '<svg viewBox="0 0 10 10"><rect width="9" height="9" style="x:1" fill="url(https://evil.test/y)"/></svg>', 'evil.test'],
+      ['image ภายนอก', '<svg viewBox="0 0 10 10"><image href="https://evil.test/t.png" width="9" height="9"/></svg>', 'evil.test'],
+      ['set + onbegin', '<svg viewBox="0 0 10 10"><set onbegin="window.__pwned=1"/><circle cx="5" cy="5" r="4"/></svg>', 'onbegin'],
+    ];
+    for (const [name, payload, needle] of ATTACKS) {
+      const r = await drawn('```svg\n' + payload + '\n```');
+      const leaked = r.html.toLowerCase().includes(needle)
+        || r.tags.some(t => ['script', 'foreignobject', 'use', 'image', 'animate', 'set', 'a'].includes(t))
+        || r.attrs.some(a => /^on/i.test(a) || /href|style/i.test(a));
+      chk('กัน XSS ในรูป: ' + name, !leaked, r.html.slice(0, 90));
+    }
+    chk('ไม่มี window.__pwned หลุดมาจากเพย์โหลดใด ๆ',
+        typeof loadTutor(opened, 'x').w.__pwned === 'undefined', '');
+
+    // ระหว่างสตรีมรูปยังวาดไม่จบ ต้องไม่โชว์ SVG พัง ๆ
+    const half = loadTutor(opened, 'กำลังอธิบาย\n```svg\n<svg viewBox="0 0 320 120"><line x1="0"');
+    half.d.querySelector('#tutorInput').value = 'ขอรูป';
+    tclick(half, '#tutorSend');
+    await waitFor(() => (half.d.querySelector('.bubble.ai') || {}).textContent);
+    chk('รูปที่ยังวาดไม่จบไม่ถูกแสดงเป็น SVG พัง ๆ',
+        !half.d.querySelector('.bubble.ai svg'), half.d.querySelector('.bubble.ai').innerHTML.slice(0, 80));
+
+    // ต้อง "ไม่" จับ / ที่ไม่ใช่เศษส่วน ไม่งั้นตัวชี้วัดกับคำว่า และ/หรือ จะเพี้ยน
+    const slash = loadTutor(opened, 'ตัวชี้วัด ค 2.1 ม.2/1 และ/หรือ เรื่องปริซึม');
+    slash.d.querySelector('#tutorInput').value = 'ถาม';
+    tclick(slash, '#tutorSend');
+    await waitFor(() => (slash.d.querySelector('.bubble.ai') || {}).textContent);
+    const plain = slash.d.querySelector('.bubble.ai').innerHTML;
+    chk('ไม่จับ / ที่ไม่ใช่เศษส่วน (ตัวชี้วัด · และ/หรือ)',
+        !/class="frac"/.test(plain) && /ม\.2\/1 และ\/หรือ/.test(plain), plain.slice(0, 60));
 
     // เพดานคำใบ้ต้องผูกกับรหัสผ่านเฉลย
     const chat = { 0: Array.from({ length: 12 }, (_, i) => ({ r: i % 2 ? 'a' : 'u', t: 'x' })) };
