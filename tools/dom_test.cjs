@@ -912,6 +912,52 @@ const waitFor = async (fn, n = 80) => { for (let i = 0; i < n && !fn(); i++) awa
         haiku.sent.length === 1 && !('output_config' in haiku.sent[0].body)
         && haiku.sent[0].body.model === 'claude-haiku-4-5', JSON.stringify(Object.keys(haiku.sent[0].body)));
 
+    // ---------- ติวเตอร์ตรวจโจทย์/เฉลยให้ด้วย ----------
+    const FLAW = '⟪ตรวจพบปัญหาในข้อสอบ⟫';
+
+    // พรอมป์ต้องสั่งให้ตรวจ และสั่งว่า "ถูกแล้วไม่ต้องพูดถึง"
+    const chk1 = loadTutor(opened);
+    chk1.d.querySelector('#tutorInput').value = 'เริ่มเลย';
+    tclick(chk1, '#tutorSend');
+    await waitFor(() => chk1.sent.length);
+    const sys = chk1.sent[0].body.system;
+    chk('พรอมป์สั่งให้ตรวจโจทย์กับเฉลยก่อนตอบ',
+        /ตรวจโจทย์กับเฉลยก่อนตอบทุกครั้ง/.test(sys) && sys.includes(FLAW), '');
+    chk('พรอมป์สั่งว่าถ้าถูกต้องไม่ต้องบอกนักเรียน',
+        /ไม่ต้องพูดถึงเรื่องนี้เลย สอนตามปกติ/.test(sys), '');
+    chk('พรอมป์กันไม่ให้ใช้การทักเป็นข้ออ้างเฉลยก่อนขั้น',
+        /ไม่ใช่ข้ออ้างให้บอกคำตอบก่อนถึงขั้นที่อนุญาต/.test(sys), '');
+    chk('พรอมป์สั่งไม่ให้ตัดสินข้อที่มีรูปประกอบ',
+        /ห้ามตัดสินว่าโจทย์\/เฉลยผิด/.test(sys), '');
+
+    // ตอบปกติ (ไม่ทัก) -> ต้องไม่มีกล่องเตือนโผล่มาเอง
+    chk('คำตอบปกติไม่ขึ้นกล่องเตือน', !chk1.d.querySelector('.bubble-flaw'), '');
+
+    // ทักว่าเฉลยผิด -> ตัดบรรทัดแรกออกมาเป็นกล่องเตือน ที่เหลือยังเป็นคำสอนตามปกติ
+    const flaw = loadTutor(opened,
+      FLAW + ' เฉลยบอกว่า 22 แต่ (-52) - (-74) ได้ 22 จริง ๆ แล้วโจทย์พิมพ์ตกไป\n' +
+      'ไม่เป็นไรครับน้อง ลองดูว่าโจทย์ถามหาอะไรก่อน');
+    flaw.d.querySelector('#tutorInput').value = 'ข้อนี้งงครับ';
+    tclick(flaw, '#tutorSend');
+    await waitFor(() => flaw.d.querySelector('.bubble-flaw'));
+    const warn = flaw.d.querySelector('.bubble-flaw');
+    chk('ติวเตอร์ทักว่าเฉลยผิด -> ขึ้นกล่องเตือน', !!warn, '');
+    chk('กล่องเตือนมีคำอธิบายว่าอะไรผิด',
+        /โจทย์พิมพ์ตกไป/.test(warn.textContent), warn.textContent.slice(0, 50));
+    chk('ตัวคั่นไม่หลุดออกมาให้นักเรียนเห็น',
+        !flaw.d.querySelector('.bubble.ai').textContent.includes('⟪'),
+        flaw.d.querySelector('.bubble.ai').textContent.slice(0, 40));
+    chk('คำสอนที่เหลือยังแสดงตามปกติ',
+        /ลองดูว่าโจทย์ถามหาอะไรก่อน/.test(flaw.d.querySelector('.bubble.ai').textContent), '');
+
+    // ตัวคั่นกลางคำตอบต้องไม่ถูกตีความว่าเป็นการทัก (กันโมเดล/นักเรียนหลอกให้ขึ้นกล่อง)
+    const mid = loadTutor(opened, 'ลองคิดดูครับ ' + FLAW + ' อันนี้เป็นแค่ข้อความ');
+    mid.d.querySelector('#tutorInput').value = 'ถาม';
+    tclick(mid, '#tutorSend');
+    await waitFor(() => (mid.d.querySelector('.bubble.ai') || {}).textContent);
+    chk('ตัวคั่นกลางคำตอบไม่นับเป็นการทัก',
+        !mid.d.querySelector('.bubble-flaw'), '');
+
     // ---------- หลายผู้ให้บริการ: OpenAI · Gemini · OpenAI-compatible ----------
     // คีย์เก็บแยกเจ้าในรูปแบบใหม่ ของเก่า {key, model} ต้องย้ายให้เองตาม prefix ของคีย์
     const NEWKEY = cfg => ({ key: 'funnymath-ai-v1', value: cfg });
