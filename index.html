@@ -741,19 +741,32 @@
     <h3 id="aiTitle">🤖 ตั้งค่าพี่หลวง (ติวเตอร์ AI)</h3>
     <div class="modal-sub">พี่หลวงจะถามคำถามนำให้น้องคิดเอง ไม่บอกคำตอบตรง ๆ</div>
 
-    <label for="aiKeyInput">Anthropic API key</label>
+    <label for="aiProviderSelect">ผู้ให้บริการ AI</label>
+    <select id="aiProviderSelect"></select>
+
+    <label for="aiKeyInput">API key</label>
     <input type="password" id="aiKeyInput" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
-    <div class="note">
-      ขอคีย์ได้ที่ <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>
-      · คีย์เก็บไว้ใน <code>localStorage</code> ของเบราว์เซอร์เครื่องนี้เท่านั้น ไม่ได้ส่งไปที่อื่น
+    <div class="note" id="aiKeyNote"></div>
+
+    <div id="aiStdFields">
+      <label for="aiModelSelect">โมเดล</label>
+      <select id="aiModelSelect"></select>
+      <div class="note" id="aiModelNote"></div>
     </div>
 
-    <label for="aiModelSelect">โมเดล</label>
-    <select id="aiModelSelect"></select>
-    <div class="note" id="aiModelNote"></div>
+    <div id="aiCustomFields" style="display:none">
+      <label for="aiBaseInput">Base URL ของ API</label>
+      <input type="text" id="aiBaseInput" placeholder="เช่น https://openrouter.ai/api/v1 หรือ http://localhost:11434/v1"
+             autocomplete="off" spellcheck="false">
+      <label for="aiCustomModelInput">ชื่อโมเดล</label>
+      <input type="text" id="aiCustomModelInput" placeholder="เช่น meta-llama/llama-3.3-70b-instruct"
+             autocomplete="off" spellcheck="false">
+      <div class="note">ใช้กับบริการที่พูดภาษาเดียวกับ OpenAI (<code>/chat/completions</code>)
+        เช่น OpenRouter, Groq หรือ Ollama ในเครื่องตัวเอง</div>
+    </div>
 
-    <div class="warn">
-      ⚠️ เวลาถามพี่หลวง โจทย์ · เฉลย · วิธีทำที่นักเรียนเขียน จะถูกส่งไปที่ Anthropic API
+    <div class="warn" id="aiWarn">
+      ⚠️ เวลาถามพี่หลวง โจทย์ · เฉลย · วิธีทำที่นักเรียนเขียน จะถูกส่งไปที่ API ของผู้ให้บริการที่เลือก
       และค่าใช้จ่ายเรียกเก็บจากคีย์ของคุณ · เครื่องที่ใช้ร่วมกันหลายคนไม่ควรใส่คีย์ไว้
     </div>
     <div class="pw-error" id="aiKeyError"></div>
@@ -1496,7 +1509,8 @@ const LEGACY_IDS = ["math-m1-01-4aac3e8b","math-m1-01-b619d996","math-m1-01-ef30
 
   // ---------- ติวเตอร์ AI แบบโสกราตีส ----------
   // หน้าเว็บนี้เป็นไฟล์เดียวเสิร์ฟจาก GitHub Pages ไม่มีเซิร์ฟเวอร์ของตัวเอง
-  // จึงเรียก Anthropic API ตรงจากเบราว์เซอร์ด้วยคีย์ของผู้ใช้เอง (bring your own key)
+  // จึงเรียก API ของผู้ให้บริการ (Anthropic / OpenAI / Gemini / OpenAI-compatible)
+  // ตรงจากเบราว์เซอร์ด้วยคีย์ของผู้ใช้เอง (bring your own key)
   // ⚠️ ห้ามใส่คีย์ไว้ในซอร์สของไฟล์นี้ — ซอร์สของหน้าเว็บใครก็เปิดอ่านได้
   //    (ต่างจาก ANSWER_PASSWORD ที่เป็นแค่ที่กั้นไม่ให้เผลอกดดูเฉลย)
   const AI_NAME = 'พี่หลวง';            // ชื่อที่ติวเตอร์ใช้เรียกตัวเอง และที่โผล่บนหน้าเว็บ
@@ -1508,23 +1522,91 @@ const LEGACY_IDS = ["math-m1-01-4aac3e8b","math-m1-01-b619d996","math-m1-01-ef30
   const CHAT_BUDGET = 180000;   // ตัวอักษรรวมของบทสนทนาที่เก็บไว้ (กัน localStorage เต็ม)
   const CHAT_KEEP = 24;         // เก็บข้อความต่อข้อไว้ไม่เกินเท่านี้
 
-  // effort ใช้ได้กับโมเดลรุ่น 5 · Haiku 4.5 ไม่รับพารามิเตอร์นี้ (จะได้ error)
+  /* ผู้ให้บริการที่รองรับ — ทุกเจ้าเรียกจากเบราว์เซอร์ตรง ๆ ด้วยคีย์ของผู้ใช้เอง (CORS เปิดหมด)
+     'custom' คือ endpoint แบบ OpenAI-compatible (OpenRouter, Groq, Ollama ในเครื่อง ฯลฯ)
+     ให้ผู้ใช้กรอก base URL กับชื่อโมเดลเอง */
+  const AI_PROVIDERS = {
+    anthropic: { label:'Anthropic (Claude)', short:'Anthropic', hint:'sk-ant-...',
+                 host:'api.anthropic.com',
+                 consoleName:'console.anthropic.com', consoleUrl:'https://console.anthropic.com/settings/keys' },
+    openai:    { label:'OpenAI (ChatGPT)', short:'OpenAI', hint:'sk-...',
+                 host:'api.openai.com',
+                 consoleName:'platform.openai.com', consoleUrl:'https://platform.openai.com/api-keys' },
+    gemini:    { label:'Google (Gemini)', short:'Google', hint:'AIza...',
+                 host:'generativelanguage.googleapis.com',
+                 consoleName:'aistudio.google.com', consoleUrl:'https://aistudio.google.com/apikey' },
+    custom:    { label:'OpenAI-compatible อื่น ๆ (OpenRouter, Groq, Ollama…)', short:'บริการที่ตั้งค่าไว้',
+                 hint:'คีย์ของบริการนั้น (Ollama ในเครื่องใส่อะไรก็ได้)', host:'',
+                 consoleName:'', consoleUrl:'' }
+  };
+
+  // ธงพิเศษรายโมเดล:
+  //   effort  — Anthropic รุ่น 5 รับ output_config.effort (Haiku 4.5 ไม่รับ จะ error)
+  //   reff    — OpenAI ตระกูล gpt-5 รับ reasoning_effort (รุ่นเก่าอย่าง gpt-4o ไม่รับ)
+  //   nothink — Gemini ปิด thinking ได้ด้วย thinkingBudget:0 (2.5 Pro ปิดไม่ได้ ห้ามส่ง)
+  // งานติวเตอร์ตอบสั้น ไม่ต้องคิดยาว จึงกดให้คิดน้อยทุกเจ้าที่กดได้ — ไวขึ้นและถูกลง
   const AI_MODELS = [
-    { id:'claude-opus-5',   label:'Claude Opus 5 — เก่งที่สุด',        effort:true,
+    { id:'claude-opus-5',   provider:'anthropic', label:'Claude Opus 5 — เก่งที่สุด',        effort:true,
       note:'อธิบายและวินิจฉัยจุดที่คิดผิดได้ละเอียดที่สุด · ค่าใช้จ่ายสูงสุด ($5/$25 ต่อล้านโทเคน)' },
-    { id:'claude-sonnet-5', label:'Claude Sonnet 5 — สมดุล',           effort:true,
+    { id:'claude-sonnet-5', provider:'anthropic', label:'Claude Sonnet 5 — สมดุล',           effort:true,
       note:'เก่งใกล้ Opus แต่ถูกและเร็วกว่า ($3/$15 ต่อล้านโทเคน)' },
-    { id:'claude-haiku-4-5', label:'Claude Haiku 4.5 — เร็วและถูกสุด', effort:false,
-      note:'เหมาะกับโจทย์ง่าย ๆ และการใช้จำนวนมาก ($1/$5 ต่อล้านโทเคน)' }
+    { id:'claude-haiku-4-5', provider:'anthropic', label:'Claude Haiku 4.5 — เร็วและถูกสุด', effort:false,
+      note:'เหมาะกับโจทย์ง่าย ๆ และการใช้จำนวนมาก ($1/$5 ต่อล้านโทเคน)' },
+
+    { id:'gpt-5.1',    provider:'openai', label:'GPT-5.1 — เก่งที่สุดของ OpenAI', reff:true,
+      note:'รุ่นหลักของ OpenAI ($1.25/$10 ต่อล้านโทเคน)' },
+    { id:'gpt-5-mini', provider:'openai', label:'GPT-5 mini — สมดุล', reff:true,
+      note:'ถูกและเร็วกว่า เหมาะกับการติวทั่วไป ($0.25/$2 ต่อล้านโทเคน)' },
+    { id:'gpt-5-nano', provider:'openai', label:'GPT-5 nano — เร็วและถูกสุด', reff:true,
+      note:'เหมาะกับโจทย์ง่าย ๆ ($0.05/$0.40 ต่อล้านโทเคน)' },
+
+    { id:'gemini-2.5-flash', provider:'gemini', label:'Gemini 2.5 Flash — สมดุล (แนะนำ)', nothink:true,
+      note:'เร็ว คุณภาพดี ($0.30/$2.50 ต่อล้านโทเคน) · Google ให้โควตาฟรีรายวันด้วย' },
+    { id:'gemini-2.5-pro',   provider:'gemini', label:'Gemini 2.5 Pro — เก่งที่สุดของ Google',
+      note:'เหมาะกับโจทย์ยาก แต่ตอบช้ากว่าเพราะปิดการคิดยาวไม่ได้ ($1.25/$10 ต่อล้านโทเคน)' },
+    { id:'gemini-2.5-flash-lite', provider:'gemini', label:'Gemini 2.5 Flash-Lite — เร็วและถูกสุด', nothink:true,
+      note:'เหมาะกับโจทย์ง่าย ๆ ($0.10/$0.40 ต่อล้านโทเคน)' }
   ];
+  const providerModels = p => AI_MODELS.filter(m => m.provider === p);
   const modelOf = id => AI_MODELS.find(m => m.id === id) || AI_MODELS[0];
 
-  const ai = { key:'', model:AI_MODELS[0].id, chats:{}, ctrl:null, busyGidx:null };
+  const ai = {
+    provider:'anthropic',
+    keys:{ anthropic:'', openai:'', gemini:'', custom:'' },   // จำแยกเจ้า สลับไปมาได้โดยคีย์ไม่หาย
+    models:{ anthropic:'claude-opus-5', openai:'gpt-5.1', gemini:'gemini-2.5-flash' },
+    customBase:'', customModel:'',
+    chats:{}, ctrl:null, busyGidx:null
+  };
+  const aiKey = () => (ai.keys[ai.provider] || '').trim();
+  const aiModelId = () => ai.provider === 'custom' ? ai.customModel : ai.models[ai.provider];
+  const aiModelLabel = () => ai.provider === 'custom'
+    ? `${ai.customModel || '(ยังไม่ได้ตั้งชื่อโมเดล)'} — OpenAI-compatible`
+    : modelOf(aiModelId()).label;
 
+  // เดาเจ้าของคีย์จาก prefix — ใช้ตอนย้ายค่าที่เก็บแบบเก่า (สมัยรองรับแค่ Anthropic)
+  const providerOfKey = k => /^AIza/.test(k) ? 'gemini'
+                           : /^sk-ant-/.test(k) ? 'anthropic'
+                           : /^sk-/.test(k) ? 'openai' : 'anthropic';
   try{
-    const d = JSON.parse(localStorage.getItem(AI_KEY_STORE) || '{}');
-    if(d && typeof d.key === 'string') ai.key = d.key;
-    if(d && AI_MODELS.some(m => m.id === d.model)) ai.model = d.model;
+    const d = JSON.parse(localStorage.getItem(AI_KEY_STORE) || '{}') || {};
+    if(d.keys && typeof d.keys === 'object'){
+      // รูปแบบใหม่
+      Object.keys(ai.keys).forEach(p => { if(typeof d.keys[p] === 'string') ai.keys[p] = d.keys[p]; });
+      if(AI_PROVIDERS[d.provider]) ai.provider = d.provider;
+      if(d.models && typeof d.models === 'object'){
+        Object.keys(ai.models).forEach(p => {
+          if(providerModels(p).some(m => m.id === d.models[p])) ai.models[p] = d.models[p];
+        });
+      }
+      if(typeof d.customBase === 'string') ai.customBase = d.customBase;
+      if(typeof d.customModel === 'string') ai.customModel = d.customModel;
+    }else if(typeof d.key === 'string' && d.key){
+      // รูปแบบเก่า {key, model} — เดาเจ้าจาก prefix ของคีย์
+      const p = providerOfKey(d.key);
+      ai.provider = p;
+      ai.keys[p] = d.key;
+      if(providerModels(p).some(m => m.id === d.model)) ai.models[p] = d.model;
+    }
   }catch(e){/* ค่าที่เก็บไว้เสีย — เริ่มใหม่ */}
   // บทสนทนาก็เคยอ้างด้วยลำดับข้อ ย้ายมาอ้างด้วย id ด้วยตารางเดียวกับความก้าวหน้า
   try{
@@ -1544,7 +1626,12 @@ const LEGACY_IDS = ["math-m1-01-4aac3e8b","math-m1-01-b619d996","math-m1-01-ef30
   }catch(e){}
 
   function saveAIConfig(){
-    try{ localStorage.setItem(AI_KEY_STORE, JSON.stringify({ key:ai.key, model:ai.model })); }catch(e){}
+    try{
+      localStorage.setItem(AI_KEY_STORE, JSON.stringify({
+        provider: ai.provider, keys: ai.keys, models: ai.models,
+        customBase: ai.customBase, customModel: ai.customModel
+      }));
+    }catch(e){}
   }
   // บทสนทนายาวได้เรื่อย ๆ จึงตัดให้พอดีโควตา localStorage ก่อนเขียน
   // (ตัดข้อความเก่าในแต่ละข้อก่อน ถ้ายังไม่พอค่อยทิ้งบทสนทนาของข้ออื่น)
@@ -1680,20 +1767,63 @@ const LEGACY_IDS = ["math-m1-01-4aac3e8b","math-m1-01-b619d996","math-m1-01-ef30
   function aiErrorText(status, detail){
     if(status === 401) return 'API key ไม่ถูกต้องหรือถูกยกเลิกแล้ว — กด “🤖 ตั้งค่าพี่หลวง” เพื่อใส่คีย์ใหม่';
     if(status === 403) return 'คีย์นี้ไม่มีสิทธิ์เรียกโมเดลที่เลือก — ลองเปลี่ยนโมเดลในหน้าตั้งค่า';
+    if(status === 404) return 'ไม่พบโมเดลที่เลือกในบริการนี้ — ตรวจชื่อโมเดลในหน้าตั้งค่า';
     if(status === 429) return 'เรียกถี่เกินไปหรือเครดิตหมด — รอสักครู่แล้วลองอีกครั้ง';
     if(status >= 500) return 'ฝั่งบริการขัดข้องชั่วคราว — ลองอีกครั้งในอีกสักครู่';
-    if(status === 0) return 'ต่อกับ api.anthropic.com ไม่ได้ — ตรวจอินเทอร์เน็ต หรือส่วนขยายเบราว์เซอร์ที่อาจบล็อกอยู่';
+    if(status === 0){
+      const host = ai.provider === 'custom'
+        ? (ai.customBase || 'endpoint ที่ตั้งไว้') : AI_PROVIDERS[ai.provider].host;
+      return `ต่อกับ ${host} ไม่ได้ — ตรวจอินเทอร์เน็ต หรือส่วนขยายเบราว์เซอร์ที่อาจบล็อกอยู่`;
+    }
     return 'เรียก API ไม่สำเร็จ' + (detail ? ` (${detail})` : '');
   }
 
-  // เรียก Messages API แบบสตรีม · retry อีกครั้งโดยตัดพารามิเตอร์ beta ออก
-  // เผื่อคีย์ของผู้ใช้ยังไม่ได้เปิดใช้ฟีเจอร์นั้น (จะได้ไม่พังไปทั้งฟีเจอร์)
-  async function aiStream({ system, messages, onText, signal }){
-    const m = modelOf(ai.model);
+  // อ่านสตรีม SSE แล้วส่ง JSON ของแต่ละบรรทัด data: ให้ onData — ทุกเจ้าใช้รูปแบบนี้เหมือนกัน
+  // ต่างกันแค่โครงของ JSON ข้างใน · ข้าม "[DONE]" ของฝั่ง OpenAI ให้เอง
+  async function pumpSSE(res, onData){
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buf = '';
+    for(;;){
+      const { value, done } = await reader.read();
+      if(done) break;
+      buf += decoder.decode(value, { stream:true }).replace(/\r/g, '');
+      let cut;
+      while((cut = buf.indexOf('\n\n')) >= 0){
+        const block = buf.slice(0, cut);
+        buf = buf.slice(cut + 2);
+        block.split('\n').forEach(line => {
+          if(!line.startsWith('data:')) return;
+          const payload = line.slice(5).trim();
+          if(payload === '[DONE]') return;
+          let ev;
+          try{ ev = JSON.parse(payload); }catch(e){ return; }
+          onData(ev);
+        });
+      }
+    }
+  }
+
+  async function throwApiError(res){
+    const detail = pickApiMessage(await res.text().catch(() => ''));
+    // Gemini ตอบ 400 พร้อมข้อความ "API key not valid" แทนที่จะเป็น 401 — แปลงให้คำแนะนำตรงอาการ
+    const status = (res.status === 400 && /api key/i.test(detail)) ? 401 : res.status;
+    throw new Error(aiErrorText(status, detail));
+  }
+
+  const netGuard = err => {
+    if(err.name === 'AbortError') throw err;
+    throw (err instanceof Error && err.message.startsWith('เรียก')) ? err : new Error(aiErrorText(0));
+  };
+
+  // ---- Anthropic Messages API ----
+  // retry อีกครั้งโดยตัดพารามิเตอร์ beta ออก เผื่อคีย์ของผู้ใช้ยังไม่ได้เปิดใช้ฟีเจอร์นั้น
+  async function streamAnthropic({ system, messages, onText, signal }){
+    const m = modelOf(aiModelId());
     const send = async (useBeta) => {
       const headers = {
         'content-type': 'application/json',
-        'x-api-key': ai.key,
+        'x-api-key': aiKey(),
         'anthropic-version': AI_VERSION,
         // จำเป็นเมื่อเรียกจากเบราว์เซอร์ตรง ๆ ไม่ผ่านเซิร์ฟเวอร์ของเราเอง
         'anthropic-dangerous-direct-browser-access': 'true'
@@ -1723,42 +1853,116 @@ const LEGACY_IDS = ["math-m1-01-4aac3e8b","math-m1-01-b619d996","math-m1-01-ef30
         if(/fallback|beta/i.test(text)) res = await send(false);
         else throw new Error(aiErrorText(400, pickApiMessage(text)));
       }
-    }catch(err){
-      if(err.name === 'AbortError') throw err;
-      throw (err instanceof Error && err.message.startsWith('เรียก')) ? err : new Error(aiErrorText(0));
-    }
+    }catch(err){ netGuard(err); }
+    if(!res.ok) await throwApiError(res);
 
-    if(!res.ok){
-      const detail = pickApiMessage(await res.text().catch(() => ''));
-      throw new Error(aiErrorText(res.status, detail));
-    }
-
-    const reader = res.body.getReader();
-    const decoder = new TextDecoder();
-    let buf = '', stop = null;
-    for(;;){
-      const { value, done } = await reader.read();
-      if(done) break;
-      buf += decoder.decode(value, { stream:true }).replace(/\r/g, '');
-      let cut;
-      while((cut = buf.indexOf('\n\n')) >= 0){
-        const block = buf.slice(0, cut);
-        buf = buf.slice(cut + 2);
-        block.split('\n').forEach(line => {
-          if(!line.startsWith('data:')) return;
-          let ev;
-          try{ ev = JSON.parse(line.slice(5).trim()); }catch(e){ return; }
-          if(ev.type === 'content_block_delta' && ev.delta && ev.delta.type === 'text_delta') onText(ev.delta.text);
-          else if(ev.type === 'message_delta' && ev.delta && ev.delta.stop_reason) stop = ev.delta.stop_reason;
-          else if(ev.type === 'error') throw new Error(aiErrorText(0, (ev.error || {}).message));
-        });
-      }
-    }
+    let stop = null;
+    await pumpSSE(res, ev => {
+      if(ev.type === 'content_block_delta' && ev.delta && ev.delta.type === 'text_delta') onText(ev.delta.text);
+      else if(ev.type === 'message_delta' && ev.delta && ev.delta.stop_reason) stop = ev.delta.stop_reason;
+      else if(ev.type === 'error') throw new Error(aiErrorText(0, (ev.error || {}).message));
+    });
     return stop;
   }
 
+  // ---- OpenAI Chat Completions (และ endpoint แบบเดียวกันของเจ้าอื่น) ----
+  async function streamOpenAI({ system, messages, onText, signal }){
+    const custom = ai.provider === 'custom';
+    const url = custom
+      ? ai.customBase.replace(/\/+$/, '') + '/chat/completions'
+      : 'https://api.openai.com/v1/chat/completions';
+    const body = {
+      model: aiModelId(),
+      // Chat Completions ไม่มีช่อง system แยก — ส่งเป็นข้อความแรกของบทสนทนา
+      messages: [{ role:'system', content:system }, ...messages],
+      stream: true
+    };
+    // ชื่อพารามิเตอร์โควตาโทเคนต่างกัน: OpenAI แท้เลิกใช้ max_tokens ไปแล้ว
+    // แต่ endpoint เลียนแบบ (Ollama, เซิร์ฟเวอร์เก่า) ส่วนใหญ่รู้จักแค่ max_tokens
+    if(custom) body.max_tokens = 4000;
+    else body.max_completion_tokens = 4000;
+    // ตระกูล gpt-5 เป็นโมเดลคิดก่อนตอบ — กดให้คิดน้อยเพราะงานติวตอบสั้น
+    // (ห้ามส่งให้ endpoint แบบ custom เพราะไม่รู้ว่าโมเดลปลายทางรับหรือเปล่า)
+    if(!custom && modelOf(aiModelId()).reff) body.reasoning_effort = 'low';
+
+    let res;
+    try{
+      res = await fetch(url, {
+        method:'POST',
+        headers:{ 'content-type':'application/json', 'authorization':'Bearer ' + aiKey() },
+        body:JSON.stringify(body), signal
+      });
+    }catch(err){ netGuard(err); }
+    if(!res.ok) await throwApiError(res);
+
+    let stop = null;
+    await pumpSSE(res, ev => {
+      const c = (ev.choices || [])[0];
+      if(!c) return;
+      if(c.delta && typeof c.delta.content === 'string' && c.delta.content) onText(c.delta.content);
+      if(c.finish_reason){
+        // แปลงชื่อเหตุผลจบให้ตรงกับที่โค้ดฝั่งแสดงผลรู้จัก (ตั้งตามของ Anthropic)
+        stop = { stop:'end_turn', length:'max_tokens', content_filter:'refusal' }[c.finish_reason]
+               || c.finish_reason;
+      }
+    });
+    return stop;
+  }
+
+  // ---- Google Gemini (generateContent แบบสตรีม) ----
+  async function streamGemini({ system, messages, onText, signal }){
+    const m = modelOf(aiModelId());
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/'
+              + encodeURIComponent(m.id) + ':streamGenerateContent?alt=sse';
+    const body = {
+      systemInstruction: { parts:[{ text: system }] },
+      contents: messages.map(x => ({ role: x.role === 'assistant' ? 'model' : 'user',
+                                     parts:[{ text: x.content }] })),
+      generationConfig: { maxOutputTokens: 4000 }
+    };
+    // ปิดการคิดยาวของ Flash ให้ตอบไว (Pro ปิดไม่ได้ — ส่งไปจะ 400)
+    if(m.nothink) body.generationConfig.thinkingConfig = { thinkingBudget: 0 };
+
+    let res;
+    try{
+      res = await fetch(url, {
+        method:'POST',
+        headers:{ 'content-type':'application/json', 'x-goog-api-key': aiKey() },
+        body:JSON.stringify(body), signal
+      });
+    }catch(err){ netGuard(err); }
+    if(!res.ok) await throwApiError(res);
+
+    let stop = null;
+    await pumpSSE(res, ev => {
+      const cand = (ev.candidates || [])[0];
+      if(cand && cand.content && Array.isArray(cand.content.parts)){
+        cand.content.parts.forEach(p => { if(typeof p.text === 'string' && p.text) onText(p.text); });
+      }
+      if(cand && cand.finishReason){
+        stop = { STOP:'end_turn', MAX_TOKENS:'max_tokens', SAFETY:'refusal',
+                 PROHIBITED_CONTENT:'refusal', RECITATION:'refusal' }[cand.finishReason]
+               || cand.finishReason;
+      }
+      if(ev.error) throw new Error(aiErrorText(0, ev.error.message));
+    });
+    return stop;
+  }
+
+  // จุดเรียกเดียวจากหน้าจอ — เลือกทางตามผู้ให้บริการที่ตั้งไว้
+  function aiStream(args){
+    if(ai.provider === 'gemini') return streamGemini(args);
+    if(ai.provider === 'openai' || ai.provider === 'custom') return streamOpenAI(args);
+    return streamAnthropic(args);
+  }
+
   function pickApiMessage(text){
-    try{ return (JSON.parse(text).error || {}).message || ''; }catch(e){ return ''; }
+    try{
+      let d = JSON.parse(text);
+      if(Array.isArray(d)) d = d[0] || {};              // Gemini บางกรณีห่อ error เป็นอาร์เรย์
+      const e = d.error || {};
+      return e.message || (typeof e === 'string' ? e : '') || '';
+    }catch(e){ return ''; }
   }
 
   // จัดรูปคำตอบของติวเตอร์ให้เป็นสมการจริง — ยกกำลังเป็น <sup> ตัวห้อยเป็น <sub>
@@ -1953,11 +2157,13 @@ const LEGACY_IDS = ["math-m1-01-4aac3e8b","math-m1-01-b619d996","math-m1-01-ef30
     const { q, gidx } = tutorItem;
     tutorWhich.textContent = `ข้อที่ ${QNO[gidx]} · ${q.subject} ${q.grade} · ${q.sub || q.uname}`;
 
-    if(!ai.key){
+    if(!aiKey()){
       tutorBody.innerHTML = `
         <div class="tutor-setup">
           ${AI_NAME}จะช่วยด้วยการถามคำถามนำให้น้องคิดออกเอง ไม่บอกคำตอบตรง ๆ<br>
-          ต้องใส่ Anthropic API key ของตัวเองก่อนใช้งาน (เก็บไว้ในเครื่องนี้เท่านั้น)
+          ต้องใส่ API key ของตัวเองก่อนใช้งาน — ใช้ได้ทั้ง Anthropic (Claude) ·
+          OpenAI (ChatGPT) · Google (Gemini) หรือบริการแบบ OpenAI-compatible
+          (คีย์เก็บไว้ในเครื่องนี้เท่านั้น)
           <button class="btn dark" type="button" id="tutorSetupBtn">🤖 ตั้งค่า${AI_NAME}</button>
         </div>`;
       document.getElementById('tutorSetupBtn').onclick = openAIModal;
@@ -1975,7 +2181,7 @@ const LEGACY_IDS = ["math-m1-01-4aac3e8b","math-m1-01-b619d996","math-m1-01-ef30
         <button class="tutor-send" type="button" id="tutorSend">ส่ง</button>
       </div>
       <div class="tutor-foot">
-        <span class="tutor-rung">โมเดล: ${escAttr(modelOf(ai.model).label)}</span>
+        <span class="tutor-rung">โมเดล: ${escAttr(aiModelLabel())}</span>
         <span>
           ${chat.length ? '<button class="tutor-link" type="button" id="tutorReset">เริ่มบทสนทนาใหม่</button>' : ''}
           <button class="tutor-link" type="button" id="tutorConfig">เปลี่ยนคีย์/โมเดล</button>
@@ -2095,16 +2301,69 @@ const LEGACY_IDS = ["math-m1-01-4aac3e8b","math-m1-01-b619d996","math-m1-01-ef30
   }
 
   // ---------- หน้าต่างตั้งค่าติวเตอร์ AI ----------
-  function fillModelSelect(){
-    aiModelSelect.innerHTML = AI_MODELS
-      .map(m => `<option value="${m.id}">${escAttr(m.label)}</option>`).join('');
-    aiModelSelect.value = ai.model;
-    aiModelNote.textContent = modelOf(aiModelSelect.value).note;
+  const aiProviderSelect = document.getElementById('aiProviderSelect');
+  const aiKeyNote = document.getElementById('aiKeyNote');
+  const aiStdFields = document.getElementById('aiStdFields');
+  const aiCustomFields = document.getElementById('aiCustomFields');
+  const aiBaseInput = document.getElementById('aiBaseInput');
+  const aiCustomModelInput = document.getElementById('aiCustomModelInput');
+
+  // ค่าที่กำลังแก้ในหน้าต่าง — ยังไม่บันทึกจนกด "บันทึก" · คีย์ที่พิมพ์ค้างไว้ของแต่ละเจ้า
+  // เก็บใน draft เพื่อให้สลับเจ้าไปมาระหว่างแก้ได้โดยไม่หาย และไม่แตะของจริงถ้ากดยกเลิก
+  let draft = null;
+
+  function paintModal(){
+    const p = draft.provider;
+    const info = AI_PROVIDERS[p];
+    aiProviderSelect.value = p;
+    aiKeyInput.value = draft.keys[p] || '';
+    aiKeyInput.placeholder = info.hint;
+    aiKeyNote.innerHTML = (info.consoleUrl
+        ? `ขอคีย์ได้ที่ <a href="${info.consoleUrl}" target="_blank" rel="noopener">${info.consoleName}</a> · `
+        : '')
+      + 'คีย์เก็บไว้ใน <code>localStorage</code> ของเบราว์เซอร์เครื่องนี้เท่านั้น ไม่ได้ส่งไปที่อื่น';
+    const custom = p === 'custom';
+    aiStdFields.style.display = custom ? 'none' : '';
+    aiCustomFields.style.display = custom ? '' : 'none';
+    if(custom){
+      aiBaseInput.value = draft.customBase;
+      aiCustomModelInput.value = draft.customModel;
+    }else{
+      aiModelSelect.innerHTML = providerModels(p)
+        .map(m => `<option value="${m.id}">${escAttr(m.label)}</option>`).join('');
+      aiModelSelect.value = draft.models[p];
+      aiModelNote.textContent = modelOf(aiModelSelect.value).note;
+    }
+    aiWarnText();
   }
+  function aiWarnText(){
+    document.getElementById('aiWarn').textContent =
+      `⚠️ เวลาถาม${AI_NAME} โจทย์ · เฉลย · วิธีทำที่นักเรียนเขียน จะถูกส่งไปที่ ` +
+      `${AI_PROVIDERS[draft.provider].short} และค่าใช้จ่ายเรียกเก็บจากคีย์ของคุณ · ` +
+      'เครื่องที่ใช้ร่วมกันหลายคนไม่ควรใส่คีย์ไว้';
+  }
+  // เก็บสิ่งที่พิมพ์ค้างอยู่ลง draft ก่อนวาดใหม่/บันทึก
+  function stashDraft(){
+    draft.keys[draft.provider] = aiKeyInput.value.trim();
+    if(draft.provider === 'custom'){
+      draft.customBase = aiBaseInput.value.trim();
+      draft.customModel = aiCustomModelInput.value.trim();
+    }else{
+      if(aiModelSelect.value) draft.models[draft.provider] = aiModelSelect.value;
+    }
+  }
+
   function openAIModal(){
-    fillModelSelect();
-    aiKeyInput.value = ai.key;
+    draft = {
+      provider: ai.provider,
+      keys: Object.assign({}, ai.keys),
+      models: Object.assign({}, ai.models),
+      customBase: ai.customBase, customModel: ai.customModel
+    };
+    aiProviderSelect.innerHTML = Object.entries(AI_PROVIDERS)
+      .map(([id, p]) => `<option value="${id}">${escAttr(p.label)}</option>`).join('');
     aiKeyError.textContent = '';
+    paintModal();
     aiOverlay.classList.add('show');
     setTimeout(() => aiKeyInput.focus(), 50);
   }
@@ -2113,19 +2372,37 @@ const LEGACY_IDS = ["math-m1-01-4aac3e8b","math-m1-01-b619d996","math-m1-01-ef30
   aiSetupBtn.onclick = openAIModal;
   aiCancelBtn.onclick = closeAIModal;
   aiOverlay.onclick = (e) => { if(e.target === aiOverlay) closeAIModal(); };
+  aiProviderSelect.onchange = () => {
+    stashDraft();
+    draft.provider = aiProviderSelect.value;
+    aiKeyError.textContent = '';
+    paintModal();
+  };
   aiModelSelect.onchange = () => { aiModelNote.textContent = modelOf(aiModelSelect.value).note; };
   aiKeyInput.onkeydown = (e) => { if(e.key === 'Enter') aiSaveBtn.click(); };
   aiSaveBtn.onclick = () => {
-    const key = aiKeyInput.value.trim();
-    if(!key){ aiKeyError.textContent = 'กรุณาใส่ API key หรือกด “ลบคีย์ออก”'; return; }
-    ai.key = key;
-    ai.model = aiModelSelect.value;
+    stashDraft();
+    if(!draft.keys[draft.provider]){
+      aiKeyError.textContent = 'กรุณาใส่ API key หรือกด “ลบคีย์ออก”'; return;
+    }
+    if(draft.provider === 'custom'){
+      if(!/^https?:\/\/./.test(draft.customBase)){
+        aiKeyError.textContent = 'Base URL ต้องขึ้นต้นด้วย http:// หรือ https://'; return;
+      }
+      if(!draft.customModel){
+        aiKeyError.textContent = 'กรุณาใส่ชื่อโมเดลของบริการนั้น'; return;
+      }
+    }
+    Object.assign(ai, draft);
     saveAIConfig();
     closeAIModal();
     renderAll();
   };
   aiClearBtn.onclick = () => {
-    ai.key = '';
+    // ลบเฉพาะคีย์ของเจ้าที่กำลังแก้อยู่ ไม่กวาดของเจ้าอื่นทิ้ง
+    const p = draft ? draft.provider : ai.provider;
+    ai.keys[p] = '';
+    if(draft) draft.keys[p] = '';
     saveAIConfig();
     aiKeyInput.value = '';
     closeAIModal();
