@@ -1130,3 +1130,272 @@ def trig_triangle(base, height, angle_label, base_label=None, height_label=None,
     if hyp_label:
         g.append(_lab((A[0] + C[0]) / 2 + 18, (A[1] + C[1]) / 2 - 6, hyp_label))
     return _wrap(w, h, "".join(g), caption)
+
+
+# ============================================================================
+# วิทยาศาสตร์ — คลื่น · วงจรไฟฟ้า · แผนภาพแสง · ตารางพันเนตต์ · สายใยอาหาร
+# ============================================================================
+
+def wave_fig(marks=(), caption=None, width=520, cycles=2, amp=42):
+    """คลื่นรูปไซน์พร้อมชี้ส่วนประกอบ · marks = ชื่อส่วนที่ต้องการทำเครื่องหมาย
+
+    'crest' สันคลื่น · 'trough' ท้องคลื่น · 'wavelength' ความยาวคลื่น · 'amplitude' แอมพลิจูด
+    """
+    pad, h = 40, 190
+    mid = h / 2 - 8
+    plot_w = width - pad * 2
+    per = plot_w / cycles
+    pts = [(pad + i / 400 * plot_w,
+            mid - amp * math.sin(2 * math.pi * cycles * i / 400)) for i in range(401)]
+
+    b = [f'<rect x="0" y="0" width="{width}" height="{h}" fill="#fff"/>',
+         f'<line x1="{pad-14}" y1="{mid}" x2="{width-pad+14}" y2="{mid}" '
+         f'stroke="{SOFT}" stroke-width="1.2" stroke-dasharray="5 4"/>',
+         '<polyline points="' + " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+         + f'" fill="none" stroke="{NAVY}" stroke-width="2.6" stroke-linejoin="round"/>']
+    c1x = pad + per / 4                      # สันคลื่นลูกแรก
+    t1x = pad + per * 3 / 4                  # ท้องคลื่นลูกแรก
+    if "crest" in marks:
+        b.append(f'<circle cx="{c1x:.1f}" cy="{mid-amp:.1f}" r="4.5" fill="{SERIES[3]}"/>')
+        b.append(_lab(c1x, mid - amp - 12, "ก", 13))
+    if "trough" in marks:
+        b.append(f'<circle cx="{t1x:.1f}" cy="{mid+amp:.1f}" r="4.5" fill="{SERIES[3]}"/>')
+        b.append(_lab(t1x, mid + amp + 20, "ข", 13))
+    if "wavelength" in marks:                # วัดจากสันถึงสันที่อยู่ติดกัน
+        y = mid - amp - 26
+        b.append(f'<line x1="{c1x:.1f}" y1="{y:.1f}" x2="{c1x+per:.1f}" y2="{y:.1f}" '
+                 f'stroke="{SERIES[3]}" stroke-width="1.4"/>')
+        for x in (c1x, c1x + per):
+            b.append(f'<line x1="{x:.1f}" y1="{y-5:.1f}" x2="{x:.1f}" y2="{y+5:.1f}" '
+                     f'stroke="{SERIES[3]}" stroke-width="1.4"/>')
+        b.append(_lab(c1x + per / 2, y - 8, "ค", 13))
+    if "amplitude" in marks:                 # วัดจากแนวกลางถึงสันคลื่น
+        x = pad + per * 1.25
+        b.append(f'<line x1="{x:.1f}" y1="{mid:.1f}" x2="{x:.1f}" y2="{mid-amp:.1f}" '
+                 f'stroke="{SERIES[3]}" stroke-width="1.4"/>')
+        for y in (mid, mid - amp):
+            b.append(f'<line x1="{x-5:.1f}" y1="{y:.1f}" x2="{x+5:.1f}" y2="{y:.1f}" '
+                     f'stroke="{SERIES[3]}" stroke-width="1.4"/>')
+        b.append(_lab(x + 10, mid - amp / 2 + 4, "ง", 13, "start"))
+    return _wrap(width, h, "".join(b), caption)
+
+
+# -------------------------------------------------------------- วงจรไฟฟ้า
+def _res(x, y, label, horiz=True):
+    """สัญลักษณ์ตัวต้านทาน — สี่เหลี่ยมผืนผ้าคร่อมเส้นลวด"""
+    w, t = 46, 18
+    if horiz:
+        box = (f'<rect x="{x-w/2:.1f}" y="{y-t/2:.1f}" width="{w}" height="{t}" '
+               f'fill="#fff" stroke="{NAVY}" stroke-width="2"/>')
+        lab = _lab(x, y - t / 2 - 7, label, 12)
+    else:
+        box = (f'<rect x="{x-t/2:.1f}" y="{y-w/2:.1f}" width="{t}" height="{w}" '
+               f'fill="#fff" stroke="{NAVY}" stroke-width="2"/>')
+        lab = _lab(x + t / 2 + 6, y + 4, label, 12, "start")
+    return box + lab
+
+
+def _battery(x, y):
+    """สัญลักษณ์เซลล์ไฟฟ้า — ขีดยาว (ขั้วบวก) สลับขีดสั้น (ขั้วลบ) ในแนวตั้ง"""
+    return (f'<line x1="{x-13}" y1="{y-4}" x2="{x+13}" y2="{y-4}" stroke="{INK}" '
+            f'stroke-width="2.4"/>'
+            f'<line x1="{x-7}" y1="{y+4}" x2="{x+7}" y2="{y+4}" stroke="{INK}" '
+            f'stroke-width="4"/>')
+
+
+def _meter(x, y, letter):
+    return (f'<circle cx="{x}" cy="{y}" r="15" fill="#fff" stroke="{NAVY}" stroke-width="2"/>'
+            + _t(x, y + 5, letter, 14, "middle", NAVY, "700"))
+
+
+def circuit_fig(kind, labels=None, caption=None, width=380, height=230):
+    """แผนภาพวงจรไฟฟ้าอย่างง่าย
+
+    kind = 'series'   ตัวต้านทานสองตัวต่ออนุกรม
+           'parallel' ตัวต้านทานสองตัวต่อขนาน
+           'meters'   แอมมิเตอร์ต่ออนุกรม โวลต์มิเตอร์ต่อขนานคร่อมตัวต้านทาน
+    """
+    labels = labels or {}
+    L, R, T, B = 46, width - 46, 46, height - 46
+    wire = lambda x1, y1, x2, y2: (f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" '
+                                   f'y2="{y2:.1f}" stroke="{INK}" stroke-width="2"/>')
+    mid_y = (T + B) / 2
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>']
+
+    if kind == "series":
+        g += [wire(L, T, R, T), wire(R, T, R, B), wire(R, B, L, B),
+              wire(L, B, L, mid_y + 6), wire(L, mid_y - 6, L, T)]
+        g.append(_battery(L, mid_y))
+        g.append(_lab(L - 12, mid_y + 4, labels.get("v", ""), 12, "end"))
+        g.append(_res((L + R) / 2 - 55, T, labels.get("r1", "R₁")))
+        g.append(_res((L + R) / 2 + 55, T, labels.get("r2", "R₂")))
+    elif kind == "parallel":
+        my2 = B - 30
+        g += [wire(L, T, R, T), wire(R, T, R, my2), wire(R, my2, L, my2),
+              wire(L, my2, L, mid_y + 6), wire(L, mid_y - 6, L, T)]
+        g.append(_battery(L, mid_y))
+        g.append(_lab(L - 12, mid_y + 4, labels.get("v", ""), 12, "end"))
+        bx = (L + R) / 2
+        g += [wire(bx - 40, T, bx - 40, my2), wire(bx + 40, T, bx + 40, my2)]
+        g.append(_res(bx - 40, (T + my2) / 2, labels.get("r1", "R₁"), horiz=False))
+        g.append(_res(bx + 40, (T + my2) / 2, labels.get("r2", "R₂"), horiz=False))
+    elif kind == "meters":
+        g += [wire(L, T, R, T), wire(R, T, R, B), wire(R, B, L, B),
+              wire(L, B, L, mid_y + 6), wire(L, mid_y - 6, L, T)]
+        g.append(_battery(L, mid_y))
+        g.append(_res((L + R) / 2 + 40, T, labels.get("r1", "R")))
+        g.append(_meter((L + R) / 2 - 45, T, "A"))
+        vy = T + 66                          # โวลต์มิเตอร์คร่อมตัวต้านทานแบบขนาน
+        x1, x2 = (L + R) / 2 + 40 - 42, (L + R) / 2 + 40 + 42
+        g += [wire(x1, T, x1, vy), wire(x2, T, x2, vy),
+              wire(x1, vy, (x1 + x2) / 2 - 15, vy), wire((x1 + x2) / 2 + 15, vy, x2, vy)]
+        g.append(_meter((x1 + x2) / 2, vy, "V"))
+    else:
+        raise ValueError(f"ไม่รู้จักวงจรชนิด {kind}")
+    return _wrap(width, height, "".join(g), caption)
+
+
+# ------------------------------------------------------- แผนภาพการเดินทางของแสง
+def lens_ray(kind="convex", caption=None, width=460, height=220):
+    """แผนภาพรังสีแสงผ่านเลนส์ · kind = 'convex' วัตถุไกลกว่า 2F หรือ 'concave'"""
+    cx, cy = width / 2, height / 2
+    f, lens_h = 62, 74
+    axis = f'<line x1="14" y1="{cy}" x2="{width-14}" y2="{cy}" stroke="{SOFT}" ' \
+           f'stroke-width="1.2" stroke-dasharray="6 4"/>'
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>', axis]
+    if kind == "convex":
+        g.append(f'<ellipse cx="{cx}" cy="{cy}" rx="13" ry="{lens_h}" fill="#eef1f4" '
+                 f'stroke="{NAVY}" stroke-width="2"/>')
+    else:
+        g.append(f'<path d="M {cx-13} {cy-lens_h} Q {cx+2} {cy} {cx-13} {cy+lens_h} '
+                 f'L {cx+13} {cy+lens_h} Q {cx-2} {cy} {cx+13} {cy-lens_h} Z" '
+                 f'fill="#eef1f4" stroke="{NAVY}" stroke-width="2"/>')
+    for d, nm in ((-f, "F"), (f, "F"), (-2 * f, "2F"), (2 * f, "2F")):
+        x = cx + d
+        if 20 < x < width - 20:
+            g.append(f'<circle cx="{x:.1f}" cy="{cy}" r="3" fill="{INK}"/>')
+            g.append(_t(x, cy + 17, nm, 11, "middle", SOFT))
+    ox, oh = cx - 2.4 * f, 46                # วัตถุอยู่ไกลกว่า 2F
+    arrow = lambda x, y0, y1, col: (
+        f'<line x1="{x:.1f}" y1="{y0:.1f}" x2="{x:.1f}" y2="{y1:.1f}" stroke="{col}" '
+        f'stroke-width="2.6"/>'
+        f'<polygon points="{x:.1f},{y1:.1f} {x-5:.1f},{y1+(7 if y1>y0 else -7):.1f} '
+        f'{x+5:.1f},{y1+(7 if y1>y0 else -7):.1f}" fill="{col}"/>')
+    g.append(arrow(ox, cy, cy - oh, NAVY))
+    g.append(_t(ox, cy + 17, "วัตถุ", 11.5, "middle", NAVY, "700"))
+    ray = lambda x1, y1, x2, y2: (f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" '
+                                  f'y2="{y2:.1f}" stroke="{SERIES[3]}" stroke-width="1.8"/>')
+    if kind == "convex":
+        u = 2.4 * f
+        v = 1 / (1 / f - 1 / u)              # 1/f = 1/u + 1/v
+        ix, ih = cx + v, oh * v / u
+        # รังสีที่ 1 ขนานแกน → หักเหผ่านโฟกัส · รังสีที่ 2 ผ่านกึ่งกลางเลนส์เป็นเส้นตรง
+        g += [ray(ox, cy - oh, cx, cy - oh), ray(cx, cy - oh, ix, cy + ih),
+              ray(ox, cy - oh, ix, cy + ih)]
+        g.append(arrow(ix, cy, cy + ih, SERIES[2]))
+        g.append(_t(ix + 4, cy - 9, "ภาพ", 11.5, "start", SERIES[2], "700"))
+    else:
+        # เลนส์เว้ากระจายแสง รังสีจริงไม่ไปรวมกัน ต้องต่อย้อนกลับ (เส้นประ) จึงได้ภาพเสมือน
+        u = 2.4 * f
+        v = 1 / (-1 / f - 1 / u)                    # เลนส์เว้าใช้ f เป็นลบ ได้ v ติดลบ
+        ix, ih = cx + v, oh * abs(v) / u
+        ex = width - 22
+        g += [ray(ox, cy - oh, cx, cy - oh),
+              ray(cx, cy - oh, ex, cy - oh + (cy - oh - (cy - ih)) / (cx - ix) * (ex - cx)),
+              ray(ox, cy - oh, cx, cy - oh)]
+        g.append(f'<line x1="{cx:.1f}" y1="{cy-oh:.1f}" x2="{ix:.1f}" y2="{cy-ih:.1f}" '
+                 f'stroke="{SERIES[3]}" stroke-width="1.4" stroke-dasharray="5 4"/>')
+        g.append(arrow(ix, cy, cy - ih, SERIES[2]))
+        g.append(_t(ix - 6, cy - ih - 8, "ภาพ", 11.5, "end", SERIES[2], "700"))
+    return _wrap(width, height, "".join(g), caption)
+
+
+def mirror_ray(angle, caption=None, width=340, height=210):
+    """แสงตกกระทบกระจกเงาราบ พร้อมเส้นแนวฉากและมุมตกกระทบ/มุมสะท้อน"""
+    cx, my = width / 2, height - 58
+    r = 118
+    a = math.radians(angle)
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>',
+         f'<line x1="26" y1="{my}" x2="{width-26}" y2="{my}" stroke="{INK}" '
+         f'stroke-width="2.6"/>']
+    for x in range(30, int(width) - 26, 14):  # ขีดเฉียงใต้กระจก บอกว่าเป็นผิวสะท้อน
+        g.append(f'<line x1="{x}" y1="{my}" x2="{x-7}" y2="{my+9}" stroke="{SOFT}" '
+                 f'stroke-width="1.2"/>')
+    g.append(f'<line x1="{cx}" y1="{my}" x2="{cx}" y2="{my-r-10}" stroke="{SOFT}" '
+             f'stroke-width="1.4" stroke-dasharray="5 4"/>')
+    g.append(_t(cx, my - r - 18, "เส้นแนวฉาก", 11, "middle", SOFT))
+    inx, iny = cx - r * math.sin(a), my - r * math.cos(a)
+    rfx, rfy = cx + r * math.sin(a), my - r * math.cos(a)
+    for (x, y), col in (((inx, iny), NAVY), ((rfx, rfy), SERIES[3])):
+        g.append(f'<line x1="{x:.1f}" y1="{y:.1f}" x2="{cx}" y2="{my}" stroke="{col}" '
+                 f'stroke-width="2.2"/>' if col == NAVY else
+                 f'<line x1="{cx}" y1="{my}" x2="{x:.1f}" y2="{y:.1f}" stroke="{col}" '
+                 f'stroke-width="2.2"/>')
+    mid = lambda x, y: ((x + cx) / 2, (y + my) / 2)
+    mx, myy = mid(inx, iny)
+    g.append(f'<polygon points="{mx:.1f},{myy:.1f} {mx-4:.1f},{myy-8:.1f} '
+             f'{mx+7:.1f},{myy-5:.1f}" fill="{NAVY}"/>')
+    rr = 46
+    g.append(f'<path d="M {cx-rr*math.sin(a):.1f} {my-rr*math.cos(a):.1f} '
+             f'A {rr} {rr} 0 0 1 {cx} {my-rr}" fill="none" stroke="{NAVY}" '
+             f'stroke-width="1.6"/>')
+    g.append(f'<path d="M {cx} {my-rr} A {rr} {rr} 0 0 1 '
+             f'{cx+rr*math.sin(a):.1f} {my-rr*math.cos(a):.1f}" fill="none" '
+             f'stroke="{SERIES[3]}" stroke-width="1.6"/>')
+    g.append(_lab(cx - rr * 0.62, my - rr * 0.92, "ก", 12.5))
+    g.append(_lab(cx + rr * 0.62, my - rr * 0.92, "ข", 12.5))
+    return _wrap(width, height, "".join(g), caption)
+
+
+# -------------------------------------------------------------- ตารางพันเนตต์
+def punnett(top, left, caption=None, cell=56, show=None):
+    """ตารางพันเนตต์ 2×2 · top/left = แอลลีลของพ่อและแม่ · show = ช่องที่ต้องซ่อนเป็น '?'"""
+    show = show if show is not None else [[True] * len(top) for _ in left]
+    pad_l, pad_t = 52, 46
+    w = pad_l + cell * len(top) + 16
+    h = pad_t + cell * len(left) + 16
+    g = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>']
+    for j, a in enumerate(top):
+        g.append(_t(pad_l + cell * (j + 0.5), pad_t - 12, a, 15, "middle", NAVY, "700"))
+    for i, b_ in enumerate(left):
+        g.append(_t(pad_l - 14, pad_t + cell * (i + 0.5) + 6, b_, 15, "end", NAVY, "700"))
+    for i, b_ in enumerate(left):
+        for j, a in enumerate(top):
+            x, y = pad_l + cell * j, pad_t + cell * i
+            g.append(f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" '
+                     f'fill="#eef1f4" stroke="{NAVY}" stroke-width="1.6"/>')
+            gt = "".join(sorted(a + b_, key=lambda c: (c.islower(), c)))
+            g.append(_t(x + cell / 2, y + cell / 2 + 6,
+                        gt if show[i][j] else "?", 16, "middle",
+                        INK if show[i][j] else SERIES[3], "700"))
+    return _wrap(round(w), round(h), "".join(g), caption)
+
+
+# --------------------------------------------------------------- สายใยอาหาร
+def food_web(nodes, links, caption=None, width=520, height=240):
+    """โซ่/สายใยอาหาร · nodes = {ชื่อ: (x, y)} พิกัด 0-1 · links = [(จาก, ไป)]
+
+    ลูกศรชี้ตามทิศทางการถ่ายทอดพลังงาน คือชี้จากผู้ถูกกินไปยังผู้กิน
+    """
+    px = lambda t: 40 + t * (width - 80)
+    py = lambda t: 34 + t * (height - 78)
+    pos = {n: (px(x), py(y)) for n, (x, y) in nodes.items()}
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>']
+    for a, b_ in links:
+        (x1, y1), (x2, y2) = pos[a], pos[b_]
+        dx, dy = x2 - x1, y2 - y1
+        d = math.hypot(dx, dy) or 1
+        gap = 34
+        sx, sy = x1 + dx / d * gap, y1 + dy / d * gap
+        ex, ey = x2 - dx / d * (gap + 7), y2 - dy / d * (gap + 7)
+        ux, uy = dx / d, dy / d
+        g.append(f'<line x1="{sx:.1f}" y1="{sy:.1f}" x2="{ex:.1f}" y2="{ey:.1f}" '
+                 f'stroke="{SOFT}" stroke-width="1.8"/>')
+        g.append(f'<polygon points="{ex+ux*7:.1f},{ey+uy*7:.1f} '
+                 f'{ex-uy*4.5:.1f},{ey+ux*4.5:.1f} {ex+uy*4.5:.1f},{ey-ux*4.5:.1f}" '
+                 f'fill="{SOFT}"/>')
+    for n, (x, y) in pos.items():
+        g.append(f'<rect x="{x-33:.1f}" y="{y-15:.1f}" width="66" height="30" rx="15" '
+                 f'fill="#eef1f4" stroke="{NAVY}" stroke-width="1.8"/>')
+        g.append(_t(x, y + 5, n, 12, "middle", NAVY, "700"))
+    return _wrap(width, height, "".join(g), caption)

@@ -18,7 +18,9 @@ from svg_helpers import (bar_chart, line_chart, pie_chart, pictograph, iso_cubes
                          right_triangle, transform_grid, prism_box, cylinder_fig,
                          dot_plot, histogram, box_plot, ineq_line, parabola,
                          two_lines, pyramid_fig, cone_fig, sphere_fig,
-                         similar_triangles, circle_fig, trig_triangle)
+                         similar_triangles, circle_fig, trig_triangle,
+                         wave_fig, circuit_fig, lens_ray, mirror_ray,
+                         punnett, food_web)
 
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                    "questions", "figures.json")
@@ -278,6 +280,54 @@ FIGURES.update({
     n: trig_triangle(a, o, "θ", f"{a} ซม.", f"{o} ซม.", f"{h} ซม.",
                      caption="θ คือมุมที่จุด C")
     for n, (a, o, h) in M3_TRIG.items()})
+
+# ══ วิทยาศาสตร์ ═══════════════════════════════════════════════════════════
+# ค่าบนรูปเก็บไว้ที่นี่ที่เดียว โจทย์ในไฟล์ questions/science-*/ อ้างด้วย "ชื่อรูป"
+CIRCUITS = {
+    "sci-cir-series-4-6": ("series", {"v": "12 V", "r1": "4 &#937;", "r2": "6 &#937;"},
+                           "ตัวต้านทานสองตัวต่อแบบอนุกรมกับแบตเตอรี่"),
+    "sci-cir-series-5-15": ("series", {"v": "20 V", "r1": "5 &#937;", "r2": "15 &#937;"},
+                            "ตัวต้านทานสองตัวต่อแบบอนุกรมกับแบตเตอรี่"),
+    "sci-cir-parallel-3-6": ("parallel", {"v": "12 V", "r1": "3 &#937;", "r2": "6 &#937;"},
+                             "ตัวต้านทานสองตัวต่อแบบขนานกับแบตเตอรี่"),
+    "sci-cir-parallel-4-4": ("parallel", {"v": "8 V", "r1": "4 &#937;", "r2": "4 &#937;"},
+                             "ตัวต้านทานสองตัวต่อแบบขนานกับแบตเตอรี่"),
+    "sci-cir-meters": ("meters", {"r1": "R"},
+                       "A คือแอมมิเตอร์ · V คือโวลต์มิเตอร์"),
+}
+FIGURES.update({n: circuit_fig(k, lab, cap) for n, (k, lab, cap) in CIRCUITS.items()})
+
+FIGURES.update({
+    "sci-wave-parts": wave_fig(("crest", "trough", "wavelength", "amplitude"),
+                               "คลื่นรูปหนึ่ง — ก ข ค ง คือส่วนประกอบที่ทำเครื่องหมายไว้"),
+    "sci-lens-convex": lens_ray("convex", "แสงผ่านเลนส์นูน เมื่อวัตถุอยู่ไกลกว่า 2F"),
+    "sci-lens-concave": lens_ray("concave",
+                                 "แสงผ่านเลนส์เว้า — เส้นประคือรังสีที่ต่อย้อนกลับ"),
+    "sci-mirror-35": mirror_ray(35, "แสงตกกระทบกระจกเงาราบ · ก และ ข คือมุมที่ทำเครื่องหมายไว้"),
+    "sci-mirror-50": mirror_ray(50, "แสงตกกระทบกระจกเงาราบ · ก และ ข คือมุมที่ทำเครื่องหมายไว้"),
+})
+
+PUNNETT = {
+    "sci-pun-Tt-Tt": (["T", "t"], ["T", "t"], None,
+                      "ตารางพันเนตต์ของการผสม Tt กับ Tt"),
+    "sci-pun-Tt-tt": (["T", "t"], ["t", "t"], [[True, False], [True, True]],
+                      "ตารางพันเนตต์ของการผสม Tt กับ tt — ช่อง ? คือจีโนไทป์ที่ต้องหา"),
+    "sci-pun-TT-tt": (["T", "T"], ["t", "t"], None,
+                      "ตารางพันเนตต์ของการผสมพันธุ์แท้ TT กับพันธุ์แท้ tt"),
+}
+FIGURES.update({n: punnett(t, l, cap, show=sh) for n, (t, l, sh, cap) in PUNNETT.items()})
+
+CHAIN = {"หญ้า": (0, .5), "ตั๊กแตน": (.33, .5), "กบ": (.66, .5), "งู": (1, .5)}
+WEB = {"หญ้า": (0, .5), "ตั๊กแตน": (.35, .1), "หนู": (.35, .9),
+       "กบ": (.7, .1), "งู": (1, .5), "เหยี่ยว": (.7, .9)}
+FIGURES.update({
+    "sci-chain-4": food_web(CHAIN, [("หญ้า", "ตั๊กแตน"), ("ตั๊กแตน", "กบ"), ("กบ", "งู")],
+                            "โซ่อาหารในทุ่งหญ้า · ลูกศรชี้ทิศทางการถ่ายทอดพลังงาน",
+                            height=110),
+    "sci-web-6": food_web(WEB, [("หญ้า", "ตั๊กแตน"), ("หญ้า", "หนู"), ("ตั๊กแตน", "กบ"),
+                                ("กบ", "งู"), ("หนู", "เหยี่ยว"), ("หนู", "งู")],
+                          "สายใยอาหารในทุ่งหญ้า · ลูกศรชี้ทิศทางการถ่ายทอดพลังงาน"),
+})
 
 # ── หน่วย 10 · แผนภาพกล่อง (ค 3.1 ม.3/1) ───────────────────────────────
 FIGURES.update({
