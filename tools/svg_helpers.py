@@ -1250,6 +1250,23 @@ def circuit_fig(kind, labels=None, caption=None, width=380, height=230):
         g += [wire(x1, T, x1, vy), wire(x2, T, x2, vy),
               wire(x1, vy, (x1 + x2) / 2 - 15, vy), wire((x1 + x2) / 2 + 15, vy, x2, vy)]
         g.append(_meter((x1 + x2) / 2, vy, "V"))
+    elif kind == "electronic":
+        g += [wire(L, T, R, T), wire(R, T, R, B), wire(R, B, L, B),
+              wire(L, B, L, mid_y + 6), wire(L, mid_y - 6, L, T)]
+        g.append(_battery(L, mid_y))
+        g.append(_res((L + R) / 2 - 52, T, labels.get("r1", "R")))
+        dx = (L + R) / 2 + 46                # ไดโอดเปล่งแสง — สามเหลี่ยมชนขีด ปล่อยผ่านทางเดียว
+        g.append(f'<polygon points="{dx-13},{T-11} {dx-13},{T+11} {dx+9},{T}" '
+                 f'fill="#eef1f4" stroke="{NAVY}" stroke-width="2"/>')
+        g.append(f'<line x1="{dx+9}" y1="{T-12}" x2="{dx+9}" y2="{T+12}" stroke="{NAVY}" '
+                 f'stroke-width="2.4"/>')
+        for k in range(2):
+            ax0 = dx + 2 + k * 9
+            g.append(f'<line x1="{ax0}" y1="{T-18}" x2="{ax0+9}" y2="{T-28}" '
+                     f'stroke="{SERIES[3]}" stroke-width="1.6"/>')
+            g.append(f'<polygon points="{ax0+12},{T-31} {ax0+5},{T-27} {ax0+10},{T-22}" '
+                     f'fill="{SERIES[3]}"/>')
+        g.append(_lab(dx, T + 28, "LED", 12))
     else:
         raise ValueError(f"ไม่รู้จักวงจรชนิด {kind}")
     return _wrap(width, height, "".join(g), caption)
@@ -1398,4 +1415,379 @@ def food_web(nodes, links, caption=None, width=520, height=240):
         g.append(f'<rect x="{x-33:.1f}" y="{y-15:.1f}" width="66" height="30" rx="15" '
                  f'fill="#eef1f4" stroke="{NAVY}" stroke-width="1.8"/>')
         g.append(_t(x, y + 5, n, 12, "middle", NAVY, "700"))
+    return _wrap(width, height, "".join(g), caption)
+
+
+# ------------------------------------------------------ ผังลำดับ (ใช้กล่อง-ลูกศรชุดเดียวกับสายใยอาหาร)
+def flow_chart(steps, caption=None, width=540, per_row=3, box_w=140):
+    """ผังลำดับขั้นตอน — กล่องเรียงพร้อมลูกศรชี้ขั้นถัดไป ขึ้นบรรทัดใหม่เมื่อเต็มแถว"""
+    rows = [steps[i:i + per_row] for i in range(0, len(steps), per_row)]
+    bh, gap_y, pad = 40, 34, 20
+    height = pad * 2 + len(rows) * bh + (len(rows) - 1) * gap_y
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>']
+    gap_x = (width - pad * 2 - per_row * box_w) / max(per_row - 1, 1)
+    pos = []
+    for r, row in enumerate(rows):
+        y = pad + r * (bh + gap_y)
+        for c, name in enumerate(row):
+            x = pad + c * (box_w + gap_x)
+            pos.append((x, y, name))
+            g.append(f'<rect x="{x:.1f}" y="{y}" width="{box_w}" height="{bh}" rx="8" '
+                     f'fill="#eef1f4" stroke="{NAVY}" stroke-width="1.8"/>')
+            g.append(_t(x + box_w / 2, y + bh / 2 + 5, name, 12, "middle", NAVY, "700"))
+    arrow = lambda x1, y1, x2, y2: (
+        f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" stroke="{SOFT}" '
+        f'stroke-width="1.8"/>'
+        + (f'<polygon points="{x2:.1f},{y2:.1f} {x2-5:.1f},{y2-7:.1f} {x2+5:.1f},{y2-7:.1f}" '
+           f'fill="{SOFT}"/>' if x1 == x2 else
+           f'<polygon points="{x2:.1f},{y2:.1f} {x2-7:.1f},{y2-4.5:.1f} {x2-7:.1f},{y2+4.5:.1f}" '
+           f'fill="{SOFT}"/>'))
+    for i in range(len(pos) - 1):
+        (x1, y1, _), (x2, y2, _) = pos[i], pos[i + 1]
+        if y1 == y2:
+            g.append(arrow(x1 + box_w + 3, y1 + bh / 2, x2 - 4, y2 + bh / 2))
+        else:                                  # ขึ้นแถวใหม่ — ลากอ้อมลงมาทางซ้าย
+            my = y1 + bh + gap_y / 2
+            g += [f'<line x1="{x1+box_w/2:.1f}" y1="{y1+bh}" x2="{x1+box_w/2:.1f}" '
+                  f'y2="{my:.1f}" stroke="{SOFT}" stroke-width="1.8"/>',
+                  f'<line x1="{x1+box_w/2:.1f}" y1="{my:.1f}" x2="{x2+box_w/2:.1f}" '
+                  f'y2="{my:.1f}" stroke="{SOFT}" stroke-width="1.8"/>',
+                  arrow(x2 + box_w / 2, my, x2 + box_w / 2, y2 - 4)]
+    return _wrap(width, round(height), "".join(g), caption)
+
+
+# ------------------------------------------------------------- แบบจำลองอนุภาค
+def particle_model(kind, caption=None, width=170, height=170):
+    """แบบจำลองอนุภาคของสสาร · kind = 'solid' | 'liquid' | 'gas' | 'mixture'"""
+    pad, r = 16, 9
+    g = [f'<rect x="{pad/2}" y="{pad/2}" width="{width-pad}" height="{height-pad}" '
+         f'fill="#fff" stroke="{INK}" stroke-width="1.8"/>']
+    dot = lambda x, y, col=NAVY: (f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r}" fill="{col}" '
+                                  f'fill-opacity="0.75" stroke="{col}" stroke-width="1.4"/>')
+    inner = width - pad * 2 - r * 2
+    if kind == "solid":                       # เรียงชิดเป็นระเบียบ สั่นอยู่กับที่
+        for i in range(4):
+            for j in range(4):
+                g.append(dot(pad + r + 6 + i * (inner / 3.4), pad + r + 6 + j * (inner / 3.4)))
+    elif kind == "liquid":                    # อยู่ชิดกันแต่ไม่เป็นระเบียบ เลื่อนที่ได้
+        off = [(0, .12), (.3, 0), (.62, .1), (.9, .02), (.1, .38), (.42, .3),
+               (.72, .42), (.98, .34), (.04, .66), (.34, .72), (.66, .64), (.94, .74)]
+        for a, b in off:
+            g.append(dot(pad + r + 6 + a * inner, pad + r + 26 + b * inner * 0.78))
+        g.append(f'<line x1="{pad/2}" y1="{pad/2+34}" x2="{width-pad/2}" y2="{pad/2+34}" '
+                 f'stroke="{SOFT}" stroke-width="1.2" stroke-dasharray="5 4"/>')
+    elif kind == "gas":                       # อยู่ห่างกันมาก ฟุ้งเต็มภาชนะ
+        for a, b in [(.05, .1), (.55, .02), (.92, .22), (.28, .38), (.72, .55),
+                     (.02, .62), (.45, .82), (.88, .9)]:
+            g.append(dot(pad + r + 6 + a * inner, pad + r + 6 + b * inner))
+    elif kind == "mixture":                   # สารสองชนิดผสมกันในระดับอนุภาค
+        for a, b, c in [(.06, .1, 0), (.4, .05, 1), (.75, .18, 0), (.15, .42, 1),
+                        (.5, .38, 0), (.85, .5, 1), (.1, .74, 0), (.45, .8, 1),
+                        (.8, .84, 0)]:
+            g.append(dot(pad + r + 6 + a * inner, pad + r + 6 + b * inner,
+                         NAVY if c == 0 else SERIES[3]))
+    else:
+        raise ValueError(f"ไม่รู้จักแบบจำลองอนุภาคชนิด {kind}")
+    return _wrap(width, height, "".join(g), caption)
+
+
+# ------------------------------------------------------------------- เซลล์
+def cell_diagram(kind, caption=None, width=300, height=230):
+    """เซลล์พืชหรือเซลล์สัตว์ · ส่วนประกอบทำเครื่องหมายเป็น ก ข ค ง"""
+    cx, cy = width / 2, height / 2 - 4
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>']
+    tag = lambda x, y, t: (f'<circle cx="{x:.1f}" cy="{y:.1f}" r="11" fill="#fff" '
+                           f'stroke="{SERIES[3]}" stroke-width="1.8"/>'
+                           + _t(x, y + 5, t, 13, "middle", SERIES[3], "700"))
+    if kind == "plant":
+        g += [f'<rect x="{cx-108}" y="{cy-78}" width="216" height="156" rx="6" '
+              f'fill="#e7efe9" stroke="{NAVY}" stroke-width="3"/>',           # ผนังเซลล์
+              f'<rect x="{cx-99}" y="{cy-69}" width="198" height="138" rx="5" '
+              f'fill="#f4f8f4" stroke="{NAVY}" stroke-width="1.6"/>',         # เยื่อหุ้มเซลล์
+              f'<ellipse cx="{cx+22}" cy="{cy+4}" rx="62" ry="42" fill="#dbe7f2" '
+              f'stroke="{NAVY}" stroke-width="1.6"/>',                        # แวคิวโอล
+              f'<circle cx="{cx-56}" cy="{cy-26}" r="20" fill="#cfd9e6" '
+              f'stroke="{NAVY}" stroke-width="1.8"/>']                        # นิวเคลียส
+        for x, y in ((cx - 62, cy + 34), (cx - 22, cy - 52), (cx + 62, cy - 48)):
+            g.append(f'<ellipse cx="{x}" cy="{y}" rx="13" ry="8" fill="#2F8F6F" '
+                     f'fill-opacity="0.8" stroke="#2F8F6F" stroke-width="1.2"/>')
+        # ป้ายวางเยื้องจากส่วนที่ชี้ ไม่ทับจนบังของที่ต้องดู
+        g += [tag(cx - 108, cy - 78, "ก"), tag(cx - 56, cy - 26, "ข"),
+              tag(cx + 22, cy + 4, "ค"), tag(cx - 62, cy + 56, "ง")]
+        g.append(f'<line x1="{cx-62}" y1="{cy+45}" x2="{cx-62}" y2="{cy+40}" '
+                 f'stroke="{SERIES[3]}" stroke-width="1.4"/>')
+    else:
+        g += [f'<ellipse cx="{cx}" cy="{cy}" rx="106" ry="76" fill="#f4f1ec" '
+              f'stroke="{NAVY}" stroke-width="2.4"/>',                        # เยื่อหุ้มเซลล์
+              f'<circle cx="{cx-24}" cy="{cy-8}" r="26" fill="#cfd9e6" '
+              f'stroke="{NAVY}" stroke-width="1.8"/>']                        # นิวเคลียส
+        for x, y in ((cx + 44, cy - 32), (cx + 56, cy + 22), (cx + 8, cy + 44)):
+            g.append(f'<ellipse cx="{x}" cy="{y}" rx="15" ry="8" fill="#C0392B" '
+                     f'fill-opacity="0.6" stroke="#C0392B" stroke-width="1.2"/>')
+        g += [tag(cx - 106, cy, "ก"), tag(cx - 24, cy - 8, "ข"),
+              tag(cx + 44, cy - 54, "ค"), tag(cx - 30, cy + 48, "ง")]
+        g.append(f'<line x1="{cx+44}" y1="{cy-43}" x2="{cx+44}" y2="{cy-38}" '
+                 f'stroke="{SERIES[3]}" stroke-width="1.4"/>')
+    return _wrap(width, height, "".join(g), caption)
+
+
+# ------------------------------------------------------------- แผนภาพแรง
+def force_diagram(forces, caption=None, width=380, height=200, label=None):
+    """วัตถุกับแรงที่กระทำ · forces = [(ทิศ, ป้ายกำกับ)] ทิศ = 'left' 'right' 'up' 'down'"""
+    cx, cy, bw, bh = width / 2, height / 2, 74, 56
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>',
+         f'<rect x="{cx-bw/2}" y="{cy-bh/2}" width="{bw}" height="{bh}" rx="5" '
+         f'fill="#eef1f4" stroke="{NAVY}" stroke-width="2"/>']
+    if label:
+        g.append(_t(cx, cy + 5, label, 13, "middle", NAVY, "700"))
+    L = 82
+    for i, (d, lab) in enumerate(forces):
+        col = SERIES[i % len(SERIES)]
+        if d in ("left", "right"):
+            sgn = 1 if d == "right" else -1
+            x0 = cx + sgn * bw / 2
+            x1 = x0 + sgn * L
+            g.append(f'<line x1="{x0:.1f}" y1="{cy}" x2="{x1-sgn*8:.1f}" y2="{cy}" '
+                     f'stroke="{col}" stroke-width="2.6"/>')
+            g.append(f'<polygon points="{x1:.1f},{cy} {x1-sgn*10:.1f},{cy-6} '
+                     f'{x1-sgn*10:.1f},{cy+6}" fill="{col}"/>')
+            g.append(_t(x0 + sgn * L / 2, cy - 12, lab, 12.5, "middle", col, "700"))
+        else:
+            sgn = 1 if d == "down" else -1
+            y0 = cy + sgn * bh / 2
+            y1 = y0 + sgn * (L - 20)
+            g.append(f'<line x1="{cx}" y1="{y0:.1f}" x2="{cx}" y2="{y1-sgn*8:.1f}" '
+                     f'stroke="{col}" stroke-width="2.6"/>')
+            g.append(f'<polygon points="{cx},{y1:.1f} {cx-6},{y1-sgn*10:.1f} '
+                     f'{cx+6},{y1-sgn*10:.1f}" fill="{col}"/>')
+            g.append(_t(cx + 12, y0 + sgn * (L - 20) / 2, lab, 12.5, "start", col, "700"))
+    return _wrap(width, height, "".join(g), caption)
+
+
+# ============================================================================
+# วิทยาศาสตร์ ม.3 — โครโมโซม · การแบ่งเซลล์ · ปฏิกิริยา · สเปกตรัม · แสง · อวกาศ
+# ============================================================================
+
+def chromosome_model(caption=None, width=470, height=200):
+    """โครโมโซม → ดีเอ็นเอ → ยีน · ขยายให้เห็นว่าอันไหนอยู่ในอันไหน"""
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>']
+    cx, cy = 74, height / 2                      # โครโมโซมรูปตัว X
+    g.append(f'<path d="M {cx-20} {cy-52} Q {cx} {cy-14} {cx-20} {cy+52} '
+             f'M {cx+20} {cy-52} Q {cx} {cy-14} {cx+20} {cy+52}" fill="none" '
+             f'stroke="{NAVY}" stroke-width="13" stroke-linecap="round"/>')
+    g.append(_t(cx, cy + 78, "ก", 14, "middle", SERIES[3], "700"))
+    lx, ly = 214, cy                             # ดีเอ็นเอเกลียวคู่
+    for k in range(2):
+        pts = [(lx - 42 + i * 84 / 60,
+                ly + 26 * math.sin(2 * math.pi * i / 30 + k * math.pi)) for i in range(61)]
+        g.append('<polyline points="' + " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+                 + f'" fill="none" stroke="{NAVY}" stroke-width="2.4"/>')
+    for i in range(0, 61, 6):
+        y1 = ly + 26 * math.sin(2 * math.pi * i / 30)
+        y2 = ly + 26 * math.sin(2 * math.pi * i / 30 + math.pi)
+        x = lx - 42 + i * 84 / 60
+        g.append(f'<line x1="{x:.1f}" y1="{y1:.1f}" x2="{x:.1f}" y2="{y2:.1f}" '
+                 f'stroke="{SOFT}" stroke-width="1.6"/>')
+    g.append(_t(lx, cy + 78, "ข", 14, "middle", SERIES[3], "700"))
+    gx = 372                                     # ยีน = ช่วงหนึ่งบนสายดีเอ็นเอ
+    g.append(f'<rect x="{gx-52}" y="{cy-16}" width="104" height="32" rx="6" '
+             f'fill="#eef1f4" stroke="{NAVY}" stroke-width="1.8"/>')
+    g.append(f'<rect x="{gx-22}" y="{cy-16}" width="42" height="32" '
+             f'fill="{SERIES[3]}" fill-opacity="0.35" stroke="{SERIES[3]}" '
+             f'stroke-width="1.8"/>')
+    g.append(_t(gx, cy + 78, "ค", 14, "middle", SERIES[3], "700"))
+    for x1, x2 in ((cx + 30, lx - 52), (lx + 52, gx - 62)):
+        g.append(f'<line x1="{x1}" y1="{cy}" x2="{x2}" y2="{cy}" stroke="{SOFT}" '
+                 f'stroke-width="1.6" stroke-dasharray="5 4"/>')
+        g.append(f'<polygon points="{x2+6},{cy} {x2-3},{cy-4.5} {x2-3},{cy+4.5}" '
+                 f'fill="{SOFT}"/>')
+    return _wrap(width, height, "".join(g), caption)
+
+
+def cell_division(kind, caption=None, width=470, height=180):
+    """เปรียบเทียบผลของการแบ่งเซลล์ · kind = 'mitosis' (ได้ 2 เซลล์) หรือ 'meiosis' (ได้ 4)"""
+    n_out = 2 if kind == "mitosis" else 4
+    keep = 4 if kind == "mitosis" else 2         # จำนวนโครโมโซมในเซลล์ลูก
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>']
+
+    def cell(cx, cy, r, bars):
+        out = [f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{r}" fill="#f4f1ec" '
+               f'stroke="{NAVY}" stroke-width="2"/>']
+        for i in range(bars):
+            bx = cx - (bars - 1) * 7 / 2 + i * 7
+            out.append(f'<line x1="{bx:.1f}" y1="{cy-r*0.42:.1f}" x2="{bx:.1f}" '
+                       f'y2="{cy+r*0.42:.1f}" stroke="{NAVY}" stroke-width="3.4" '
+                       f'stroke-linecap="round"/>')
+        return "".join(out)
+
+    cy = height / 2 - 6
+    g.append(cell(64, cy, 36, 4))
+    g.append(_t(64, cy + 58, "เซลล์ตั้งต้น", 11.5, "middle", SOFT))
+    ax = 118
+    g.append(f'<line x1="{ax}" y1="{cy}" x2="{ax+46}" y2="{cy}" stroke="{SOFT}" '
+             f'stroke-width="2"/>')
+    g.append(f'<polygon points="{ax+54},{cy} {ax+44},{cy-6} {ax+44},{cy+6}" fill="{SOFT}"/>')
+    r2 = 30 if n_out == 2 else 24
+    for i in range(n_out):
+        col = 2 if n_out == 2 else 2
+        x = 250 + (i % col) * (r2 * 2 + 26)
+        y = cy if n_out == 2 else cy - 40 + (i // col) * 80
+        g.append(cell(x, y, r2, keep))
+    g.append(_t(340, height - 10, f"ได้เซลล์ใหม่ {n_out} เซลล์ · โครโมโซมเซลล์ละ {keep} แท่ง",
+                11.5, "middle", SOFT))
+    return _wrap(width, height, "".join(g), caption)
+
+
+def reaction_model(caption=None, width=470, height=170):
+    """แบบจำลองการจัดเรียงอะตอมใหม่ · 2H₂ + O₂ → 2H₂O (จำนวนอะตอมก่อนและหลังเท่ากัน)"""
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>']
+    H, O = "#4A90A4", "#C0392B"
+    atom = lambda x, y, col, r=11: (f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r}" fill="{col}" '
+                                    f'fill-opacity="0.8" stroke="{col}" stroke-width="1.4"/>')
+    bond = lambda x1, y1, x2, y2: (f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" '
+                                   f'y2="{y2:.1f}" stroke="{SOFT}" stroke-width="3"/>')
+    cy = height / 2 - 4
+    for i, bx in enumerate((44, 44)):            # H₂ สองโมเลกุล
+        y = cy - 32 + i * 64
+        g += [bond(bx, y, bx + 22, y), atom(bx, y, H), atom(bx + 22, y, H)]
+    g.append(_t(102, cy + 5, "+", 20, "middle", INK, "700"))
+    g += [bond(132, cy, 158, cy), atom(132, cy, O, 14), atom(158, cy, O, 14)]  # O₂
+    g.append(f'<line x1="196" y1="{cy}" x2="242" y2="{cy}" stroke="{INK}" stroke-width="2.2"/>')
+    g.append(f'<polygon points="252,{cy} 240,{cy-7} 240,{cy+7}" fill="{INK}"/>')
+    for i in range(2):                           # H₂O สองโมเลกุล
+        bx, y = 300, cy - 32 + i * 64
+        g += [bond(bx, y, bx + 24, y - 12), bond(bx, y, bx + 24, y + 12),
+              atom(bx, y, O, 14), atom(bx + 24, y - 12, H), atom(bx + 24, y + 12, H)]
+    g.append(_t(120, height - 8, "ก่อนเกิดปฏิกิริยา", 11.5, "middle", SOFT, "600"))
+    g.append(_t(340, height - 8, "หลังเกิดปฏิกิริยา", 11.5, "middle", SOFT, "600"))
+    return _wrap(width, height, "".join(g), caption)
+
+
+def em_spectrum(caption=None, width=520, height=140):
+    """สเปกตรัมคลื่นแม่เหล็กไฟฟ้า เรียงตามความยาวคลื่นจากมากไปน้อย"""
+    bands = [("คลื่นวิทยุ", "#7B6CA8"), ("ไมโครเวฟ", "#4A90A4"), ("อินฟราเรด", "#C0392B"),
+             ("แสงที่มองเห็นได้", "#E0A83D"), ("อัลตราไวโอเลต", "#2F8F6F"),
+             ("รังสีเอกซ์", "#1E3A5F"), ("รังสีแกมมา", "#5b5952")]
+    pad, bh = 26, 40
+    bw = (width - pad * 2) / len(bands)
+    y = 46
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>']
+    for i, (name, col) in enumerate(bands):
+        x = pad + i * bw
+        g.append(f'<rect x="{x:.1f}" y="{y}" width="{bw:.1f}" height="{bh}" fill="{col}" '
+                 f'fill-opacity="0.55" stroke="#fff" stroke-width="1.2"/>')
+        g.append(f'<g transform="translate({x+bw/2:.1f},{y+bh+8}) rotate(38)">'
+                 + _t(0, 0, name, 10.5, "start", SOFT) + '</g>')
+        # ป้าย ก-ช วางในแถบสี ไม่ใช่เหนือแถบ เพราะไปชนคำอธิบายแกน
+        g.append(_t(x + bw / 2, y + bh / 2 + 5, "กขคงจฉช"[i], 13, "middle", "#fff", "700"))
+    g.append(_t(pad, 30, "ความยาวคลื่นมาก", 11, "start", SOFT))
+    g.append(_t(width - pad, 30, "ความยาวคลื่นน้อย", 11, "end", SOFT))
+    g.append(f'<line x1="{pad+96}" y1="26" x2="{width-pad-100}" y2="26" stroke="{SOFT}" '
+             f'stroke-width="1.2"/>')
+    g.append(f'<polygon points="{width-pad-92},26 {width-pad-102},22 {width-pad-102},30" '
+             f'fill="{SOFT}"/>')
+    return _wrap(width, height, "".join(g), caption)
+
+
+def mirror_image(caption=None, width=400, height=200):
+    """ภาพจากกระจกเงาราบ — ภาพเสมือนอยู่หลังกระจก ห่างเท่ากับวัตถุ"""
+    mx, cy = width / 2, height / 2
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>',
+         f'<line x1="{mx}" y1="26" x2="{mx}" y2="{height-40}" stroke="{INK}" '
+         f'stroke-width="3"/>']
+    for y in range(30, int(height) - 40, 13):
+        g.append(f'<line x1="{mx}" y1="{y}" x2="{mx+9}" y2="{y+7}" stroke="{SOFT}" '
+                 f'stroke-width="1.2"/>')
+    d = 92
+    arrow = lambda x, col, dash="": (
+        f'<line x1="{x}" y1="{cy+30}" x2="{x}" y2="{cy-30}" stroke="{col}" '
+        f'stroke-width="2.6" {dash}/>'
+        f'<polygon points="{x},{cy-38} {x-6},{cy-26} {x+6},{cy-26}" fill="{col}"/>')
+    g.append(arrow(mx - d, NAVY))
+    g.append(arrow(mx + d, SERIES[2], 'stroke-dasharray="6 4"'))
+    g.append(_t(mx - d, cy + 48, "วัตถุ", 12, "middle", NAVY, "700"))
+    g.append(_t(mx + d, cy + 48, "ภาพ", 12, "middle", SERIES[2], "700"))
+    for x0, x1, lab in ((mx - d, mx, "ก"), (mx, mx + d, "ข")):
+        yy = height - 26
+        g.append(f'<line x1="{x0}" y1="{yy}" x2="{x1}" y2="{yy}" stroke="{SERIES[3]}" '
+                 f'stroke-width="1.4"/>')
+        for xx in (x0, x1):
+            g.append(f'<line x1="{xx}" y1="{yy-5}" x2="{xx}" y2="{yy+5}" '
+                     f'stroke="{SERIES[3]}" stroke-width="1.4"/>')
+        g.append(_lab((x0 + x1) / 2, yy - 8, lab, 12.5))
+    return _wrap(width, height, "".join(g), caption)
+
+
+def prism_fig(caption=None, width=420, height=210):
+    """แสงขาวผ่านปริซึมแล้วกระจายออกเป็นแถบสี"""
+    cx, cy = width / 2 - 20, height / 2
+    r = 62
+    p = [(cx, cy - r), (cx - r * 0.87, cy + r * 0.5), (cx + r * 0.87, cy + r * 0.5)]
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>',
+         '<polygon points="' + " ".join(f"{x:.1f},{y:.1f}" for x, y in p)
+         + f'" fill="#eef1f4" stroke="{NAVY}" stroke-width="2"/>',
+         f'<line x1="18" y1="{cy-6}" x2="{cx-24:.1f}" y2="{cy+6:.1f}" stroke="{INK}" '
+         f'stroke-width="2.6"/>',
+         _t(60, cy - 16, "แสงขาว", 11.5, "middle", INK, "700")]
+    cols = ["#C0392B", "#E07A2D", "#E0A83D", "#2F8F6F", "#1E3A5F", "#3B4A9B", "#7B6CA8"]
+    for i, col in enumerate(cols):
+        y2 = cy - 34 + i * 15
+        g.append(f'<line x1="{cx+30:.1f}" y1="{cy+14:.1f}" x2="{width-16}" y2="{y2:.1f}" '
+                 f'stroke="{col}" stroke-width="2.4"/>')
+    g.append(_t(width - 16, cy - 52, "แดง", 11, "end", SOFT))
+    g.append(_t(width - 16, cy + 68, "ม่วง", 11, "end", SOFT))
+    return _wrap(width, height, "".join(g), caption)
+
+
+def orbit_fig(caption=None, width=380, height=240):
+    """ดาวเคราะห์โคจรรอบดวงอาทิตย์ พร้อมลูกศรแรงโน้มถ่วงที่ชี้เข้าหาดวงอาทิตย์"""
+    cx, cy = width / 2, height / 2
+    rx, ry = 138, 84
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>',
+         f'<ellipse cx="{cx}" cy="{cy}" rx="{rx}" ry="{ry}" fill="none" stroke="{SOFT}" '
+         f'stroke-width="1.6" stroke-dasharray="6 5"/>',
+         f'<circle cx="{cx}" cy="{cy}" r="26" fill="#E0A83D" stroke="#C88E22" '
+         f'stroke-width="2"/>',
+         _t(cx, cy + 46, "ดวงอาทิตย์", 11.5, "middle", SOFT, "600")]
+    a = math.radians(38)
+    px, py = cx + rx * math.cos(a), cy - ry * math.sin(a)
+    g.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="13" fill="#4A90A4" '
+             f'stroke="{NAVY}" stroke-width="1.8"/>')
+    g.append(_t(px + 6, py - 20, "ดาวเคราะห์", 11.5, "middle", SOFT, "600"))
+    dx, dy = cx - px, cy - py
+    d = math.hypot(dx, dy)
+    ex, ey = px + dx / d * 58, py + dy / d * 58
+    g.append(f'<line x1="{px:.1f}" y1="{py:.1f}" x2="{ex:.1f}" y2="{ey:.1f}" '
+             f'stroke="{SERIES[3]}" stroke-width="2.4"/>')
+    g.append(f'<polygon points="{ex+dx/d*8:.1f},{ey+dy/d*8:.1f} '
+             f'{ex-dy/d*5:.1f},{ey+dx/d*5:.1f} {ex+dy/d*5:.1f},{ey-dx/d*5:.1f}" '
+             f'fill="{SERIES[3]}"/>')
+    g.append(_lab((px + ex) / 2 + 26, (py + ey) / 2 - 4, "F", 13))
+    return _wrap(width, height, "".join(g), caption)
+
+
+def moon_phase(caption=None, width=380, height=340):
+    """ตำแหน่งดวงจันทร์รอบโลก · ครึ่งที่หันเข้าหาดวงอาทิตย์สว่างเสมอ"""
+    cx, cy, R, r = width / 2 + 24, height / 2, 108, 19
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>']
+    for i in range(5):                            # แสงอาทิตย์มาจากทางซ้าย
+        y = cy - 76 + i * 38
+        g.append(f'<line x1="10" y1="{y}" x2="52" y2="{y}" stroke="#E0A83D" '
+                 f'stroke-width="2.2"/>')
+        g.append(f'<polygon points="60,{y} 50,{y-5} 50,{y+5}" fill="#E0A83D"/>')
+    g.append(_t(34, cy - 100, "แสงจาก", 10.5, "middle", SOFT))
+    g.append(_t(34, cy - 88, "ดวงอาทิตย์", 10.5, "middle", SOFT))
+    g.append(f'<circle cx="{cx}" cy="{cy}" r="26" fill="#4A90A4" stroke="{NAVY}" '
+             f'stroke-width="2"/>')
+    g.append(_t(cx, cy + 5, "โลก", 11.5, "middle", "#fff", "700"))
+    g.append(f'<circle cx="{cx}" cy="{cy}" r="{R}" fill="none" stroke="{SOFT}" '
+             f'stroke-width="1.4" stroke-dasharray="5 4"/>')
+    for i, tag in enumerate("กขคง"):
+        ang = math.radians(180 - i * 90)          # ซ้าย บน ขวา ล่าง
+        mx, my = cx + R * math.cos(ang), cy - R * math.sin(ang)
+        g.append(f'<circle cx="{mx:.1f}" cy="{my:.1f}" r="{r}" fill="{INK}" '
+                 f'stroke="{INK}" stroke-width="1.4"/>')
+        g.append(f'<path d="M {mx:.1f} {my-r} A {r} {r} 0 0 0 {mx:.1f} {my+r} Z" '
+                 f'fill="#F2EFE6"/>')            # ครึ่งซ้ายสว่างเสมอ
+        g.append(_t(mx, my - r - 9, tag, 13, "middle", SERIES[3], "700"))
     return _wrap(width, height, "".join(g), caption)

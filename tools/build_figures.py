@@ -20,7 +20,10 @@ from svg_helpers import (bar_chart, line_chart, pie_chart, pictograph, iso_cubes
                          two_lines, pyramid_fig, cone_fig, sphere_fig,
                          similar_triangles, circle_fig, trig_triangle,
                          wave_fig, circuit_fig, lens_ray, mirror_ray,
-                         punnett, food_web)
+                         punnett, food_web, flow_chart, particle_model,
+                         cell_diagram, force_diagram, chromosome_model,
+                         cell_division, reaction_model, em_spectrum,
+                         mirror_image, prism_fig, orbit_fig, moon_phase)
 
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                    "questions", "figures.json")
@@ -327,6 +330,51 @@ FIGURES.update({
     "sci-web-6": food_web(WEB, [("หญ้า", "ตั๊กแตน"), ("หญ้า", "หนู"), ("ตั๊กแตน", "กบ"),
                                 ("กบ", "งู"), ("หนู", "เหยี่ยว"), ("หนู", "งู")],
                           "สายใยอาหารในทุ่งหญ้า · ลูกศรชี้ทิศทางการถ่ายทอดพลังงาน"),
+})
+
+FIGURES.update({
+    "sci-particle-solid": particle_model("solid", "การจัดเรียงอนุภาคในภาชนะปิด — แบบ ก"),
+    "sci-particle-liquid": particle_model("liquid", "การจัดเรียงอนุภาคในภาชนะปิด — แบบ ข"),
+    "sci-particle-gas": particle_model("gas", "การจัดเรียงอนุภาคในภาชนะปิด — แบบ ค"),
+    "sci-particle-mixture": particle_model("mixture",
+                                           "แบบจำลองอนุภาคของสารในภาชนะหนึ่ง"),
+    "sci-cell-plant": cell_diagram("plant", "เซลล์ชนิดหนึ่งเมื่อส่องด้วยกล้องจุลทรรศน์"),
+    "sci-cell-animal": cell_diagram("animal", "เซลล์ชนิดหนึ่งเมื่อส่องด้วยกล้องจุลทรรศน์"),
+    "sci-force-12-8": force_diagram([("right", "12 N"), ("left", "8 N")],
+                                    "แรงสองแรงกระทำต่อวัตถุในแนวเดียวกัน", label="วัตถุ"),
+    "sci-force-20-20": force_diagram([("right", "20 N"), ("left", "20 N")],
+                                     "แรงสองแรงกระทำต่อกล่องในแนวเดียวกัน", label="กล่อง"),
+    "sci-force-float": force_diagram([("down", "น้ำหนัก"), ("up", "แรงพยุง")],
+                                     "วัตถุลอยนิ่งอยู่ในน้ำ", label="วัตถุ"),
+    "sci-force-friction": force_diagram([("right", "แรงดึง 30 N"),
+                                         ("left", "แรงเสียดทาน 30 N")],
+                                        "ลากกล่องบนพื้น แต่กล่องยังไม่ขยับ", label="กล่อง"),
+    "sci-flow-reflex": flow_chart(["สิ่งเร้า", "หน่วยรับความรู้สึก",
+                                   "เซลล์ประสาทรับความรู้สึก", "ไขสันหลัง",
+                                   "เซลล์ประสาทสั่งการ", "หน่วยปฏิบัติงาน"],
+                                  "ทางเดินของกระแสประสาทในการตอบสนองแบบรีเฟล็กซ์"),
+    "sci-flow-breath": flow_chart(["รูจมูก", "หลอดลม", "ขั้วปอด", "ถุงลมในปอด",
+                                   "หลอดเลือดฝอย", "เลือด"],
+                                  "ทางเดินของอากาศเข้าสู่ร่างกาย"),
+    "sci-chromosome": chromosome_model("ก ข ค คือโครงสร้างที่ทำเครื่องหมายไว้"),
+    "sci-mitosis": cell_division("mitosis", "การแบ่งเซลล์แบบหนึ่ง"),
+    "sci-meiosis": cell_division("meiosis", "การแบ่งเซลล์อีกแบบหนึ่ง"),
+    "sci-reaction": reaction_model("แบบจำลองอนุภาคก่อนและหลังเกิดปฏิกิริยาเคมี"),
+    "sci-iv-graph": line_chart(["0", "1", "2", "3", "4"], [0, 3, 6, 9, 12],
+                               "ความต่างศักย์ (V)",
+                               "กราฟความสัมพันธ์ของตัวต้านทานตัวหนึ่ง",
+                               x_title="กระแสไฟฟ้า (A)"),
+    "sci-cir-diode": circuit_fig("electronic", {"r1": "R"},
+                                 "วงจรที่มีไดโอดเปล่งแสงต่ออยู่"),
+    "sci-em-spectrum": em_spectrum("สเปกตรัมคลื่นแม่เหล็กไฟฟ้า · ก ถึง ช คือช่วงคลื่น"),
+    "sci-mirror-image": mirror_image("วัตถุหน้ากระจกเงาราบและภาพที่เกิดขึ้น"),
+    "sci-prism": prism_fig("แสงขาวผ่านปริซึม"),
+    "sci-orbit": orbit_fig("ดาวเคราะห์โคจรรอบดวงอาทิตย์ · F คือแรงที่กระทำ"),
+    "sci-moon": moon_phase("ตำแหน่งดวงจันทร์รอบโลก · ส่วนสว่างคือด้านที่รับแสงอาทิตย์"),
+    "sci-flow-blood": flow_chart(["หัวใจห้องล่างซ้าย", "หลอดเลือดแดง", "หลอดเลือดฝอย",
+                                  "หลอดเลือดดำ", "หัวใจห้องบนขวา"],
+                                 "การไหลของเลือดออกจากหัวใจไปเลี้ยงร่างกายแล้วกลับเข้าหัวใจ",
+                                 per_row=3),
 })
 
 # ── หน่วย 10 · แผนภาพกล่อง (ค 3.1 ม.3/1) ───────────────────────────────
