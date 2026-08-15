@@ -5,6 +5,7 @@
 รัน:  python3 tools/validate.py
 ออกด้วยรหัส 1 ถ้าพบข้อผิดพลาด
 """
+import glob
 import json
 import os
 import re
@@ -17,6 +18,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HTML = os.path.join(ROOT, "index.html")
 COPY = os.path.join(ROOT, "ข้อสอบคณิตศาสตร์_ม1.html")
 COURSES = os.path.join(ROOT, "questions", "courses.json")
+DATA = os.path.join(ROOT, "data")
 
 # แข่งขัน = โจทย์แนวสอบแข่งขัน (สพฐ./สสวท./TEDET) ยากกว่า "ยาก" และมักต้องใช้หลายหัวข้อร่วมกัน
 LEVELS = {"ง่าย", "กลาง", "ยาก", "แข่งขัน"}
@@ -35,11 +37,17 @@ def err(msg):
 
 
 def main():
+    # index.html เป็นแค่โค้ด ข้อสอบอยู่ใน data/*.json (ออนไลน์) และในสำเนาชื่อไทย (ออฟไลน์)
+    # ตรวจจากสำเนาที่รวมไฟล์เดียว เพราะนั่นคือ "ของที่ส่งถึงผู้เรียน" ครบทั้งก้อน
     html = open(HTML, encoding="utf-8").read()
+    if not os.path.exists(COPY):
+        err("ไม่พบไฟล์สำเนา ข้อสอบคณิตศาสตร์_ม1.html")
+        return report()
+    bundled = open(COPY, encoding="utf-8").read()
 
-    m = re.search(r"const QUESTIONS = (\[.*?\]);", html, re.S)
+    m = re.search(r"const QUESTIONS = (\[.*?\]);", bundled, re.S)
     if not m:
-        err("ไม่พบ const QUESTIONS ใน index.html")
+        err("ไม่พบ const QUESTIONS ในสำเนาชื่อไทย")
         return report()
     try:
         qs = json.loads(m.group(1))
@@ -47,6 +55,36 @@ def main():
         err(f"QUESTIONS ไม่ใช่ JSON ที่ถูกต้อง: {e}")
         return report()
     notes.append(f"ข้อสอบทั้งหมด {len(qs)} ข้อ")
+
+    # ---- 0. ไฟล์ที่เสิร์ฟออนไลน์ต้องสอดคล้องกับสำเนา ----
+    if not re.search(r"const QUESTIONS = \[\];", html):
+        err("index.html ต้องไม่ฝังข้อสอบไว้ (ต้องเป็น const QUESTIONS = [];) — รัน tools/build.py")
+    mm = re.search(r"const MANIFEST = (\[.*?\]);", html, re.S)
+    if not mm:
+        err("ไม่พบ const MANIFEST ใน index.html")
+        return report()
+    manifest = json.loads(mm.group(1))
+
+    parts = []
+    for c in manifest:
+        path = os.path.join(DATA, c["slug"] + ".json")
+        if not os.path.exists(path):
+            err(f"ไม่พบไฟล์ข้อมูล data/{c['slug']}.json")
+            continue
+        part = json.load(open(path, encoding="utf-8"))
+        parts.extend(part)
+        if len(part) != c["count"]:
+            err(f"data/{c['slug']}.json มี {len(part)} ข้อ แต่ MANIFEST บอก {c['count']}")
+        want_units = sum(u["count"] for u in c["units"])
+        if want_units != c["count"]:
+            err(f"MANIFEST ของ {c['slug']}: จำนวนข้อรายหน่วยรวม {want_units} ไม่เท่ากับ {c['count']}")
+    if [q["id"] for q in parts] != [q["id"] for q in qs]:
+        err("data/*.json รวมกันแล้วไม่ตรงกับสำเนาชื่อไทย — รัน tools/build.py")
+    extra = sorted(set(os.path.basename(f)[:-5] for f in glob.glob(os.path.join(DATA, "*.json")))
+                   - {c["slug"] for c in manifest})
+    if extra:
+        err(f"มีไฟล์ข้อมูลที่ไม่มีวิชารองรับแล้ว: {', '.join(extra)}")
+    notes.append(f"ไฟล์ข้อมูลรายวิชา {len(manifest)} ไฟล์ · index.html {len(html.encode('utf-8'))/1024:.0f} KB")
 
     # ---- 1. ครบทุกฟิลด์และค่าถูกต้อง ----
     for i, q in enumerate(qs, 1):
@@ -180,11 +218,11 @@ console.log(JSON.stringify({{ bad, manual }}));
         notes.append(f"เฉลยที่ตรวจอัตโนมัติไม่ได้ {len(res['manual'])} ข้อ "
                      f"(คำตอบเชิงบรรยาย)")
 
-    # ---- 8. สำเนาชื่อภาษาไทยต้องตรงกับ index.html ----
-    if not os.path.exists(COPY):
-        err("ไม่พบไฟล์สำเนา ข้อสอบคณิตศาสตร์_ม1.html")
-    elif open(COPY, encoding="utf-8").read() != html:
-        err("สำเนา ข้อสอบคณิตศาสตร์_ม1.html ไม่ตรงกับ index.html (รัน: python3 tools/build.py)")
+    # ---- 8. สำเนาออฟไลน์ต้องเป็นไฟล์เดียวกับ index.html ต่างแค่ข้อมูลที่ฝังไว้ ----
+    strip = lambda t: re.sub(r"const QUESTIONS = \[.*?\];", "const QUESTIONS = [];", t, flags=re.S)
+    if strip(bundled) != strip(html):
+        err("สำเนา ข้อสอบคณิตศาสตร์_ม1.html มีโค้ดไม่ตรงกับ index.html "
+            "(รัน: python3 tools/build.py)")
 
     # ---- 9. ตัวชี้วัดคณิตศาสตร์ ม.ต้น ต้องมีข้อสอบครบทุกตัว ----
     # รายการตามหลักสูตรแกนกลาง 2551 (ปรับปรุง 2560) สาระการเรียนรู้คณิตศาสตร์
