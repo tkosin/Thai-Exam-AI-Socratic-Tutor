@@ -2016,16 +2016,19 @@ def want_yesno(q, ok, neg, why):
     โจทย์เดียวกันมีทั้งแบบเติมคำและแบบปรนัย ปรนัยให้ไล่ดูตัวเลือกว่าตัวไหนคือฝั่งไหน
     """
     global checks
-    checks += 1
     got = re.sub(r"<[^>]+>", " ", str(q["answer"])).split("หรือ")[0].strip()
     if 'class="choices' in q["text"]:
         opts = re.findall(r'<div class="ch"><b>(.)\.</b>\s*(.*?)</div>', q["text"])
         pick = [L for L, t in opts if (neg in t) != ok]
+        # นับว่า "ตรวจแล้ว" ต่อเมื่อตรวจได้จริง — ไม่งั้นข้อเดียวถูกนับสองที่
+        # (ทั้งในยอดที่ตรวจแล้วและในกองที่ข้าม) ทำให้ยอดรวมในรายงานเกินจริง
         if len(pick) != 1:
             raise NotPlainData(f"ตัวเลือกไม่ได้แยกเป็นสองฝั่งชัดเจน ({opts})")
+        checks += 1
         if got != pick[0]:
             bad.append((q["id"], why, q["answer"], pick[0], txt(q)[:95]))
         return
+    checks += 1
     if (neg in got) == ok:
         bad.append((q["id"], why, q["answer"], f"ควรเป็นฝั่ง{'บวก' if ok else neg}",
                     txt(q)[:95]))
@@ -2625,12 +2628,13 @@ def main():
     global skipped
     if selftest():
         return 1
-    buckets = {}
+    buckets, seen = {}, 0
     for course in json.load(open(os.path.join(QDIR, "courses.json"), encoding="utf-8")):
         for path in sorted(glob.glob(os.path.join(QDIR, course["slug"], "unit-*.json"))):
             data = json.load(open(path, encoding="utf-8"))
             for i, q in enumerate(data["questions"], 1):
                 q = dict(q, id=f"{course['slug']}/u{data['unit']:02d}#{i}")
+                seen += 1
                 body = txt(q)
                 for pat, fn in RULES:
                     mt = pat.search(body)
@@ -2646,6 +2650,10 @@ def main():
                     buckets[k] = buckets.get(k, 0) + 1
 
     tot = sum(buckets.values()) + checks
+    if tot != seen:
+        print(f"❌ ยอดในรายงานไม่ตรงกับคลัง ({tot} เทียบกับ {seen}) — "
+              "มีข้อที่ถูกนับสองที่ หรือนับตกไป")
+        return 1
     print(f"  ตรวจซ้ำด้วยการคิดใหม่ {checks} ข้อ จาก {tot} ข้อ")
     for k, n in sorted(buckets.items(), key=lambda kv: -kv[1]):
         print(f"    ยังไม่ได้ตรวจ {n:>4} ข้อ — {k}")
