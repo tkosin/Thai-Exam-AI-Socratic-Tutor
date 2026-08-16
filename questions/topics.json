@@ -2323,7 +2323,7 @@
    "slug": "science-p5",
    "subject": "วิทยาศาสตร์",
    "grade": "ป.5",
-   "status": "planned",
+   "status": "active",
    "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560) · สำนักวิชาการและมาตรฐานการศึกษา สพฐ.",
    "official": {
     "total": 32,
@@ -2351,7 +2351,7 @@
      "indicator": "บรรยายโครงสร้างและลักษณะของสิ่งมีชีวิตที่เหมาะสมกับการดำรงชีวิต ซึ่งเป็นผลมาจากการปรับตัวของสิ่งมีชีวิตในแต่ละแหล่งที่อยู่",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-002",
@@ -2361,7 +2361,7 @@
      "indicator": "อธิบายความสัมพันธ์ระหว่างสิ่งมีชีวิตกับสิ่งมีชีวิต และความสัมพันธ์ระหว่างสิ่งมีชีวิตกับสิ่งไม่มีชีวิต เพื่อประโยชน์ต่อการดำรงชีวิต",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-003",
@@ -2371,7 +2371,7 @@
      "indicator": "เขียนโซ่อาหารและระบุบทบาทหน้าที่ของสิ่งมีชีวิตที่เป็นผู้ผลิตและผู้บริโภคในโซ่อาหาร",
      "needs_svg": true,
      "svg_type": "food_web",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-004",
@@ -2381,7 +2381,7 @@
      "indicator": "ตระหนักในคุณค่าของสิ่งแวดล้อมที่มีต่อการดำรงชีวิตของสิ่งมีชีวิต โดยมีส่วนร่วมในการดูแลรักษาสิ่งแวดล้อม",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-005",
@@ -2391,7 +2391,7 @@
      "indicator": "อธิบายลักษณะทางพันธุกรรมที่มีการถ่ายทอดจากพ่อแม่สู่ลูกของพืช สัตว์ และมนุษย์",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-006",
@@ -2401,7 +2401,7 @@
      "indicator": "แสดงความอยากรู้อยากเห็น โดยการถามคำถามเกี่ยวกับลักษณะที่คล้ายคลึงกันของตนเองกับพ่อแม่",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-007",
@@ -2411,7 +2411,7 @@
      "indicator": "อธิบายการเปลี่ยนสถานะของสสาร เมื่อทำให้สสารร้อนขึ้นหรือเย็นลง โดยใช้หลักฐานเชิงประจักษ์",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-008",
@@ -2421,7 +2421,7 @@
      "indicator": "อธิบายการละลายของสารในน้ำ โดยใช้หลักฐานเชิงประจักษ์",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-009",
@@ -2431,7 +2431,7 @@
      "indicator": "วิเคราะห์การเปลี่ยนแปลงของสารเมื่อเกิดการเปลี่ยนแปลงทางเคมี โดยใช้หลักฐานเชิงประจักษ์",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-010",
@@ -2441,7 +2441,7 @@
      "indicator": "วิเคราะห์และระบุการเปลี่ยนแปลงที่ผันกลับได้และการเปลี่ยนแปลงที่ผันกลับไม่ได้",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-011",
@@ -2451,7 +2451,7 @@
      "indicator": "อธิบายวิธีการหาแรงลัพธ์ของแรงหลายแรงในแนวเดียวกันที่กระทำต่อวัตถุในกรณีที่วัตถุอยู่นิ่งจากหลักฐานเชิงประจักษ์",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-012",
@@ -2461,7 +2461,7 @@
      "indicator": "เขียนแผนภาพแสดงแรงที่กระทำต่อวัตถุที่อยู่ในแนวเดียวกันและแรงลัพธ์ที่กระทำต่อวัตถุ",
      "needs_svg": true,
      "svg_type": "force_diagram",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-013",
@@ -2471,7 +2471,7 @@
      "indicator": "ใช้เครื่องชั่งสปริงในการวัดแรงที่กระทำต่อวัตถุ",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-014",
@@ -2481,7 +2481,7 @@
      "indicator": "ระบุผลของแรงเสียดทานที่มีต่อการเปลี่ยนแปลงการเคลื่อนที่ของวัตถุจากหลักฐานเชิงประจักษ์",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-015",
@@ -2491,7 +2491,7 @@
      "indicator": "เขียนแผนภาพแสดงแรงเสียดทานและแรงที่อยู่ในแนวเดียวกันที่กระทำต่อวัตถุ",
      "needs_svg": true,
      "svg_type": "force_diagram",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-016",
@@ -2501,7 +2501,7 @@
      "indicator": "อธิบายการได้ยินเสียงผ่านตัวกลางจากหลักฐานเชิงประจักษ์",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-017",
@@ -2511,7 +2511,7 @@
      "indicator": "ระบุตัวแปร ทดลอง และอธิบายลักษณะและการเกิดเสียงสูง เสียงต่ำ",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-018",
@@ -2521,7 +2521,7 @@
      "indicator": "ออกแบบการทดลองและอธิบายลักษณะและการเกิดเสียงดัง เสียงค่อย",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-019",
@@ -2531,7 +2531,7 @@
      "indicator": "วัดระดับเสียงโดยใช้เครื่องมือวัดระดับเสียง",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-020",
@@ -2541,7 +2541,7 @@
      "indicator": "ตระหนักในคุณค่าของความรู้เรื่องระดับเสียง โดยเสนอแนะแนวทางในการหลีกเลี่ยงและลดมลพิษทางเสียง",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-021",
@@ -2551,7 +2551,7 @@
      "indicator": "เปรียบเทียบความแตกต่างของดาวเคราะห์และดาวฤกษ์จากแบบจำลอง",
      "needs_svg": true,
      "svg_type": "solar_system",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-022",
@@ -2561,7 +2561,7 @@
      "indicator": "ใช้แผนที่ดาวระบุตำแหน่งและเส้นทางการขึ้นและตกของกลุ่มดาวฤกษ์บนท้องฟ้า และอธิบายแบบรูปเส้นทางการขึ้นและตกของกลุ่มดาวฤกษ์บนท้องฟ้าในรอบปี",
      "needs_svg": true,
      "svg_type": "celestial_sphere",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-023",
@@ -2571,7 +2571,7 @@
      "indicator": "เปรียบเทียบปริมาณน้ำในแต่ละแหล่ง และระบุปริมาณน้ำที่มนุษย์สามารถนำมาใช้ประโยชน์ได้ จากข้อมูลที่รวบรวมได้",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-024",
@@ -2581,7 +2581,7 @@
      "indicator": "ตระหนักถึงคุณค่าของน้ำโดยนำเสนอแนวทางการใช้น้ำอย่างประหยัดและการอนุรักษ์น้ำ",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-025",
@@ -2591,7 +2591,7 @@
      "indicator": "สร้างแบบจำลองที่อธิบายการหมุนเวียนของน้ำในวัฏจักรน้ำ",
      "needs_svg": true,
      "svg_type": "diagram_layers",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-026",
@@ -2601,7 +2601,7 @@
      "indicator": "เปรียบเทียบกระบวนการเกิดเมฆ หมอก น้ำค้าง และน้ำค้างแข็ง จากแบบจำลอง",
      "needs_svg": true,
      "svg_type": "weather_map",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-027",
@@ -2611,7 +2611,7 @@
      "indicator": "เปรียบเทียบกระบวนการเกิดฝน หิมะ และลูกเห็บ จากข้อมูลที่รวบรวมได้",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-028",
@@ -2621,7 +2621,7 @@
      "indicator": "ใช้เหตุผลเชิงตรรกะในการแก้ปัญหา การอธิบายการทำงาน การคาดการณ์ผลลัพธ์ จากปัญหาอย่างง่าย",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-029",
@@ -2631,7 +2631,7 @@
      "indicator": "ออกแบบและเขียนโปรแกรมที่มีการใช้เหตุผลเชิงตรรกะอย่างง่าย ตรวจหาข้อผิดพลาดและแก้ไข",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-030",
@@ -2641,7 +2641,7 @@
      "indicator": "ใช้อินเทอร์เน็ตค้นหาข้อมูล ติดต่อสื่อสารและทำงานร่วมกัน ประเมินความน่าเชื่อถือของข้อมูล",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-031",
@@ -2651,7 +2651,7 @@
      "indicator": "รวบรวม ประเมิน นำเสนอข้อมูลและสารสนเทศตามวัตถุประสงค์โดยใช้ซอฟต์แวร์หรือบริการบนอินเทอร์เน็ตที่หลากหลาย เพื่อแก้ปัญหาในชีวิตประจำวัน",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P5-032",
@@ -2661,7 +2661,7 @@
      "indicator": "ใช้เทคโนโลยีสารสนเทศอย่างปลอดภัย มีมารยาท เข้าใจสิทธิและหน้าที่ของตน เคารพในสิทธิของผู้อื่น แจ้งผู้เกี่ยวข้องเมื่อพบข้อมูลหรือบุคคลที่ไม่เหมาะสม",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     }
    ]
   },
@@ -2669,7 +2669,7 @@
    "slug": "science-p6",
    "subject": "วิทยาศาสตร์",
    "grade": "ป.6",
-   "status": "planned",
+   "status": "active",
    "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560) · สำนักวิชาการและมาตรฐานการศึกษา สพฐ.",
    "official": {
     "total": 30,
@@ -2697,7 +2697,7 @@
      "indicator": "ระบุสารอาหารและบอกประโยชน์ของสารอาหารแต่ละประเภทจากอาหารที่ตนเองรับประทาน",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-002",
@@ -2707,7 +2707,7 @@
      "indicator": "บอกแนวทางในการเลือกรับประทานอาหารให้ได้สารอาหารครบถ้วน ในสัดส่วนที่เหมาะสมกับเพศและวัย รวมทั้งความปลอดภัยต่อสุขภาพ",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-003",
@@ -2717,7 +2717,7 @@
      "indicator": "ตระหนักถึงความสำคัญของสารอาหาร โดยการเลือกรับประทานอาหารที่มีสารอาหารครบถ้วนในสัดส่วนที่เหมาะสมกับเพศและวัย รวมทั้งปลอดภัยต่อสุขภาพ",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-004",
@@ -2727,7 +2727,7 @@
      "indicator": "สร้างแบบจำลองระบบย่อยอาหาร และบรรยายหน้าที่ของอวัยวะในระบบย่อยอาหาร รวมทั้งอธิบายการย่อยอาหารและการดูดซึมสารอาหาร",
      "needs_svg": true,
      "svg_type": "body_system",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-005",
@@ -2737,7 +2737,7 @@
      "indicator": "ตระหนักถึงความสำคัญของระบบย่อยอาหาร โดยการบอกแนวทางในการดูแลรักษาอวัยวะในระบบย่อยอาหารให้ทำงานเป็นปกติ",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-006",
@@ -2747,7 +2747,7 @@
      "indicator": "อธิบายและเปรียบเทียบการแยกสารผสม โดยการหยิบออก การร่อน การใช้แม่เหล็กดึงดูด การรินออก การกรอง และการตกตะกอน โดยใช้หลักฐานเชิงประจักษ์ รวมทั้งระบุวิธีแก้ปัญหาในชีวิตประจำวันเกี่ยวกับการแยกสาร",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-007",
@@ -2757,7 +2757,7 @@
      "indicator": "อธิบายการเกิดและผลของแรงไฟฟ้าซึ่งเกิดจากวัตถุที่ผ่านการขัดถู โดยใช้หลักฐานเชิงประจักษ์",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-008",
@@ -2767,7 +2767,7 @@
      "indicator": "ระบุส่วนประกอบและบรรยายหน้าที่ของแต่ละส่วนประกอบของวงจรไฟฟ้าอย่างง่าย จากหลักฐานเชิงประจักษ์",
      "needs_svg": true,
      "svg_type": "circuit_diagram",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-009",
@@ -2777,7 +2777,7 @@
      "indicator": "เขียนแผนภาพและต่อวงจรไฟฟ้าอย่างง่าย",
      "needs_svg": true,
      "svg_type": "circuit_diagram",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-010",
@@ -2787,7 +2787,7 @@
      "indicator": "ออกแบบการทดลองและทดลองด้วยวิธีที่เหมาะสมในการอธิบายวิธีการและผลของการต่อเซลล์ไฟฟ้าแบบอนุกรม",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-011",
@@ -2797,7 +2797,7 @@
      "indicator": "ตระหนักถึงประโยชน์ของความรู้ของการต่อเซลล์ไฟฟ้าแบบอนุกรม โดยบอกประโยชน์และการประยุกต์ใช้ในชีวิตประจำวัน",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-012",
@@ -2807,7 +2807,7 @@
      "indicator": "ออกแบบการทดลองและทดลองด้วยวิธีที่เหมาะสมในการอธิบายการต่อหลอดไฟฟ้าแบบอนุกรมและแบบขนาน",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-013",
@@ -2817,7 +2817,7 @@
      "indicator": "ตระหนักถึงประโยชน์ของความรู้ของการต่อหลอดไฟฟ้าแบบอนุกรมและแบบขนาน โดยบอกประโยชน์ ข้อจำกัด และการประยุกต์ใช้ในชีวิตประจำวัน",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-014",
@@ -2827,7 +2827,7 @@
      "indicator": "อธิบายการเกิดเงามืดเงามัวจากหลักฐานเชิงประจักษ์",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-015",
@@ -2837,7 +2837,7 @@
      "indicator": "เขียนแผนภาพรังสีของแสงแสดงการเกิดเงามืดเงามัว",
      "needs_svg": true,
      "svg_type": "ray_diagram",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-016",
@@ -2847,7 +2847,7 @@
      "indicator": "สร้างแบบจำลองที่อธิบายการเกิด และเปรียบเทียบปรากฏการณ์สุริยุปราคาและจันทรุปราคา",
      "needs_svg": true,
      "svg_type": "moon_phase",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-017",
@@ -2857,7 +2857,7 @@
      "indicator": "อธิบายพัฒนาการของเทคโนโลยีอวกาศ และยกตัวอย่างการนำเทคโนโลยีอวกาศมาใช้ประโยชน์ในชีวิตประจำวัน จากข้อมูลที่รวบรวมได้",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-018",
@@ -2867,7 +2867,7 @@
      "indicator": "เปรียบเทียบกระบวนการเกิดหินอัคนี หินตะกอน และหินแปร และอธิบายวัฏจักรหินจากแบบจำลอง",
      "needs_svg": true,
      "svg_type": "rock_cycle",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-019",
@@ -2877,7 +2877,7 @@
      "indicator": "บรรยายและยกตัวอย่างการใช้ประโยชน์ของหินและแร่ในชีวิตประจำวัน จากข้อมูลที่รวบรวมได้",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-020",
@@ -2887,7 +2887,7 @@
      "indicator": "สร้างแบบจำลองที่อธิบายการเกิดซากดึกดำบรรพ์และคาดคะเนสภาพแวดล้อมในอดีตของซากดึกดำบรรพ์",
      "needs_svg": true,
      "svg_type": "diagram_layers",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-021",
@@ -2897,7 +2897,7 @@
      "indicator": "เปรียบเทียบการเกิดลมบก ลมทะเล และมรสุม รวมทั้งอธิบายผลที่มีต่อสิ่งมีชีวิตและสิ่งแวดล้อม จากแบบจำลอง",
      "needs_svg": true,
      "svg_type": "weather_map",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-022",
@@ -2907,7 +2907,7 @@
      "indicator": "อธิบายผลของมรสุมต่อการเกิดฤดูของประเทศไทย จากข้อมูลที่รวบรวมได้",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-023",
@@ -2917,7 +2917,7 @@
      "indicator": "บรรยายลักษณะและผลกระทบของน้ำท่วม การกัดเซาะชายฝั่ง ดินถล่ม แผ่นดินไหว สึนามิ",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-024",
@@ -2927,7 +2927,7 @@
      "indicator": "ตระหนักถึงผลกระทบของภัยธรรมชาติและธรณีพิบัติภัย โดยนำเสนอแนวทางในการเฝ้าระวังและปฏิบัติตนให้ปลอดภัยจากภัยธรรมชาติและธรณีพิบัติภัยที่อาจเกิดในท้องถิ่น",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-025",
@@ -2937,7 +2937,7 @@
      "indicator": "สร้างแบบจำลองที่อธิบายการเกิดปรากฏการณ์เรือนกระจก และผลของปรากฏการณ์เรือนกระจกต่อสิ่งมีชีวิต",
      "needs_svg": true,
      "svg_type": "diagram_layers",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-026",
@@ -2947,7 +2947,7 @@
      "indicator": "ตระหนักถึงผลกระทบของปรากฏการณ์เรือนกระจก โดยนำเสนอแนวทางการปฏิบัติตนเพื่อลดกิจกรรมที่ก่อให้เกิดแก๊สเรือนกระจก",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-027",
@@ -2957,7 +2957,7 @@
      "indicator": "ใช้เหตุผลเชิงตรรกะในการอธิบายและออกแบบวิธีการแก้ปัญหาที่พบในชีวิตประจำวัน",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-028",
@@ -2967,7 +2967,7 @@
      "indicator": "ออกแบบและเขียนโปรแกรมอย่างง่าย เพื่อใช้แก้ปัญหาในชีวิตประจำวัน ตรวจหาข้อผิดพลาดของโปรแกรมและแก้ไข",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-029",
@@ -2977,7 +2977,7 @@
      "indicator": "ใช้อินเทอร์เน็ตในการค้นหาข้อมูลอย่างมีประสิทธิภาพ",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "SCI-P6-030",
@@ -2987,7 +2987,7 @@
      "indicator": "ใช้เทคโนโลยีสารสนเทศทำงานร่วมกันอย่างปลอดภัย เข้าใจสิทธิและหน้าที่ของตน เคารพในสิทธิของผู้อื่น แจ้งผู้เกี่ยวข้องเมื่อพบข้อมูลหรือบุคคลที่ไม่เหมาะสม",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     }
    ]
   }

@@ -2240,3 +2240,36 @@ def quad_fig(kind, labels=None, caption=None, box=190):
         return _wrap(w, h, "".join(body), caption)
 
     raise ValueError(f"quad_fig: ไม่รู้จักชนิด '{kind}'")
+
+
+# ----------------------------------------------------- แผนที่ดาวอย่างง่าย
+def star_map(groups, caption=None, size=360):
+    """ท้องฟ้าที่มองจากพื้น — ขอบวงกลมคือเส้นขอบฟ้า จุดกลางคือเหนือศีรษะ
+
+    groups = [(ชื่อกลุ่มดาว, มุมทิศเป็นองศาวัดจากทิศตะวันออกทวนเข็ม, ระยะจากศูนย์กลาง 0-1)]
+    ทิศบนแผนที่ดาวกลับซ้ายขวากับแผนที่พื้นดิน เพราะเงยหน้าดู จึงเขียนกำกับไว้ทุกด้าน
+    """
+    c = size / 2
+    r = size * 0.30
+    g = [f'<rect x="0" y="0" width="{size}" height="{size}" fill="#fff"/>',
+         f'<circle cx="{c}" cy="{c}" r="{r:.1f}" fill="#f4f6f9" stroke="{NAVY}" '
+         'stroke-width="2"/>']
+    # เขียนทิศเต็มคำ — ตัวย่อทิศภาษาไทยอ่านผิดกันง่ายในชั้นประถม
+    # ป้ายซ้าย-ขวาต้องถอยออกมามากกว่าป้ายบน-ล่าง เพราะคำยาวกว่าและวางกลางแนวนอน
+    for deg, name, pad in ((0, "ตะวันออก", 40), (90, "เหนือ", 20),
+                           (180, "ตะวันตก", 40), (270, "ใต้", 20)):
+        x = c + (r + pad) * math.cos(math.radians(deg))
+        y = c - (r + pad) * math.sin(math.radians(deg))
+        g.append(_t(x, y + 4, name, 12, "middle", SOFT, "700"))
+    # เส้นทางการขึ้น-ตกของกลุ่มดาว: โค้งจากขอบฟ้าด้านตะวันออกไปด้านตะวันตก
+    g.append(f'<path d="M {c - r:.1f} {c:.1f} A {r:.1f} {r * 0.55:.1f} 0 0 1 '
+             f'{c + r:.1f} {c:.1f}" fill="none" stroke="{SERIES[1]}" '
+             'stroke-width="1.8" stroke-dasharray="6 5"/>')
+    for name, deg, dist in groups:
+        x = c + r * dist * math.cos(math.radians(deg))
+        y = c - r * dist * math.sin(math.radians(deg))
+        g.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4.2" fill="{NAVY}"/>')
+        g.append(_t(x, y - 10, name, 12, "middle", NAVY, "700"))
+    g.append(_t(c, size - 6, "เส้นประ = เส้นทางการขึ้นและตกของกลุ่มดาว",
+                11, "middle", SOFT))
+    return _wrap(size, size, "".join(g), caption)
