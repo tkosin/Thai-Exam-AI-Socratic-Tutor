@@ -21,7 +21,7 @@ try {
 const path = require('path');
 const fs = require('fs');
 const FILE = 'file://' + path.resolve(__dirname, '..', 'index.html');
-const OUT = process.env.SHOT_DIR || path.join(require('os').tmpdir(), 'math-is-fun-shots') + path.sep;
+const OUT = process.env.SHOT_DIR || path.join(require('os').tmpdir(), 'thai-exam-ai-socratic-tutor-shots') + path.sep;
 fs.mkdirSync(OUT, { recursive: true });
 
 const DEVICES = [
