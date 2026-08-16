@@ -1996,3 +1996,122 @@ def displacement_fig(east, north, caption=None, cell=34):
     b.append(f'<circle cx="{ex}" cy="{ny}" r="4.5" fill="{INK}"/>')
     b.append(_t(ex + 8, ny - 8, "จุดสุดท้าย", 11, "start", SOFT))
     return _wrap(w, h, arrow + "".join(b), caption)
+
+
+# ------------------------------------------------- การสร้างด้วยวงเวียนและสันตรง
+def _circ_cross(c0, r0, c1, r1, upper=True):
+    """จุดตัดของวงกลมสองวง — คืนจุดบนหรือจุดล่างตามที่ขอ
+
+    การสร้างทุกแบบวางอยู่บนจุดตัดนี้ ถ้าเดามุมของส่วนโค้งเอาเอง ส่วนโค้งจะไม่ผ่านจุด
+    ที่ทำเครื่องหมายไว้ (พลาดมาแล้วทั้งสามรูป) จึงคิดจุดตัดก่อน แล้วค่อยกลับไปหามุม
+    """
+    (x0, y0), (x1, y1) = c0, c1
+    dx, dy = x1 - x0, y1 - y0
+    dist = math.hypot(dx, dy)
+    if dist > r0 + r1 or dist < abs(r0 - r1) or dist == 0:
+        raise ValueError("วงกลมสองวงนี้ไม่ตัดกัน — รัศมีวงเวียนไม่เหมาะกับระยะที่กำหนด")
+    a = (r0 * r0 - r1 * r1 + dist * dist) / (2 * dist)
+    hh = math.sqrt(max(r0 * r0 - a * a, 0))
+    mx, my = x0 + a * dx / dist, y0 + a * dy / dist
+    ux, uy = -dy / dist, dx / dist                 # เวกเตอร์ตั้งฉากกับแนวศูนย์กลาง
+    sign = -1 if upper else 1                      # แกน y ในภาพชี้ลง "บน" คือ y น้อยกว่า
+    return (mx + sign * hh * ux, my + sign * hh * uy)
+
+
+def _ang(centre, pt):
+    """มุมของจุด pt เมื่อมองจาก centre (องศา · ระบบเดียวกับ _arc)"""
+    return math.degrees(math.atan2(centre[1] - pt[1], pt[0] - centre[0]))
+
+
+def _arc(cx, cy, r, a0, a1):
+    """ส่วนโค้งจากมุม a0 ถึง a1 (องศา · วัดทวนเข็มจากแกน x บวก · แกน y ในภาพชี้ลง)
+
+    สุ่มจุดบนส่วนโค้งแล้วต่อเป็นเส้น แทนการใช้คำสั่ง A ของ SVG — flag large-arc/sweep
+    ของ SVG อ่านทิศจากระบบพิกัดที่แกน y ชี้ลง ซึ่งกลับด้านกับมุมที่คิดมา
+    เคยวาดออกมาโค้งไปคนละทางจนล้นกรอบมาแล้ว การสุ่มจุดไม่มีทางกำกวมแบบนั้น
+    """
+    lo, hi = (a0, a1) if a0 <= a1 else (a1, a0)
+    n = max(8, int(abs(hi - lo) / 4))
+    pts = []
+    for i in range(n + 1):
+        a = math.radians(lo + (hi - lo) * i / n)
+        pts.append(f"{cx + r * math.cos(a):.1f},{cy - r * math.sin(a):.1f}")
+    return (f'<polyline points="{" ".join(pts)}" fill="none" stroke="{SERIES[3]}" '
+            'stroke-width="1.6" stroke-dasharray="5 4"/>')
+
+
+def _arc_through(centre, r, pts, pad=14):
+    """ส่วนโค้งรอบ centre ที่กินช่วงมุมของทุกจุดใน pts พร้อมเผื่อปลายไว้ pad องศา
+
+    atan2 คืนค่าในช่วง (-180, 180] จุดสองจุดที่คร่อมมุม 180° จึงได้ +143 กับ -143
+    ซึ่งถ้าเอามาลบกันตรง ๆ จะได้ช่วง 286° คือวาดอ้อมไปอีกด้านของวงกลม (เคยล้นกรอบมาแล้ว)
+    """
+    angs = [_ang(centre, p) for p in pts]
+    if max(angs) - min(angs) > 180:
+        angs = [a + 360 if a < 0 else a for a in angs]
+    return _arc(centre[0], centre[1], r, max(angs) + pad, min(angs) - pad)
+
+
+def construction_fig(kind, caption=None, width=360, height=280):
+    """รอยวงเวียนของการสร้างพื้นฐาน · kind = 'bisect_segment' | 'bisect_angle' | 'perpendicular'
+
+    ส่วนโค้งวาดเป็นเส้นประสีต่างจากเส้นที่สร้างเสร็จ เพื่อให้แยกออกว่าอะไรคือ
+    "รอยวงเวียนที่ใช้ระหว่างทาง" กับอะไรคือ "เส้นที่เป็นคำตอบ"
+    ตำแหน่งทุกจุดคิดจากจุดตัดของวงกลมจริง ไม่ได้วางด้วยสายตา
+    """
+    dot = lambda p, s, dy=-11: (
+        f'<circle cx="{p[0]:.1f}" cy="{p[1]:.1f}" r="4" fill="{INK}"/>' +
+        _t(p[0], p[1] + dy, s, 13, "middle", INK, "700"))
+    seg = lambda a, b, col=INK, wd=2.4: (
+        f'<line x1="{a[0]:.1f}" y1="{a[1]:.1f}" x2="{b[0]:.1f}" y2="{b[1]:.1f}" '
+        f'stroke="{col}" stroke-width="{wd}"/>')
+    g = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>']
+
+    if kind == "bisect_segment":
+        A, B = (70, 150), (290, 150)
+        r = 138                                    # ต้องเกินครึ่งของ AB ส่วนโค้งจึงตัดกัน
+        P = _circ_cross(A, r, B, r, upper=True)
+        Q = _circ_cross(A, r, B, r, upper=False)
+        M = ((A[0] + B[0]) / 2, A[1])
+        g += [seg(A, B), _arc_through(A, r, [P, Q]), _arc_through(B, r, [P, Q]),
+              seg((P[0], P[1] - 18), (Q[0], Q[1] + 18), NAVY),
+              dot(A, "A", 24), dot(B, "B", 24), dot(P, "P"), dot(Q, "Q", 24),
+              dot(M, "M", -13)]
+    elif kind == "bisect_angle":
+        B, L, up = (70, 210), 190, 58
+        C = (B[0] + L, B[1])
+        A = (B[0] + L * math.cos(math.radians(up)), B[1] - L * math.sin(math.radians(up)))
+        r, r2 = 92, 74
+        D = (B[0] + r, B[1])
+        E = (B[0] + r * math.cos(math.radians(up)), B[1] - r * math.sin(math.radians(up)))
+        # จุดตัดสองจุดของวงเวียนจาก D และ E — ต้องเอาจุดที่ไกลจากมุม B
+        # ไม่ใช่จุดใกล้ ไม่งั้นเส้นแบ่งครึ่งสั้นจนไม่เห็นว่าแบ่งมุมจริง
+        F = _circ_cross(D, r2, E, r2, upper=False)
+        g += [seg(B, C), seg(B, A), _arc_through(B, r, [D, E]),
+              _arc_through(D, r2, [F], 22), _arc_through(E, r2, [F], 22),
+              seg(B, (F[0] * 1.28 - B[0] * 0.28, F[1] * 1.28 - B[1] * 0.28), NAVY),
+              dot(B, "B", 24), dot(C, "C", 24), dot(A, "A"),
+              dot(D, "D", 24), dot(E, "E"), dot(F, "F")]
+    elif kind == "perpendicular":
+        height = 320              # เผื่อที่ให้ป้ายจุด Z ใต้เส้น ไม่ชนบรรทัดอธิบายท้ายรูป
+        y0, P = 200, (180, 62)
+        r = 150                                    # ต้องยาวกว่าระยะจาก P ถึงเส้น
+        if r <= y0 - P[1]:
+            raise ValueError("รัศมีวงเวียนสั้นเกินกว่าจะตัดเส้นตรงได้")
+        d = math.sqrt(r * r - (y0 - P[1]) ** 2)
+        X, Y = (P[0] - d, y0), (P[0] + d, y0)
+        r2 = 90
+        Z = _circ_cross(X, r2, Y, r2, upper=False)
+        M = (P[0], y0)
+        g += [seg((40, y0), (width - 40, y0)),
+              _arc_through(P, r, [X, Y]),
+              _arc_through(X, r2, [Z], 22), _arc_through(Y, r2, [Z], 22),
+              seg((P[0], P[1] - 16), (Z[0], Z[1] + 12), NAVY),
+              f'<rect x="{M[0]}" y="{y0-13}" width="13" height="13" fill="none" '
+              f'stroke="{NAVY}" stroke-width="1.6"/>',
+              dot(P, "P"), dot(X, "X", 24), dot(Y, "Y", 24), dot(Z, "Z", 24)]
+    else:
+        raise ValueError(f"ไม่รู้จักการสร้างชนิด {kind}")
+    g.append(_t(width / 2, height - 8, "เส้นประ = รอยวงเวียน · เส้นทึบน้ำเงิน = เส้นที่สร้างได้",
+                11, "middle", SOFT))
+    return _wrap(width, height, "".join(g), caption)

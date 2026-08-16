@@ -23,7 +23,7 @@ from svg_helpers import (bar_chart, line_chart, pie_chart, pictograph, iso_cubes
                          punnett, food_web, flow_chart, particle_model,
                          heating_curve, substance_model, expansion_fig,
                          heat_transfer, layers_fig, concentric_layers,
-                         field_forces, displacement_fig,
+                         field_forces, displacement_fig, construction_fig,
                          force_diagram, reaction_model, em_spectrum,
                          mirror_image, prism_fig, orbit_fig, moon_phase)
 
@@ -463,6 +463,22 @@ FIGURES.update({
         ["ฝนตกหนักต่อเนื่อง", "น้ำซึมลงในดิน", "ดินอิ่มน้ำ น้ำหนักเพิ่ม",
          "แรงยึดระหว่างเม็ดดินลดลง", "มวลดินไถลลงตามความลาด", "ดินถล่ม"],
         "แบบจำลองกระบวนการเกิดดินถล่ม"),
+})
+
+
+# ---- คณิตศาสตร์ · สองหัวข้อสุดท้ายที่ยังไม่มีรูป ----
+M1_LINE = (2, 1)        # y = 2x + 1 — โจทย์อ่านจุดจากกราฟเส้นนี้
+
+FIGURES.update({
+    "m1-line-2x-plus-1": two_lines([(M1_LINE[0], M1_LINE[1], "y = 2x + 1")],
+                                   "กราฟของความสัมพันธ์เชิงเส้น", lo=-4, hi=6,
+                                   mark_cross=False),
+    "m2-construct-bisect-segment": construction_fig(
+        "bisect_segment", "การแบ่งครึ่งส่วนของเส้นตรง AB ด้วยวงเวียนและสันตรง"),
+    "m2-construct-bisect-angle": construction_fig(
+        "bisect_angle", "การแบ่งครึ่งมุม ABC ด้วยวงเวียนและสันตรง"),
+    "m2-construct-perpendicular": construction_fig(
+        "perpendicular", "การสร้างเส้นตั้งฉากจากจุด P ที่อยู่นอกเส้นตรง"),
 })
 
 if __name__ == "__main__":
