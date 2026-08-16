@@ -21,6 +21,8 @@ from svg_helpers import (bar_chart, line_chart, pie_chart, pictograph, iso_cubes
                          similar_triangles, circle_fig, trig_triangle,
                          wave_fig, circuit_fig, lens_ray, mirror_ray,
                          punnett, food_web, flow_chart, particle_model,
+                         heating_curve, substance_model, expansion_fig,
+                         heat_transfer, layers_fig,
                          force_diagram, reaction_model, em_spectrum,
                          mirror_image, prism_fig, orbit_fig, moon_phase)
 
@@ -334,6 +336,32 @@ FIGURES.update({
 # ความดันอากาศตามความสูง — ค่ามาตรฐาน ISA ปัดเป็นจำนวนเต็ม (ว 2.2 ม.1/1)
 # โจทย์อ่านค่าจากตารางนี้ รูปกับเฉลยจึงบอกคนละเลขไม่ได้
 AIR_PRESSURE = [(0, 1013), (2, 795), (4, 616), (6, 472), (8, 356), (10, 264)]
+
+
+# ---- วิทยาศาสตร์ ม.1 · รูปที่ตัวชี้วัดสั่งให้มี ----
+# ค่าทุกตัวอยู่ที่เดียว โจทย์อ่านจากตารางเดียวกับที่วาดรูป
+BOIL_PURE = [(0, 30), (2, 55), (4, 80), (6, 100), (8, 100), (10, 100), (12, 100)]
+BOIL_MIX = [(0, 30), (2, 55), (4, 80), (6, 102), (8, 104), (10, 106), (12, 108)]
+
+FIGURES.update({
+    "sci-boiling-pure-mix": heating_curve(
+        [("น้ำกลั่น (สารบริสุทธิ์)", BOIL_PURE), ("น้ำเกลือ (สารผสม)", BOIL_MIX)],
+        "กราฟอุณหภูมิขณะให้ความร้อนแก่ของเหลวสองชนิดด้วยอัตราเท่ากัน"),
+    "sci-sub-atoms": substance_model("atoms", "แบบจำลองอนุภาคของสารในภาชนะ — แบบ ก"),
+    "sci-sub-element": substance_model("element", "แบบจำลองอนุภาคของสารในภาชนะ — แบบ ข"),
+    "sci-sub-compound": substance_model("compound", "แบบจำลองอนุภาคของสารในภาชนะ — แบบ ค"),
+    "sci-sub-mixture": substance_model("mixture", "แบบจำลองอนุภาคของสารในภาชนะ — แบบ ง"),
+    "sci-expansion": expansion_fig("ยาว 8 หน่วย", "ยาว 10 หน่วย",
+                                   "แบบจำลองแท่งโลหะก่อนและหลังได้รับความร้อน"),
+    "sci-heat-transfer": heat_transfer(
+        "แบบจำลองการถ่ายโอนความร้อนสามแบบ"),
+    "sci-atmosphere-layers": layers_fig(
+        [("เทอร์โมสเฟียร์", "500 กม.", "อุณหภูมิสูงขึ้น"),
+         ("มีโซสเฟียร์", "80 กม.", "อุณหภูมิลดลง"),
+         ("สตราโตสเฟียร์", "50 กม.", "อุณหภูมิสูงขึ้น · มีโอโซน"),
+         ("โทรโพสเฟียร์", "10 กม.", "อุณหภูมิลดลง · เกิดลมฟ้าอากาศ")],
+        "0 (พื้นโลก)", "แบบจำลองการแบ่งชั้นบรรยากาศ · โน้ตขวาคือแนวโน้มอุณหภูมิเมื่อสูงขึ้น"),
+})
 
 FIGURES.update({
     "sci-air-pressure-altitude": line_chart(

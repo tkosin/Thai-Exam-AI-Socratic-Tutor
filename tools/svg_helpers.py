@@ -1681,3 +1681,211 @@ def moon_phase(caption=None, width=380, height=340):
                  f'fill="#F2EFE6"/>')            # ครึ่งซ้ายสว่างเสมอ
         g.append(_t(mx, my - r - 9, tag, 13, "middle", SERIES[3], "700"))
     return _wrap(width, height, "".join(g), caption)
+
+
+# ------------------------------------------- กราฟอุณหภูมิ-เวลา (สารบริสุทธิ์/สารผสม)
+def heating_curve(curves, caption=None, x_title="เวลา (นาที)",
+                  y_title="อุณหภูมิ (°C)", width=520, vmin=0, vmax=120, vstep=20):
+    """กราฟให้ความร้อนสองเส้นเทียบกัน · curves = [(ชื่อเส้น, [(เวลา, อุณหภูมิ), …]), …]
+
+    ใช้กับ ว 2.1 ม.1/4 — สารบริสุทธิ์เดือดที่อุณหภูมิคงที่ (กราฟราบ)
+    ส่วนสารผสมอุณหภูมิยังไต่ขึ้นเรื่อย ๆ ความต่างนี้ต้องมองเห็นจากรูปได้ตรง ๆ
+    """
+    pad_l, pad_r, pad_t = 46, 14, 18
+    plot_h, plot_w = 190, width - 46 - 14
+    legend_h = 24 if len(curves) > 1 else 0
+    h = pad_t + plot_h + 40 + legend_h
+    tmax = max(t for _, pts in curves for t, _ in pts)
+
+    b = [f'<rect x="0" y="0" width="{width}" height="{h}" fill="#fff"/>']
+    sy = lambda v: pad_t + plot_h - (v - vmin) / (vmax - vmin) * plot_h
+    sx = lambda t: pad_l + t / tmax * plot_w
+    v = vmin
+    while v <= vmax:
+        b.append(f'<line x1="{pad_l}" y1="{sy(v):.1f}" x2="{pad_l+plot_w}" y2="{sy(v):.1f}" '
+                 f'stroke="{GRID}" stroke-width="1"/>')
+        b.append(_t(pad_l - 7, sy(v) + 4, v, 11, "end"))
+        v += vstep
+    for t in range(0, tmax + 1, max(1, tmax // 6)):
+        b.append(_t(sx(t), pad_t + plot_h + 17, t, 11.5, "middle", INK))
+    b.append(f'<line x1="{pad_l}" y1="{pad_t}" x2="{pad_l}" y2="{pad_t+plot_h}" '
+             f'stroke="{INK}" stroke-width="1.5"/>')
+    b.append(f'<line x1="{pad_l}" y1="{pad_t+plot_h}" x2="{pad_l+plot_w}" '
+             f'y2="{pad_t+plot_h}" stroke="{INK}" stroke-width="1.5"/>')
+    b.append(f'<g transform="translate(13,{pad_t+plot_h/2}) rotate(-90)">'
+             f'{_t(0,0,y_title,11,"middle",SOFT,"600")}</g>')
+    b.append(_t(pad_l + plot_w / 2, pad_t + plot_h + 38, x_title, 11, "middle", SOFT, "600"))
+
+    # ช่วงต้นของสองเส้นมักทับกันสนิท (ให้ความร้อนเท่ากันก่อนถึงจุดเดือด)
+    # เส้นที่สองจึงวาดเป็นเส้นประ ไม่งั้นเส้นแรกหายไปใต้เส้นที่สองทั้งเส้น
+    shared = {t for t, _ in curves[0][1]} if len(curves) > 1 else set()
+    for i, (name, pts) in enumerate(curves):
+        col = SERIES[i]
+        dash = ' stroke-dasharray="7 5"' if i else ""
+        b.append('<polyline points="' +
+                 " ".join(f"{sx(t):.1f},{sy(v):.1f}" for t, v in pts) +
+                 f'" fill="none" stroke="{col}" stroke-width="2.4"{dash} '
+                 'stroke-linejoin="round" stroke-linecap="round"/>')
+        base = dict(curves[0][1])
+        for t, v in pts:
+            b.append(f'<circle cx="{sx(t):.1f}" cy="{sy(v):.1f}" r="3.4" fill="#fff" '
+                     f'stroke="{col}" stroke-width="2"/>')
+            # ติดป้ายเฉพาะจุดที่สองเส้นแยกกันแล้ว — ไม่งั้นป้ายซ้อนกันตรงช่วงที่ทับกัน
+            # และวางคนละฝั่งของจุด เพราะช่วงที่เพิ่งแยกกันสองค่ายังห่างกันไม่กี่พิกเซล
+            if i == 0 or base.get(t) != v:
+                first = t == pts[0][0]      # จุดซ้ายสุดชนป้ายขีดของแกน y ถ้าจัดกึ่งกลาง
+                b.append(_t(sx(t) + (7 if first else 0), sy(v) + (17 if i == 0 else -9),
+                            v, 10.5, "start" if first else "middle", INK, "600"))
+        if legend_h:
+            lx = pad_l + 6 + i * (plot_w / len(curves))
+            ly = pad_t + plot_h + 40 + legend_h - 8
+            b.append(f'<line x1="{lx}" y1="{ly-4}" x2="{lx+22}" y2="{ly-4}" '
+                     f'stroke="{col}" stroke-width="3" stroke-linecap="round"/>')
+            b.append(_t(lx + 28, ly, name, 11.5, "start", INK, "600"))
+    return _wrap(width, h, "".join(b), caption)
+
+
+# ------------------------------------------ แบบจำลองอะตอม ธาตุ และสารประกอบ
+def substance_model(kind, caption=None, width=180, height=170):
+    """แบบจำลองระดับอนุภาค · kind = 'atoms' | 'element' | 'compound' | 'mixture'
+
+    ต่างจาก particle_model() ที่เล่าเรื่อง *สถานะ* — อันนี้เล่าเรื่อง *ชนิดของสาร*
+    ว่าอนุภาคเป็นอะตอมเดี่ยว โมเลกุลของธาตุชนิดเดียว หรือโมเลกุลของธาตุต่างชนิดที่ยึดกัน
+    """
+    pad, r = 16, 8.5
+    A, B = NAVY, SERIES[3]
+    g = [f'<rect x="{pad/2}" y="{pad/2}" width="{width-pad}" height="{height-pad}" '
+         f'fill="#fff" stroke="{INK}" stroke-width="1.8"/>']
+
+    def dot(x, y, col):
+        return (f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r}" fill="{col}" '
+                f'fill-opacity="0.8" stroke="{col}" stroke-width="1.4"/>')
+
+    def pair(x, y, c1, c2):
+        return (f'<line x1="{x-r*0.8:.1f}" y1="{y:.1f}" x2="{x+r*0.8:.1f}" y2="{y:.1f}" '
+                f'stroke="{INK}" stroke-width="2.4"/>' +
+                dot(x - r * 0.8, y, c1) + dot(x + r * 0.8, y, c2))
+
+    spots = [(.08, .1), (.62, .04), (.3, .44), (.86, .46), (.06, .82), (.58, .86)]
+    inner_w = width - pad * 2 - r * 4 - 8       # เผื่อที่ให้โมเลกุลคู่ไม่ล้นกรอบ
+    inner_h = height - pad * 2 - r * 2 - 8
+    for i, (a, c) in enumerate(spots):
+        x = pad + r * 2 + 6 + a * inner_w
+        y = pad + r + 8 + c * inner_h
+        if kind == "atoms":                       # อะตอมเดี่ยวของธาตุชนิดเดียว
+            g.append(dot(x, y, A))
+        elif kind == "element":                   # โมเลกุลของธาตุ — อะตอมชนิดเดียวยึดกัน
+            g.append(pair(x, y, A, A))
+        elif kind == "compound":                  # โมเลกุลของสารประกอบ — ต่างชนิดยึดกัน
+            g.append(pair(x, y, A, B))
+        elif kind == "mixture":                   # โมเลกุลสองชนิดปนกัน แต่ไม่ยึดกัน
+            g.append(pair(x, y, A, A) if i % 2 else pair(x, y, A, B))
+        else:
+            raise ValueError(f"ไม่รู้จักแบบจำลองสารชนิด {kind}")
+    return _wrap(width, height, "".join(g), caption)
+
+
+# ------------------------------------------------ การขยายตัวเมื่อได้รับความร้อน
+def expansion_fig(cold_label, hot_label, caption=None, width=470, height=210):
+    """แท่งโลหะก่อน/หลังได้รับความร้อน — อนุภาคเท่าเดิม แต่ห่างกันมากขึ้น (ว 2.3 ม.1/3)"""
+    b = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>']
+    panel_w, y0, bar_h = (width - 40) / 2, 54, 44
+
+    for k, (title, gap, cols) in enumerate(
+            [("ก่อนได้รับความร้อน", 20, 8), ("หลังได้รับความร้อน", 25, 8)]):
+        x0 = 14 + k * (panel_w + 12)
+        bw = gap * cols + 14
+        b.append(_t(x0 + panel_w / 2, 26, title, 12.5, "middle", INK, "600"))
+        b.append(f'<rect x="{x0}" y="{y0}" width="{bw:.1f}" height="{bar_h}" rx="4" '
+                 f'fill="#fff" stroke="{NAVY}" stroke-width="2"/>')
+        for i in range(cols):
+            for j in range(2):
+                b.append(f'<circle cx="{x0+9+i*gap:.1f}" cy="{y0+14+j*16}" r="5" '
+                         f'fill="{NAVY}" fill-opacity="0.75" stroke="{NAVY}" '
+                         'stroke-width="1.2"/>')
+        # เส้นบอกความยาว วางใต้แท่ง ไม่ทับตัวแท่ง
+        yd = y0 + bar_h + 22
+        b.append(f'<line x1="{x0}" y1="{yd}" x2="{x0+bw:.1f}" y2="{yd}" stroke="{SOFT}" '
+                 'stroke-width="1.4" marker-start="url(#exar)" marker-end="url(#exar)"/>')
+        b.append(f'<line x1="{x0}" y1="{y0+bar_h}" x2="{x0}" y2="{yd+5}" '
+                 f'stroke="{SOFT}" stroke-width="1"/>')
+        b.append(f'<line x1="{x0+bw:.1f}" y1="{y0+bar_h}" x2="{x0+bw:.1f}" y2="{yd+5}" '
+                 f'stroke="{SOFT}" stroke-width="1"/>')
+        b.append(_t(x0 + bw / 2, yd + 20, cold_label if k == 0 else hot_label,
+                    12, "middle", INK, "600"))
+    b.append(_t(width / 2, height - 12,
+                "จำนวนอนุภาคเท่าเดิม · ระยะห่างระหว่างอนุภาคเปลี่ยนไป", 11.5, "middle", SOFT))
+    defs = (f'<defs><marker id="exar" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" '
+            f'orient="auto"><path d="M0,3.5 L7,1 L7,6 Z" fill="{SOFT}"/></marker></defs>')
+    return _wrap(width, height, defs + "".join(b), caption)
+
+
+# ------------------------------------------------------- การถ่ายโอนความร้อน 3 แบบ
+def heat_transfer(caption=None, width=520, height=200):
+    """สามแผงเทียบกัน — การนำ · การพา · การแผ่รังสี (ว 2.3 ม.1/6)"""
+    b = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>']
+    pw, y0 = (width - 32) / 3, 42
+    flame = lambda x, y: (f'<path d="M{x-7},{y} q3,-12 7,-16 q4,4 7,16 q-7,5 -14,0 z" '
+                          f'fill="{SERIES[3]}" fill-opacity="0.85"/>')
+    for k, name in enumerate(["ก", "ข", "ค"]):
+        x0 = 10 + k * (pw + 6)
+        b.append(f'<rect x="{x0}" y="{y0-22}" width="{pw:.1f}" height="{height-y0-14}" '
+                 f'rx="6" fill="#fff" stroke="{GRID}" stroke-width="1.4"/>')
+        b.append(_t(x0 + pw / 2, 26, name, 13, "middle", INK, "700"))
+        cx, cy = x0 + pw / 2, y0 + 52
+        if k == 0:                                   # การนำความร้อน — แท่งโลหะบนเปลวไฟ
+            b.append(f'<rect x="{cx-56}" y="{cy-8}" width="112" height="16" rx="3" '
+                     f'fill="#fff" stroke="{NAVY}" stroke-width="2"/>')
+            b.append(flame(cx - 44, cy + 34))
+            for i in range(4):
+                b.append(f'<circle cx="{cx-30+i*22}" cy="{cy+20}" r="3.6" '
+                         f'fill="{SOFT}"/>')
+            b.append(f'<path d="M{cx-40},{cy} L{cx+42},{cy}" stroke="{SERIES[3]}" '
+                     'stroke-width="2.4" stroke-dasharray="6 4" marker-end="url(#htar)"/>')
+        elif k == 1:                                 # การพาความร้อน — น้ำหมุนวนในบีกเกอร์
+            b.append(f'<path d="M{cx-34},{cy-32} L{cx-30},{cy+30} L{cx+30},{cy+30} '
+                     f'L{cx+34},{cy-32}" fill="none" stroke="{NAVY}" stroke-width="2"/>')
+            b.append(f'<path d="M{cx-27},{cy-14} L{cx+27},{cy-14}" stroke="{SERIES[5]}" '
+                     'stroke-width="2"/>')
+            b.append(f'<path d="M{cx-16},{cy+20} A16,16 0 1,1 {cx+16},{cy+2}" fill="none" '
+                     f'stroke="{SERIES[3]}" stroke-width="2.2" marker-end="url(#htar)"/>')
+            b.append(flame(cx, cy + 48))
+        else:                                        # การแผ่รังสีความร้อน — ไม่ต้องมีตัวกลาง
+            b.append(f'<circle cx="{cx-30}" cy="{cy}" r="15" fill="{SERIES[1]}" '
+                     f'fill-opacity="0.9" stroke="{SERIES[1]}" stroke-width="1.5"/>')
+            for j in range(3):
+                yy = cy - 18 + j * 18
+                b.append(f'<path d="M{cx-10},{yy} L{cx+30},{yy}" stroke="{SERIES[3]}" '
+                         'stroke-width="2.2" marker-end="url(#htar)"/>')
+            b.append(f'<rect x="{cx+34}" y="{cy-24}" width="12" height="48" rx="3" '
+                     f'fill="#fff" stroke="{NAVY}" stroke-width="2"/>')
+    defs = (f'<defs><marker id="htar" markerWidth="8" markerHeight="8" refX="7" refY="4" '
+            f'orient="auto"><path d="M0,1 L8,4 L0,7 Z" fill="{SERIES[3]}"/></marker></defs>')
+    return _wrap(width, height, defs + "".join(b), caption)
+
+
+# --------------------------------------------------- ชั้นของสิ่งต่าง ๆ (บรรยากาศ ดิน ฯลฯ)
+def layers_fig(bands, bottom_label, caption=None, band_h=48, edge_w=86, box_w=266):
+    """ชั้นซ้อนกันพร้อมป้ายขอบเขต · bands = [(ชื่อชั้น, ป้ายขอบบน, หมายเหตุ), …] เรียงจากบนลงล่าง
+
+    วาดทุกชั้นสูงเท่ากันโดยตั้งใจ เพราะความหนาจริงต่างกันหลายสิบเท่า
+    ถ้าวาดตามสเกลจริงชั้นล่าง ๆ จะบางจนอ่านชื่อไม่ออก — ป้ายตัวเลขที่ขอบเป็นตัวบอกความสูงจริง
+    """
+    # กว้างพอสำหรับโน้ตที่ยาวที่สุดเสมอ — เคยตั้งความกว้างตายตัวแล้วโน้ตโดนตัดขอบ
+    x0, x1 = edge_w, edge_w + box_w
+    longest = max((len(n) for _, _, n in bands if n), default=0)
+    width = x1 + (16 + int(longest * 7.4) if longest else 12)
+    h = 18 + band_h * len(bands) + 34
+    b = [f'<rect x="0" y="0" width="{width}" height="{h}" fill="#fff"/>']
+    for i, (name, edge, note) in enumerate(bands):
+        y = 18 + i * band_h
+        b.append(f'<rect x="{x0}" y="{y}" width="{x1-x0}" height="{band_h}" '
+                 f'fill="{SERIES[i % len(SERIES)]}" fill-opacity="0.16" '
+                 f'stroke="{INK}" stroke-width="1.4"/>')
+        b.append(_t((x0 + x1) / 2, y + band_h / 2 + 5, name, 13, "middle", INK, "600"))
+        b.append(_t(x0 - 10, y + 5, edge, 11.5, "end", SOFT))
+        if note:
+            b.append(_t(x1 + 10, y + band_h / 2 + 5, note, 11.5, "start", SOFT))
+    y = 18 + band_h * len(bands)
+    b.append(_t(x0 - 10, y + 5, bottom_label, 11.5, "end", SOFT))
+    return _wrap(width, h, "".join(b), caption)
