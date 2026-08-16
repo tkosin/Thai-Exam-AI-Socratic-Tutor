@@ -113,6 +113,56 @@ const UNITS = items('unitList').length - 1;      // ไม่นับปุ่�
 chk('มีตัวกรองหน่วยครบ (อ่านจากข้อมูล)', UNITS >= 9, UNITS + ' หน่วย');
 chk('ทุกปุ่มหน่วยมีเลขหน่วยกำกับ',
     items('unitList').slice(1).every(e => e.querySelector('.unum')), '');
+// ---- การเข้าถึงของกล่องซ้อน (a11y) ----
+{
+  const cr = d.getElementById('checkResult');
+  chk('ผลการตรวจคำตอบประกาศให้ screen reader ได้ยิน',
+      cr.getAttribute('aria-live') === 'polite' && cr.getAttribute('role') === 'status',
+      cr.getAttribute('aria-live') + '/' + cr.getAttribute('role'));
+
+  const key = (k, shift) => d.dispatchEvent(
+    new w.KeyboardEvent('keydown', { key: k, shiftKey: !!shift, bubbles: true }));
+  const ov = d.getElementById('overviewOverlay');
+  const pw = d.getElementById('pwOverlay');
+  const ovBtn = d.getElementById('overviewBtn');
+
+  ovBtn.focus();
+  ovBtn.click();
+  chk('กดปุ่มภาพรวมแล้วกล่องเปิด', ov.classList.contains('show'), ov.className);
+
+  // Tab ต้องวนอยู่ในกล่อง ไม่หลุดออกไปข้างนอก — ต้องทดสอบทั้งสองทิศ
+  const inModal = [...ov.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')]
+    .filter(el => !el.disabled && !el.hidden);
+  const first = inModal[0], last = inModal[inModal.length - 1];
+  last.focus();
+  key('Tab');
+  chk('Tab ที่ตัวสุดท้ายของกล่องวนกลับมาตัวแรก',
+      d.activeElement === first, d.activeElement && d.activeElement.id);
+  first.focus();
+  key('Tab', true);
+  chk('Shift+Tab ที่ตัวแรกของกล่องวนไปตัวสุดท้าย',
+      d.activeElement === last, d.activeElement && d.activeElement.id);
+
+  // ปิดกล่องแล้วโฟกัสต้องกลับไปที่ปุ่มที่เปิดมัน
+  // ต้องย้ายโฟกัสเข้าไปในกล่องก่อน ไม่งั้นโฟกัสไม่เคยขยับ เทสต์จะผ่านแม้ถอดโค้ดคืนโฟกัสออก
+  first.focus();
+  key('Escape');
+  chk('Esc ปิดกล่องภาพรวมได้', !ov.classList.contains('show'), ov.className);
+  chk('ปิดกล่องแล้วคืนโฟกัสให้ปุ่มที่เปิด',
+      d.activeElement === ovBtn, d.activeElement && (d.activeElement.id || d.activeElement.tagName));
+
+  // ปุ่ม "ดูเฉลย" อยู่ในการ์ดข้อสอบ หาแบบเดียวกับที่ผู้เรียนเห็น
+  const revealBtn = [...d.querySelectorAll('button')].find(b => /ดูเฉลย/.test(b.textContent));
+  revealBtn.focus();
+  revealBtn.click();
+  chk('กดดูเฉลยแล้วกล่องรหัสผ่านเปิด', pw.classList.contains('show'), pw.className);
+  d.getElementById('pwInput').focus();
+  key('Escape');
+  chk('Esc ปิดกล่องรหัสผ่านได้', !pw.classList.contains('show'), pw.className);
+  chk('ปิดกล่องรหัสผ่านแล้วคืนโฟกัสให้ปุ่มดูเฉลย',
+      d.activeElement === revealBtn, d.activeElement && (d.activeElement.id || d.activeElement.tagName));
+}
+
 chk('มีตัวกรองระดับความยาก ครบ 5 ระดับรวมแข่งขันและโอลิมปิก',
     items('levelList').map(label).join('/') === 'ทุกระดับ/ง่าย/กลาง/ยาก/แข่งขัน/โอลิมปิก',
     items('levelList').map(label).join('/'));

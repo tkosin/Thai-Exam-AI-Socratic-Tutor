@@ -2498,6 +2498,34 @@ const MANIFEST = [{"slug": "math-m1", "subject": "คณิตศาสตร์
     }
   }
 
+  // ---- โฟกัสของกล่องซ้อน ----
+  // ก่อนหน้านี้ Esc ปิดกล่องรหัสผ่านกับกล่องภาพรวมไม่ได้ (ตัวจัดการ keydown return ทิ้งไปเลย)
+  // และกด Tab แล้วโฟกัสหลุดออกไปนอกกล่อง ผู้ใช้คีย์บอร์ด/screen reader จึงหลงทาง
+  let focusBeforeModal = null;
+
+  function modalFocusables(overlay){
+    // ไม่กรองด้วย offsetParent เพราะ jsdom ไม่จัดเลย์เอาต์ ค่าจะเป็น null เสมอ
+    return [...overlay.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')]
+      .filter(el => !el.disabled && !el.hidden);
+  }
+
+  function rememberFocus(){ focusBeforeModal = document.activeElement; }
+
+  function restoreFocus(){
+    if(focusBeforeModal && focusBeforeModal.focus) focusBeforeModal.focus();
+    focusBeforeModal = null;
+  }
+
+  function trapTab(overlay, e){
+    if(e.key !== 'Tab') return;
+    const f = modalFocusables(overlay);
+    if(!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  }
+
   function openAIModal(){
     draft = {
       provider: ai.provider,
@@ -2509,10 +2537,11 @@ const MANIFEST = [{"slug": "math-m1", "subject": "คณิตศาสตร์
       .map(([id, p]) => `<option value="${id}">${escAttr(p.label)}</option>`).join('');
     aiKeyError.textContent = '';
     paintModal();
+    rememberFocus();
     aiOverlay.classList.add('show');
     setTimeout(() => aiKeyInput.focus(), 50);
   }
-  function closeAIModal(){ aiOverlay.classList.remove('show'); }
+  function closeAIModal(){ aiOverlay.classList.remove('show'); restoreFocus(); }
 
   aiSetupBtn.onclick = openAIModal;
   aiCancelBtn.onclick = closeAIModal;
@@ -2592,7 +2621,7 @@ const MANIFEST = [{"slug": "math-m1", "subject": "คณิตศาสตร์
             <input type="text" id="finalInput" placeholder="กรอกเฉพาะคำตอบ เช่น -41" value="${escAttr(finalVal)}">
             <button class="check-btn" type="button" id="checkBtn">ตรวจคำตอบ</button>
           </div>
-          <div class="check-result" id="checkResult"></div>
+          <div class="check-result" id="checkResult" role="status" aria-live="polite"></div>
         </div>
       </div>
       <div class="answer ${isRevealed ? 'show' : ''}" id="answerBox">
@@ -2749,9 +2778,19 @@ const MANIFEST = [{"slug": "math-m1", "subject": "คณิตศาสตร์
   document.addEventListener('keydown', (e) => {
     if(aiOverlay.classList.contains('show')){
       if(e.key === 'Escape') closeAIModal();
+      trapTab(aiOverlay, e);
       return;
     }
-    if(pwOverlay.classList.contains('show') || overviewOverlay.classList.contains('show')) return;
+    if(pwOverlay.classList.contains('show')){
+      if(e.key === 'Escape') closePasswordModal();
+      trapTab(pwOverlay, e);
+      return;
+    }
+    if(overviewOverlay.classList.contains('show')){
+      if(e.key === 'Escape') closeOverview();
+      trapTab(overviewOverlay, e);
+      return;
+    }
     if(e.key === 'Escape' && document.body.classList.contains('nav-open')){ setNav(false); return; }
     // Esc ปิดแผงติวเตอร์ได้แม้เคอร์เซอร์อยู่ในช่องพิมพ์ถาม
     if(e.key === 'Escape' && tutorOpen && state.view === 'exam'){ setTutor(false); return; }
@@ -2840,7 +2879,7 @@ const MANIFEST = [{"slug": "math-m1", "subject": "คณิตศาสตร์
           .filter(Boolean).join(' ');
         b.textContent = QNO[item.gidx];
         b.title = `ข้อที่ ${QNO[item.gidx]} · ${st ? st[1] : (isDone ? 'ทำแล้ว' : 'ยังไม่ทำ')}`;
-        b.onclick = () => { state.index = i; renderAll(); overviewOverlay.classList.remove('show'); };
+        b.onclick = () => { state.index = i; renderAll(); closeOverview(); };
         grid.appendChild(b);
 
         if(st) tally[state.checked[item.q.id]]++;
@@ -2866,23 +2905,30 @@ const MANIFEST = [{"slug": "math-m1", "subject": "คณิตศาสตร์
     sum.push(`ทำแล้ว ${tally.done}`, `ยังไม่ทำ ${tally.todo}`);
     overviewSub.innerHTML =
       `${filterLabel()} · ${list.length} ข้อ · ${groups.length} หน่วย<br>` + sum.join(' · ');
+    rememberFocus();
     overviewOverlay.classList.add('show');
   }
   overviewBtn.onclick = openOverview;
-  closeOverviewBtn.onclick = () => overviewOverlay.classList.remove('show');
-  overviewOverlay.onclick = (e) => { if(e.target === overviewOverlay) overviewOverlay.classList.remove('show'); };
+  function closeOverview(){
+    overviewOverlay.classList.remove('show');
+    restoreFocus();
+  }
+  closeOverviewBtn.onclick = closeOverview;
+  overviewOverlay.onclick = (e) => { if(e.target === overviewOverlay) closeOverview(); };
 
   // ---------- password modal ----------
   function openPasswordModal(onSuccess){
     state.pendingAction = onSuccess;
     pwInput.value = '';
     pwError.textContent = '';
+    rememberFocus();
     pwOverlay.classList.add('show');
     setTimeout(() => pwInput.focus(), 50);
   }
   function closePasswordModal(){
     pwOverlay.classList.remove('show');
     state.pendingAction = null;
+    restoreFocus();
   }
   function tryPassword(){
     if(pwInput.value === ANSWER_PASSWORD){

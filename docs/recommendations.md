@@ -14,7 +14,7 @@
 > | --- | --- |
 > | 2.1 ความก้าวหน้าผูกกับลำดับข้อ | ✅ **แก้แล้ว** — อ้างด้วย `id` ถาวร (`funnymath-m1-v6`) มี migration จาก `legacy-order.json` |
 > | 2.3 หน่วย 4 ตรวจไม่ได้ 15 ข้อ | ยังค้าง — ทั้งคลัง 3,698 ข้อ เหลือเฉลยเชิงบรรยาย 17 ข้อเท่าเดิม |
-> | 4.1 a11y ของ modal | ทำแล้วบางส่วน — modal มี `role="dialog"`/`aria-modal`/`aria-labelledby` แล้ว · ยังขาด `aria-live` ที่ `#checkResult` และ focus trap |
+> | 4.1 a11y ของ modal | ✅ **แก้แล้ว** — `#checkResult` มี `role="status"`/`aria-live="polite"` · Esc ปิดได้ทุกกล่อง · Tab ถูกขังไว้ในกล่องทั้งสองทิศ · ปิดแล้วคืนโฟกัสให้ปุ่มที่เปิด |
 > | 4.3 CI | ไม่เกี่ยวแล้ว — repo เลิกใช้ GitHub Actions ย้ายมา `tools/check.sh` + `.githooks/pre-push` (ดูหมายเหตุในข้อนั้น) |
 > | 4.4 ไม่มีเทสต์ของ `tools/` | ✅ **แก้แล้ว** — `validate.py --selftest` ป้อนแผนที่หัวข้อปลอม 15 แบบ · `verify_math.py` มี `selftest()` ที่รันก่อนตรวจจริงทุกครั้ง |
 > | 2.5 “ออฟไลน์” ยังไม่จริง | ยังค้าง — ฟอนต์ยังโหลดจาก Google Fonts CDN |
