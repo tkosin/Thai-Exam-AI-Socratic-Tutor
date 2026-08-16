@@ -96,6 +96,20 @@
 
   /* min() กันคอลัมน์กว้างค้างที่ 420px บนจอที่แคบกว่านั้น ซึ่งจะดันหน้าให้เลื่อนแนวนอน */
   .course-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap:18px; }
+  /* แท็บเลือกระดับชั้นบนหน้าแรก — ภาพรวมทุกชั้น หรือดูทีละชั้น
+     คลังโตขึ้นจนการ์ดทุกวิชาต่อกันยาวเกินกว่าจะกวาดสายตาหาชั้นที่ตัวเองเรียนได้ */
+  .home-tabs{ display:flex; gap:8px; flex-wrap:wrap; margin:16px 0 2px 0; }
+  .home-tabs button{
+    font-family:inherit; font-size:14px; font-weight:600; cursor:pointer;
+    color:var(--navy-deep); background:var(--card); border:1px solid var(--paper-line);
+    border-radius:999px; padding:7px 15px;
+  }
+  .home-tabs button:hover{ border-color:var(--navy); }
+  .home-tabs button[aria-selected="true"]{
+    background:var(--navy); border-color:var(--navy); color:#fff;
+  }
+  .home-tabs button .t-c{ font-weight:500; opacity:.75; margin-left:6px; font-size:12.5px; }
+
   .course-card{
     background:var(--card); border:1px solid var(--paper-line); border-radius:var(--radius);
     padding:18px 20px 16px 20px; box-shadow:0 2px 8px rgba(0,0,0,.05);
@@ -676,10 +690,11 @@
 <section class="home" id="homeView">
   <div id="resumeSlot"></div>
   <div class="home-sum">
-    <h2>ความก้าวหน้าทั้งหมด</h2>
+    <h2 id="homeSumTitle">ความก้าวหน้าทั้งหมด</h2>
     <span class="s-note" id="homeSumNote"></span>
   </div>
   <div class="home-bar"><i id="homeBarFill"></i></div>
+  <div class="home-tabs" id="homeTabs" role="tablist" aria-label="เลือกระดับชั้น"></div>
   <div class="course-grid" id="courseGrid"></div>
 </section>
 
@@ -845,6 +860,13 @@ const MANIFEST = [{"slug": "math-m1", "subject": "คณิตศาสตร์
   COURSES.sort((a, b) => subjectRank(a.subject) - subjectRank(b.subject)
                       || a.grade.localeCompare(b.grade, 'th'));
 
+  // รายชื่อวิชาและระดับชั้นที่มีจริง — ใช้ทั้งคำโปรยบนหัวเรื่องและแท็บบนหน้าแรก
+  const SUBJECTS = [...new Set(COURSES.map(c => c.subject))];
+  const GRADES = [...new Set(COURSES.map(c => c.grade))]
+    .sort((a, b) => a.localeCompare(b, 'th'));
+  const gradeFull = g => (g.startsWith('ป.') ? 'ระดับประถมศึกษาปีที่ ' : 'ระดับมัธยมศึกษาปีที่ ')
+                         + g.slice(2);
+
   // เลขข้อที่ผู้เรียนเห็น นับแยกในแต่ละวิชา (ไม่ใช่ลำดับในอาร์เรย์รวม)
   // ส่วนคีย์ที่ใช้บันทึกความก้าวหน้าเป็น q.id จึงไม่ขยับตามลำดับ
   // เลขข้อที่ผู้เรียนเห็นและตารางค้นหา id -> ลำดับ ต้องสร้างใหม่ทุกครั้งที่โหลดวิชาเพิ่ม
@@ -892,6 +914,7 @@ const MANIFEST = [{"slug": "math-m1", "subject": "คณิตศาสตร์
 
   const state = {
     view: 'home',           // 'home' | 'exam' — เปิดเว็บมาเจอหน้าแรกเสมอ
+    homeGrade: 'all',       // แท็บบนหน้าแรก: 'all' = ภาพรวมทุกชั้น หรือชื่อชั้นเดียว
     activeCourse: COURSES[0].key,
     activeUnit: 'all',
     activeSub: 'all',
@@ -1098,16 +1121,19 @@ const MANIFEST = [{"slug": "math-m1", "subject": "คณิตศาสตร์
     const mainTitle = document.getElementById('mainTitle');
     const eyebrow = document.getElementById('eyebrow');
     if(state.view === 'home'){
-      const TITLE = `คลังข้อสอบ ม.ต้น · ${TOTAL_Q.toLocaleString('th-TH')} ข้อ`;
+      const g = GRADES;
+      const TITLE = `คลังข้อสอบ ${g[0]}–${g[g.length-1]} · ${TOTAL_Q.toLocaleString('th-TH')} ข้อ`;
       mainTitle.textContent = TITLE;
-      eyebrow.textContent = `สสวท. · ${COURSES.length} วิชา`;
+      // นับ "วิชา" จากชื่อวิชาที่ต่างกันจริง ไม่ใช่จำนวนคู่ (วิชา × ชั้น)
+      // ของเดิมนับคู่แล้วเขียนว่า "6 วิชา" ทั้งที่มีอยู่สองวิชา คือคณิตศาสตร์กับวิทยาศาสตร์
+      eyebrow.textContent = `สสวท. · ${SUBJECTS.length} วิชา · ${g.length} ระดับชั้น`;
       document.title = TITLE;
       return;
     }
     const c = curCourse();
     const TITLE = `ข้อสอบ${c.subject} ${c.grade} · ${c.count} ข้อ`;
     mainTitle.textContent = TITLE;
-    eyebrow.textContent = `สสวท. · ระดับมัธยมศึกษาปีที่ ${c.grade.replace('ม.','')}`;
+    eyebrow.textContent = `สสวท. · ${gradeFull(c.grade)}`;
     document.title = TITLE;
   }
 
@@ -1232,18 +1258,42 @@ const MANIFEST = [{"slug": "math-m1", "subject": "คณิตศาสตร์
     const stats = allStats();
     buildResume(stats);
 
-    const done = COURSES.reduce((a, c) => a + stats[c.key].done, 0);
-    const ok = COURSES.reduce((a, c) => a + stats[c.key].ok, 0);
-    const no = COURSES.reduce((a, c) => a + stats[c.key].no, 0);
-    const pct = TOTAL_Q ? Math.round(done / TOTAL_Q * 100) : 0;
+    // แท็บระดับชั้น — 'all' คือภาพรวมเหมือนเดิม ส่วนแท็บชั้นจะกรองทั้งสรุปและการ์ด
+    // ถ้าชั้นที่เลือกไว้หายไป (เช่นโหลดหน้าเว็บรุ่นที่ยังไม่มีชั้นนั้น) ให้ตกกลับมาที่ภาพรวม
+    if(state.homeGrade !== 'all' && !GRADES.includes(state.homeGrade))
+      state.homeGrade = 'all';
+    const shown = COURSES.filter(c => state.homeGrade === 'all' || c.grade === state.homeGrade);
+
+    const tabs = document.getElementById('homeTabs');
+    tabs.innerHTML = '';
+    [['all', 'ภาพรวมทุกชั้น'], ...GRADES.map(g => [g, g])].forEach(([key, label]) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', String(state.homeGrade === key));
+      const n = COURSES.filter(c => key === 'all' || c.grade === key)
+                       .reduce((a, c) => a + stats[c.key].total, 0);
+      b.innerHTML = `${label}<span class="t-c">${n.toLocaleString('th-TH')} ข้อ</span>`;
+      b.onclick = () => { state.homeGrade = key; buildHome(); };
+      tabs.appendChild(b);
+    });
+
+    const total = shown.reduce((a, c) => a + stats[c.key].total, 0);
+    const done = shown.reduce((a, c) => a + stats[c.key].done, 0);
+    const ok = shown.reduce((a, c) => a + stats[c.key].ok, 0);
+    const no = shown.reduce((a, c) => a + stats[c.key].no, 0);
+    const pct = total ? Math.round(done / total * 100) : 0;
     document.getElementById('homeBarFill').style.width = pct + '%';
+    document.getElementById('homeSumTitle').textContent =
+      state.homeGrade === 'all' ? 'ความก้าวหน้าทั้งหมด'
+                                : `ความก้าวหน้าระดับชั้น ${state.homeGrade}`;
     document.getElementById('homeSumNote').innerHTML =
-      `ทำแล้ว <b>${done}</b> จาก ${TOTAL_Q.toLocaleString('th-TH')} ข้อ (${pct}%) · ` +
+      `ทำแล้ว <b>${done}</b> จาก ${total.toLocaleString('th-TH')} ข้อ (${pct}%) · ` +
       `<span style="color:var(--green)">ถูก ${ok}</span> · <span style="color:var(--red)">ผิด ${no}</span>`;
 
     const grid = document.getElementById('courseGrid');
     grid.innerHTML = '';
-    COURSES.forEach(c => {
+    shown.forEach(c => {
       const s = stats[c.key];
       const cpct = s.total ? Math.round(s.done / s.total * 100) : 0;
       const card = document.createElement('article');

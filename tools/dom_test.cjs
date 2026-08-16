@@ -74,6 +74,45 @@ chk('การ์ดวิชาบอกความก้าวหน้า �
     !!$('#courseGrid .c-stat .ok') && !!$('#courseGrid .c-stat .no'),
     $('#courseGrid .c-stat').textContent.replace(/\s+/g, ' ').trim());
 chk('ยังไม่เคยทำข้อสอบจึงไม่มีปุ่มทำต่อ', !$('#resumeBtn'), '');
+
+// ---------- แท็บระดับชั้นบนหน้าแรก ----------
+{
+  const tabs = () => $$('#homeTabs button');
+  const cardNames = () => $$('#courseGrid .c-name').map(e => e.textContent);
+  const grades = [...new Set(cardNames().map(n => n.split(' ').pop()))];
+  chk('หน้าแรกมีแท็บภาพรวมและแท็บรายชั้นครบ', tabs().length === grades.length + 1,
+      tabs().map(b => b.textContent).join(' / '));
+  chk('แท็บภาพรวมถูกเลือกไว้ตั้งแต่เปิดหน้า',
+      tabs()[0].getAttribute('aria-selected') === 'true',
+      tabs()[0].getAttribute('aria-selected'));
+  chk('แท็บทุกอันบอกจำนวนข้อของชั้นนั้น',
+      tabs().every(b => /[\d,]+ ข้อ/.test(b.textContent)), tabs()[1].textContent);
+  // ยอดของแต่ละแท็บรวมกันต้องเท่ากับแท็บภาพรวมพอดี ไม่งั้นมีวิชาตกหล่นหรือถูกนับซ้ำ
+  // อ่านจากช่องตัวเลขของแท็บโดยตรง — ชื่อชั้นกับตัวเลขติดกันในข้อความรวม ("ป.5368 ข้อ")
+  const nOf = b => +b.querySelector('.t-c').textContent.match(/([\d,]+)/)[1].replace(/,/g, '');
+  chk('ยอดของแท็บรายชั้นรวมกันเท่ากับแท็บภาพรวม',
+      tabs().slice(1).reduce((a, b) => a + nOf(b), 0) === nOf(tabs()[0]),
+      `${tabs().slice(1).reduce((a, b) => a + nOf(b), 0)} vs ${nOf(tabs()[0])}`);
+
+  const allCards = cardNames().length;
+  click(tabs()[1]);
+  const g = grades[0];
+  chk('กดแท็บชั้นแล้วเหลือเฉพาะการ์ดของชั้นนั้น',
+      cardNames().length > 0 && cardNames().every(n => n.endsWith(' ' + g)),
+      cardNames().join(' / '));
+  chk('กดแท็บชั้นแล้วแท็บนั้นถูกเลือก',
+      tabs()[1].getAttribute('aria-selected') === 'true', '');
+  chk('กดแท็บชั้นแล้วหัวข้อสรุปเปลี่ยนตามชั้น',
+      $('#homeSumTitle').textContent.includes(g), $('#homeSumTitle').textContent);
+  chk('กดแท็บชั้นแล้วยอดสรุปเป็นของชั้นนั้น ไม่ใช่ทั้งคลัง',
+      $('#homeSumNote').textContent.includes(nOf(tabs()[1]).toLocaleString('en-US')),
+      $('#homeSumNote').textContent.replace(/\s+/g, ' ').trim());
+  click(tabs()[0]);
+  chk('กดกลับแท็บภาพรวมแล้วการ์ดครบเหมือนเดิม', cardNames().length === allCards,
+      `${cardNames().length} / ${allCards}`);
+  chk('กลับแท็บภาพรวมแล้วหัวข้อสรุปกลับเป็นทั้งหมด',
+      $('#homeSumTitle').textContent === 'ความก้าวหน้าทั้งหมด', $('#homeSumTitle').textContent);
+}
 chk('แถบบนหัวเรื่องบอกความก้าวหน้ารวมทุกวิชา',
     /ทำแล้ว 0 \//.test($('#progressLabel').textContent), $('#progressLabel').textContent);
 
