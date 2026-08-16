@@ -1773,6 +1773,7 @@
    "subject": "เทคโนโลยี",
    "grade": "ม.3",
    "status": "active",
+   "explain_required": true,
    "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560) · สำนักวิชาการและมาตรฐานการศึกษา สพฐ.",
    "official": {
     "total": 9,
