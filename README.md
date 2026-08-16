@@ -1,4 +1,4 @@
-# math-is-fun
+# Thai-Exam-AI-Socratic-Tutor
 
 คลังข้อสอบ ป.5–ม.3 · **5,175 ข้อ · 3 วิชา × 5 ระดับชั้น (11 รายวิชา)** — หน้าเว็บแบบไฟล์เดียว (single-file HTML) ทำข้อสอบและตรวจคำตอบได้ในเบราว์เซอร์
 
@@ -41,7 +41,11 @@
 
 ## เปิดใช้งาน
 
-👉 [tkosin.github.io/math-is-fun](https://tkosin.github.io/math-is-fun/)
+👉 [tkosin.github.io/Thai-Exam-AI-Socratic-Tutor](https://tkosin.github.io/Thai-Exam-AI-Socratic-Tutor/)
+
+> repo เปลี่ยนชื่อจาก `math-is-fun` ลิงก์เดิม `tkosin.github.io/math-is-fun` **ใช้ไม่ได้แล้ว (404)**
+> ส่วน remote ของ git ที่ชี้ชื่อเดิมยังใช้ได้เพราะ GitHub redirect ให้ แต่ควรแก้ให้ตรงชื่อใหม่ด้วย
+> `git remote set-url origin https://github.com/tkosin/Thai-Exam-AI-Socratic-Tutor`
 
 ## ความสามารถ
 

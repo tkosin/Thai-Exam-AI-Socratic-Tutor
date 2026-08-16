@@ -26,7 +26,7 @@ function load(seed) {
   const dom = new JSDOM(html, {
     runScripts: 'dangerously',
     pretendToBeVisual: true,
-    url: 'https://tkosin.github.io/math-is-fun/',
+    url: 'https://tkosin.github.io/Thai-Exam-AI-Socratic-Tutor/',
     beforeParse(w) {
       if (seed) w.localStorage.setItem(seed.key, JSON.stringify(seed.value));
     },
@@ -755,7 +755,7 @@ function loadTutor(seeds, reply = 'ลองอ่านโจทย์อีก
   const dom = new JSDOM(html, {
     runScripts: 'dangerously',
     pretendToBeVisual: true,
-    url: 'https://tkosin.github.io/math-is-fun/',
+    url: 'https://tkosin.github.io/Thai-Exam-AI-Socratic-Tutor/',
     beforeParse(w) {
       seeds.forEach(s => w.localStorage.setItem(s.key, JSON.stringify(s.value)));
       w.fetch = (url, opt) => {
@@ -1189,7 +1189,7 @@ function loadShell({ fail = false, seeds = [] } = {}) {
   const dom = new JSDOM(shellHtml, {
     runScripts: 'dangerously',
     pretendToBeVisual: true,
-    url: 'https://tkosin.github.io/math-is-fun/',
+    url: 'https://tkosin.github.io/Thai-Exam-AI-Socratic-Tutor/',
     beforeParse(w) {
       seeds.forEach(x => w.localStorage.setItem(x.key, JSON.stringify(x.value)));
       w.fetch = (url) => {
