@@ -31,6 +31,7 @@ QDIR = os.path.join(ROOT, "questions")
 COURSES = os.path.join(QDIR, "courses.json")
 FIGURES = os.path.join(QDIR, "figures.json")
 LEGACY = os.path.join(QDIR, "legacy-order.json")
+TOPICS = os.path.join(QDIR, "topics.json")
 DATA = os.path.join(ROOT, "data")
 HTML = os.path.join(ROOT, "index.html")
 COPY = os.path.join(ROOT, "คลังข้อสอบ_ออฟไลน์.html")
@@ -105,6 +106,30 @@ def load():
     return questions, per_course, unused
 
 
+def uncovered_strands(course):
+    """สาระที่คลังไม่ครอบคลุมเลย เพราะทุกหัวข้อในสาระนั้นเป็น practical
+
+    หน้าแรกเอาไปบอกผู้เรียนตรง ๆ ว่าวิชานี้ไม่มีอะไรบ้าง — ป้าย "ครบทุกตัวชี้วัด"
+    บนวิชาที่ครอบคลุมครึ่งเดียวทำให้เด็กเตรียมสอบผิด ซึ่งเสียหายกว่าการไม่มีวิชานั้นเลย
+
+    อ่านจาก topics.json โดยตรง ไม่ให้พิมพ์ข้อความซ้ำด้วยมือ ไม่งั้นวันที่แก้สถานะหัวข้อ
+    แล้วลืมแก้ข้อความ หน้าเว็บจะบอกคนละเรื่องกับด่านตรวจ
+    """
+    if not os.path.exists(TOPICS):
+        return []
+    doc = json.load(open(TOPICS, encoding="utf-8"))
+    for c in doc["courses"]:
+        if (c["subject"], c["grade"]) != (course["subject"], course["grade"]):
+            continue
+        by_strand = {}
+        for t in c["topics"]:
+            by_strand.setdefault(t.get("strand") or t["std"].rsplit(" ", 1)[0],
+                                 []).append(t["status"])
+        return sorted(name for name, st in by_strand.items()
+                      if st and all(s == "practical" for s in st))
+    return []
+
+
 def build_texts(questions, per_course):
     """คืน (เนื้อ index.html แบบแยกข้อมูล, เนื้อสำเนาออฟไลน์แบบรวมไฟล์เดียว, ไฟล์ข้อมูลรายวิชา)
 
@@ -131,12 +156,16 @@ def build_texts(questions, per_course):
         for q in mine:
             units[q["unit"]] = units.get(q["unit"], 0) + 1
             names[q["unit"]] = q["uname"]
-        manifest.append({
+        entry = {
             "slug": course["slug"], "subject": course["subject"], "grade": course["grade"],
             "count": len(mine),
             "units": [{"unit": u, "uname": names[u], "count": units[u]}
                       for u in sorted(units)],
-        })
+        }
+        gaps = uncovered_strands(course)
+        if gaps:
+            entry["gaps"] = gaps
+        manifest.append(entry)
         data_files[course["slug"]] = mine
 
     legacy = json.load(open(LEGACY, encoding="utf-8"))

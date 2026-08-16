@@ -130,6 +130,11 @@
   .course-card .c-stat b{ font-weight:600; }
   .course-card .c-stat .ok{ color:var(--green); }
   .course-card .c-stat .no{ color:var(--red); }
+  /* บอกสาระที่คลังไม่ครอบคลุม — ต้องอ่านออกแต่ไม่แย่งความสนใจจากความก้าวหน้า */
+  .course-card .c-gaps{
+    margin-top:9px; padding:6px 9px; border-radius:6px; font-size:11.5px; line-height:1.5;
+    background:#fdf6e6; color:#7a5a13; border-left:3px solid var(--gold);
+  }
   .course-card .c-units{ display:flex; flex-wrap:wrap; gap:6px; margin-top:13px; }
   .course-card .c-units button{
     font-family:inherit; font-size:12px; color:var(--ink-soft); cursor:pointer;
@@ -856,7 +861,9 @@ const MANIFEST = [{"slug": "math-m1", "subject": "คณิตศาสตร์
   MANIFEST.forEach(c => {
     const key = c.subject + ' ' + c.grade;
     const entry = { key, slug:c.slug, subject:c.subject, grade:c.grade,
-                    units:{}, unitCount:{}, count:c.count, loaded:false };
+                    units:{}, unitCount:{}, count:c.count, loaded:false,
+                    // สาระที่ไม่ครอบคลุม — build.py อ่านจาก topics.json มาให้ ไม่มีก็ไม่ต้องมีคีย์
+                    gaps: c.gaps || null };
     c.units.forEach(u => { entry.units[u.unit] = u.uname; entry.unitCount[u.unit] = u.count; });
     COURSE_BY_KEY[key] = entry;
     COURSES.push(entry);
@@ -864,7 +871,12 @@ const MANIFEST = [{"slug": "math-m1", "subject": "คณิตศาสตร์
   // ลำดับที่ผู้เรียนเห็นแยกจากลำดับที่ประกอบไฟล์ — courses.json ต่อท้ายได้อย่างเดียว
   // (เรียงตาม courses.json เพื่อให้ผลลัพธ์ของ build เหมือนเดิมทุกครั้ง)
   // แต่ในหน้าเว็บควรเรียงตามวิชาแล้วตามระดับชั้น
-  const SUBJECT_ORDER = ['คณิตศาสตร์', 'วิทยาศาสตร์', 'เทคโนโลยี'];
+  // เรียงตามลำดับกลุ่มสาระของหลักสูตรแกนกลาง ไม่ใช่ลำดับที่วิชาถูกเพิ่มเข้ามา
+  // ใส่วิชาที่ยังไม่มีในคลังไว้ล่วงหน้าด้วย เพราะวิชาที่ไม่อยู่ในรายการนี้ตกไปอันดับ 99
+  // แล้วลำดับบนหน้าแรกจะสลับกันเองตามลำดับที่ประกอบ ซึ่งผู้เรียนอ่านไม่ออกว่าเรียงด้วยอะไร
+  const SUBJECT_ORDER = ['ภาษาไทย', 'คณิตศาสตร์', 'วิทยาศาสตร์', 'เทคโนโลยี',
+                         'สังคมศึกษา ศาสนา และวัฒนธรรม', 'สุขศึกษา',
+                         'ศิลปะ', 'การงานอาชีพ', 'ภาษาอังกฤษ'];
   const subjectRank = s => (SUBJECT_ORDER.indexOf(s) + 1 || 99);
   COURSES.sort((a, b) => subjectRank(a.subject) - subjectRank(b.subject)
                       || a.grade.localeCompare(b.grade, 'th'));
@@ -1328,6 +1340,15 @@ const MANIFEST = [{"slug": "math-m1", "subject": "คณิตศาสตร์
       stat.innerHTML = `<span>ทำแล้ว <b>${s.done}</b> / ${s.total}</span>` +
         `<span class="ok">ถูก <b>${s.ok}</b></span><span class="no">ผิด <b>${s.no}</b></span>`;
 
+      // สาระที่คลังไม่ครอบคลุมเลย ต้องบอกผู้เรียนตรงนี้ ไม่ใช่ปล่อยให้เข้าใจว่าครบ
+      // แล้วไปรู้ตอนสอบ · ข้อความมาจาก topics.json ผ่าน MANIFEST ไม่ได้พิมพ์ซ้ำในหน้าเว็บ
+      let gaps = null;
+      if(c.gaps && c.gaps.length){
+        gaps = document.createElement('div');
+        gaps.className = 'c-gaps';
+        gaps.textContent = `ไม่รวม ${c.gaps.join(' · ')} — เป็นตัวชี้วัดเชิงปฏิบัติที่ข้อเขียนวัดไม่ได้`;
+      }
+
       const units = document.createElement('div');
       units.className = 'c-units';
       Object.keys(c.units).map(Number).sort((a, b) => a - b).forEach(u => {
@@ -1345,7 +1366,9 @@ const MANIFEST = [{"slug": "math-m1", "subject": "คณิตศาสตร์
       go.textContent = 'เริ่มทำข้อสอบ →';
       go.onclick = () => openCourse(c.key);
 
-      card.append(head, bar, stat, units, go);
+      card.append(head, bar, stat);
+      if(gaps) card.appendChild(gaps);
+      card.append(units, go);
       grid.appendChild(card);
     });
   }

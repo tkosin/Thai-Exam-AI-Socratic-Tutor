@@ -52,8 +52,12 @@ def coverage(qs, doc=None, courses=None):
     เพิ่มระดับชั้นใหม่ = เพิ่มรายวิชาใน topics.json ไม่ต้องมาแก้โค้ดตรวจ
 
     หัวข้อ status:
-      active  — ต้องมีข้อสอบแล้ว · ไม่มี = ผิด (กันไม่ให้ "ครอบคลุม" เป็นแค่คำพูด)
-      planned — ยังไม่มี ตั้งใจไว้ทำเฟสถัดไป · ถ้าดันมีข้อสอบแล้วก็ผิด (ลืมอัปเดตแผนที่)
+      active    — ต้องมีข้อสอบแล้ว · ไม่มี = ผิด (กันไม่ให้ "ครอบคลุม" เป็นแค่คำพูด)
+      planned   — ยังไม่มี ตั้งใจไว้ทำเฟสถัดไป · ถ้าดันมีข้อสอบแล้วก็ผิด (ลืมอัปเดตแผนที่)
+      practical — ตัวชี้วัดเชิงปฏิบัติ ประเมินด้วยข้อเขียนไม่ได้โดยหลักการ ("เล่นกีฬา…"
+                  "แสดงนาฏศิลป์…") · ไม่บังคับให้มีข้อสอบ และไม่นับเป็นงานค้าง
+                  แต่ยังนับรวมในยอดตัวชี้วัดของ check_official() ความครอบคลุมจึงยังพูดความจริง
+                  ต้องมี practical_reason กำกับเสมอ กันการใช้เป็นที่ซุกหัวข้อที่แค่ทำยาก
 
     doc/courses ใส่เองได้เพื่อให้ selftest ป้อนข้อมูลสมมุติเข้ามาตรวจว่าด่านนี้ดักได้จริง
     """
@@ -86,8 +90,13 @@ def coverage(qs, doc=None, courses=None):
                 err(f"{where}: ตัวชี้วัด '{t['std']}' ไม่ตรงรูปแบบ")
             elif f" {c['grade']}/" not in t["std"]:
                 err(f"{where}: ตัวชี้วัด '{t['std']}' ไม่ใช่ของชั้น {c['grade']}")
-            if t["status"] not in ("active", "planned"):
-                err(f"{where}: status '{t['status']}' ต้องเป็น active หรือ planned")
+            if t["status"] not in ("active", "planned", "practical"):
+                err(f"{where}: status '{t['status']}' ต้องเป็น active · planned หรือ practical")
+            if t["status"] == "practical" and not (t.get("practical_reason") or "").strip():
+                err(f"{where}: status practical ต้องมี practical_reason บอกว่าทำไม"
+                    "ข้อเขียนประเมินไม่ได้ (กันการใช้ practical ซุกหัวข้อที่แค่ทำยาก)")
+            if t["status"] != "practical" and t.get("practical_reason"):
+                err(f"{where}: มี practical_reason แต่ status ไม่ใช่ practical")
             # กติกาจากสเปก: หัวข้อที่ต้องใช้รูป ต้องบอกด้วยว่าเป็นรูปแบบไหน
             if t["needs_svg"] and not t["svg_type"]:
                 err(f"{where}: needs_svg เป็น true แต่ไม่ได้ระบุ svg_type")
@@ -128,6 +137,7 @@ def coverage(qs, doc=None, courses=None):
     # ---- 9.3 หัวข้อ active ต้องมีข้อสอบ · planned ต้องยังไม่มี ----
     for (subj, grade), c in sorted(by_course.items()):
         missing, early, nofig, waiting, done = [], [], [], [], 0
+        hands_on = []
         for t in c["topics"]:
             n = len(have.get((subj, t["std"]), []))
             if t["status"] == "active":
@@ -135,6 +145,13 @@ def coverage(qs, doc=None, courses=None):
                     done += 1
                 else:
                     missing.append(t["std"])
+            elif t["status"] == "practical":
+                # ไม่บังคับให้มีข้อสอบ และไม่นับเป็นงานค้าง — แต่ถ้ามีข้อสอบแล้วแปลว่า
+                # เราประเมินมันด้วยข้อเขียนได้จริง คำว่า practical จึงผิด
+                hands_on.append(t["std"])
+                if n:
+                    err(f"{subj} {grade}: หัวข้อ {t['std']} ตั้งเป็น practical "
+                        f"แต่มีข้อสอบแล้ว {n} ข้อ — ถ้าประเมินด้วยข้อเขียนได้ ให้เปลี่ยนเป็น active")
             elif n:
                 early.append(t["std"])
             if t["needs_svg"] and not any("<svg" in q["text"]
@@ -149,8 +166,13 @@ def coverage(qs, doc=None, courses=None):
             err(f"{subj} {grade}: หัวข้อ planned ที่มีข้อสอบแล้ว "
                 f"ให้เปลี่ยน status เป็น active — {', '.join(early)}")
         plan = [t["std"] for t in c["topics"] if t["status"] == "planned"]
-        notes.append(f"หัวข้อ {subj} {grade}: มีข้อสอบ {done}/{len(c['topics'])}"
+        # ตัวส่วนไม่รวมหัวข้อเชิงปฏิบัติ ไม่งั้นวิชาอย่างศิลปะจะดูเหมือนทำได้ครึ่งเดียวตลอดกาล
+        # ทั้งที่ครึ่งที่เหลือไม่ใช่งานที่ค้าง แต่เป็นงานที่ตั้งใจไม่ทำ
+        scope = len(c["topics"]) - len(hands_on)
+        notes.append(f"หัวข้อ {subj} {grade}: มีข้อสอบ {done}/{scope}"
                      + (f" · รอทำอีก {len(plan)}" if plan else "")
+                     + (f" · เชิงปฏิบัติ ประเมินด้วยข้อเขียนไม่ได้ {len(hands_on)} หัวข้อ"
+                        if hands_on else "")
                      # ไม่ใช่ข้อผิดพลาด แต่เป็นงานค้าง: หัวข้อที่ควรมีรูปประกอบแต่ยังไม่มีสักข้อ
                      + (f" · ควรมีรูปแต่ยังไม่มี {len(nofig)} หัวข้อ" if nofig else ""))
 
@@ -558,7 +580,8 @@ def selftest():
          ("รหัสหัวข้อซ้ำ",)),
         ("ตัวชี้วัดซ้ำในวิชาเดียวกัน", doc(topic(), topic(id="T-2")), ok, ("ซ้ำในวิชาเดียวกัน",)),
         ("ตัวชี้วัดผิดชั้น", doc(topic(std="ค 1.1 ม.2/1")), [], ("ไม่ใช่ของชั้น ม.1",)),
-        ("status สะกดผิด", doc(topic(status="ทำแล้ว")), ok, ("ต้องเป็น active หรือ planned",)),
+        ("status สะกดผิด", doc(topic(status="ทำแล้ว")), ok,
+         ("ต้องเป็น active · planned หรือ practical",)),
         ("วิชาที่มีข้อสอบแล้วแต่ไม่มีในแผนที่", doc(topic()), ok, ("ทั้งที่มีข้อสอบแล้ว",),
          [{"subject": "วิทยาศาสตร์", "grade": "ม.3"}]),
         ("หัวข้อย่อย active แต่ไม่มีข้อสอบ",
@@ -591,6 +614,20 @@ def selftest():
                                  "เพราะเป็นการกลับทิศสองครั้งบนเส้นจำนวน")], ()),
         ("คำอธิบายสั้นเกินไป", doc(topic(), explain_required=True),
          [Q(grade="ม.1", explain="ตอบ ก")], ("คำอธิบายสั้นเกินไป",)),
+        # ---- หัวข้อเชิงปฏิบัติ (ประเมินด้วยข้อเขียนไม่ได้) ----
+        ("practical ไม่ต้องมีข้อสอบ และไม่นับเป็นข้อผิดพลาด",
+         doc(topic(status="practical", practical_reason="ตัวชี้วัดคือการเล่นกีฬาจริง")), [], ()),
+        ("practical ต้องมี practical_reason",
+         doc(topic(status="practical")), [], ("ต้องมี practical_reason",)),
+        ("practical แต่ดันมีข้อสอบแล้ว",
+         doc(topic(status="practical", practical_reason="ตัวชี้วัดคือการปฏิบัติ")), ok,
+         ("ให้เปลี่ยนเป็น active",)),
+        ("ใส่ practical_reason ทั้งที่ status ไม่ใช่ practical",
+         doc(topic(practical_reason="อ้างว่าปฏิบัติ")), ok,
+         ("แต่ status ไม่ใช่ practical",)),
+        ("practical ยังนับรวมในยอดตัวชี้วัดของหลักสูตร",
+         doc(topic(status="practical", practical_reason="ปฏิบัติ"), official=off(total=2)),
+         [], ("บันทึกตัวชี้วัดไว้ 1 ตัว แต่หลักสูตรมี 2 ตัว",)),
         ("คำอธิบายเป็นการทวนตัวเลือกที่ถูกเฉย ๆ", doc(topic()),
          [Q(grade="ม.1",
             text='ข้อใดถูก<div class="choices">'

@@ -358,6 +358,32 @@ $('#pwInput').value = '2569';
 click($('#pwConfirmBtn'));
 chk('รหัสถูกเปิดเฉลย', $('.answer').classList.contains('show'));
 
+// ---------- ป้ายบอกสาระที่คลังไม่ครอบคลุม ----------
+// เหตุผลอยู่ใน docs/implementation-plan.md ข้อ 6.6 — ป้าย "ครบทุกตัวชี้วัด" บนวิชาที่
+// ครอบคลุมครึ่งเดียวทำให้เด็กเตรียมสอบผิด ซึ่งเสียหายกว่าการไม่มีวิชานั้นเลย
+{
+  chk('วิชาที่ครอบคลุมครบ ไม่ขึ้นป้ายเตือน', !$('#courseGrid .c-gaps'),
+      ($('#courseGrid .c-gaps') || {}).textContent);
+
+  // ยังไม่มีวิชาไหนมีหัวข้อ practical จริง (มาถึงตอนเฟส 10) จึงป้อน gaps เข้า MANIFEST
+  // ตรง ๆ เพื่อให้เส้นทางการวาดถูกเดินจริง ไม่ใช่โค้ดที่ไม่เคยถูกเรียก
+  const faked = html.replace('const MANIFEST = [{"slug": "math-m1"',
+                             'const MANIFEST = [{"gaps": ["พลศึกษา"], "slug": "math-m1"');
+  if (faked === html) throw new Error('แทรก gaps เข้า MANIFEST ไม่สำเร็จ — รูปแบบเปลี่ยนไป');
+  const g = new JSDOM(faked, { runScripts: 'dangerously', pretendToBeVisual: true,
+                               url: 'https://tkosin.github.io/Thai-Exam-AI-Socratic-Tutor/' });
+  const box = [...g.window.document.querySelectorAll('#courseGrid .course-card')]
+    .find(c => c.textContent.includes('คณิตศาสตร์ ม.1'));
+  const gap = box && box.querySelector('.c-gaps');
+  chk('วิชาที่ไม่ครอบคลุมบางสาระ ขึ้นป้ายบอกตรง ๆ',
+      !!gap && gap.textContent.includes('พลศึกษา'), gap && gap.textContent);
+  chk('ป้ายบอกด้วยว่าทำไมถึงไม่มี',
+      !!gap && /ปฏิบัติ/.test(gap.textContent), gap && gap.textContent);
+  chk('วิชาอื่นที่ไม่มี gaps ยังไม่ขึ้นป้าย',
+      [...g.window.document.querySelectorAll('#courseGrid .course-card')]
+        .filter(c => c.querySelector('.c-gaps')).length === 1);
+}
+
 // ---------- คำอธิบายวิธีคิด: ต้องอ่านได้โดยไม่ต้องปลดล็อกเฉลย ----------
 // เหตุผลของด่านนี้อยู่ใน docs/implementation-plan.md ข้อ 6.3 — คำอธิบายที่ล็อกไว้
 // หลังรหัสผ่านที่นักเรียนไม่มี เท่ากับไม่มีคำอธิบาย
