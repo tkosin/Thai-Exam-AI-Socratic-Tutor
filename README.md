@@ -132,7 +132,8 @@
 | `questions/science-m3/unit-*.json` | คลังข้อสอบวิทยาศาสตร์ ม.3 แยกไฟล์ตามหน่วย |
 | `questions/figures.json` | คลังรูป SVG อ้างด้วยชื่อ ใช้ซ้ำได้หลายข้อ · สร้างจาก `tools/build_figures.py` |
 | `questions/topics.json` | **แผนที่หัวข้อ** — ตัวชี้วัดที่ต้องมีข้อสอบ · หัวข้อที่ยังไม่ทำ · รูปที่ควรมี |
-| [`docs/roadmap.md`](docs/roadmap.md) | **แผนขยายเป็น ป.5–ม.3 ครบ 7 วิชา** — ช่องว่างที่วัดได้ ลำดับเฟส และเหตุผล |
+| [`docs/roadmap.md`](docs/roadmap.md) | **แผนขยายให้ครบ 8 กลุ่มสาระ** — ช่องว่างที่วัดได้เทียบหลักสูตร ลำดับเฟส และเหตุผล |
+| [`docs/subject-fit.md`](docs/subject-fit.md) | **กลุ่มสาระไหนเข้ากับ "อ่านแล้วตอบ"** — ส่วนที่ไม่ควรทำเป็นข้อสอบเขียน และควรทำอะไรแทน |
 | [`docs/coverage-plan.md`](docs/coverage-plan.md) | **บันทึกย้อนหลัง** ของการขยายรอบ ม.1/วิทยาศาสตร์ (แหล่งจริงตอนนี้คือ `topics.json`) |
 | [`docs/olympiad-guide.md`](docs/olympiad-guide.md) | **สเปกออกข้อสอบระดับแข่งขัน/โอลิมปิก** — ขอบเขตที่ระบบตรวจได้ · เกณฑ์ตัดสินระดับ · คลังแม่แบบโจทย์ · anti-pattern |
 | [`docs/recommendations.md`](docs/recommendations.md) | ผลวิเคราะห์ repo และข้อเสนอแนะสิ่งที่ควรเพิ่ม |
