@@ -113,6 +113,7 @@
 | `questions/topics.json` | **แผนที่หัวข้อ** — ตัวชี้วัดที่ต้องมีข้อสอบ · หัวข้อที่ยังไม่ทำ · รูปที่ควรมี |
 | [`docs/roadmap.md`](docs/roadmap.md) | **แผนขยายเป็น ป.5–ม.3 ครบ 7 วิชา** — ช่องว่างที่วัดได้ ลำดับเฟส และเหตุผล |
 | [`docs/coverage-plan.md`](docs/coverage-plan.md) | **บันทึกย้อนหลัง** ของการขยายรอบ ม.1/วิทยาศาสตร์ (แหล่งจริงตอนนี้คือ `topics.json`) |
+| [`docs/olympiad-guide.md`](docs/olympiad-guide.md) | **สเปกออกข้อสอบระดับแข่งขัน/โอลิมปิก** — ขอบเขตที่ระบบตรวจได้ · เกณฑ์ตัดสินระดับ · คลังแม่แบบโจทย์ · anti-pattern |
 | [`docs/recommendations.md`](docs/recommendations.md) | ผลวิเคราะห์ repo และข้อเสนอแนะสิ่งที่ควรเพิ่ม |
 | [`docs/ai-tutor.md`](docs/ai-tutor.md) | พี่หลวง (ติวเตอร์ AI) — บุคลิก, วิธีใช้, บันไดคำใบ้ 7 ขั้น, เรื่องคีย์และความเป็นส่วนตัว |
 | `tools/build.py` | ประกอบคลังข้อสอบ + รูป เป็น `index.html` + `data/*.json` + สำเนาออฟไลน์ |
