@@ -345,6 +345,12 @@
   .check-result.no{ background:#fbf1ef; color:#8d3325; border-left:3px solid var(--red);}
   .check-result.manual{ background:#fdf6e6; color:#7a5a13; border-left:3px solid var(--gold);}
   .check-result .rhint{ display:block; font-weight:400; font-size:12px; margin-top:3px; opacity:.85;}
+  /* คำอธิบายวิธีคิด — แสดงทันทีที่ตอบผิด ไม่ผูกกับรหัสผ่านเฉลย จึงทำให้อ่านสบายกว่า rhint */
+  .check-result .rexplain{
+    display:block; font-weight:400; font-size:13px; line-height:1.65;
+    margin-top:8px; padding-top:8px; border-top:1px solid rgba(0,0,0,.12);
+  }
+  .check-result .rexplain b{ font-weight:600; }
 
   .qfoot{
     display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
@@ -2720,10 +2726,21 @@ const MANIFEST = [{"slug": "math-m1", "subject": "คณิตศาสตร์
       manual: ['manual', 'ℹ️ ข้อนี้เป็นคำตอบเชิงอธิบาย ตรวจอัตโนมัติไม่ได้', 'กด “ดูเฉลย” แล้วเทียบกับคำตอบของคุณเอง'],
       empty:  ['manual', 'กรอกคำตอบสุดท้ายก่อนกดตรวจ', '']
     };
+    /* คำอธิบายวิธีคิดแสดงทันทีที่ตอบผิด — จงใจไม่ผูกกับ ANSWER_PASSWORD
+       รหัสผ่านกั้นไว้ที่ "ตัวคำตอบ" เท่านั้น ซึ่งยังเป็นที่กั้นไม่ให้เผลอกดดูก่อนคิดเหมือนเดิม
+       แต่คำอธิบายที่ล็อกไว้หลังรหัสผ่านที่นักเรียนไม่มี เท่ากับไม่มีคำอธิบาย
+       เด็กที่ตอบผิดต้องได้เรียนรู้เดี๋ยวนั้น ไม่ใช่รอครูมาปลดล็อกให้ */
+    function explainHTML(status){
+      // แสดงทั้งตอนถูกและตอนผิด — คนที่เดาถูกก็ยังไม่รู้ว่าทำไม การซ่อนไว้เฉพาะตอนผิด
+      // จึงปล่อยให้การเดาถูกผ่านไปโดยไม่ได้เรียนรู้อะไร
+      if(!q.explain || status === 'empty') return '';
+      return `<span class="rexplain"><b>ทำไมถึงเป็นแบบนั้น</b><br>${q.explain}</span>`;
+    }
     function paintResult(status){
       const [cls, msg, hint] = MSG[status] || MSG.empty;
       checkResult.className = 'check-result show ' + cls;
-      checkResult.innerHTML = msg + (hint ? `<span class="rhint">${hint}</span>` : '');
+      checkResult.innerHTML = msg + (hint ? `<span class="rhint">${hint}</span>` : '')
+                            + explainHTML(status);
     }
     function clearResult(){
       checkResult.className = 'check-result';

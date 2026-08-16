@@ -39,6 +39,10 @@ FONT_CSS = os.path.join(ROOT, "questions", "font-embed.css")
 PLACEHOLDER = "[[fig]]"
 FIELD_ORDER = ["id", "subject", "grade", "unit", "uname", "sub",
                "text", "answer", "level", "std", "tag"]
+# คำอธิบายวิธีคิด — ยังไม่บังคับทุกข้อ (คลังเดิม 5,175 ข้อไม่มี) จึงแยกจาก FIELD_ORDER
+# ที่เป็นฟิลด์บังคับ · ข้อไหนมีก็ส่งต่อไปหน้าเว็บ ข้อไหนไม่มีก็ไม่ใส่คีย์ให้เปลืองไบต์
+# วิชาที่ตั้ง explain_required ใน topics.json จะถูก validate.py บังคับอีกชั้น
+OPTIONAL_FIELDS = ["explain"]
 
 
 def qid(slug, unit, q):
@@ -86,7 +90,9 @@ def load():
                 missing = [k for k in FIELD_ORDER if k not in merged]
                 if missing:
                     raise SystemExit(f"{where}: ไม่มีฟิลด์ {', '.join(missing)}")
-                questions.append({k: merged[k] for k in FIELD_ORDER})
+                out = {k: merged[k] for k in FIELD_ORDER}
+                out.update({k: merged[k] for k in OPTIONAL_FIELDS if merged.get(k)})
+                questions.append(out)
         per_course.append((course, len(questions) - start))
 
     seen = {}

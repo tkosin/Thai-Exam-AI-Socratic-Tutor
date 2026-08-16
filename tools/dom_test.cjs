@@ -358,6 +358,45 @@ $('#pwInput').value = '2569';
 click($('#pwConfirmBtn'));
 chk('รหัสถูกเปิดเฉลย', $('.answer').classList.contains('show'));
 
+// ---------- คำอธิบายวิธีคิด: ต้องอ่านได้โดยไม่ต้องปลดล็อกเฉลย ----------
+// เหตุผลของด่านนี้อยู่ใน docs/implementation-plan.md ข้อ 6.3 — คำอธิบายที่ล็อกไว้
+// หลังรหัสผ่านที่นักเรียนไม่มี เท่ากับไม่มีคำอธิบาย
+{
+  const withEx = ALL_Q.filter(q => q.explain);
+  chk('คลังมีข้อที่เติมคำอธิบายแล้ว', withEx.length > 0, `${withEx.length} ข้อ`);
+  const target = withEx[0];
+  const r = enterExam(load(), `${target.subject} ${target.grade}`);
+  const rd = s => r.d.querySelector(s);
+  const rclick = el => el.dispatchEvent(new r.w.Event('click'));
+  const rtype = (el, v) => { el.value = v; el.dispatchEvent(new r.w.Event('input')); };
+  const head = target.explain.slice(0, 30);
+
+  chk('ยังไม่กดตรวจ ยังไม่เห็นคำอธิบาย', !rd('#checkResult .rexplain'));
+
+  rtype(rd('#finalInput'), 'คำตอบที่ผิดแน่นอน 99999');
+  rclick(rd('#checkBtn'));
+  chk('ตอบผิดแล้วเห็นคำอธิบาย', (rd('#checkResult').textContent || '').includes(head),
+      (rd('#checkResult').textContent || '').slice(0, 60));
+  chk('เห็นคำอธิบายโดยไม่ต้องใส่รหัสผ่าน', !rd('#answerBox').classList.contains('show'));
+  chk('คำอธิบายไม่ได้แอบบอกตัวเฉลย',
+      !(rd('#checkResult .rexplain').textContent || '').includes(`เฉลย: ${target.answer}`));
+
+  rtype(rd('#finalInput'), target.answer);
+  rclick(rd('#checkBtn'));
+  chk('ตอบถูกก็ยังเห็นคำอธิบาย', (rd('#checkResult').textContent || '').includes(head),
+      rd('#checkResult').className);
+
+  // ข้อที่ยังไม่มีคำอธิบาย (คลังเดิม 5,175 ข้อ) ต้องไม่ขึ้นกล่องเปล่า
+  const plain = enterExam(load(), 'คณิตศาสตร์ ม.1');
+  const pd = s => plain.d.querySelector(s);
+  pd('#finalInput').value = 'ผิดแน่นอน 99999';
+  pd('#finalInput').dispatchEvent(new plain.w.Event('input'));
+  pd('#checkBtn').dispatchEvent(new plain.w.Event('click'));
+  chk('ข้อที่ไม่มีคำอธิบาย ไม่ขึ้นกล่องเปล่า',
+      !pd('#checkResult .rexplain') && pd('#checkResult').className.includes('show'),
+      pd('#checkResult').className);
+}
+
 // ---------- โหลดข้อมูลที่บันทึกไว้กลับมาได้ ----------
 {
   const key = Object.keys(w.localStorage).find(k => PROGRESS.test(k));
