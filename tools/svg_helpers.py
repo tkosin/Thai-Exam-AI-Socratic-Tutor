@@ -1889,3 +1889,110 @@ def layers_fig(bands, bottom_label, caption=None, band_h=48, edge_w=86, box_w=26
     y = 18 + band_h * len(bands)
     b.append(_t(x0 - 10, y + 5, bottom_label, 11.5, "end", SOFT))
     return _wrap(width, h, "".join(b), caption)
+
+
+# --------------------------------------------------- โครงสร้างภายในโลก (ชั้นซ้อนศูนย์กลาง)
+def concentric_layers(rings, caption=None, width=520, height=250):
+    """ชั้นซ้อนจากศูนย์กลางออกมา · rings = [(ชื่อชั้น, รัศมีสัมพัทธ์ 0-1, ป้ายความหนา), …]
+    เรียงจากชั้นนอกสุดเข้าไปหาศูนย์กลาง
+
+    ชื่อชั้นวางเป็นรายการข้าง ๆ พร้อมแถบสี ไม่เขียนทับลงบนวง เพราะชั้นนอกสุดบางมาก
+    จนไม่มีที่ให้ตัวอักษร (ลองเขียนทับแล้วชื่อล้นออกนอกวงทุกครั้ง)
+    """
+    cx, cy, R = 118, height / 2, min(96, height / 2 - 16)
+    b = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>']
+    for i, (name, frac, _) in enumerate(rings):
+        col = SERIES[i % len(SERIES)]
+        b.append(f'<circle cx="{cx}" cy="{cy:.1f}" r="{R*frac:.1f}" '
+                 f'fill="{col}" fill-opacity="{0.22 + 0.16*i:.2f}" '
+                 f'stroke="{INK}" stroke-width="1.4"/>')
+    lx, ly = cx + R + 34, cy - (len(rings) * 34) / 2 + 20
+    for i, (name, _, note) in enumerate(rings):
+        y = ly + i * 34
+        b.append(f'<rect x="{lx}" y="{y-11}" width="16" height="16" rx="3" '
+                 f'fill="{SERIES[i % len(SERIES)]}" fill-opacity="{0.22 + 0.16*i:.2f}" '
+                 f'stroke="{INK}" stroke-width="1.2"/>')
+        b.append(_t(lx + 24, y + 2, name, 13, "start", INK, "600"))
+        if note:
+            b.append(_t(lx + 24, y + 17, note, 11, "start", SOFT))
+    return _wrap(width, height, "".join(b), caption)
+
+
+# ------------------------------------------ แรงจากสนามสามชนิด (แม่เหล็ก · ไฟฟ้า · โน้มถ่วง)
+def field_forces(caption=None, width=520, height=200):
+    """สามแผงเทียบกัน — ไม่เขียนชื่อแรงลงในรูป เพราะโจทย์ให้ระบุเองว่าแผงไหนคือแรงอะไร"""
+    b = [f'<rect x="0" y="0" width="{width}" height="{height}" fill="#fff"/>']
+    pw = (width - 32) / 3
+    arrow = (f'<defs><marker id="ffar" markerWidth="9" markerHeight="9" refX="8" refY="4.5" '
+             f'orient="auto"><path d="M0,1 L9,4.5 L0,8 Z" fill="{SERIES[3]}"/></marker></defs>')
+    for k, name in enumerate(["ก", "ข", "ค"]):
+        x0 = 10 + k * (pw + 6)
+        b.append(f'<rect x="{x0}" y="22" width="{pw:.1f}" height="{height-38}" rx="6" '
+                 f'fill="#fff" stroke="{GRID}" stroke-width="1.4"/>')
+        b.append(_t(x0 + pw / 2, 16, name, 13, "middle", INK, "700"))
+        cx, cy = x0 + pw / 2, 108
+        if k == 0:                                  # แท่งแม่เหล็กดูดตะปูเหล็ก
+            b.append(f'<rect x="{cx-62}" y="{cy-16}" width="46" height="32" rx="3" '
+                     f'fill="{SERIES[3]}" fill-opacity="0.3" stroke="{INK}" stroke-width="1.6"/>')
+            b.append(_t(cx - 51, cy + 5, "N", 13, "middle", INK, "700"))
+            b.append(_t(cx - 27, cy + 5, "S", 13, "middle", INK, "700"))
+            b.append(f'<rect x="{cx+30}" y="{cy-5}" width="30" height="10" rx="2" '
+                     f'fill="#c9ccd1" stroke="{INK}" stroke-width="1.4"/>')
+            b.append(f'<line x1="{cx+26}" y1="{cy}" x2="{cx-4}" y2="{cy}" '
+                     f'stroke="{SERIES[3]}" stroke-width="2.6" marker-end="url(#ffar)"/>')
+        elif k == 1:                                # แท่งพลาสติกถูผ้าดูดเศษกระดาษ
+            b.append(f'<rect x="{cx-58}" y="{cy-30}" width="16" height="62" rx="4" '
+                     f'fill="#e8e2f2" stroke="{INK}" stroke-width="1.6"/>')
+            for j in range(3):
+                b.append(_t(cx - 50, cy - 14 + j * 20, "+", 13, "middle", NAVY, "700"))
+            for j, (dx, dy) in enumerate([(34, -16), (44, 6), (32, 24)]):
+                b.append(f'<rect x="{cx+dx}" y="{cy+dy-5}" width="13" height="9" '
+                         f'fill="#fff" stroke="{INK}" stroke-width="1.2"/>')
+            b.append(f'<line x1="{cx+28}" y1="{cy}" x2="{cx-32}" y2="{cy}" '
+                     f'stroke="{SERIES[3]}" stroke-width="2.6" marker-end="url(#ffar)"/>')
+        else:                                       # วัตถุตกสู่พื้นโลก
+            b.append(f'<circle cx="{cx}" cy="{cy-32}" r="13" fill="{NAVY}" '
+                     f'fill-opacity="0.7" stroke="{NAVY}" stroke-width="1.6"/>')
+            b.append(f'<line x1="{cx}" y1="{cy-14}" x2="{cx}" y2="{cy+24}" '
+                     f'stroke="{SERIES[3]}" stroke-width="2.6" marker-end="url(#ffar)"/>')
+            b.append(f'<path d="M{cx-56},{cy+62} A70,70 0 0,1 {cx+56},{cy+62}" fill="none" '
+                     f'stroke="{INK}" stroke-width="2"/>')
+            b.append(_t(cx, cy + 58, "ผิวโลก", 11.5, "middle", SOFT))
+    return _wrap(width, height, arrow + "".join(b), caption)
+
+
+# ------------------------------------------------------ การกระจัดเทียบกับระยะทาง
+def displacement_fig(east, north, caption=None, cell=34):
+    """เดินไปทางตะวันออก east ช่อง แล้วขึ้นเหนือ north ช่อง · เส้นประคือการกระจัด (ว 2.2 ม.2/15)"""
+    pad_l, pad_b, pad_t, pad_r = 76, 46, 26, 96   # ซ้ายต้องกว้างพอให้ป้ายจุดเริ่มต้นไม่โดนตัด
+    w = pad_l + east * cell + pad_r
+    h = pad_t + north * cell + pad_b
+    ox, oy = pad_l, pad_t + north * cell          # จุดเริ่มต้นอยู่มุมซ้ายล่าง
+    b = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>']
+    for i in range(east + 1):
+        b.append(f'<line x1="{ox+i*cell}" y1="{pad_t}" x2="{ox+i*cell}" y2="{oy}" '
+                 f'stroke="{GRID}" stroke-width="1"/>')
+    for j in range(north + 1):
+        b.append(f'<line x1="{ox}" y1="{oy-j*cell}" x2="{ox+east*cell}" y2="{oy-j*cell}" '
+                 f'stroke="{GRID}" stroke-width="1"/>')
+    ex, ny = ox + east * cell, oy - north * cell
+    arrow = (f'<defs><marker id="dsar" markerWidth="9" markerHeight="9" refX="8" refY="4.5" '
+             f'orient="auto"><path d="M0,1 L9,4.5 L0,8 Z" fill="{NAVY}"/></marker>'
+             f'<marker id="dsar2" markerWidth="9" markerHeight="9" refX="8" refY="4.5" '
+             f'orient="auto"><path d="M0,1 L9,4.5 L0,8 Z" fill="{SERIES[3]}"/></marker></defs>')
+    b.append(f'<line x1="{ox}" y1="{oy}" x2="{ex}" y2="{oy}" stroke="{NAVY}" '
+             'stroke-width="2.8" marker-end="url(#dsar)"/>')
+    b.append(f'<line x1="{ex}" y1="{oy}" x2="{ex}" y2="{ny}" stroke="{NAVY}" '
+             'stroke-width="2.8" marker-end="url(#dsar)"/>')
+    b.append(f'<line x1="{ox}" y1="{oy}" x2="{ex}" y2="{ny}" stroke="{SERIES[3]}" '
+             'stroke-width="2.6" stroke-dasharray="7 5" marker-end="url(#dsar2)"/>')
+    b.append(_t(ox + east * cell / 2, oy + 34, f"{east} เมตร ไปทางตะวันออก",
+                12, "middle", NAVY, "600"))
+    b.append(_t(ex + 8, oy - north * cell / 2 + 4, f"{north} เมตร", 12, "start", NAVY, "600"))
+    b.append(_t(ox + 4, ny - 8, "เส้นประ = การกระจัด", 12, "start", SERIES[3], "600"))
+    b.append(f'<circle cx="{ox}" cy="{oy}" r="4.5" fill="{INK}"/>')
+    # ป้ายจุดเริ่มต้นเคยวางใต้จุดแล้วชนป้ายระยะทางที่จัดกึ่งกลางลูกศร จึงย้ายมาไว้ซ้ายจุด
+    b.append(_t(ox - 8, oy + 5, "จุดเริ่มต้น", 11, "end", SOFT))
+    b.append(f'<circle cx="{ex}" cy="{ny}" r="4.5" fill="{INK}"/>')
+    b.append(_t(ex + 8, ny - 8, "จุดสุดท้าย", 11, "start", SOFT))
+    return _wrap(w, h, arrow + "".join(b), caption)
