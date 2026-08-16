@@ -6,10 +6,14 @@
 # ได้อีกถึง 10 นาทีหลัง deploy สำเร็จ สคริปต์นี้จึงเทียบ "ไฟล์จริงที่เสิร์ฟอยู่"
 # กับ "ไฟล์ที่ main ชี้อยู่" ทีละไบต์ ไม่ได้ดูสถานะ build
 #
+# **เทียบไฟล์ที่ push ล่าสุดแก้จริง** ไม่ใช่แค่ index.html — ถ้าเทียบเฉพาะ index.html
+# แล้ว push นั้นไม่ได้แตะ index.html (เช่นแก้แต่เอกสารหรือสคริปต์) จะได้เครื่องหมายถูก
+# ทันทีตั้งแต่ยังไม่ deploy ซึ่งเป็นคำตอบที่ผ่านโดยไม่มีหลักฐาน
+#
 # ไม่ต้องใช้โทเคน — อ่านจากเว็บสาธารณะกับ git remote เท่านั้น
 #
-# รัน:  bash tools/pages_status.sh            เทียบ index.html (เร็ว)
-#       bash tools/pages_status.sh --all      เทียบไฟล์ข้อมูลรายวิชาด้วย
+# รัน:  bash tools/pages_status.sh            เทียบไฟล์ที่ push ล่าสุดแก้ + index.html
+#       bash tools/pages_status.sh --all      เทียบไฟล์ข้อมูลรายวิชาทุกไฟล์ด้วย
 #       bash tools/pages_status.sh --watch    วนเช็กจนตรง (สูงสุด 10 นาที)
 #
 # รหัสออก 0 = ตรงกับ main แล้ว · 1 = ยังไม่ตรง · 2 = เรียกใช้ผิดหรือเข้าเว็บไม่ได้
@@ -19,6 +23,7 @@ cd "$(dirname "$0")/.."
 
 ALL=0
 WATCH=0
+MAXFILES=25          # push ที่แก้เป็นร้อยไฟล์มีจริง — ตัดจำนวน แต่บอกว่าตัดไปเท่าไร
 for a in "$@"; do
   case "$a" in
     --all) ALL=1 ;;
@@ -48,7 +53,20 @@ check_once() {
   head=$(git rev-parse origin/main)
   short=${head:0:7}
 
-  files=("index.html")
+  # ไฟล์ที่ push ล่าสุดแก้ = สิ่งที่ต้องกลายเป็นของใหม่บนเว็บพอดี
+  # ใช้ ^1 เพื่อให้ merge commit เทียบกับยอด main เดิม ไม่ใช่กับปลายแบรนช์ที่ถูก merge เข้ามา
+  files=()
+  if git rev-parse -q --verify "$head^1" >/dev/null; then
+    while read -r f; do [ -n "$f" ] && files+=("$f"); done < <(
+      git diff --name-only "$head^1" "$head")
+  fi
+  if [ "${#files[@]}" -gt "$MAXFILES" ]; then
+    echo "  (push ล่าสุดแก้ ${#files[@]} ไฟล์ — เทียบแค่ $MAXFILES ไฟล์แรก)"
+    files=("${files[@]:0:$MAXFILES}")
+  fi
+  # index.html เป็นหน้าที่ผู้เรียนเปิดจริง เทียบไว้เสมอแม้ push ล่าสุดจะไม่ได้แตะ
+  case " ${files[*]-} " in *" index.html "*) ;; *) files+=("index.html") ;; esac
+
   if [ "$ALL" = 1 ]; then
     # อ่านรายชื่อไฟล์ข้อมูลจาก MANIFEST ของ main — เพิ่มวิชาแล้วไม่ต้องมาแก้สคริปต์
     while read -r f; do files+=("data/${f}.json"); done < <(
@@ -56,16 +74,28 @@ check_once() {
       grep -o '"slug": "[a-z0-9-]*"' | sed 's/.*"\([a-z0-9-]*\)"$/\1/' | sort -u)
   fi
 
+  local w=0
+  for f in "${files[@]}"; do [ "${#f}" -gt "$w" ] && w=${#f}; done
   for f in "${files[@]}"; do
-    want=$(git show "origin/main:$f" 2>/dev/null | sha)
     live=$(fetch "$SITE/$f" 2>/dev/null | sha)
+    if ! git cat-file -e "origin/main:$f" 2>/dev/null; then
+      # ไฟล์ถูกลบใน push นี้ — deploy สำเร็จแปลว่าเว็บต้องไม่มีไฟล์นี้แล้ว
+      if [ -z "$live" ]; then
+        printf '  %-*s ✔ ถูกลบออกจากเว็บแล้ว\n' "$w" "$f"
+      else
+        printf '  %-*s ✘ ลบใน main แล้วแต่เว็บยังเสิร์ฟอยู่\n' "$w" "$f"
+        stale=1
+      fi
+      continue
+    fi
+    want=$(git show "origin/main:$f" | sha)
     if [ -z "$live" ]; then
-      printf '  %-22s ✘ ดึงจากเว็บไม่ได้\n' "$f"
+      printf '  %-*s ✘ ดึงจากเว็บไม่ได้\n' "$w" "$f"
       stale=1
     elif [ "$want" = "$live" ]; then
-      printf '  %-22s ✔ ตรงกับ main\n' "$f"
+      printf '  %-*s ✔ ตรงกับ main\n' "$w" "$f"
     else
-      printf '  %-22s ✘ ยังเป็นของเดิม (main %s · เว็บ %s)\n' "$f" "$want" "$live"
+      printf '  %-*s ✘ ยังเป็นของเดิม (main %s · เว็บ %s)\n' "$w" "$f" "$want" "$live"
       stale=1
     fi
   done
