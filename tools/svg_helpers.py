@@ -2052,6 +2052,11 @@ def _arc_through(centre, r, pts, pad=14):
     return _arc(centre[0], centre[1], r, max(angs) + pad, min(angs) - pad)
 
 
+# ขนาดมุม ABC ที่ construction_fig('bisect_angle') วาดจริง
+# โจทย์ที่อ้างรูปนี้ต้องอ่านค่าจากตรงนี้ ไม่ใช่พิมพ์ตัวเลขเอง ไม่งั้นรูปกับโจทย์เพี้ยนจากกัน
+BISECT_ANGLE_DEG = 58
+
+
 def construction_fig(kind, caption=None, width=360, height=280):
     """รอยวงเวียนของการสร้างพื้นฐาน · kind = 'bisect_segment' | 'bisect_angle' | 'perpendicular'
 
@@ -2078,7 +2083,7 @@ def construction_fig(kind, caption=None, width=360, height=280):
               dot(A, "A", 24), dot(B, "B", 24), dot(P, "P"), dot(Q, "Q", 24),
               dot(M, "M", -13)]
     elif kind == "bisect_angle":
-        B, L, up = (70, 210), 190, 58
+        B, L, up = (70, 210), 190, BISECT_ANGLE_DEG
         C = (B[0] + L, B[1])
         A = (B[0] + L * math.cos(math.radians(up)), B[1] - L * math.sin(math.radians(up)))
         r, r2 = 92, 74
