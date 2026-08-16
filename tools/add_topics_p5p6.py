@@ -237,6 +237,13 @@ def main():
     for c in built:
         key = (c["subject"], c["grade"])
         if key in by_key:
+            # รักษา status เดิมไว้ — วิชาที่มีข้อสอบแล้วเป็น active ถ้าเขียนทับเป็น planned
+            # ด่านตรวจจะร้องว่า "หัวข้อ planned ที่มีข้อสอบแล้ว" ทันที
+            old = doc["courses"][by_key[key]]
+            was = {t["std"]: t["status"] for t in old["topics"]}
+            c["status"] = old.get("status", c["status"])
+            for t in c["topics"]:
+                t["status"] = was.get(t["std"], t["status"])
             doc["courses"][by_key[key]] = c
         else:
             doc["courses"].append(c)
