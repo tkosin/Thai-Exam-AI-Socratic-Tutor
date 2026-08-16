@@ -471,12 +471,12 @@ repo มีสองชั้น เพราะสองสนามนี้�
 ```bash
 python3 tools/gen_advanced.py   # สร้างข้อสองระดับบน (คิดเฉลยสองทางแล้วเทียบกัน)
 python3 tools/build.py          # ประกอบเข้า index.html + data/*.json + สำเนาออฟไลน์
-bash tools/check.sh             # ตรวจครบ 5 ขั้น ต้องผ่านทั้งหมดก่อน commit
+bash tools/check.sh             # ตรวจครบ 6 ขั้น ต้องผ่านทั้งหมดก่อน commit
 ```
 
 ### Definition of Done ของแต่ละรอบ
 
-- [ ] `bash tools/check.sh` ผ่านครบ 5 ขั้น
+- [ ] `bash tools/check.sh` ผ่านครบ 6 ขั้น
 - [ ] `verify_math.py` ตรวจข้อคณิตที่เพิ่มใหม่ได้ **ทุกข้อ** (ไม่ตกลงถังหางยาว)
 - [ ] ทุก `sub` ที่เพิ่มมีข้ออย่างน้อย 8 ข้อ
 - [ ] ไม่มีข้อเดิมถูกแก้ — ตรวจด้วย `git diff` ว่ามีแต่บรรทัดที่เพิ่ม

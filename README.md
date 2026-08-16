@@ -156,7 +156,7 @@
 | `tools/gen_tech_m3.py` | สร้างวิชา**เทคโนโลยี ม.3** 202 ข้อ ครบ 9 ตัวชี้วัด · เฉลยข้ออัลกอริทึมคิดสองทาง · หมุนตำแหน่งตัวเลือกปรนัย |
 | `tools/verify_math.py` | ตรวจว่าเฉลยคณิตศาสตร์ถูกตามคณิตศาสตร์จริง (คิดใหม่จากตัวโจทย์) |
 | `tools/responsive_check.js` | ตรวจเลย์เอาต์บนขนาดจอจริง 8 แบบด้วยเบราว์เซอร์ (ทางเลือก ต้องมี Playwright) |
-| `tools/check.sh` · `.githooks/pre-push` | รันชุดตรวจทั้งหมด (5 ขั้น) ในเครื่อง แทน GitHub Actions |
+| `tools/check.sh` · `.githooks/pre-push` | รันชุดตรวจทั้งหมด (6 ขั้น) ในเครื่อง แทน GitHub Actions |
 
 ## แก้ไขและเพิ่มข้อสอบ
 
@@ -166,7 +166,7 @@
 $EDITOR questions/science-m2/unit-05-force-motion.json
 python3 tools/build.py                                  # ประกอบเข้า index.html + ซิงค์สำเนา
 
-bash tools/check.sh                                      # ตรวจทั้งหมด (5 ขั้น)
+bash tools/check.sh                                      # ตรวจทั้งหมด (6 ขั้น)
 ```
 
 ### ฟิลด์ `explain` — คำอธิบายวิธีคิด
