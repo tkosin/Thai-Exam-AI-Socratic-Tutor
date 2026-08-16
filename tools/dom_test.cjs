@@ -113,8 +113,8 @@ const UNITS = items('unitList').length - 1;      // ไม่นับปุ่�
 chk('มีตัวกรองหน่วยครบ (อ่านจากข้อมูล)', UNITS >= 9, UNITS + ' หน่วย');
 chk('ทุกปุ่มหน่วยมีเลขหน่วยกำกับ',
     items('unitList').slice(1).every(e => e.querySelector('.unum')), '');
-chk('มีตัวกรองระดับความยาก ครบ 4 ระดับรวมแข่งขัน',
-    items('levelList').map(label).join('/') === 'ทุกระดับ/ง่าย/กลาง/ยาก/แข่งขัน',
+chk('มีตัวกรองระดับความยาก ครบ 5 ระดับรวมแข่งขันและโอลิมปิก',
+    items('levelList').map(label).join('/') === 'ทุกระดับ/ง่าย/กลาง/ยาก/แข่งขัน/โอลิมปิก',
     items('levelList').map(label).join('/'));
 chk('มีตัวกรองขอบเขตเนื้อหา',
     items('tagList').map(label).join('/') === 'ทุกขอบเขต/ม.1/ทบทวน ป.6/ต่อยอด ม.2',
@@ -167,7 +167,8 @@ chk('ค่าเริ่มต้น: ระดับและขอบเข�
 chk('กลุ่มที่พับไม่แสดงรายการ', !!d.querySelector('#group-level.collapsed .flist'), '');
 click(head('level'));
 chk('กดหัวกลุ่มแล้วกางออก', isOpen('level') && head('level').getAttribute('aria-expanded') === 'true', '');
-chk('กางแล้วเห็นรายการครบ', items('levelList').length === 5, items('levelList').length);
+// ทุกระดับ + ง่าย/กลาง/ยาก/แข่งขัน/โอลิมปิก = 6 รายการ
+chk('กางแล้วเห็นรายการครบ', items('levelList').length === 6, items('levelList').length);
 click(head('unit'));
 chk('กดอีกกลุ่มแล้วพับได้', !isOpen('unit'), '');
 chk('พับกลุ่มหน่วยไม่กระทบกลุ่มอื่น', isOpen('sub') && isOpen('level'), '');

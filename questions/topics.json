@@ -46,7 +46,8 @@
     "historical_map",
     "flowchart",
     "logic_grid",
-    "stroke_order"
+    "stroke_order",
+    "diagram_layers"
   ],
   "courses": [
     {
@@ -144,7 +145,7 @@
       "subject": "วิทยาศาสตร์",
       "grade": "ม.1",
       "status": "active",
-      "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560)",
+      "source": "ตัวชี้วัดและสาระการเรียนรู้แกนกลาง กลุ่มสาระการเรียนรู้วิทยาศาสตร์ (ฉบับปรับปรุง พ.ศ. 2560) — สพฐ./สสวท. · needs_svg ตั้งจากถ้อยคำในตัวชี้วัดรายตัว (เขียนแผนภาพ/เขียนกราฟ/แบบจำลอง)",
       "topics": [
         {
           "id": "SCI-M1-BIO-001",
@@ -300,12 +301,21 @@
           "status": "active"
         },
         {
+          "id": "SCI-M1-BIO-018",
+          "std": "ว 1.2 ม.1/18",
+          "strand": "วิทยาศาสตร์ชีวภาพ",
+          "topic": "การขยายพันธุ์พืช",
+          "needs_svg": false,
+          "svg_type": null,
+          "status": "active"
+        },
+        {
           "id": "SCI-M1-PHY-001",
           "std": "ว 2.1 ม.1/1",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "สารรอบตัว",
-          "needs_svg": true,
-          "svg_type": "particle_model",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -313,8 +323,8 @@
           "std": "ว 2.1 ม.1/2",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "สารรอบตัว",
-          "needs_svg": true,
-          "svg_type": "particle_model",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -322,8 +332,8 @@
           "std": "ว 2.1 ม.1/3",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "สารรอบตัว",
-          "needs_svg": true,
-          "svg_type": "particle_model",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -332,7 +342,7 @@
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "สารรอบตัว",
           "needs_svg": true,
-          "svg_type": "particle_model",
+          "svg_type": "graph",
           "status": "active"
         },
         {
@@ -340,8 +350,8 @@
           "std": "ว 2.1 ม.1/5",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "สารรอบตัว",
-          "needs_svg": true,
-          "svg_type": "particle_model",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -349,8 +359,8 @@
           "std": "ว 2.1 ม.1/6",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "สารรอบตัว",
-          "needs_svg": true,
-          "svg_type": "particle_model",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -359,7 +369,7 @@
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "สารรอบตัว",
           "needs_svg": true,
-          "svg_type": "particle_model",
+          "svg_type": "atomic_model",
           "status": "active"
         },
         {
@@ -368,7 +378,7 @@
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "สารรอบตัว",
           "needs_svg": true,
-          "svg_type": "particle_model",
+          "svg_type": "atomic_model",
           "status": "active"
         },
         {
@@ -378,6 +388,24 @@
           "topic": "สารรอบตัว",
           "needs_svg": true,
           "svg_type": "particle_model",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M1-PHY-017",
+          "std": "ว 2.1 ม.1/10",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "ความร้อนกับการเปลี่ยนสถานะของสสาร",
+          "needs_svg": true,
+          "svg_type": "particle_model",
+          "status": "active"
+        },
+        {
+          "id": "SCI-M1-PHY-018",
+          "std": "ว 2.2 ม.1/1",
+          "strand": "วิทยาศาสตร์กายภาพ",
+          "topic": "ความดันอากาศกับความสูงจากพื้นโลก",
+          "needs_svg": true,
+          "svg_type": "graph",
           "status": "active"
         },
         {
@@ -403,8 +431,8 @@
           "std": "ว 2.3 ม.1/3",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "พลังงานความร้อน",
-          "needs_svg": false,
-          "svg_type": null,
+          "needs_svg": true,
+          "svg_type": "particle_model",
           "status": "active"
         },
         {
@@ -430,8 +458,8 @@
           "std": "ว 2.3 ม.1/6",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "พลังงานความร้อน",
-          "needs_svg": false,
-          "svg_type": null,
+          "needs_svg": true,
+          "svg_type": "apparatus",
           "status": "active"
         },
         {
@@ -449,7 +477,7 @@
           "strand": "วิทยาศาสตร์โลกและอวกาศ",
           "topic": "บรรยากาศและลมฟ้าอากาศ",
           "needs_svg": true,
-          "svg_type": "weather_map",
+          "svg_type": "diagram_layers",
           "status": "active"
         },
         {
@@ -457,8 +485,8 @@
           "std": "ว 3.2 ม.1/2",
           "strand": "วิทยาศาสตร์โลกและอวกาศ",
           "topic": "บรรยากาศและลมฟ้าอากาศ",
-          "needs_svg": true,
-          "svg_type": "weather_map",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -466,8 +494,8 @@
           "std": "ว 3.2 ม.1/3",
           "strand": "วิทยาศาสตร์โลกและอวกาศ",
           "topic": "บรรยากาศและลมฟ้าอากาศ",
-          "needs_svg": true,
-          "svg_type": "weather_map",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -475,8 +503,8 @@
           "std": "ว 3.2 ม.1/4",
           "strand": "วิทยาศาสตร์โลกและอวกาศ",
           "topic": "บรรยากาศและลมฟ้าอากาศ",
-          "needs_svg": true,
-          "svg_type": "weather_map",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -484,8 +512,8 @@
           "std": "ว 3.2 ม.1/5",
           "strand": "วิทยาศาสตร์โลกและอวกาศ",
           "topic": "บรรยากาศและลมฟ้าอากาศ",
-          "needs_svg": true,
-          "svg_type": "weather_map",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -493,8 +521,8 @@
           "std": "ว 3.2 ม.1/6",
           "strand": "วิทยาศาสตร์โลกและอวกาศ",
           "topic": "บรรยากาศและลมฟ้าอากาศ",
-          "needs_svg": true,
-          "svg_type": "weather_map",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -502,8 +530,8 @@
           "std": "ว 3.2 ม.1/7",
           "strand": "วิทยาศาสตร์โลกและอวกาศ",
           "topic": "บรรยากาศและลมฟ้าอากาศ",
-          "needs_svg": true,
-          "svg_type": "weather_map",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         }
       ]
@@ -513,7 +541,7 @@
       "subject": "วิทยาศาสตร์",
       "grade": "ม.2",
       "status": "active",
-      "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560)",
+      "source": "ตัวชี้วัดและสาระการเรียนรู้แกนกลาง กลุ่มสาระการเรียนรู้วิทยาศาสตร์ (ฉบับปรับปรุง พ.ศ. 2560) — สพฐ./สสวท. · needs_svg ตั้งจากถ้อยคำในตัวชี้วัดรายตัว (เขียนแผนภาพ/เขียนกราฟ/แบบจำลอง)",
       "topics": [
         {
           "id": "SCI-M2-BIO-001",
@@ -673,8 +701,8 @@
           "std": "ว 2.1 ม.2/1",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "การแยกสารและสารละลาย",
-          "needs_svg": true,
-          "svg_type": "apparatus",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -682,8 +710,8 @@
           "std": "ว 2.1 ม.2/2",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "การแยกสารและสารละลาย",
-          "needs_svg": true,
-          "svg_type": "apparatus",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -691,8 +719,8 @@
           "std": "ว 2.1 ม.2/3",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "การแยกสารและสารละลาย",
-          "needs_svg": true,
-          "svg_type": "apparatus",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -700,8 +728,8 @@
           "std": "ว 2.1 ม.2/4",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "การแยกสารและสารละลาย",
-          "needs_svg": true,
-          "svg_type": "apparatus",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -709,8 +737,8 @@
           "std": "ว 2.1 ม.2/5",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "การแยกสารและสารละลาย",
-          "needs_svg": true,
-          "svg_type": "apparatus",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -718,8 +746,8 @@
           "std": "ว 2.1 ม.2/6",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "การแยกสารและสารละลาย",
-          "needs_svg": true,
-          "svg_type": "apparatus",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -727,8 +755,8 @@
           "std": "ว 2.2 ม.2/1",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": true,
-          "svg_type": "force_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -745,8 +773,8 @@
           "std": "ว 2.2 ม.2/3",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": true,
-          "svg_type": "force_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -754,8 +782,8 @@
           "std": "ว 2.2 ม.2/4",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": true,
-          "svg_type": "force_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -772,8 +800,8 @@
           "std": "ว 2.2 ม.2/6",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": true,
-          "svg_type": "force_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -781,8 +809,8 @@
           "std": "ว 2.2 ม.2/7",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": true,
-          "svg_type": "force_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -799,8 +827,8 @@
           "std": "ว 2.2 ม.2/9",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": true,
-          "svg_type": "force_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -808,8 +836,8 @@
           "std": "ว 2.2 ม.2/10",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": true,
-          "svg_type": "force_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -817,8 +845,8 @@
           "std": "ว 2.2 ม.2/11",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": true,
-          "svg_type": "force_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -835,8 +863,8 @@
           "std": "ว 2.2 ม.2/13",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": true,
-          "svg_type": "force_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -844,8 +872,8 @@
           "std": "ว 2.2 ม.2/14",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": true,
-          "svg_type": "force_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -862,8 +890,8 @@
           "std": "ว 2.3 ม.2/1",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "แสงและการมองเห็น",
-          "needs_svg": true,
-          "svg_type": "ray_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -871,8 +899,8 @@
           "std": "ว 2.3 ม.2/2",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "แสงและการมองเห็น",
-          "needs_svg": true,
-          "svg_type": "ray_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -880,8 +908,8 @@
           "std": "ว 2.3 ม.2/3",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "แสงและการมองเห็น",
-          "needs_svg": true,
-          "svg_type": "ray_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -889,8 +917,8 @@
           "std": "ว 2.3 ม.2/4",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "แสงและการมองเห็น",
-          "needs_svg": true,
-          "svg_type": "ray_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -898,8 +926,8 @@
           "std": "ว 2.3 ม.2/5",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "แสงและการมองเห็น",
-          "needs_svg": true,
-          "svg_type": "ray_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -907,8 +935,8 @@
           "std": "ว 2.3 ม.2/6",
           "strand": "วิทยาศาสตร์กายภาพ",
           "topic": "แสงและการมองเห็น",
-          "needs_svg": true,
-          "svg_type": "ray_diagram",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -916,8 +944,8 @@
           "std": "ว 3.2 ม.2/1",
           "strand": "วิทยาศาสตร์โลกและอวกาศ",
           "topic": "โลกและการเปลี่ยนแปลง",
-          "needs_svg": true,
-          "svg_type": "rock_cycle",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -925,8 +953,8 @@
           "std": "ว 3.2 ม.2/2",
           "strand": "วิทยาศาสตร์โลกและอวกาศ",
           "topic": "โลกและการเปลี่ยนแปลง",
-          "needs_svg": true,
-          "svg_type": "rock_cycle",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -934,8 +962,8 @@
           "std": "ว 3.2 ม.2/3",
           "strand": "วิทยาศาสตร์โลกและอวกาศ",
           "topic": "โลกและการเปลี่ยนแปลง",
-          "needs_svg": true,
-          "svg_type": "rock_cycle",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -944,7 +972,7 @@
           "strand": "วิทยาศาสตร์โลกและอวกาศ",
           "topic": "โลกและการเปลี่ยนแปลง",
           "needs_svg": true,
-          "svg_type": "rock_cycle",
+          "svg_type": "diagram_layers",
           "status": "active"
         },
         {
@@ -962,7 +990,7 @@
           "strand": "วิทยาศาสตร์โลกและอวกาศ",
           "topic": "โลกและการเปลี่ยนแปลง",
           "needs_svg": true,
-          "svg_type": "rock_cycle",
+          "svg_type": "diagram_layers",
           "status": "active"
         },
         {
@@ -970,8 +998,8 @@
           "std": "ว 3.2 ม.2/7",
           "strand": "วิทยาศาสตร์โลกและอวกาศ",
           "topic": "โลกและการเปลี่ยนแปลง",
-          "needs_svg": true,
-          "svg_type": "rock_cycle",
+          "needs_svg": false,
+          "svg_type": null,
           "status": "active"
         },
         {
@@ -980,7 +1008,7 @@
           "strand": "วิทยาศาสตร์โลกและอวกาศ",
           "topic": "โลกและการเปลี่ยนแปลง",
           "needs_svg": true,
-          "svg_type": "rock_cycle",
+          "svg_type": "diagram_layers",
           "status": "active"
         },
         {
@@ -989,7 +1017,7 @@
           "strand": "วิทยาศาสตร์โลกและอวกาศ",
           "topic": "โลกและการเปลี่ยนแปลง",
           "needs_svg": true,
-          "svg_type": "rock_cycle",
+          "svg_type": "flowchart",
           "status": "active"
         },
         {
@@ -998,7 +1026,7 @@
           "strand": "วิทยาศาสตร์โลกและอวกาศ",
           "topic": "โลกและการเปลี่ยนแปลง",
           "needs_svg": true,
-          "svg_type": "rock_cycle",
+          "svg_type": "diagram_layers",
           "status": "active"
         }
       ]
