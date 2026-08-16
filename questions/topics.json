@@ -1,1821 +1,3022 @@
 {
-  "_readme": [
-    "แผนที่หัวข้อการเรียนรู้ — ใช้เป็นด่านตรวจความครอบคลุมใน tools/validate.py",
-    "หนึ่ง record ต่อหนึ่งตัวชี้วัด · subtopics ใช้ตรวจให้ละเอียดกว่าระดับตัวชี้วัด",
-    "status: active = ต้องมีข้อสอบแล้ว (ไม่มี = build ไม่ผ่าน) · planned = ยังไม่มี รอเฟสถัดไป",
-    "needs_svg เป็นค่าตั้งต้นระดับหัวข้อ ข้อแต่ละข้อกำหนดเองได้ · needs_svg true ต้องมี svg_type",
-    "วิชาที่ยังไม่มีในคลังอยู่ใน planned_courses — ไม่ใส่ตัวชี้วัดไว้ล่วงหน้า",
-    "เพราะต้องเทียบหลักสูตรจริงตอนลงมือทำ ไม่ใช่เดาไว้ก่อน (ดู docs/roadmap.md)",
-    "ตั้งต้นด้วยการอ่านตัวชี้วัดจากคลังที่มีอยู่ จากนั้นดูแลด้วยมือ — เพิ่มหัวข้อใหม่ได้เลย",
-    "วิทย์ ม.3 มีตัวชี้วัด 59 ตัว แต่ 9 ตัวเป็นสาระ 4 เทคโนโลยี (ว 4.1/ว 4.2) ซึ่งแยกสอนเป็นวิชาต่างหาก จึงอยู่ใน planned_courses",
-    "needs_svg ของวิทย์ ม.3 ตั้งรายตัวชี้วัดจากข้อความตัวชี้วัดจริง ส่วน ม.1/ม.2 ยังตั้งรายหน่วยไว้ก่อน รอเทียบข้อความตัวชี้วัดของสองชั้นนั้น",
-    "ชีววิทยา (ว 1.1 · ว 1.2 · ว 1.3) ตั้ง needs_svg เป็น false ทั้งสาระ — โครงสร้างของสิ่งมีชีวิตวาดด้วย SVG แล้วไม่เหมือนของจริง จึงไม่นับเป็นงานค้าง (ตาราง/ผังลำดับที่ไม่ได้วาดของจริงยังใช้ได้)"
-  ],
-  "svg_types": [
-    "geometry_figure",
-    "spatial_figure",
-    "coordinate_plane",
-    "graph",
-    "number_line",
-    "bar_chart",
-    "pie_chart",
-    "histogram",
-    "box_plot",
-    "fraction_model",
-    "pattern_figure",
-    "cell_diagram",
-    "body_system",
-    "life_cycle",
-    "plant_diagram",
-    "food_web",
-    "punnett_square",
-    "particle_model",
-    "atomic_model",
-    "apparatus",
-    "circuit_diagram",
-    "force_diagram",
-    "ray_diagram",
-    "wave",
-    "moon_phase",
-    "rock_cycle",
-    "solar_system",
-    "weather_map",
-    "celestial_sphere",
-    "map",
-    "timeline",
-    "historical_map",
-    "flowchart",
-    "logic_grid",
-    "stroke_order",
-    "diagram_layers"
-  ],
-  "courses": [
+ "_readme": [
+  "แผนที่หัวข้อการเรียนรู้ — ใช้เป็นด่านตรวจความครอบคลุมใน tools/validate.py",
+  "หนึ่ง record ต่อหนึ่งตัวชี้วัด · subtopics ใช้ตรวจให้ละเอียดกว่าระดับตัวชี้วัด",
+  "status: active = ต้องมีข้อสอบแล้ว (ไม่มี = build ไม่ผ่าน) · planned = ยังไม่มี รอเฟสถัดไป",
+  "needs_svg เป็นค่าตั้งต้นระดับหัวข้อ ข้อแต่ละข้อกำหนดเองได้ · needs_svg true ต้องมี svg_type",
+  "วิชาที่ยังไม่มีในคลังอยู่ใน planned_courses — ไม่ใส่ตัวชี้วัดไว้ล่วงหน้า",
+  "เพราะต้องเทียบหลักสูตรจริงตอนลงมือทำ ไม่ใช่เดาไว้ก่อน (ดู docs/roadmap.md)",
+  "ตั้งต้นด้วยการอ่านตัวชี้วัดจากคลังที่มีอยู่ จากนั้นดูแลด้วยมือ — เพิ่มหัวข้อใหม่ได้เลย",
+  "วิทย์ ม.3 มีตัวชี้วัด 59 ตัว แต่ 9 ตัวเป็นสาระ 4 เทคโนโลยี (ว 4.1/ว 4.2) ซึ่งแยกสอนเป็นวิชาต่างหาก จึงอยู่ใน planned_courses",
+  "needs_svg ของวิทย์ ม.3 ตั้งรายตัวชี้วัดจากข้อความตัวชี้วัดจริง ส่วน ม.1/ม.2 ยังตั้งรายหน่วยไว้ก่อน รอเทียบข้อความตัวชี้วัดของสองชั้นนั้น",
+  "ชีววิทยา (ว 1.1 · ว 1.2 · ว 1.3) ตั้ง needs_svg เป็น false ทั้งสาระ — โครงสร้างของสิ่งมีชีวิตวาดด้วย SVG แล้วไม่เหมือนของจริง จึงไม่นับเป็นงานค้าง (ตาราง/ผังลำดับที่ไม่ได้วาดของจริงยังใช้ได้)",
+  "ตัวชี้วัด ป.5/ป.6 และเทคโนโลยี ม.3 บันทึกจากเอกสารสำนักวิชาการและมาตรฐานการศึกษา สพฐ. ฉบับปรับปรุง 2560 · ฟิลด์ indicator เก็บข้อความเต็มแบบคัดลอกตรงตัว เพราะ needs_svg ตัดสินจากคำกริยาในตัวชี้วัด · ระดับประถมไม่มี ว 4.1 เลย (เริ่มมีตั้งแต่ ม.1) และ ค 1.3 กับ ค 3.2 ก็ไม่มีในประถมทุกชั้น"
+ ],
+ "svg_types": [
+  "geometry_figure",
+  "spatial_figure",
+  "coordinate_plane",
+  "graph",
+  "number_line",
+  "bar_chart",
+  "pie_chart",
+  "histogram",
+  "box_plot",
+  "fraction_model",
+  "pattern_figure",
+  "cell_diagram",
+  "body_system",
+  "life_cycle",
+  "plant_diagram",
+  "food_web",
+  "punnett_square",
+  "particle_model",
+  "atomic_model",
+  "apparatus",
+  "circuit_diagram",
+  "force_diagram",
+  "ray_diagram",
+  "wave",
+  "moon_phase",
+  "rock_cycle",
+  "solar_system",
+  "weather_map",
+  "celestial_sphere",
+  "map",
+  "timeline",
+  "historical_map",
+  "flowchart",
+  "logic_grid",
+  "stroke_order",
+  "diagram_layers"
+ ],
+ "courses": [
+  {
+   "slug": "math-m1",
+   "subject": "คณิตศาสตร์",
+   "grade": "ม.1",
+   "status": "active",
+   "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560)",
+   "topics": [
     {
-      "slug": "math-m1",
-      "subject": "คณิตศาสตร์",
-      "grade": "ม.1",
-      "status": "active",
-      "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560)",
-      "topics": [
-        {
-          "id": "MATH-M1-NUM-001",
-          "std": "ค 1.1 ม.1/1",
-          "strand": "จำนวนและพีชคณิต",
-          "topic": "จำนวนเต็ม เศษส่วน และทศนิยม",
-          "needs_svg": true,
-          "svg_type": "number_line",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M1-NUM-002",
-          "std": "ค 1.1 ม.1/2",
-          "strand": "จำนวนและพีชคณิต",
-          "topic": "เลขยกกำลัง",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "MATH-M1-NUM-003",
-          "std": "ค 1.1 ม.1/3",
-          "strand": "จำนวนและพีชคณิต",
-          "topic": "อัตราส่วน สัดส่วน และร้อยละ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "MATH-M1-NUM-004",
-          "std": "ค 1.3 ม.1/1",
-          "strand": "จำนวนและพีชคณิต",
-          "topic": "สมการเชิงเส้นตัวแปรเดียว",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "MATH-M1-NUM-005",
-          "std": "ค 1.3 ม.1/2",
-          "strand": "จำนวนและพีชคณิต",
-          "topic": "กราฟและความสัมพันธ์เชิงเส้น",
-          "needs_svg": true,
-          "svg_type": "coordinate_plane",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M1-NUM-006",
-          "std": "ค 1.3 ม.1/3",
-          "strand": "จำนวนและพีชคณิต",
-          "topic": "กราฟและความสัมพันธ์เชิงเส้น",
-          "needs_svg": true,
-          "svg_type": "coordinate_plane",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M1-GEO-001",
-          "std": "ค 2.2 ม.1/1",
-          "strand": "การวัดและเรขาคณิต",
-          "topic": "การสร้างทางเรขาคณิต",
-          "needs_svg": true,
-          "svg_type": "geometry_figure",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M1-GEO-002",
-          "std": "ค 2.2 ม.1/2",
-          "strand": "การวัดและเรขาคณิต",
-          "topic": "รูปเรขาคณิตสองมิติและสามมิติ",
-          "needs_svg": true,
-          "svg_type": "spatial_figure",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M1-STA-001",
-          "std": "ค 3.1 ม.1/1",
-          "strand": "สถิติและความน่าจะเป็น",
-          "topic": "สถิติเบื้องต้น",
-          "needs_svg": true,
-          "svg_type": "bar_chart",
-          "status": "active"
-        }
-      ]
+     "id": "MATH-M1-NUM-001",
+     "std": "ค 1.1 ม.1/1",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "จำนวนเต็ม เศษส่วน และทศนิยม",
+     "needs_svg": true,
+     "svg_type": "number_line",
+     "status": "active"
     },
     {
-      "slug": "science-m1",
-      "subject": "วิทยาศาสตร์",
-      "grade": "ม.1",
-      "status": "active",
-      "source": "ตัวชี้วัดและสาระการเรียนรู้แกนกลาง กลุ่มสาระการเรียนรู้วิทยาศาสตร์ (ฉบับปรับปรุง พ.ศ. 2560) — สพฐ./สสวท. · needs_svg ตั้งจากถ้อยคำในตัวชี้วัดรายตัว (เขียนแผนภาพ/เขียนกราฟ/แบบจำลอง)",
-      "topics": [
-        {
-          "id": "SCI-M1-BIO-001",
-          "std": "ว 1.2 ม.1/1",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "หน่วยพื้นฐานของสิ่งมีชีวิต",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-BIO-002",
-          "std": "ว 1.2 ม.1/2",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "หน่วยพื้นฐานของสิ่งมีชีวิต",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-BIO-003",
-          "std": "ว 1.2 ม.1/3",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "หน่วยพื้นฐานของสิ่งมีชีวิต",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-BIO-004",
-          "std": "ว 1.2 ม.1/4",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "หน่วยพื้นฐานของสิ่งมีชีวิต",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-BIO-005",
-          "std": "ว 1.2 ม.1/5",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "หน่วยพื้นฐานของสิ่งมีชีวิต",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-BIO-006",
-          "std": "ว 1.2 ม.1/6",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-BIO-007",
-          "std": "ว 1.2 ม.1/7",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-BIO-008",
-          "std": "ว 1.2 ม.1/8",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-BIO-009",
-          "std": "ว 1.2 ม.1/9",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-BIO-010",
-          "std": "ว 1.2 ม.1/10",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-BIO-011",
-          "std": "ว 1.2 ม.1/11",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-BIO-012",
-          "std": "ว 1.2 ม.1/12",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-BIO-013",
-          "std": "ว 1.2 ม.1/13",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-BIO-014",
-          "std": "ว 1.2 ม.1/14",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-BIO-015",
-          "std": "ว 1.2 ม.1/15",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-BIO-016",
-          "std": "ว 1.2 ม.1/16",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-BIO-017",
-          "std": "ว 1.2 ม.1/17",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "การดำรงชีวิตของพืช",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-BIO-018",
-          "std": "ว 1.2 ม.1/18",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "การขยายพันธุ์พืช",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-001",
-          "std": "ว 2.1 ม.1/1",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "สารรอบตัว",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-002",
-          "std": "ว 2.1 ม.1/2",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "สารรอบตัว",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-003",
-          "std": "ว 2.1 ม.1/3",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "สารรอบตัว",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-004",
-          "std": "ว 2.1 ม.1/4",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "สารรอบตัว",
-          "needs_svg": true,
-          "svg_type": "graph",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-005",
-          "std": "ว 2.1 ม.1/5",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "สารรอบตัว",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-006",
-          "std": "ว 2.1 ม.1/6",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "สารรอบตัว",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-007",
-          "std": "ว 2.1 ม.1/7",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "สารรอบตัว",
-          "needs_svg": true,
-          "svg_type": "atomic_model",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-008",
-          "std": "ว 2.1 ม.1/8",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "สารรอบตัว",
-          "needs_svg": true,
-          "svg_type": "atomic_model",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-009",
-          "std": "ว 2.1 ม.1/9",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "สารรอบตัว",
-          "needs_svg": true,
-          "svg_type": "particle_model",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-017",
-          "std": "ว 2.1 ม.1/10",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "ความร้อนกับการเปลี่ยนสถานะของสสาร",
-          "needs_svg": true,
-          "svg_type": "particle_model",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-018",
-          "std": "ว 2.2 ม.1/1",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "ความดันอากาศกับความสูงจากพื้นโลก",
-          "needs_svg": true,
-          "svg_type": "graph",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-010",
-          "std": "ว 2.3 ม.1/1",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "พลังงานความร้อน",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-011",
-          "std": "ว 2.3 ม.1/2",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "พลังงานความร้อน",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-012",
-          "std": "ว 2.3 ม.1/3",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "พลังงานความร้อน",
-          "needs_svg": true,
-          "svg_type": "particle_model",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-013",
-          "std": "ว 2.3 ม.1/4",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "พลังงานความร้อน",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-014",
-          "std": "ว 2.3 ม.1/5",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "พลังงานความร้อน",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-015",
-          "std": "ว 2.3 ม.1/6",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "พลังงานความร้อน",
-          "needs_svg": true,
-          "svg_type": "apparatus",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-PHY-016",
-          "std": "ว 2.3 ม.1/7",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "พลังงานความร้อน",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-EAR-001",
-          "std": "ว 3.2 ม.1/1",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "บรรยากาศและลมฟ้าอากาศ",
-          "needs_svg": true,
-          "svg_type": "diagram_layers",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-EAR-002",
-          "std": "ว 3.2 ม.1/2",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "บรรยากาศและลมฟ้าอากาศ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-EAR-003",
-          "std": "ว 3.2 ม.1/3",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "บรรยากาศและลมฟ้าอากาศ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-EAR-004",
-          "std": "ว 3.2 ม.1/4",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "บรรยากาศและลมฟ้าอากาศ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-EAR-005",
-          "std": "ว 3.2 ม.1/5",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "บรรยากาศและลมฟ้าอากาศ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-EAR-006",
-          "std": "ว 3.2 ม.1/6",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "บรรยากาศและลมฟ้าอากาศ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M1-EAR-007",
-          "std": "ว 3.2 ม.1/7",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "บรรยากาศและลมฟ้าอากาศ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        }
-      ]
+     "id": "MATH-M1-NUM-002",
+     "std": "ค 1.1 ม.1/2",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "เลขยกกำลัง",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
     },
     {
-      "slug": "science-m2",
-      "subject": "วิทยาศาสตร์",
-      "grade": "ม.2",
-      "status": "active",
-      "source": "ตัวชี้วัดและสาระการเรียนรู้แกนกลาง กลุ่มสาระการเรียนรู้วิทยาศาสตร์ (ฉบับปรับปรุง พ.ศ. 2560) — สพฐ./สสวท. · needs_svg ตั้งจากถ้อยคำในตัวชี้วัดรายตัว (เขียนแผนภาพ/เขียนกราฟ/แบบจำลอง)",
-      "topics": [
-        {
-          "id": "SCI-M2-BIO-001",
-          "std": "ว 1.2 ม.2/1",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบหายใจและระบบขับถ่าย",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-BIO-002",
-          "std": "ว 1.2 ม.2/2",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบหายใจและระบบขับถ่าย",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-BIO-003",
-          "std": "ว 1.2 ม.2/3",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบหายใจและระบบขับถ่าย",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-BIO-004",
-          "std": "ว 1.2 ม.2/4",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบหายใจและระบบขับถ่าย",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-BIO-005",
-          "std": "ว 1.2 ม.2/5",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบหายใจและระบบขับถ่าย",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-BIO-006",
-          "std": "ว 1.2 ม.2/6",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบหมุนเวียนเลือด",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-BIO-007",
-          "std": "ว 1.2 ม.2/7",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบหมุนเวียนเลือด",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-BIO-008",
-          "std": "ว 1.2 ม.2/8",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบหมุนเวียนเลือด",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-BIO-009",
-          "std": "ว 1.2 ม.2/9",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบหมุนเวียนเลือด",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-BIO-010",
-          "std": "ว 1.2 ม.2/10",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบประสาทและระบบสืบพันธุ์",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-BIO-011",
-          "std": "ว 1.2 ม.2/11",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบประสาทและระบบสืบพันธุ์",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-BIO-012",
-          "std": "ว 1.2 ม.2/12",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบประสาทและระบบสืบพันธุ์",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-BIO-013",
-          "std": "ว 1.2 ม.2/13",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบประสาทและระบบสืบพันธุ์",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-BIO-014",
-          "std": "ว 1.2 ม.2/14",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบประสาทและระบบสืบพันธุ์",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-BIO-015",
-          "std": "ว 1.2 ม.2/15",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบประสาทและระบบสืบพันธุ์",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-BIO-016",
-          "std": "ว 1.2 ม.2/16",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบประสาทและระบบสืบพันธุ์",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-BIO-017",
-          "std": "ว 1.2 ม.2/17",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบประสาทและระบบสืบพันธุ์",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-001",
-          "std": "ว 2.1 ม.2/1",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "การแยกสารและสารละลาย",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-002",
-          "std": "ว 2.1 ม.2/2",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "การแยกสารและสารละลาย",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-003",
-          "std": "ว 2.1 ม.2/3",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "การแยกสารและสารละลาย",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-004",
-          "std": "ว 2.1 ม.2/4",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "การแยกสารและสารละลาย",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-005",
-          "std": "ว 2.1 ม.2/5",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "การแยกสารและสารละลาย",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-006",
-          "std": "ว 2.1 ม.2/6",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "การแยกสารและสารละลาย",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-007",
-          "std": "ว 2.2 ม.2/1",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-008",
-          "std": "ว 2.2 ม.2/2",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": true,
-          "svg_type": "force_diagram",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-009",
-          "std": "ว 2.2 ม.2/3",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-010",
-          "std": "ว 2.2 ม.2/4",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-011",
-          "std": "ว 2.2 ม.2/5",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": true,
-          "svg_type": "force_diagram",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-012",
-          "std": "ว 2.2 ม.2/6",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-013",
-          "std": "ว 2.2 ม.2/7",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-014",
-          "std": "ว 2.2 ม.2/8",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": true,
-          "svg_type": "force_diagram",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-015",
-          "std": "ว 2.2 ม.2/9",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-016",
-          "std": "ว 2.2 ม.2/10",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-017",
-          "std": "ว 2.2 ม.2/11",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-018",
-          "std": "ว 2.2 ม.2/12",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": true,
-          "svg_type": "force_diagram",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-019",
-          "std": "ว 2.2 ม.2/13",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-020",
-          "std": "ว 2.2 ม.2/14",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-021",
-          "std": "ว 2.2 ม.2/15",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แรงและการเคลื่อนที่",
-          "needs_svg": true,
-          "svg_type": "force_diagram",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-022",
-          "std": "ว 2.3 ม.2/1",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แสงและการมองเห็น",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-023",
-          "std": "ว 2.3 ม.2/2",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แสงและการมองเห็น",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-024",
-          "std": "ว 2.3 ม.2/3",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แสงและการมองเห็น",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-025",
-          "std": "ว 2.3 ม.2/4",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แสงและการมองเห็น",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-026",
-          "std": "ว 2.3 ม.2/5",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แสงและการมองเห็น",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-PHY-027",
-          "std": "ว 2.3 ม.2/6",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แสงและการมองเห็น",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-EAR-001",
-          "std": "ว 3.2 ม.2/1",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "โลกและการเปลี่ยนแปลง",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-EAR-002",
-          "std": "ว 3.2 ม.2/2",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "โลกและการเปลี่ยนแปลง",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-EAR-003",
-          "std": "ว 3.2 ม.2/3",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "โลกและการเปลี่ยนแปลง",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-EAR-004",
-          "std": "ว 3.2 ม.2/4",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "โลกและการเปลี่ยนแปลง",
-          "needs_svg": true,
-          "svg_type": "diagram_layers",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-EAR-005",
-          "std": "ว 3.2 ม.2/5",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "โลกและการเปลี่ยนแปลง",
-          "needs_svg": true,
-          "svg_type": "rock_cycle",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-EAR-006",
-          "std": "ว 3.2 ม.2/6",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "โลกและการเปลี่ยนแปลง",
-          "needs_svg": true,
-          "svg_type": "diagram_layers",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-EAR-007",
-          "std": "ว 3.2 ม.2/7",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "โลกและการเปลี่ยนแปลง",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-EAR-008",
-          "std": "ว 3.2 ม.2/8",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "โลกและการเปลี่ยนแปลง",
-          "needs_svg": true,
-          "svg_type": "diagram_layers",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-EAR-009",
-          "std": "ว 3.2 ม.2/9",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "โลกและการเปลี่ยนแปลง",
-          "needs_svg": true,
-          "svg_type": "flowchart",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M2-EAR-010",
-          "std": "ว 3.2 ม.2/10",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "โลกและการเปลี่ยนแปลง",
-          "needs_svg": true,
-          "svg_type": "diagram_layers",
-          "status": "active"
-        }
-      ]
+     "id": "MATH-M1-NUM-003",
+     "std": "ค 1.1 ม.1/3",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "อัตราส่วน สัดส่วน และร้อยละ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
     },
     {
-      "slug": "math-m2",
-      "subject": "คณิตศาสตร์",
-      "grade": "ม.2",
-      "status": "active",
-      "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560)",
-      "topics": [
-        {
-          "id": "MATH-M2-NUM-001",
-          "std": "ค 1.1 ม.2/1",
-          "strand": "จำนวนและพีชคณิต",
-          "topic": "สมบัติของเลขยกกำลัง",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "MATH-M2-NUM-002",
-          "std": "ค 1.1 ม.2/2",
-          "strand": "จำนวนและพีชคณิต",
-          "topic": "ความรู้เบื้องต้นเกี่ยวกับจำนวนจริง",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "MATH-M2-NUM-003",
-          "std": "ค 1.2 ม.2/1",
-          "strand": "จำนวนและพีชคณิต",
-          "topic": "พหุนาม",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "MATH-M2-NUM-004",
-          "std": "ค 1.2 ม.2/2",
-          "strand": "จำนวนและพีชคณิต",
-          "topic": "การแยกตัวประกอบของพหุนามดีกรีสอง",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "MATH-M2-GEO-001",
-          "std": "ค 2.1 ม.2/1",
-          "strand": "การวัดและเรขาคณิต",
-          "topic": "ปริซึมและทรงกระบอก",
-          "needs_svg": true,
-          "svg_type": "geometry_figure",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M2-GEO-002",
-          "std": "ค 2.1 ม.2/2",
-          "strand": "การวัดและเรขาคณิต",
-          "topic": "ปริซึมและทรงกระบอก",
-          "needs_svg": true,
-          "svg_type": "geometry_figure",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M2-GEO-003",
-          "std": "ค 2.2 ม.2/1",
-          "strand": "การวัดและเรขาคณิต",
-          "topic": "การสร้างทางเรขาคณิต",
-          "needs_svg": true,
-          "svg_type": "geometry_figure",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M2-GEO-004",
-          "std": "ค 2.2 ม.2/2",
-          "strand": "การวัดและเรขาคณิต",
-          "topic": "เส้นขนาน",
-          "needs_svg": true,
-          "svg_type": "geometry_figure",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M2-GEO-005",
-          "std": "ค 2.2 ม.2/3",
-          "strand": "การวัดและเรขาคณิต",
-          "topic": "การแปลงทางเรขาคณิต",
-          "needs_svg": true,
-          "svg_type": "coordinate_plane",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M2-GEO-006",
-          "std": "ค 2.2 ม.2/4",
-          "strand": "การวัดและเรขาคณิต",
-          "topic": "ความเท่ากันทุกประการ",
-          "needs_svg": true,
-          "svg_type": "geometry_figure",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M2-GEO-007",
-          "std": "ค 2.2 ม.2/5",
-          "strand": "การวัดและเรขาคณิต",
-          "topic": "ทฤษฎีบทพีทาโกรัส",
-          "needs_svg": true,
-          "svg_type": "geometry_figure",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M2-STA-001",
-          "std": "ค 3.1 ม.2/1",
-          "strand": "สถิติและความน่าจะเป็น",
-          "topic": "สถิติและการวิเคราะห์ข้อมูล",
-          "needs_svg": true,
-          "svg_type": "histogram",
-          "status": "active"
-        }
-      ]
+     "id": "MATH-M1-NUM-004",
+     "std": "ค 1.3 ม.1/1",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "สมการเชิงเส้นตัวแปรเดียว",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
     },
     {
-      "slug": "math-m3",
-      "subject": "คณิตศาสตร์",
-      "grade": "ม.3",
-      "status": "active",
-      "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560)",
-      "topics": [
-        {
-          "id": "MATH-M3-NUM-001",
-          "std": "ค 1.2 ม.3/1",
-          "strand": "จำนวนและพีชคณิต",
-          "topic": "การแยกตัวประกอบของพหุนามดีกรีสูงกว่าสอง",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "MATH-M3-NUM-002",
-          "std": "ค 1.2 ม.3/2",
-          "strand": "จำนวนและพีชคณิต",
-          "topic": "กราฟของฟังก์ชันกำลังสอง",
-          "needs_svg": true,
-          "svg_type": "graph",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M3-NUM-003",
-          "std": "ค 1.3 ม.3/1",
-          "strand": "จำนวนและพีชคณิต",
-          "topic": "อสมการเชิงเส้นตัวแปรเดียว",
-          "needs_svg": true,
-          "svg_type": "number_line",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M3-NUM-004",
-          "std": "ค 1.3 ม.3/2",
-          "strand": "จำนวนและพีชคณิต",
-          "topic": "สมการกำลังสองตัวแปรเดียว",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "MATH-M3-NUM-005",
-          "std": "ค 1.3 ม.3/3",
-          "strand": "จำนวนและพีชคณิต",
-          "topic": "ระบบสมการเชิงเส้นสองตัวแปร",
-          "needs_svg": true,
-          "svg_type": "coordinate_plane",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M3-GEO-001",
-          "std": "ค 2.1 ม.3/1",
-          "strand": "การวัดและเรขาคณิต",
-          "topic": "พีระมิด กรวย และทรงกลม",
-          "needs_svg": true,
-          "svg_type": "geometry_figure",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M3-GEO-002",
-          "std": "ค 2.1 ม.3/2",
-          "strand": "การวัดและเรขาคณิต",
-          "topic": "พีระมิด กรวย และทรงกลม",
-          "needs_svg": true,
-          "svg_type": "geometry_figure",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M3-GEO-003",
-          "std": "ค 2.2 ม.3/1",
-          "strand": "การวัดและเรขาคณิต",
-          "topic": "ความคล้าย",
-          "needs_svg": true,
-          "svg_type": "geometry_figure",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M3-GEO-004",
-          "std": "ค 2.2 ม.3/2",
-          "strand": "การวัดและเรขาคณิต",
-          "topic": "อัตราส่วนตรีโกณมิติ",
-          "needs_svg": true,
-          "svg_type": "geometry_figure",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M3-GEO-005",
-          "std": "ค 2.2 ม.3/3",
-          "strand": "การวัดและเรขาคณิต",
-          "topic": "วงกลม",
-          "needs_svg": true,
-          "svg_type": "geometry_figure",
-          "status": "active"
-        },
-        {
-          "id": "MATH-M3-STA-001",
-          "std": "ค 3.1 ม.3/1",
-          "strand": "สถิติและความน่าจะเป็น",
-          "topic": "สถิติและการวิเคราะห์ข้อมูล",
-          "needs_svg": true,
-          "svg_type": "box_plot",
-          "status": "active",
-          "subtopics": [
-            {
-              "name": "ค่ากลาง (ค่าเฉลี่ย มัธยฐาน ฐานนิยม)",
-              "match": [
-                "ค่าเฉลี่ย",
-                "มัธยฐาน",
-                "ฐานนิยม"
-              ],
-              "status": "active"
-            },
-            {
-              "name": "พิสัยและควอร์ไทล์",
-              "match": [
-                "พิสัย",
-                "ควอร์ไทล์"
-              ],
-              "status": "active"
-            },
-            {
-              "name": "แผนภาพกล่อง",
-              "match": [
-                "แผนภาพกล่อง"
-              ],
-              "status": "active"
-            },
-            {
-              "name": "เปอร์เซ็นไทล์",
-              "match": [
-                "เปอร์เซ็นไทล์"
-              ],
-              "status": "active"
-            },
-            {
-              "name": "ค่านอกเกณฑ์",
-              "match": [
-                "ค่านอกเกณฑ์",
-                "นอกเกณฑ์"
-              ],
-              "status": "active"
-            }
-          ]
-        },
-        {
-          "id": "MATH-M3-STA-002",
-          "std": "ค 3.2 ม.3/1",
-          "strand": "สถิติและความน่าจะเป็น",
-          "topic": "ความน่าจะเป็น",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        }
-      ]
+     "id": "MATH-M1-NUM-005",
+     "std": "ค 1.3 ม.1/2",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "กราฟและความสัมพันธ์เชิงเส้น",
+     "needs_svg": true,
+     "svg_type": "coordinate_plane",
+     "status": "active"
     },
     {
-      "slug": "science-m3",
-      "subject": "วิทยาศาสตร์",
-      "grade": "ม.3",
-      "status": "active",
-      "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560)",
-      "topics": [
-        {
-          "id": "SCI-M3-BIO-001",
-          "std": "ว 1.1 ม.3/1",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบนิเวศ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-BIO-002",
-          "std": "ว 1.1 ม.3/2",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบนิเวศ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-BIO-003",
-          "std": "ว 1.1 ม.3/3",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบนิเวศ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-BIO-004",
-          "std": "ว 1.1 ม.3/4",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบนิเวศ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-BIO-005",
-          "std": "ว 1.1 ม.3/5",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบนิเวศ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-BIO-006",
-          "std": "ว 1.1 ม.3/6",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "ระบบนิเวศ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-BIO-007",
-          "std": "ว 1.3 ม.3/1",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-BIO-008",
-          "std": "ว 1.3 ม.3/2",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-BIO-009",
-          "std": "ว 1.3 ม.3/3",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-BIO-010",
-          "std": "ว 1.3 ม.3/4",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-BIO-011",
-          "std": "ว 1.3 ม.3/5",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-BIO-012",
-          "std": "ว 1.3 ม.3/6",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-BIO-013",
-          "std": "ว 1.3 ม.3/7",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-BIO-014",
-          "std": "ว 1.3 ม.3/8",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-BIO-015",
-          "std": "ว 1.3 ม.3/9",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-BIO-016",
-          "std": "ว 1.3 ม.3/10",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-BIO-017",
-          "std": "ว 1.3 ม.3/11",
-          "strand": "วิทยาศาสตร์ชีวภาพ",
-          "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-001",
-          "std": "ว 2.1 ม.3/1",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "วัสดุและปฏิกิริยาเคมี",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-002",
-          "std": "ว 2.1 ม.3/2",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "วัสดุและปฏิกิริยาเคมี",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-003",
-          "std": "ว 2.1 ม.3/3",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "วัสดุและปฏิกิริยาเคมี",
-          "needs_svg": true,
-          "svg_type": "particle_model",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-004",
-          "std": "ว 2.1 ม.3/4",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "วัสดุและปฏิกิริยาเคมี",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-005",
-          "std": "ว 2.1 ม.3/5",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "วัสดุและปฏิกิริยาเคมี",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-006",
-          "std": "ว 2.1 ม.3/6",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "วัสดุและปฏิกิริยาเคมี",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-007",
-          "std": "ว 2.1 ม.3/7",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "วัสดุและปฏิกิริยาเคมี",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-008",
-          "std": "ว 2.1 ม.3/8",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "วัสดุและปฏิกิริยาเคมี",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-009",
-          "std": "ว 2.3 ม.3/1",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
-          "needs_svg": true,
-          "svg_type": "circuit_diagram",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-010",
-          "std": "ว 2.3 ม.3/2",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
-          "needs_svg": true,
-          "svg_type": "graph",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-011",
-          "std": "ว 2.3 ม.3/3",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
-          "needs_svg": true,
-          "svg_type": "circuit_diagram",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-012",
-          "std": "ว 2.3 ม.3/4",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
-          "needs_svg": true,
-          "svg_type": "circuit_diagram",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-013",
-          "std": "ว 2.3 ม.3/5",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
-          "needs_svg": true,
-          "svg_type": "circuit_diagram",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-014",
-          "std": "ว 2.3 ม.3/6",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
-          "needs_svg": true,
-          "svg_type": "circuit_diagram",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-015",
-          "std": "ว 2.3 ม.3/7",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
-          "needs_svg": true,
-          "svg_type": "circuit_diagram",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-016",
-          "std": "ว 2.3 ม.3/8",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-017",
-          "std": "ว 2.3 ม.3/9",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-018",
-          "std": "ว 2.3 ม.3/10",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "คลื่นและคลื่นแม่เหล็กไฟฟ้า",
-          "needs_svg": true,
-          "svg_type": "wave",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-019",
-          "std": "ว 2.3 ม.3/11",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "คลื่นและคลื่นแม่เหล็กไฟฟ้า",
-          "needs_svg": true,
-          "svg_type": "wave",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-020",
-          "std": "ว 2.3 ม.3/12",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "คลื่นและคลื่นแม่เหล็กไฟฟ้า",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-021",
-          "std": "ว 2.3 ม.3/13",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แสงและทัศนอุปกรณ์",
-          "needs_svg": true,
-          "svg_type": "ray_diagram",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-022",
-          "std": "ว 2.3 ม.3/14",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แสงและทัศนอุปกรณ์",
-          "needs_svg": true,
-          "svg_type": "ray_diagram",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-023",
-          "std": "ว 2.3 ม.3/15",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แสงและทัศนอุปกรณ์",
-          "needs_svg": true,
-          "svg_type": "ray_diagram",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-024",
-          "std": "ว 2.3 ม.3/16",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แสงและทัศนอุปกรณ์",
-          "needs_svg": true,
-          "svg_type": "ray_diagram",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-025",
-          "std": "ว 2.3 ม.3/17",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แสงและทัศนอุปกรณ์",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-026",
-          "std": "ว 2.3 ม.3/18",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แสงและทัศนอุปกรณ์",
-          "needs_svg": true,
-          "svg_type": "ray_diagram",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-027",
-          "std": "ว 2.3 ม.3/19",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แสงและทัศนอุปกรณ์",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-028",
-          "std": "ว 2.3 ม.3/20",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แสงและทัศนอุปกรณ์",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-PHY-029",
-          "std": "ว 2.3 ม.3/21",
-          "strand": "วิทยาศาสตร์กายภาพ",
-          "topic": "แสงและทัศนอุปกรณ์",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-EAR-001",
-          "std": "ว 3.1 ม.3/1",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "ระบบสุริยะและเทคโนโลยีอวกาศ",
-          "needs_svg": true,
-          "svg_type": "solar_system",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-EAR-002",
-          "std": "ว 3.1 ม.3/2",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "ระบบสุริยะและเทคโนโลยีอวกาศ",
-          "needs_svg": true,
-          "svg_type": "moon_phase",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-EAR-003",
-          "std": "ว 3.1 ม.3/3",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "ระบบสุริยะและเทคโนโลยีอวกาศ",
-          "needs_svg": true,
-          "svg_type": "moon_phase",
-          "status": "active"
-        },
-        {
-          "id": "SCI-M3-EAR-004",
-          "std": "ว 3.1 ม.3/4",
-          "strand": "วิทยาศาสตร์โลกและอวกาศ",
-          "topic": "ระบบสุริยะและเทคโนโลยีอวกาศ",
-          "needs_svg": false,
-          "svg_type": null,
-          "status": "active"
-        }
-      ]
+     "id": "MATH-M1-NUM-006",
+     "std": "ค 1.3 ม.1/3",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "กราฟและความสัมพันธ์เชิงเส้น",
+     "needs_svg": true,
+     "svg_type": "coordinate_plane",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M1-GEO-001",
+     "std": "ค 2.2 ม.1/1",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "การสร้างทางเรขาคณิต",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M1-GEO-002",
+     "std": "ค 2.2 ม.1/2",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "รูปเรขาคณิตสองมิติและสามมิติ",
+     "needs_svg": true,
+     "svg_type": "spatial_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M1-STA-001",
+     "std": "ค 3.1 ม.1/1",
+     "strand": "สถิติและความน่าจะเป็น",
+     "topic": "สถิติเบื้องต้น",
+     "needs_svg": true,
+     "svg_type": "bar_chart",
+     "status": "active"
     }
-  ],
-  "planned_courses": [
+   ]
+  },
+  {
+   "slug": "science-m1",
+   "subject": "วิทยาศาสตร์",
+   "grade": "ม.1",
+   "status": "active",
+   "source": "ตัวชี้วัดและสาระการเรียนรู้แกนกลาง กลุ่มสาระการเรียนรู้วิทยาศาสตร์ (ฉบับปรับปรุง พ.ศ. 2560) — สพฐ./สสวท. · needs_svg ตั้งจากถ้อยคำในตัวชี้วัดรายตัว (เขียนแผนภาพ/เขียนกราฟ/แบบจำลอง)",
+   "topics": [
     {
-      "subject": "เทคโนโลยี",
-      "grade": "ม.3",
-      "phase": 5
+     "id": "SCI-M1-BIO-001",
+     "std": "ว 1.2 ม.1/1",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "หน่วยพื้นฐานของสิ่งมีชีวิต",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
     },
     {
-      "subject": "คณิตศาสตร์",
-      "grade": "ป.6",
-      "phase": 4
+     "id": "SCI-M1-BIO-002",
+     "std": "ว 1.2 ม.1/2",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "หน่วยพื้นฐานของสิ่งมีชีวิต",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
     },
     {
-      "subject": "วิทยาศาสตร์",
-      "grade": "ป.6",
-      "phase": 4
+     "id": "SCI-M1-BIO-003",
+     "std": "ว 1.2 ม.1/3",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "หน่วยพื้นฐานของสิ่งมีชีวิต",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
     },
     {
-      "subject": "คณิตศาสตร์",
-      "grade": "ป.5",
-      "phase": 4
+     "id": "SCI-M1-BIO-004",
+     "std": "ว 1.2 ม.1/4",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "หน่วยพื้นฐานของสิ่งมีชีวิต",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
     },
     {
-      "subject": "วิทยาศาสตร์",
-      "grade": "ป.5",
-      "phase": 4
+     "id": "SCI-M1-BIO-005",
+     "std": "ว 1.2 ม.1/5",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "หน่วยพื้นฐานของสิ่งมีชีวิต",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
     },
     {
-      "subject": "เชาวน์และมิติสัมพันธ์",
-      "grade": "ม.1",
-      "phase": 5
+     "id": "SCI-M1-BIO-006",
+     "std": "ว 1.2 ม.1/6",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การดำรงชีวิตของพืช",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
     },
     {
-      "subject": "สังคมศึกษา",
-      "grade": "ม.1",
-      "phase": 6
+     "id": "SCI-M1-BIO-007",
+     "std": "ว 1.2 ม.1/7",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การดำรงชีวิตของพืช",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
     },
     {
-      "subject": "ภาษาไทย",
-      "grade": "ม.1",
-      "phase": 6
+     "id": "SCI-M1-BIO-008",
+     "std": "ว 1.2 ม.1/8",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การดำรงชีวิตของพืช",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
     },
     {
-      "subject": "ภาษาอังกฤษ",
-      "grade": "ม.1",
-      "phase": 6
+     "id": "SCI-M1-BIO-009",
+     "std": "ว 1.2 ม.1/9",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การดำรงชีวิตของพืช",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
     },
     {
-      "subject": "ภาษาจีน",
-      "grade": "ม.1",
-      "phase": 6
+     "id": "SCI-M1-BIO-010",
+     "std": "ว 1.2 ม.1/10",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การดำรงชีวิตของพืช",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-BIO-011",
+     "std": "ว 1.2 ม.1/11",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การดำรงชีวิตของพืช",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-BIO-012",
+     "std": "ว 1.2 ม.1/12",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การดำรงชีวิตของพืช",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-BIO-013",
+     "std": "ว 1.2 ม.1/13",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การดำรงชีวิตของพืช",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-BIO-014",
+     "std": "ว 1.2 ม.1/14",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การดำรงชีวิตของพืช",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-BIO-015",
+     "std": "ว 1.2 ม.1/15",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การดำรงชีวิตของพืช",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-BIO-016",
+     "std": "ว 1.2 ม.1/16",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การดำรงชีวิตของพืช",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-BIO-017",
+     "std": "ว 1.2 ม.1/17",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การดำรงชีวิตของพืช",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-BIO-018",
+     "std": "ว 1.2 ม.1/18",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การขยายพันธุ์พืช",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-001",
+     "std": "ว 2.1 ม.1/1",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "สารรอบตัว",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-002",
+     "std": "ว 2.1 ม.1/2",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "สารรอบตัว",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-003",
+     "std": "ว 2.1 ม.1/3",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "สารรอบตัว",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-004",
+     "std": "ว 2.1 ม.1/4",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "สารรอบตัว",
+     "needs_svg": true,
+     "svg_type": "graph",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-005",
+     "std": "ว 2.1 ม.1/5",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "สารรอบตัว",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-006",
+     "std": "ว 2.1 ม.1/6",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "สารรอบตัว",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-007",
+     "std": "ว 2.1 ม.1/7",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "สารรอบตัว",
+     "needs_svg": true,
+     "svg_type": "atomic_model",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-008",
+     "std": "ว 2.1 ม.1/8",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "สารรอบตัว",
+     "needs_svg": true,
+     "svg_type": "atomic_model",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-009",
+     "std": "ว 2.1 ม.1/9",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "สารรอบตัว",
+     "needs_svg": true,
+     "svg_type": "particle_model",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-017",
+     "std": "ว 2.1 ม.1/10",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "ความร้อนกับการเปลี่ยนสถานะของสสาร",
+     "needs_svg": true,
+     "svg_type": "particle_model",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-018",
+     "std": "ว 2.2 ม.1/1",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "ความดันอากาศกับความสูงจากพื้นโลก",
+     "needs_svg": true,
+     "svg_type": "graph",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-010",
+     "std": "ว 2.3 ม.1/1",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "พลังงานความร้อน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-011",
+     "std": "ว 2.3 ม.1/2",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "พลังงานความร้อน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-012",
+     "std": "ว 2.3 ม.1/3",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "พลังงานความร้อน",
+     "needs_svg": true,
+     "svg_type": "particle_model",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-013",
+     "std": "ว 2.3 ม.1/4",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "พลังงานความร้อน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-014",
+     "std": "ว 2.3 ม.1/5",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "พลังงานความร้อน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-015",
+     "std": "ว 2.3 ม.1/6",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "พลังงานความร้อน",
+     "needs_svg": true,
+     "svg_type": "apparatus",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-PHY-016",
+     "std": "ว 2.3 ม.1/7",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "พลังงานความร้อน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-EAR-001",
+     "std": "ว 3.2 ม.1/1",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "บรรยากาศและลมฟ้าอากาศ",
+     "needs_svg": true,
+     "svg_type": "diagram_layers",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-EAR-002",
+     "std": "ว 3.2 ม.1/2",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "บรรยากาศและลมฟ้าอากาศ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-EAR-003",
+     "std": "ว 3.2 ม.1/3",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "บรรยากาศและลมฟ้าอากาศ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-EAR-004",
+     "std": "ว 3.2 ม.1/4",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "บรรยากาศและลมฟ้าอากาศ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-EAR-005",
+     "std": "ว 3.2 ม.1/5",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "บรรยากาศและลมฟ้าอากาศ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-EAR-006",
+     "std": "ว 3.2 ม.1/6",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "บรรยากาศและลมฟ้าอากาศ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M1-EAR-007",
+     "std": "ว 3.2 ม.1/7",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "บรรยากาศและลมฟ้าอากาศ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
     }
-  ]
+   ]
+  },
+  {
+   "slug": "science-m2",
+   "subject": "วิทยาศาสตร์",
+   "grade": "ม.2",
+   "status": "active",
+   "source": "ตัวชี้วัดและสาระการเรียนรู้แกนกลาง กลุ่มสาระการเรียนรู้วิทยาศาสตร์ (ฉบับปรับปรุง พ.ศ. 2560) — สพฐ./สสวท. · needs_svg ตั้งจากถ้อยคำในตัวชี้วัดรายตัว (เขียนแผนภาพ/เขียนกราฟ/แบบจำลอง)",
+   "topics": [
+    {
+     "id": "SCI-M2-BIO-001",
+     "std": "ว 1.2 ม.2/1",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบหายใจและระบบขับถ่าย",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-BIO-002",
+     "std": "ว 1.2 ม.2/2",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบหายใจและระบบขับถ่าย",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-BIO-003",
+     "std": "ว 1.2 ม.2/3",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบหายใจและระบบขับถ่าย",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-BIO-004",
+     "std": "ว 1.2 ม.2/4",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบหายใจและระบบขับถ่าย",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-BIO-005",
+     "std": "ว 1.2 ม.2/5",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบหายใจและระบบขับถ่าย",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-BIO-006",
+     "std": "ว 1.2 ม.2/6",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบหมุนเวียนเลือด",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-BIO-007",
+     "std": "ว 1.2 ม.2/7",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบหมุนเวียนเลือด",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-BIO-008",
+     "std": "ว 1.2 ม.2/8",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบหมุนเวียนเลือด",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-BIO-009",
+     "std": "ว 1.2 ม.2/9",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบหมุนเวียนเลือด",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-BIO-010",
+     "std": "ว 1.2 ม.2/10",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบประสาทและระบบสืบพันธุ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-BIO-011",
+     "std": "ว 1.2 ม.2/11",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบประสาทและระบบสืบพันธุ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-BIO-012",
+     "std": "ว 1.2 ม.2/12",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบประสาทและระบบสืบพันธุ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-BIO-013",
+     "std": "ว 1.2 ม.2/13",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบประสาทและระบบสืบพันธุ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-BIO-014",
+     "std": "ว 1.2 ม.2/14",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบประสาทและระบบสืบพันธุ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-BIO-015",
+     "std": "ว 1.2 ม.2/15",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบประสาทและระบบสืบพันธุ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-BIO-016",
+     "std": "ว 1.2 ม.2/16",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบประสาทและระบบสืบพันธุ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-BIO-017",
+     "std": "ว 1.2 ม.2/17",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบประสาทและระบบสืบพันธุ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-001",
+     "std": "ว 2.1 ม.2/1",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "การแยกสารและสารละลาย",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-002",
+     "std": "ว 2.1 ม.2/2",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "การแยกสารและสารละลาย",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-003",
+     "std": "ว 2.1 ม.2/3",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "การแยกสารและสารละลาย",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-004",
+     "std": "ว 2.1 ม.2/4",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "การแยกสารและสารละลาย",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-005",
+     "std": "ว 2.1 ม.2/5",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "การแยกสารและสารละลาย",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-006",
+     "std": "ว 2.1 ม.2/6",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "การแยกสารและสารละลาย",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-007",
+     "std": "ว 2.2 ม.2/1",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงและการเคลื่อนที่",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-008",
+     "std": "ว 2.2 ม.2/2",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงและการเคลื่อนที่",
+     "needs_svg": true,
+     "svg_type": "force_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-009",
+     "std": "ว 2.2 ม.2/3",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงและการเคลื่อนที่",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-010",
+     "std": "ว 2.2 ม.2/4",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงและการเคลื่อนที่",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-011",
+     "std": "ว 2.2 ม.2/5",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงและการเคลื่อนที่",
+     "needs_svg": true,
+     "svg_type": "force_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-012",
+     "std": "ว 2.2 ม.2/6",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงและการเคลื่อนที่",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-013",
+     "std": "ว 2.2 ม.2/7",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงและการเคลื่อนที่",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-014",
+     "std": "ว 2.2 ม.2/8",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงและการเคลื่อนที่",
+     "needs_svg": true,
+     "svg_type": "force_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-015",
+     "std": "ว 2.2 ม.2/9",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงและการเคลื่อนที่",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-016",
+     "std": "ว 2.2 ม.2/10",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงและการเคลื่อนที่",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-017",
+     "std": "ว 2.2 ม.2/11",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงและการเคลื่อนที่",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-018",
+     "std": "ว 2.2 ม.2/12",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงและการเคลื่อนที่",
+     "needs_svg": true,
+     "svg_type": "force_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-019",
+     "std": "ว 2.2 ม.2/13",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงและการเคลื่อนที่",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-020",
+     "std": "ว 2.2 ม.2/14",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงและการเคลื่อนที่",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-021",
+     "std": "ว 2.2 ม.2/15",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงและการเคลื่อนที่",
+     "needs_svg": true,
+     "svg_type": "force_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-022",
+     "std": "ว 2.3 ม.2/1",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แสงและการมองเห็น",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-023",
+     "std": "ว 2.3 ม.2/2",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แสงและการมองเห็น",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-024",
+     "std": "ว 2.3 ม.2/3",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แสงและการมองเห็น",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-025",
+     "std": "ว 2.3 ม.2/4",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แสงและการมองเห็น",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-026",
+     "std": "ว 2.3 ม.2/5",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แสงและการมองเห็น",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-PHY-027",
+     "std": "ว 2.3 ม.2/6",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แสงและการมองเห็น",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-EAR-001",
+     "std": "ว 3.2 ม.2/1",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "โลกและการเปลี่ยนแปลง",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-EAR-002",
+     "std": "ว 3.2 ม.2/2",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "โลกและการเปลี่ยนแปลง",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-EAR-003",
+     "std": "ว 3.2 ม.2/3",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "โลกและการเปลี่ยนแปลง",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-EAR-004",
+     "std": "ว 3.2 ม.2/4",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "โลกและการเปลี่ยนแปลง",
+     "needs_svg": true,
+     "svg_type": "diagram_layers",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-EAR-005",
+     "std": "ว 3.2 ม.2/5",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "โลกและการเปลี่ยนแปลง",
+     "needs_svg": true,
+     "svg_type": "rock_cycle",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-EAR-006",
+     "std": "ว 3.2 ม.2/6",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "โลกและการเปลี่ยนแปลง",
+     "needs_svg": true,
+     "svg_type": "diagram_layers",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-EAR-007",
+     "std": "ว 3.2 ม.2/7",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "โลกและการเปลี่ยนแปลง",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-EAR-008",
+     "std": "ว 3.2 ม.2/8",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "โลกและการเปลี่ยนแปลง",
+     "needs_svg": true,
+     "svg_type": "diagram_layers",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-EAR-009",
+     "std": "ว 3.2 ม.2/9",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "โลกและการเปลี่ยนแปลง",
+     "needs_svg": true,
+     "svg_type": "flowchart",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M2-EAR-010",
+     "std": "ว 3.2 ม.2/10",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "โลกและการเปลี่ยนแปลง",
+     "needs_svg": true,
+     "svg_type": "diagram_layers",
+     "status": "active"
+    }
+   ]
+  },
+  {
+   "slug": "math-m2",
+   "subject": "คณิตศาสตร์",
+   "grade": "ม.2",
+   "status": "active",
+   "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560)",
+   "topics": [
+    {
+     "id": "MATH-M2-NUM-001",
+     "std": "ค 1.1 ม.2/1",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "สมบัติของเลขยกกำลัง",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-M2-NUM-002",
+     "std": "ค 1.1 ม.2/2",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "ความรู้เบื้องต้นเกี่ยวกับจำนวนจริง",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-M2-NUM-003",
+     "std": "ค 1.2 ม.2/1",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "พหุนาม",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-M2-NUM-004",
+     "std": "ค 1.2 ม.2/2",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "การแยกตัวประกอบของพหุนามดีกรีสอง",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-M2-GEO-001",
+     "std": "ค 2.1 ม.2/1",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "ปริซึมและทรงกระบอก",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M2-GEO-002",
+     "std": "ค 2.1 ม.2/2",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "ปริซึมและทรงกระบอก",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M2-GEO-003",
+     "std": "ค 2.2 ม.2/1",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "การสร้างทางเรขาคณิต",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M2-GEO-004",
+     "std": "ค 2.2 ม.2/2",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "เส้นขนาน",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M2-GEO-005",
+     "std": "ค 2.2 ม.2/3",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "การแปลงทางเรขาคณิต",
+     "needs_svg": true,
+     "svg_type": "coordinate_plane",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M2-GEO-006",
+     "std": "ค 2.2 ม.2/4",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "ความเท่ากันทุกประการ",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M2-GEO-007",
+     "std": "ค 2.2 ม.2/5",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "ทฤษฎีบทพีทาโกรัส",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M2-STA-001",
+     "std": "ค 3.1 ม.2/1",
+     "strand": "สถิติและความน่าจะเป็น",
+     "topic": "สถิติและการวิเคราะห์ข้อมูล",
+     "needs_svg": true,
+     "svg_type": "histogram",
+     "status": "active"
+    }
+   ]
+  },
+  {
+   "slug": "math-m3",
+   "subject": "คณิตศาสตร์",
+   "grade": "ม.3",
+   "status": "active",
+   "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560)",
+   "topics": [
+    {
+     "id": "MATH-M3-NUM-001",
+     "std": "ค 1.2 ม.3/1",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "การแยกตัวประกอบของพหุนามดีกรีสูงกว่าสอง",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-M3-NUM-002",
+     "std": "ค 1.2 ม.3/2",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "กราฟของฟังก์ชันกำลังสอง",
+     "needs_svg": true,
+     "svg_type": "graph",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M3-NUM-003",
+     "std": "ค 1.3 ม.3/1",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "อสมการเชิงเส้นตัวแปรเดียว",
+     "needs_svg": true,
+     "svg_type": "number_line",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M3-NUM-004",
+     "std": "ค 1.3 ม.3/2",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "สมการกำลังสองตัวแปรเดียว",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-M3-NUM-005",
+     "std": "ค 1.3 ม.3/3",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "ระบบสมการเชิงเส้นสองตัวแปร",
+     "needs_svg": true,
+     "svg_type": "coordinate_plane",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M3-GEO-001",
+     "std": "ค 2.1 ม.3/1",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "พีระมิด กรวย และทรงกลม",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M3-GEO-002",
+     "std": "ค 2.1 ม.3/2",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "พีระมิด กรวย และทรงกลม",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M3-GEO-003",
+     "std": "ค 2.2 ม.3/1",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "ความคล้าย",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M3-GEO-004",
+     "std": "ค 2.2 ม.3/2",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "อัตราส่วนตรีโกณมิติ",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M3-GEO-005",
+     "std": "ค 2.2 ม.3/3",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "วงกลม",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-M3-STA-001",
+     "std": "ค 3.1 ม.3/1",
+     "strand": "สถิติและความน่าจะเป็น",
+     "topic": "สถิติและการวิเคราะห์ข้อมูล",
+     "needs_svg": true,
+     "svg_type": "box_plot",
+     "status": "active",
+     "subtopics": [
+      {
+       "name": "ค่ากลาง (ค่าเฉลี่ย มัธยฐาน ฐานนิยม)",
+       "match": [
+        "ค่าเฉลี่ย",
+        "มัธยฐาน",
+        "ฐานนิยม"
+       ],
+       "status": "active"
+      },
+      {
+       "name": "พิสัยและควอร์ไทล์",
+       "match": [
+        "พิสัย",
+        "ควอร์ไทล์"
+       ],
+       "status": "active"
+      },
+      {
+       "name": "แผนภาพกล่อง",
+       "match": [
+        "แผนภาพกล่อง"
+       ],
+       "status": "active"
+      },
+      {
+       "name": "เปอร์เซ็นไทล์",
+       "match": [
+        "เปอร์เซ็นไทล์"
+       ],
+       "status": "active"
+      },
+      {
+       "name": "ค่านอกเกณฑ์",
+       "match": [
+        "ค่านอกเกณฑ์",
+        "นอกเกณฑ์"
+       ],
+       "status": "active"
+      }
+     ]
+    },
+    {
+     "id": "MATH-M3-STA-002",
+     "std": "ค 3.2 ม.3/1",
+     "strand": "สถิติและความน่าจะเป็น",
+     "topic": "ความน่าจะเป็น",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    }
+   ]
+  },
+  {
+   "slug": "science-m3",
+   "subject": "วิทยาศาสตร์",
+   "grade": "ม.3",
+   "status": "active",
+   "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560)",
+   "topics": [
+    {
+     "id": "SCI-M3-BIO-001",
+     "std": "ว 1.1 ม.3/1",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบนิเวศ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-BIO-002",
+     "std": "ว 1.1 ม.3/2",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบนิเวศ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-BIO-003",
+     "std": "ว 1.1 ม.3/3",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบนิเวศ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-BIO-004",
+     "std": "ว 1.1 ม.3/4",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบนิเวศ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-BIO-005",
+     "std": "ว 1.1 ม.3/5",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบนิเวศ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-BIO-006",
+     "std": "ว 1.1 ม.3/6",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบนิเวศ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-BIO-007",
+     "std": "ว 1.3 ม.3/1",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-BIO-008",
+     "std": "ว 1.3 ม.3/2",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-BIO-009",
+     "std": "ว 1.3 ม.3/3",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-BIO-010",
+     "std": "ว 1.3 ม.3/4",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-BIO-011",
+     "std": "ว 1.3 ม.3/5",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-BIO-012",
+     "std": "ว 1.3 ม.3/6",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-BIO-013",
+     "std": "ว 1.3 ม.3/7",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-BIO-014",
+     "std": "ว 1.3 ม.3/8",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-BIO-015",
+     "std": "ว 1.3 ม.3/9",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-BIO-016",
+     "std": "ว 1.3 ม.3/10",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-BIO-017",
+     "std": "ว 1.3 ม.3/11",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "พันธุกรรมและความหลากหลายทางชีวภาพ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-001",
+     "std": "ว 2.1 ม.3/1",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "วัสดุและปฏิกิริยาเคมี",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-002",
+     "std": "ว 2.1 ม.3/2",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "วัสดุและปฏิกิริยาเคมี",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-003",
+     "std": "ว 2.1 ม.3/3",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "วัสดุและปฏิกิริยาเคมี",
+     "needs_svg": true,
+     "svg_type": "particle_model",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-004",
+     "std": "ว 2.1 ม.3/4",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "วัสดุและปฏิกิริยาเคมี",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-005",
+     "std": "ว 2.1 ม.3/5",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "วัสดุและปฏิกิริยาเคมี",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-006",
+     "std": "ว 2.1 ม.3/6",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "วัสดุและปฏิกิริยาเคมี",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-007",
+     "std": "ว 2.1 ม.3/7",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "วัสดุและปฏิกิริยาเคมี",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-008",
+     "std": "ว 2.1 ม.3/8",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "วัสดุและปฏิกิริยาเคมี",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-009",
+     "std": "ว 2.3 ม.3/1",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+     "needs_svg": true,
+     "svg_type": "circuit_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-010",
+     "std": "ว 2.3 ม.3/2",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+     "needs_svg": true,
+     "svg_type": "graph",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-011",
+     "std": "ว 2.3 ม.3/3",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+     "needs_svg": true,
+     "svg_type": "circuit_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-012",
+     "std": "ว 2.3 ม.3/4",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+     "needs_svg": true,
+     "svg_type": "circuit_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-013",
+     "std": "ว 2.3 ม.3/5",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+     "needs_svg": true,
+     "svg_type": "circuit_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-014",
+     "std": "ว 2.3 ม.3/6",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+     "needs_svg": true,
+     "svg_type": "circuit_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-015",
+     "std": "ว 2.3 ม.3/7",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+     "needs_svg": true,
+     "svg_type": "circuit_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-016",
+     "std": "ว 2.3 ม.3/8",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-017",
+     "std": "ว 2.3 ม.3/9",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "ไฟฟ้าและอิเล็กทรอนิกส์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-018",
+     "std": "ว 2.3 ม.3/10",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "คลื่นและคลื่นแม่เหล็กไฟฟ้า",
+     "needs_svg": true,
+     "svg_type": "wave",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-019",
+     "std": "ว 2.3 ม.3/11",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "คลื่นและคลื่นแม่เหล็กไฟฟ้า",
+     "needs_svg": true,
+     "svg_type": "wave",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-020",
+     "std": "ว 2.3 ม.3/12",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "คลื่นและคลื่นแม่เหล็กไฟฟ้า",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-021",
+     "std": "ว 2.3 ม.3/13",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แสงและทัศนอุปกรณ์",
+     "needs_svg": true,
+     "svg_type": "ray_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-022",
+     "std": "ว 2.3 ม.3/14",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แสงและทัศนอุปกรณ์",
+     "needs_svg": true,
+     "svg_type": "ray_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-023",
+     "std": "ว 2.3 ม.3/15",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แสงและทัศนอุปกรณ์",
+     "needs_svg": true,
+     "svg_type": "ray_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-024",
+     "std": "ว 2.3 ม.3/16",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แสงและทัศนอุปกรณ์",
+     "needs_svg": true,
+     "svg_type": "ray_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-025",
+     "std": "ว 2.3 ม.3/17",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แสงและทัศนอุปกรณ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-026",
+     "std": "ว 2.3 ม.3/18",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แสงและทัศนอุปกรณ์",
+     "needs_svg": true,
+     "svg_type": "ray_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-027",
+     "std": "ว 2.3 ม.3/19",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แสงและทัศนอุปกรณ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-028",
+     "std": "ว 2.3 ม.3/20",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แสงและทัศนอุปกรณ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-PHY-029",
+     "std": "ว 2.3 ม.3/21",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แสงและทัศนอุปกรณ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-EAR-001",
+     "std": "ว 3.1 ม.3/1",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "ระบบสุริยะและเทคโนโลยีอวกาศ",
+     "needs_svg": true,
+     "svg_type": "solar_system",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-EAR-002",
+     "std": "ว 3.1 ม.3/2",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "ระบบสุริยะและเทคโนโลยีอวกาศ",
+     "needs_svg": true,
+     "svg_type": "moon_phase",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-EAR-003",
+     "std": "ว 3.1 ม.3/3",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "ระบบสุริยะและเทคโนโลยีอวกาศ",
+     "needs_svg": true,
+     "svg_type": "moon_phase",
+     "status": "active"
+    },
+    {
+     "id": "SCI-M3-EAR-004",
+     "std": "ว 3.1 ม.3/4",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "ระบบสุริยะและเทคโนโลยีอวกาศ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    }
+   ]
+  },
+  {
+   "slug": "tech-m3",
+   "subject": "เทคโนโลยี",
+   "grade": "ม.3",
+   "status": "active",
+   "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560) · สำนักวิชาการและมาตรฐานการศึกษา สพฐ.",
+   "official": {
+    "total": 9,
+    "std_present": [
+     "ว 4.1",
+     "ว 4.2"
+    ],
+    "std_absent": []
+   },
+   "topics": [
+    {
+     "id": "TECH-M3-001",
+     "std": "ว 4.1 ม.3/1",
+     "strand": "เทคโนโลยี",
+     "topic": "การเปลี่ยนแปลงของเทคโนโลยี",
+     "indicator": "วิเคราะห์สาเหตุ หรือปัจจัยที่ส่งผลต่อการเปลี่ยนแปลงของเทคโนโลยี และความสัมพันธ์ของเทคโนโลยีกับศาสตร์อื่น โดยเฉพาะวิทยาศาสตร์ หรือคณิตศาสตร์ เพื่อเป็นแนวทางการแก้ปัญหาหรือพัฒนางาน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "TECH-M3-002",
+     "std": "ว 4.1 ม.3/2",
+     "strand": "เทคโนโลยี",
+     "topic": "การระบุปัญหาและรวบรวมข้อมูล",
+     "indicator": "ระบุปัญหาหรือความต้องการของชุมชนหรือท้องถิ่น เพื่อพัฒนางานอาชีพ สรุปกรอบของปัญหา รวบรวม วิเคราะห์ข้อมูลและแนวคิดที่เกี่ยวข้องกับปัญหา โดยคำนึงถึงความถูกต้องด้านทรัพย์สินทางปัญญา",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "TECH-M3-003",
+     "std": "ว 4.1 ม.3/3",
+     "strand": "เทคโนโลยี",
+     "topic": "การออกแบบวิธีการแก้ปัญหา",
+     "indicator": "ออกแบบวิธีการแก้ปัญหา โดยวิเคราะห์เปรียบเทียบ และตัดสินใจเลือกข้อมูลที่จำเป็นภายใต้เงื่อนไขและทรัพยากรที่มีอยู่ นำเสนอแนวทางการแก้ปัญหาให้ผู้อื่นเข้าใจด้วยเทคนิคหรือวิธีการที่หลากหลาย วางแผนขั้นตอนการทำงานและดำเนินการแก้ปัญหาอย่างเป็นขั้นตอน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "TECH-M3-004",
+     "std": "ว 4.1 ม.3/4",
+     "strand": "เทคโนโลยี",
+     "topic": "การทดสอบและปรับปรุงแก้ไข",
+     "indicator": "ทดสอบ ประเมินผล วิเคราะห์ และให้เหตุผลของปัญหาหรือข้อบกพร่องที่เกิดขึ้นภายใต้กรอบเงื่อนไข พร้อมทั้งหาแนวทางการปรับปรุงแก้ไข และนำเสนอผลการแก้ปัญหา",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "TECH-M3-005",
+     "std": "ว 4.1 ม.3/5",
+     "strand": "เทคโนโลยี",
+     "topic": "วัสดุ อุปกรณ์ กลไก ไฟฟ้าและอิเล็กทรอนิกส์",
+     "indicator": "ใช้ความรู้ และทักษะเกี่ยวกับวัสดุ อุปกรณ์ เครื่องมือ กลไก ไฟฟ้าและอิเล็กทรอนิกส์ ให้ถูกต้องกับลักษณะของงาน และปลอดภัย เพื่อแก้ปัญหาหรือพัฒนางาน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "TECH-M3-006",
+     "std": "ว 4.2 ม.3/1",
+     "strand": "เทคโนโลยี",
+     "topic": "การพัฒนาแอปพลิเคชัน",
+     "indicator": "พัฒนาแอปพลิเคชันที่มีการบูรณาการกับวิชาอื่นอย่างสร้างสรรค์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "TECH-M3-007",
+     "std": "ว 4.2 ม.3/2",
+     "strand": "เทคโนโลยี",
+     "topic": "การรวบรวมและประมวลผลข้อมูล",
+     "indicator": "รวบรวมข้อมูล ประมวลผล ประเมินผล นำเสนอข้อมูลและสารสนเทศตามวัตถุประสงค์ โดยใช้ซอฟต์แวร์หรือบริการบนอินเทอร์เน็ตที่หลากหลาย",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "TECH-M3-008",
+     "std": "ว 4.2 ม.3/3",
+     "strand": "เทคโนโลยี",
+     "topic": "การรู้เท่าทันสื่อและข้อมูล",
+     "indicator": "ประเมินความน่าเชื่อถือของข้อมูล วิเคราะห์สื่อ และผลกระทบจากการให้ข่าวสารที่ผิด เพื่อการใช้งานอย่างรู้เท่าทัน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "TECH-M3-009",
+     "std": "ว 4.2 ม.3/4",
+     "strand": "เทคโนโลยี",
+     "topic": "การใช้เทคโนโลยีอย่างปลอดภัยและรับผิดชอบ",
+     "indicator": "ใช้เทคโนโลยีสารสนเทศอย่างปลอดภัย และมีความรับผิดชอบต่อสังคม ปฏิบัติตามกฎหมายเกี่ยวกับคอมพิวเตอร์ ใช้ลิขสิทธิ์ของผู้อื่นโดยชอบธรรม",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    }
+   ]
+  },
+  {
+   "slug": "math-p5",
+   "subject": "คณิตศาสตร์",
+   "grade": "ป.5",
+   "status": "active",
+   "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560) · สำนักวิชาการและมาตรฐานการศึกษา สพฐ.",
+   "official": {
+    "total": 19,
+    "std_present": [
+     "ค 1.1",
+     "ค 2.1",
+     "ค 2.2",
+     "ค 3.1"
+    ],
+    "std_absent": [
+     "ค 1.2",
+     "ค 1.3",
+     "ค 3.2"
+    ]
+   },
+   "topics": [
+    {
+     "id": "MATH-P5-001",
+     "std": "ค 1.1 ป.5/1",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "เศษส่วนเป็นทศนิยม",
+     "indicator": "เขียนเศษส่วนที่มีตัวส่วนเป็นตัวประกอบของ ๑๐ หรือ ๑๐๐ หรือ ๑,๐๐๐ ในรูปทศนิยม",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-002",
+     "std": "ค 1.1 ป.5/2",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "บัญญัติไตรยางศ์",
+     "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหา โดยใช้บัญญัติไตรยางศ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-003",
+     "std": "ค 1.1 ป.5/3",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "บวกลบเศษส่วนและจำนวนคละ",
+     "indicator": "หาผลบวก ผลลบของเศษส่วนและจำนวนคละ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-004",
+     "std": "ค 1.1 ป.5/4",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "คูณหารเศษส่วนและจำนวนคละ",
+     "indicator": "หาผลคูณ ผลหารของเศษส่วนและจำนวนคละ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-005",
+     "std": "ค 1.1 ป.5/5",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "โจทย์ปัญหาเศษส่วนสองขั้นตอน",
+     "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาการบวก การลบ การคูณ การหาร เศษส่วน ๒ ขั้นตอน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-006",
+     "std": "ค 1.1 ป.5/6",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "คูณทศนิยม",
+     "indicator": "หาผลคูณของทศนิยมที่ผลคูณเป็นทศนิยมไม่เกิน ๓ ตำแหน่ง",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-007",
+     "std": "ค 1.1 ป.5/7",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "หารทศนิยม",
+     "indicator": "หาผลหารที่ตัวตั้งเป็นจำนวนนับหรือทศนิยมไม่เกิน ๓ ตำแหน่ง และตัวหารเป็นจำนวนนับ ผลหารเป็นทศนิยมไม่เกิน ๓ ตำแหน่ง",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-008",
+     "std": "ค 1.1 ป.5/8",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "โจทย์ปัญหาทศนิยมสองขั้นตอน",
+     "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาการบวก การลบ การคูณ การหารทศนิยม ๒ ขั้นตอน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-009",
+     "std": "ค 1.1 ป.5/9",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "โจทย์ปัญหาร้อยละ",
+     "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาร้อยละไม่เกิน ๒ ขั้นตอน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-010",
+     "std": "ค 2.1 ป.5/1",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "โจทย์ปัญหาความยาวและการเปลี่ยนหน่วย",
+     "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาเกี่ยวกับความยาวที่มีการเปลี่ยนหน่วยและเขียนในรูปทศนิยม",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-011",
+     "std": "ค 2.1 ป.5/2",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "โจทย์ปัญหาน้ำหนักและการเปลี่ยนหน่วย",
+     "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาเกี่ยวกับน้ำหนักที่มีการเปลี่ยนหน่วยและเขียนในรูปทศนิยม",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-012",
+     "std": "ค 2.1 ป.5/3",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "ปริมาตรและความจุของทรงสี่เหลี่ยมมุมฉาก",
+     "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาเกี่ยวกับปริมาตรของทรงสี่เหลี่ยมมุมฉากและความจุของภาชนะทรงสี่เหลี่ยมมุมฉาก",
+     "needs_svg": true,
+     "svg_type": "spatial_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-013",
+     "std": "ค 2.1 ป.5/4",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "ความยาวรอบรูปและพื้นที่ของรูปสี่เหลี่ยม",
+     "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาเกี่ยวกับความยาวรอบรูปของรูปสี่เหลี่ยมและพื้นที่ของรูปสี่เหลี่ยมด้านขนานและรูปสี่เหลี่ยมขนมเปียกปูน",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-014",
+     "std": "ค 2.2 ป.5/1",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "การสร้างเส้นขนาน",
+     "indicator": "สร้างเส้นตรงหรือส่วนของเส้นตรงให้ขนานกับเส้นตรงหรือส่วนของเส้นตรงที่กำหนดให้",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-015",
+     "std": "ค 2.2 ป.5/2",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "การจำแนกรูปสี่เหลี่ยม",
+     "indicator": "จำแนกรูปสี่เหลี่ยม โดยพิจารณาจากสมบัติของรูป",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-016",
+     "std": "ค 2.2 ป.5/3",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "การสร้างรูปสี่เหลี่ยม",
+     "indicator": "สร้างรูปสี่เหลี่ยมชนิดต่าง ๆ เมื่อกำหนดความยาวของด้านและขนาดของมุมหรือเมื่อกำหนดความยาวของเส้นทแยงมุม",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-017",
+     "std": "ค 2.2 ป.5/4",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "ลักษณะของปริซึม",
+     "indicator": "บอกลักษณะของปริซึม",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-018",
+     "std": "ค 3.1 ป.5/1",
+     "strand": "สถิติและความน่าจะเป็น",
+     "topic": "การอ่านกราฟเส้น",
+     "indicator": "ใช้ข้อมูลจากกราฟเส้นในการหาคำตอบของโจทย์ปัญหา",
+     "needs_svg": true,
+     "svg_type": "graph",
+     "status": "active"
+    },
+    {
+     "id": "MATH-P5-019",
+     "std": "ค 3.1 ป.5/2",
+     "strand": "สถิติและความน่าจะเป็น",
+     "topic": "การเขียนแผนภูมิแท่ง",
+     "indicator": "เขียนแผนภูมิแท่งจากข้อมูลที่เป็นจำนวนนับ",
+     "needs_svg": true,
+     "svg_type": "bar_chart",
+     "status": "active"
+    }
+   ]
+  },
+  {
+   "slug": "math-p6",
+   "subject": "คณิตศาสตร์",
+   "grade": "ป.6",
+   "status": "active",
+   "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560) · สำนักวิชาการและมาตรฐานการศึกษา สพฐ.",
+   "official": {
+    "total": 21,
+    "std_present": [
+     "ค 1.1",
+     "ค 1.2",
+     "ค 2.1",
+     "ค 2.2",
+     "ค 3.1"
+    ],
+    "std_absent": [
+     "ค 1.3",
+     "ค 3.2"
+    ]
+   },
+   "topics": [
+    {
+     "id": "MATH-P6-001",
+     "std": "ค 1.1 ป.6/1",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "เปรียบเทียบเศษส่วนและจำนวนคละ",
+     "indicator": "เปรียบเทียบ เรียงลำดับเศษส่วนและจำนวนคละ จากสถานการณ์ต่าง ๆ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-002",
+     "std": "ค 1.1 ป.6/2",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "การเขียนอัตราส่วน",
+     "indicator": "เขียนอัตราส่วนแสดงการเปรียบเทียบปริมาณ ๒ ปริมาณ จากข้อความหรือสถานการณ์ โดยที่ปริมาณแต่ละปริมาณเป็นจำนวนนับ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-003",
+     "std": "ค 1.1 ป.6/3",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "อัตราส่วนที่เท่ากัน",
+     "indicator": "หาอัตราส่วนที่เท่ากับอัตราส่วนที่กำหนดให้",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-004",
+     "std": "ค 1.1 ป.6/4",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "ห.ร.ม.",
+     "indicator": "หา ห.ร.ม. ของจำนวนนับไม่เกิน ๓ จำนวน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-005",
+     "std": "ค 1.1 ป.6/5",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "ค.ร.น.",
+     "indicator": "หา ค.ร.น. ของจำนวนนับไม่เกิน ๓ จำนวน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-006",
+     "std": "ค 1.1 ป.6/6",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "โจทย์ปัญหา ห.ร.ม. และ ค.ร.น.",
+     "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหา โดยใช้ความรู้เกี่ยวกับ ห.ร.ม. และ ค.ร.น.",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-007",
+     "std": "ค 1.1 ป.6/7",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "การคำนวณระคนของเศษส่วน",
+     "indicator": "หาผลลัพธ์ของการบวก ลบ คูณ หารระคนของเศษส่วนและจำนวนคละ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-008",
+     "std": "ค 1.1 ป.6/8",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "โจทย์ปัญหาเศษส่วนหลายขั้นตอน",
+     "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาเศษส่วนและจำนวนคละ ๒ - ๓ ขั้นตอน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-009",
+     "std": "ค 1.1 ป.6/9",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "หารทศนิยมด้วยทศนิยม",
+     "indicator": "หาผลหารของทศนิยมที่ตัวหารและผลหารเป็นทศนิยมไม่เกิน ๓ ตำแหน่ง",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-010",
+     "std": "ค 1.1 ป.6/10",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "โจทย์ปัญหาทศนิยมสามขั้นตอน",
+     "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาการบวก การลบ การคูณ การหารทศนิยม ๓ ขั้นตอน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-011",
+     "std": "ค 1.1 ป.6/11",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "โจทย์ปัญหาอัตราส่วน",
+     "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาอัตราส่วน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-012",
+     "std": "ค 1.1 ป.6/12",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "โจทย์ปัญหาร้อยละหลายขั้นตอน",
+     "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาร้อยละ ๒ - ๓ ขั้นตอน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-013",
+     "std": "ค 1.2 ป.6/1",
+     "strand": "จำนวนและพีชคณิต",
+     "topic": "แบบรูป",
+     "indicator": "แสดงวิธีคิดและหาคำตอบของปัญหาเกี่ยวกับแบบรูป",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-014",
+     "std": "ค 2.1 ป.6/1",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "ปริมาตรของรูปสามมิติที่ประกอบกัน",
+     "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาเกี่ยวกับปริมาตรของรูปเรขาคณิตสามมิติที่ประกอบด้วยทรงสี่เหลี่ยมมุมฉาก",
+     "needs_svg": true,
+     "svg_type": "spatial_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-015",
+     "std": "ค 2.1 ป.6/2",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "ความยาวรอบรูปและพื้นที่ของรูปหลายเหลี่ยม",
+     "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาเกี่ยวกับความยาวรอบรูปและพื้นที่ของรูปหลายเหลี่ยม",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-016",
+     "std": "ค 2.1 ป.6/3",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "ความยาวรอบรูปและพื้นที่ของวงกลม",
+     "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาเกี่ยวกับความยาวรอบรูปและพื้นที่ของวงกลม",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-017",
+     "std": "ค 2.2 ป.6/1",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "การจำแนกรูปสามเหลี่ยม",
+     "indicator": "จำแนกรูปสามเหลี่ยมโดยพิจารณาจากสมบัติของรูป",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-018",
+     "std": "ค 2.2 ป.6/2",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "การสร้างรูปสามเหลี่ยม",
+     "indicator": "สร้างรูปสามเหลี่ยมเมื่อกำหนดความยาวของด้านและขนาดของมุม",
+     "needs_svg": true,
+     "svg_type": "geometry_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-019",
+     "std": "ค 2.2 ป.6/3",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "ลักษณะของรูปเรขาคณิตสามมิติ",
+     "indicator": "บอกลักษณะของรูปเรขาคณิตสามมิติชนิดต่าง ๆ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-020",
+     "std": "ค 2.2 ป.6/4",
+     "strand": "การวัดและเรขาคณิต",
+     "topic": "รูปคลี่ของรูปเรขาคณิตสามมิติ",
+     "indicator": "ระบุรูปเรขาคณิตสามมิติที่ประกอบจากรูปคลี่ และระบุรูปคลี่ของรูปเรขาคณิตสามมิติ",
+     "needs_svg": true,
+     "svg_type": "spatial_figure",
+     "status": "active"
+    },
+    {
+     "id": "MATH-P6-021",
+     "std": "ค 3.1 ป.6/1",
+     "strand": "สถิติและความน่าจะเป็น",
+     "topic": "การอ่านแผนภูมิรูปวงกลม",
+     "indicator": "ใช้ข้อมูลจากแผนภูมิรูปวงกลมในการหาคำตอบของโจทย์ปัญหา",
+     "needs_svg": true,
+     "svg_type": "pie_chart",
+     "status": "active"
+    }
+   ]
+  },
+  {
+   "slug": "science-p5",
+   "subject": "วิทยาศาสตร์",
+   "grade": "ป.5",
+   "status": "active",
+   "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560) · สำนักวิชาการและมาตรฐานการศึกษา สพฐ.",
+   "official": {
+    "total": 32,
+    "std_present": [
+     "ว 1.1",
+     "ว 1.3",
+     "ว 2.1",
+     "ว 2.2",
+     "ว 2.3",
+     "ว 3.1",
+     "ว 3.2",
+     "ว 4.2"
+    ],
+    "std_absent": [
+     "ว 1.2",
+     "ว 4.1"
+    ]
+   },
+   "topics": [
+    {
+     "id": "SCI-P5-001",
+     "std": "ว 1.1 ป.5/1",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การปรับตัวของสิ่งมีชีวิต",
+     "indicator": "บรรยายโครงสร้างและลักษณะของสิ่งมีชีวิตที่เหมาะสมกับการดำรงชีวิต ซึ่งเป็นผลมาจากการปรับตัวของสิ่งมีชีวิตในแต่ละแหล่งที่อยู่",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-002",
+     "std": "ว 1.1 ป.5/2",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ความสัมพันธ์ในแหล่งที่อยู่",
+     "indicator": "อธิบายความสัมพันธ์ระหว่างสิ่งมีชีวิตกับสิ่งมีชีวิต และความสัมพันธ์ระหว่างสิ่งมีชีวิตกับสิ่งไม่มีชีวิต เพื่อประโยชน์ต่อการดำรงชีวิต",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-003",
+     "std": "ว 1.1 ป.5/3",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "โซ่อาหาร",
+     "indicator": "เขียนโซ่อาหารและระบุบทบาทหน้าที่ของสิ่งมีชีวิตที่เป็นผู้ผลิตและผู้บริโภคในโซ่อาหาร",
+     "needs_svg": true,
+     "svg_type": "food_web",
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-004",
+     "std": "ว 1.1 ป.5/4",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การดูแลรักษาสิ่งแวดล้อม",
+     "indicator": "ตระหนักในคุณค่าของสิ่งแวดล้อมที่มีต่อการดำรงชีวิตของสิ่งมีชีวิต โดยมีส่วนร่วมในการดูแลรักษาสิ่งแวดล้อม",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-005",
+     "std": "ว 1.3 ป.5/1",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การถ่ายทอดลักษณะทางพันธุกรรม",
+     "indicator": "อธิบายลักษณะทางพันธุกรรมที่มีการถ่ายทอดจากพ่อแม่สู่ลูกของพืช สัตว์ และมนุษย์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-006",
+     "std": "ว 1.3 ป.5/2",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ลักษณะที่คล้ายคลึงกับพ่อแม่",
+     "indicator": "แสดงความอยากรู้อยากเห็น โดยการถามคำถามเกี่ยวกับลักษณะที่คล้ายคลึงกันของตนเองกับพ่อแม่",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-007",
+     "std": "ว 2.1 ป.5/1",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "การเปลี่ยนสถานะของสสาร",
+     "indicator": "อธิบายการเปลี่ยนสถานะของสสาร เมื่อทำให้สสารร้อนขึ้นหรือเย็นลง โดยใช้หลักฐานเชิงประจักษ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-008",
+     "std": "ว 2.1 ป.5/2",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "การละลายของสารในน้ำ",
+     "indicator": "อธิบายการละลายของสารในน้ำ โดยใช้หลักฐานเชิงประจักษ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-009",
+     "std": "ว 2.1 ป.5/3",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "การเปลี่ยนแปลงทางเคมี",
+     "indicator": "วิเคราะห์การเปลี่ยนแปลงของสารเมื่อเกิดการเปลี่ยนแปลงทางเคมี โดยใช้หลักฐานเชิงประจักษ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-010",
+     "std": "ว 2.1 ป.5/4",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "การเปลี่ยนแปลงที่ผันกลับได้",
+     "indicator": "วิเคราะห์และระบุการเปลี่ยนแปลงที่ผันกลับได้และการเปลี่ยนแปลงที่ผันกลับไม่ได้",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-011",
+     "std": "ว 2.2 ป.5/1",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงลัพธ์ในแนวเดียวกัน",
+     "indicator": "อธิบายวิธีการหาแรงลัพธ์ของแรงหลายแรงในแนวเดียวกันที่กระทำต่อวัตถุในกรณีที่วัตถุอยู่นิ่งจากหลักฐานเชิงประจักษ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-012",
+     "std": "ว 2.2 ป.5/2",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แผนภาพแรงลัพธ์",
+     "indicator": "เขียนแผนภาพแสดงแรงที่กระทำต่อวัตถุที่อยู่ในแนวเดียวกันและแรงลัพธ์ที่กระทำต่อวัตถุ",
+     "needs_svg": true,
+     "svg_type": "force_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-013",
+     "std": "ว 2.2 ป.5/3",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "การวัดแรงด้วยเครื่องชั่งสปริง",
+     "indicator": "ใช้เครื่องชั่งสปริงในการวัดแรงที่กระทำต่อวัตถุ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-014",
+     "std": "ว 2.2 ป.5/4",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงเสียดทาน",
+     "indicator": "ระบุผลของแรงเสียดทานที่มีต่อการเปลี่ยนแปลงการเคลื่อนที่ของวัตถุจากหลักฐานเชิงประจักษ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-015",
+     "std": "ว 2.2 ป.5/5",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แผนภาพแรงเสียดทาน",
+     "indicator": "เขียนแผนภาพแสดงแรงเสียดทานและแรงที่อยู่ในแนวเดียวกันที่กระทำต่อวัตถุ",
+     "needs_svg": true,
+     "svg_type": "force_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-016",
+     "std": "ว 2.3 ป.5/1",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "การได้ยินเสียงผ่านตัวกลาง",
+     "indicator": "อธิบายการได้ยินเสียงผ่านตัวกลางจากหลักฐานเชิงประจักษ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-017",
+     "std": "ว 2.3 ป.5/2",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "เสียงสูงเสียงต่ำ",
+     "indicator": "ระบุตัวแปร ทดลอง และอธิบายลักษณะและการเกิดเสียงสูง เสียงต่ำ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-018",
+     "std": "ว 2.3 ป.5/3",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "เสียงดังเสียงค่อย",
+     "indicator": "ออกแบบการทดลองและอธิบายลักษณะและการเกิดเสียงดัง เสียงค่อย",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-019",
+     "std": "ว 2.3 ป.5/4",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "การวัดระดับเสียง",
+     "indicator": "วัดระดับเสียงโดยใช้เครื่องมือวัดระดับเสียง",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-020",
+     "std": "ว 2.3 ป.5/5",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "มลพิษทางเสียง",
+     "indicator": "ตระหนักในคุณค่าของความรู้เรื่องระดับเสียง โดยเสนอแนะแนวทางในการหลีกเลี่ยงและลดมลพิษทางเสียง",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-021",
+     "std": "ว 3.1 ป.5/1",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "ดาวเคราะห์กับดาวฤกษ์",
+     "indicator": "เปรียบเทียบความแตกต่างของดาวเคราะห์และดาวฤกษ์จากแบบจำลอง",
+     "needs_svg": true,
+     "svg_type": "solar_system",
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-022",
+     "std": "ว 3.1 ป.5/2",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "แผนที่ดาวและกลุ่มดาวฤกษ์",
+     "indicator": "ใช้แผนที่ดาวระบุตำแหน่งและเส้นทางการขึ้นและตกของกลุ่มดาวฤกษ์บนท้องฟ้า และอธิบายแบบรูปเส้นทางการขึ้นและตกของกลุ่มดาวฤกษ์บนท้องฟ้าในรอบปี",
+     "needs_svg": true,
+     "svg_type": "celestial_sphere",
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-023",
+     "std": "ว 3.2 ป.5/1",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "ปริมาณน้ำในแต่ละแหล่ง",
+     "indicator": "เปรียบเทียบปริมาณน้ำในแต่ละแหล่ง และระบุปริมาณน้ำที่มนุษย์สามารถนำมาใช้ประโยชน์ได้ จากข้อมูลที่รวบรวมได้",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-024",
+     "std": "ว 3.2 ป.5/2",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "การใช้น้ำอย่างประหยัด",
+     "indicator": "ตระหนักถึงคุณค่าของน้ำโดยนำเสนอแนวทางการใช้น้ำอย่างประหยัดและการอนุรักษ์น้ำ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-025",
+     "std": "ว 3.2 ป.5/3",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "วัฏจักรน้ำ",
+     "indicator": "สร้างแบบจำลองที่อธิบายการหมุนเวียนของน้ำในวัฏจักรน้ำ",
+     "needs_svg": true,
+     "svg_type": "diagram_layers",
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-026",
+     "std": "ว 3.2 ป.5/4",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "เมฆ หมอก น้ำค้าง",
+     "indicator": "เปรียบเทียบกระบวนการเกิดเมฆ หมอก น้ำค้าง และน้ำค้างแข็ง จากแบบจำลอง",
+     "needs_svg": true,
+     "svg_type": "weather_map",
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-027",
+     "std": "ว 3.2 ป.5/5",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "ฝน หิมะ ลูกเห็บ",
+     "indicator": "เปรียบเทียบกระบวนการเกิดฝน หิมะ และลูกเห็บ จากข้อมูลที่รวบรวมได้",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-028",
+     "std": "ว 4.2 ป.5/1",
+     "strand": "เทคโนโลยี",
+     "topic": "เหตุผลเชิงตรรกะ",
+     "indicator": "ใช้เหตุผลเชิงตรรกะในการแก้ปัญหา การอธิบายการทำงาน การคาดการณ์ผลลัพธ์ จากปัญหาอย่างง่าย",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-029",
+     "std": "ว 4.2 ป.5/2",
+     "strand": "เทคโนโลยี",
+     "topic": "การเขียนโปรแกรมอย่างง่าย",
+     "indicator": "ออกแบบและเขียนโปรแกรมที่มีการใช้เหตุผลเชิงตรรกะอย่างง่าย ตรวจหาข้อผิดพลาดและแก้ไข",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-030",
+     "std": "ว 4.2 ป.5/3",
+     "strand": "เทคโนโลยี",
+     "topic": "การใช้อินเทอร์เน็ตค้นหาข้อมูล",
+     "indicator": "ใช้อินเทอร์เน็ตค้นหาข้อมูล ติดต่อสื่อสารและทำงานร่วมกัน ประเมินความน่าเชื่อถือของข้อมูล",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-031",
+     "std": "ว 4.2 ป.5/4",
+     "strand": "เทคโนโลยี",
+     "topic": "การรวบรวมและนำเสนอข้อมูล",
+     "indicator": "รวบรวม ประเมิน นำเสนอข้อมูลและสารสนเทศตามวัตถุประสงค์โดยใช้ซอฟต์แวร์หรือบริการบนอินเทอร์เน็ตที่หลากหลาย เพื่อแก้ปัญหาในชีวิตประจำวัน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P5-032",
+     "std": "ว 4.2 ป.5/5",
+     "strand": "เทคโนโลยี",
+     "topic": "การใช้เทคโนโลยีอย่างปลอดภัย",
+     "indicator": "ใช้เทคโนโลยีสารสนเทศอย่างปลอดภัย มีมารยาท เข้าใจสิทธิและหน้าที่ของตน เคารพในสิทธิของผู้อื่น แจ้งผู้เกี่ยวข้องเมื่อพบข้อมูลหรือบุคคลที่ไม่เหมาะสม",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    }
+   ]
+  },
+  {
+   "slug": "science-p6",
+   "subject": "วิทยาศาสตร์",
+   "grade": "ป.6",
+   "status": "active",
+   "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560) · สำนักวิชาการและมาตรฐานการศึกษา สพฐ.",
+   "official": {
+    "total": 30,
+    "std_present": [
+     "ว 1.2",
+     "ว 2.1",
+     "ว 2.2",
+     "ว 2.3",
+     "ว 3.1",
+     "ว 3.2",
+     "ว 4.2"
+    ],
+    "std_absent": [
+     "ว 1.1",
+     "ว 1.3",
+     "ว 4.1"
+    ]
+   },
+   "topics": [
+    {
+     "id": "SCI-P6-001",
+     "std": "ว 1.2 ป.6/1",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "สารอาหารและประโยชน์",
+     "indicator": "ระบุสารอาหารและบอกประโยชน์ของสารอาหารแต่ละประเภทจากอาหารที่ตนเองรับประทาน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-002",
+     "std": "ว 1.2 ป.6/2",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การเลือกรับประทานอาหาร",
+     "indicator": "บอกแนวทางในการเลือกรับประทานอาหารให้ได้สารอาหารครบถ้วน ในสัดส่วนที่เหมาะสมกับเพศและวัย รวมทั้งความปลอดภัยต่อสุขภาพ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-003",
+     "std": "ว 1.2 ป.6/3",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ความสำคัญของสารอาหาร",
+     "indicator": "ตระหนักถึงความสำคัญของสารอาหาร โดยการเลือกรับประทานอาหารที่มีสารอาหารครบถ้วนในสัดส่วนที่เหมาะสมกับเพศและวัย รวมทั้งปลอดภัยต่อสุขภาพ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-004",
+     "std": "ว 1.2 ป.6/4",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "ระบบย่อยอาหาร",
+     "indicator": "สร้างแบบจำลองระบบย่อยอาหาร และบรรยายหน้าที่ของอวัยวะในระบบย่อยอาหาร รวมทั้งอธิบายการย่อยอาหารและการดูดซึมสารอาหาร",
+     "needs_svg": true,
+     "svg_type": "body_system",
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-005",
+     "std": "ว 1.2 ป.6/5",
+     "strand": "วิทยาศาสตร์ชีวภาพ",
+     "topic": "การดูแลระบบย่อยอาหาร",
+     "indicator": "ตระหนักถึงความสำคัญของระบบย่อยอาหาร โดยการบอกแนวทางในการดูแลรักษาอวัยวะในระบบย่อยอาหารให้ทำงานเป็นปกติ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-006",
+     "std": "ว 2.1 ป.6/1",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "การแยกสารผสม",
+     "indicator": "อธิบายและเปรียบเทียบการแยกสารผสม โดยการหยิบออก การร่อน การใช้แม่เหล็กดึงดูด การรินออก การกรอง และการตกตะกอน โดยใช้หลักฐานเชิงประจักษ์ รวมทั้งระบุวิธีแก้ปัญหาในชีวิตประจำวันเกี่ยวกับการแยกสาร",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-007",
+     "std": "ว 2.2 ป.6/1",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แรงไฟฟ้าจากการขัดถู",
+     "indicator": "อธิบายการเกิดและผลของแรงไฟฟ้าซึ่งเกิดจากวัตถุที่ผ่านการขัดถู โดยใช้หลักฐานเชิงประจักษ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-008",
+     "std": "ว 2.3 ป.6/1",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "ส่วนประกอบของวงจรไฟฟ้า",
+     "indicator": "ระบุส่วนประกอบและบรรยายหน้าที่ของแต่ละส่วนประกอบของวงจรไฟฟ้าอย่างง่าย จากหลักฐานเชิงประจักษ์",
+     "needs_svg": true,
+     "svg_type": "circuit_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-009",
+     "std": "ว 2.3 ป.6/2",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "การเขียนแผนภาพวงจรไฟฟ้า",
+     "indicator": "เขียนแผนภาพและต่อวงจรไฟฟ้าอย่างง่าย",
+     "needs_svg": true,
+     "svg_type": "circuit_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-010",
+     "std": "ว 2.3 ป.6/3",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "การต่อเซลล์ไฟฟ้าแบบอนุกรม",
+     "indicator": "ออกแบบการทดลองและทดลองด้วยวิธีที่เหมาะสมในการอธิบายวิธีการและผลของการต่อเซลล์ไฟฟ้าแบบอนุกรม",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-011",
+     "std": "ว 2.3 ป.6/4",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "ประโยชน์ของการต่อเซลล์ไฟฟ้า",
+     "indicator": "ตระหนักถึงประโยชน์ของความรู้ของการต่อเซลล์ไฟฟ้าแบบอนุกรม โดยบอกประโยชน์และการประยุกต์ใช้ในชีวิตประจำวัน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-012",
+     "std": "ว 2.3 ป.6/5",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "การต่อหลอดไฟฟ้าอนุกรมและขนาน",
+     "indicator": "ออกแบบการทดลองและทดลองด้วยวิธีที่เหมาะสมในการอธิบายการต่อหลอดไฟฟ้าแบบอนุกรมและแบบขนาน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-013",
+     "std": "ว 2.3 ป.6/6",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "ประโยชน์และข้อจำกัดของการต่อหลอดไฟฟ้า",
+     "indicator": "ตระหนักถึงประโยชน์ของความรู้ของการต่อหลอดไฟฟ้าแบบอนุกรมและแบบขนาน โดยบอกประโยชน์ ข้อจำกัด และการประยุกต์ใช้ในชีวิตประจำวัน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-014",
+     "std": "ว 2.3 ป.6/7",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "เงามืดเงามัว",
+     "indicator": "อธิบายการเกิดเงามืดเงามัวจากหลักฐานเชิงประจักษ์",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-015",
+     "std": "ว 2.3 ป.6/8",
+     "strand": "วิทยาศาสตร์กายภาพ",
+     "topic": "แผนภาพรังสีของเงามืดเงามัว",
+     "indicator": "เขียนแผนภาพรังสีของแสงแสดงการเกิดเงามืดเงามัว",
+     "needs_svg": true,
+     "svg_type": "ray_diagram",
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-016",
+     "std": "ว 3.1 ป.6/1",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "สุริยุปราคาและจันทรุปราคา",
+     "indicator": "สร้างแบบจำลองที่อธิบายการเกิด และเปรียบเทียบปรากฏการณ์สุริยุปราคาและจันทรุปราคา",
+     "needs_svg": true,
+     "svg_type": "moon_phase",
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-017",
+     "std": "ว 3.1 ป.6/2",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "เทคโนโลยีอวกาศ",
+     "indicator": "อธิบายพัฒนาการของเทคโนโลยีอวกาศ และยกตัวอย่างการนำเทคโนโลยีอวกาศมาใช้ประโยชน์ในชีวิตประจำวัน จากข้อมูลที่รวบรวมได้",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-018",
+     "std": "ว 3.2 ป.6/1",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "วัฏจักรหิน",
+     "indicator": "เปรียบเทียบกระบวนการเกิดหินอัคนี หินตะกอน และหินแปร และอธิบายวัฏจักรหินจากแบบจำลอง",
+     "needs_svg": true,
+     "svg_type": "rock_cycle",
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-019",
+     "std": "ว 3.2 ป.6/2",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "การใช้ประโยชน์ของหินและแร่",
+     "indicator": "บรรยายและยกตัวอย่างการใช้ประโยชน์ของหินและแร่ในชีวิตประจำวัน จากข้อมูลที่รวบรวมได้",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-020",
+     "std": "ว 3.2 ป.6/3",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "ซากดึกดำบรรพ์",
+     "indicator": "สร้างแบบจำลองที่อธิบายการเกิดซากดึกดำบรรพ์และคาดคะเนสภาพแวดล้อมในอดีตของซากดึกดำบรรพ์",
+     "needs_svg": true,
+     "svg_type": "diagram_layers",
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-021",
+     "std": "ว 3.2 ป.6/4",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "ลมบก ลมทะเล และมรสุม",
+     "indicator": "เปรียบเทียบการเกิดลมบก ลมทะเล และมรสุม รวมทั้งอธิบายผลที่มีต่อสิ่งมีชีวิตและสิ่งแวดล้อม จากแบบจำลอง",
+     "needs_svg": true,
+     "svg_type": "weather_map",
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-022",
+     "std": "ว 3.2 ป.6/5",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "มรสุมกับฤดูของประเทศไทย",
+     "indicator": "อธิบายผลของมรสุมต่อการเกิดฤดูของประเทศไทย จากข้อมูลที่รวบรวมได้",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-023",
+     "std": "ว 3.2 ป.6/6",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "ภัยธรรมชาติและธรณีพิบัติภัย",
+     "indicator": "บรรยายลักษณะและผลกระทบของน้ำท่วม การกัดเซาะชายฝั่ง ดินถล่ม แผ่นดินไหว สึนามิ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-024",
+     "std": "ว 3.2 ป.6/7",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "การเฝ้าระวังภัยธรรมชาติ",
+     "indicator": "ตระหนักถึงผลกระทบของภัยธรรมชาติและธรณีพิบัติภัย โดยนำเสนอแนวทางในการเฝ้าระวังและปฏิบัติตนให้ปลอดภัยจากภัยธรรมชาติและธรณีพิบัติภัยที่อาจเกิดในท้องถิ่น",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-025",
+     "std": "ว 3.2 ป.6/8",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "ปรากฏการณ์เรือนกระจก",
+     "indicator": "สร้างแบบจำลองที่อธิบายการเกิดปรากฏการณ์เรือนกระจก และผลของปรากฏการณ์เรือนกระจกต่อสิ่งมีชีวิต",
+     "needs_svg": true,
+     "svg_type": "diagram_layers",
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-026",
+     "std": "ว 3.2 ป.6/9",
+     "strand": "วิทยาศาสตร์โลกและอวกาศ",
+     "topic": "การลดแก๊สเรือนกระจก",
+     "indicator": "ตระหนักถึงผลกระทบของปรากฏการณ์เรือนกระจก โดยนำเสนอแนวทางการปฏิบัติตนเพื่อลดกิจกรรมที่ก่อให้เกิดแก๊สเรือนกระจก",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-027",
+     "std": "ว 4.2 ป.6/1",
+     "strand": "เทคโนโลยี",
+     "topic": "เหตุผลเชิงตรรกะกับการแก้ปัญหา",
+     "indicator": "ใช้เหตุผลเชิงตรรกะในการอธิบายและออกแบบวิธีการแก้ปัญหาที่พบในชีวิตประจำวัน",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-028",
+     "std": "ว 4.2 ป.6/2",
+     "strand": "เทคโนโลยี",
+     "topic": "การเขียนโปรแกรมแก้ปัญหา",
+     "indicator": "ออกแบบและเขียนโปรแกรมอย่างง่าย เพื่อใช้แก้ปัญหาในชีวิตประจำวัน ตรวจหาข้อผิดพลาดของโปรแกรมและแก้ไข",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-029",
+     "std": "ว 4.2 ป.6/3",
+     "strand": "เทคโนโลยี",
+     "topic": "การค้นหาข้อมูลอย่างมีประสิทธิภาพ",
+     "indicator": "ใช้อินเทอร์เน็ตในการค้นหาข้อมูลอย่างมีประสิทธิภาพ",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    },
+    {
+     "id": "SCI-P6-030",
+     "std": "ว 4.2 ป.6/4",
+     "strand": "เทคโนโลยี",
+     "topic": "การใช้เทคโนโลยีร่วมกันอย่างปลอดภัย",
+     "indicator": "ใช้เทคโนโลยีสารสนเทศทำงานร่วมกันอย่างปลอดภัย เข้าใจสิทธิและหน้าที่ของตน เคารพในสิทธิของผู้อื่น แจ้งผู้เกี่ยวข้องเมื่อพบข้อมูลหรือบุคคลที่ไม่เหมาะสม",
+     "needs_svg": false,
+     "svg_type": null,
+     "status": "active"
+    }
+   ]
+  }
+ ],
+ "planned_courses": [
+  {
+   "subject": "เชาวน์และมิติสัมพันธ์",
+   "grade": "ม.1",
+   "phase": 5
+  },
+  {
+   "subject": "สังคมศึกษา",
+   "grade": "ม.1",
+   "phase": 6
+  },
+  {
+   "subject": "ภาษาไทย",
+   "grade": "ม.1",
+   "phase": 6
+  },
+  {
+   "subject": "ภาษาอังกฤษ",
+   "grade": "ม.1",
+   "phase": 6
+  },
+  {
+   "subject": "ภาษาจีน",
+   "grade": "ม.1",
+   "phase": 6
+  }
+ ]
 }

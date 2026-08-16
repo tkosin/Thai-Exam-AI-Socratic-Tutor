@@ -26,9 +26,11 @@ DATA = os.path.join(ROOT, "data")
 # โอลิมปิก = แนว สอวน./TMO ยากกว่าแข่งขันอีกขั้น มักไม่มีสูตรตรง ๆ ให้ใช้
 LEVELS = {"ง่าย", "กลาง", "ยาก", "แข่งขัน", "โอลิมปิก"}
 LEVEL_ORDER = ("ง่าย", "กลาง", "ยาก", "แข่งขัน", "โอลิมปิก")
-TAGS = {"ม.1", "ม.2", "ม.3", "ทบทวน ป.6", "ต่อยอด ม.2", "ต่อยอด ม.3", "ทบทวน ม.2"}
+TAGS = {"ป.5", "ป.6", "ม.1", "ม.2", "ม.3",
+        "ทบทวน ป.6", "ต่อยอด ม.2", "ต่อยอด ม.3", "ทบทวน ม.2"}
 # ค = คณิตศาสตร์ · ว = วิทยาศาสตร์ · ตัวชี้วัดวิทย์บางมาตรฐานมีถึงสองหลัก (เช่น ว 1.2 ม.2/17)
-STD_RE = re.compile(r"^([คว] \d\.\d ม\.\d/\d{1,2}|-)$")
+# รับทั้ง ม. และ ป. เพราะคลังเริ่มมีชั้นประถม (ป.5 · ป.6) แล้ว
+STD_RE = re.compile(r"^([คว] \d\.\d [มป]\.\d/\d{1,2}|-)$")
 CHOICE_LETTERS = {"ก", "ข", "ค", "ง"}
 FIELDS = ("subject", "grade", "unit", "uname", "sub",
           "text", "answer", "level", "std", "tag")
@@ -62,7 +64,7 @@ def coverage(qs, doc=None, courses=None):
     svg_types = set(doc["svg_types"])
 
     # ---- 9.1 ตัว topics.json เองต้องสมเหตุสมผลก่อน ----
-    seen_id, by_course = {}, {}
+    seen_id, by_course, unchecked = {}, {}, []
     for c in doc["courses"]:
         key = (c["subject"], c["grade"])
         if key in by_course:
@@ -90,6 +92,11 @@ def coverage(qs, doc=None, courses=None):
                 err(f"{where}: needs_svg เป็น false แต่ระบุ svg_type '{t['svg_type']}'")
             if t["svg_type"] and t["svg_type"] not in svg_types:
                 err(f"{where}: svg_type '{t['svg_type']}' ไม่อยู่ในรายการ svg_types")
+        if not check_official(c, stds):
+            unchecked.append(f"{c['subject']} {c['grade']}")
+    if unchecked:
+        notes.append("รายวิชาที่ยังไม่ได้ทานจำนวนตัวชี้วัดกับเอกสารหลักสูตร "
+                     f"{len(unchecked)} วิชา: " + " · ".join(unchecked))
 
     # วิชาที่มีข้อสอบแล้ว ต้องมีแผนที่หัวข้อทุกวิชา ไม่งั้นด่านนี้ปล่อยผ่านไปเงียบ ๆ
     for c in courses:
@@ -150,6 +157,34 @@ def coverage(qs, doc=None, courses=None):
                      + " · ".join(f"{p['subject']} {p['grade']} (เฟส {p['phase']})"
                                   for p in later[:4])
                      + (" …" if len(later) > 4 else ""))
+
+
+def check_official(course, stds):
+    """เทียบตัวชี้วัดที่บันทึกไว้ กับยอดที่เอกสารหลักสูตรสรุปไว้จริง
+
+    ไม่มีด่านนี้ ตัวชี้วัดที่ตกหล่นจะเงียบสนิท — แผนที่หัวข้อบอกว่า "ครบ 30 ตัว" ได้สบาย
+    ทั้งที่หลักสูตรมี 32 ตัว เพราะไม่มีอะไรรู้จักเลข 32 นอกจากตัวเอกสาร
+    ฟิลด์ official จึงเก็บสามอย่างที่ตรวจกันเองได้: ยอดรวม · รหัสสาระที่มี · รหัสสาระที่ยืนยันว่าไม่มี
+    รายวิชาที่ยังไม่ได้ทานกับเอกสาร จะไม่มีฟิลด์นี้ และถูกรายงานเป็นงานค้าง ไม่ใช่ผ่านฟรี
+    """
+    o = course.get("official")
+    if not o:
+        return False
+    where = f"topics.json {course['subject']} {course['grade']}"
+    if len(stds) != o["total"]:
+        err(f"{where}: บันทึกตัวชี้วัดไว้ {len(stds)} ตัว "
+            f"แต่หลักสูตรมี {o['total']} ตัว")
+    codes = {s.rsplit(" ", 1)[0] for s in stds}
+    missing = sorted(set(o["std_present"]) - codes)
+    extra = sorted(codes - set(o["std_present"]))
+    if missing:
+        err(f"{where}: ไม่มีตัวชี้วัดของสาระ {', '.join(missing)} ทั้งที่หลักสูตรระบุว่ามี")
+    if extra:
+        err(f"{where}: มีสาระ {', '.join(extra)} ที่ไม่อยู่ในรายการสาระของชั้นนี้")
+    banned = sorted(codes & set(o["std_absent"]))
+    if banned:
+        err(f"{where}: มีสาระ {', '.join(banned)} ทั้งที่ยืนยันแล้วว่าชั้นนี้ไม่มี")
+    return True
 
 
 def check_subtopics(course, topic, group):
@@ -267,14 +302,15 @@ def main():
                 err(f"{subj} {grade} หน่วย {u}: ชื่อหน่วยไม่ตรงกัน {sorted(ns)}")
 
     # ตัวชี้วัดต้องขึ้นต้นด้วยอักษรของวิชานั้น (คณิต = ค · วิทยาศาสตร์ = ว)
-    PREFIX = {"คณิตศาสตร์": "ค", "วิทยาศาสตร์": "ว"}
+    # เทคโนโลยีใช้อักษร ว เหมือนกัน เพราะเป็นสาระที่ 4 ของกลุ่มสาระวิทยาศาสตร์ฯ
+    PREFIX = {"คณิตศาสตร์": "ค", "วิทยาศาสตร์": "ว", "เทคโนโลยี": "ว"}
     for i, q in enumerate(qs, 1):
         want = PREFIX.get(q.get("subject"))
         std = str(q.get("std", ""))
         if want and std != "-" and not std.startswith(want + " "):
             err(f"ข้อ {i}: วิชา {q.get('subject')} แต่ตัวชี้วัดเป็น '{std}'")
         # ข้อที่ติด tag ทบทวน/ต่อยอด ตั้งใจให้ตัวชี้วัดข้ามชั้น จึงยกเว้นให้
-        on_grade = q.get("tag") in ("ม.1", "ม.2", "ม.3")
+        on_grade = q.get("tag") in ("ป.5", "ป.6", "ม.1", "ม.2", "ม.3")
         if std != "-" and on_grade and f" {q['grade']}/" not in std:
             err(f"ข้อ {i}: ระดับชั้น {q.get('grade')} tag '{q.get('tag')}' "
                 f"แต่ตัวชี้วัดเป็น '{std}'")
@@ -392,7 +428,9 @@ console.log(JSON.stringify({{ bad, manual }}));
     # เดิมบังคับเฉพาะคณิตศาสตร์ วิทยาศาสตร์จึงไม่มีระดับแข่งขันเลยสักข้อโดยไม่มีใครดัก
     # ระดับที่ทุกวิชาต้องมี ส่วนโอลิมปิกบังคับเฉพาะคณิตศาสตร์ (วิทย์ยังไม่มีแนวข้อสอบรองรับ)
     REQUIRED = {"คณิตศาสตร์": ("ง่าย", "กลาง", "ยาก", "แข่งขัน", "โอลิมปิก"),
-                "วิทยาศาสตร์": ("ง่าย", "กลาง", "ยาก", "แข่งขัน")}
+                "วิทยาศาสตร์": ("ง่าย", "กลาง", "ยาก", "แข่งขัน"),
+                # เทคโนโลยีมีโอลิมปิกได้ เพราะโจทย์แนว สอวน. คอมพิวเตอร์ ตอบเป็นค่าเดียวได้
+                "เทคโนโลยี": ("ง่าย", "กลาง", "ยาก", "แข่งขัน", "โอลิมปิก")}
     by_course_level = {}
     for q in qs:
         key = (q.get("subject"), q.get("grade"))
@@ -438,6 +476,9 @@ def selftest():
                      "topic": "จำนวนเต็ม", "needs_svg": False, "svg_type": None,
                      "status": "active"}, **kw)
 
+    def off(**kw):
+        return dict({"total": 1, "std_present": ["ค 1.1"], "std_absent": ["ค 1.3"]}, **kw)
+
     def doc(*topics, **kw):
         return {"svg_types": ["number_line", "bar_chart"],
                 "courses": [dict({"slug": "math-m1", "subject": "คณิตศาสตร์",
@@ -473,6 +514,18 @@ def selftest():
         ("หัวข้อย่อยจับคำจากฟิลด์ sub ได้ด้วย",
          doc(topic(subtopics=[{"name": "ก", "match": ["เรื่องย่อย"], "status": "active"}])),
          ok, ()),
+        # ---- ด่านทานยอดตัวชี้วัดกับเอกสารหลักสูตร ----
+        ("ตัวชี้วัดครบตามยอดหลักสูตร", doc(topic(), official=off()), ok, ()),
+        ("บันทึกตัวชี้วัดไม่ครบยอด", doc(topic(), official=off(total=2)), ok,
+         ("บันทึกตัวชี้วัดไว้ 1 ตัว แต่หลักสูตรมี 2 ตัว",)),
+        ("ขาดตัวชี้วัดทั้งสาระ", doc(topic(), official=off(std_present=["ค 1.1", "ค 2.1"], total=1)),
+         ok, ("ไม่มีตัวชี้วัดของสาระ ค 2.1",)),
+        ("มีสาระที่ไม่ใช่ของชั้นนี้", doc(topic(), official=off(std_present=["ค 2.1"])),
+         ok, ("มีสาระ ค 1.1 ที่ไม่อยู่ในรายการสาระของชั้นนี้",)),
+        ("มีสาระที่ยืนยันแล้วว่าไม่มี",
+         doc(topic(), official=off(std_present=["ค 1.1"], std_absent=["ค 1.1"])), ok,
+         ("ทั้งที่ยืนยันแล้วว่าชั้นนี้ไม่มี",)),
+        ("รายวิชาที่ยังไม่ได้ทานยอด ไม่นับเป็นข้อผิดพลาด", doc(topic()), ok, ()),
     ]
     bad = []
     for name, d, qs, want, *rest in cases:

@@ -36,9 +36,14 @@ function load(seed) {
 }
 
 // ทุก load() เริ่มที่หน้าแรก — บล็อกที่ทดสอบหน้าข้อสอบต้องกดเข้าไปก่อน
-const enterExam = (r, nth = 0) => {
-  const b = [...r.d.querySelectorAll('#courseGrid .course-card .c-go')][nth];
-  b.dispatchEvent(new r.w.Event('click'));
+// เลือกวิชาด้วย "ชื่อวิชา" ไม่ใช่ลำดับการ์ด — ลำดับบนหน้าแรกเปลี่ยนได้เมื่อเพิ่มชั้นใหม่
+// (ตอนเพิ่ม ป.5 เข้ามา การ์ดใบแรกกลายเป็น ป.5 แล้วเทสต์ที่ผูกกับ ม.1 ล้มยกชุด)
+const enterExam = (r, which = 'คณิตศาสตร์ ม.1') => {
+  const cards = [...r.d.querySelectorAll('#courseGrid .course-card')];
+  const pick = typeof which === 'number' ? cards[which]
+    : cards.find(c => c.textContent.includes(which));
+  if (!pick) throw new Error('ไม่พบการ์ดวิชา ' + which);
+  pick.querySelector('.c-go').dispatchEvent(new r.w.Event('click'));
   return r;
 };
 
@@ -69,12 +74,54 @@ chk('การ์ดวิชาบอกความก้าวหน้า �
     !!$('#courseGrid .c-stat .ok') && !!$('#courseGrid .c-stat .no'),
     $('#courseGrid .c-stat').textContent.replace(/\s+/g, ' ').trim());
 chk('ยังไม่เคยทำข้อสอบจึงไม่มีปุ่มทำต่อ', !$('#resumeBtn'), '');
+
+// ---------- แท็บระดับชั้นบนหน้าแรก ----------
+{
+  const tabs = () => $$('#homeTabs button');
+  const cardNames = () => $$('#courseGrid .c-name').map(e => e.textContent);
+  const grades = [...new Set(cardNames().map(n => n.split(' ').pop()))];
+  chk('หน้าแรกมีแท็บภาพรวมและแท็บรายชั้นครบ', tabs().length === grades.length + 1,
+      tabs().map(b => b.textContent).join(' / '));
+  chk('แท็บภาพรวมถูกเลือกไว้ตั้งแต่เปิดหน้า',
+      tabs()[0].getAttribute('aria-selected') === 'true',
+      tabs()[0].getAttribute('aria-selected'));
+  chk('แท็บทุกอันบอกจำนวนข้อของชั้นนั้น',
+      tabs().every(b => /[\d,]+ ข้อ/.test(b.textContent)), tabs()[1].textContent);
+  // ยอดของแต่ละแท็บรวมกันต้องเท่ากับแท็บภาพรวมพอดี ไม่งั้นมีวิชาตกหล่นหรือถูกนับซ้ำ
+  // อ่านจากช่องตัวเลขของแท็บโดยตรง — ชื่อชั้นกับตัวเลขติดกันในข้อความรวม ("ป.5368 ข้อ")
+  const nOf = b => +b.querySelector('.t-c').textContent.match(/([\d,]+)/)[1].replace(/,/g, '');
+  chk('ยอดของแท็บรายชั้นรวมกันเท่ากับแท็บภาพรวม',
+      tabs().slice(1).reduce((a, b) => a + nOf(b), 0) === nOf(tabs()[0]),
+      `${tabs().slice(1).reduce((a, b) => a + nOf(b), 0)} vs ${nOf(tabs()[0])}`);
+
+  const allCards = cardNames().length;
+  click(tabs()[1]);
+  const g = grades[0];
+  chk('กดแท็บชั้นแล้วเหลือเฉพาะการ์ดของชั้นนั้น',
+      cardNames().length > 0 && cardNames().every(n => n.endsWith(' ' + g)),
+      cardNames().join(' / '));
+  chk('กดแท็บชั้นแล้วแท็บนั้นถูกเลือก',
+      tabs()[1].getAttribute('aria-selected') === 'true', '');
+  chk('กดแท็บชั้นแล้วหัวข้อสรุปเปลี่ยนตามชั้น',
+      $('#homeSumTitle').textContent.includes(g), $('#homeSumTitle').textContent);
+  chk('กดแท็บชั้นแล้วยอดสรุปเป็นของชั้นนั้น ไม่ใช่ทั้งคลัง',
+      $('#homeSumNote').textContent.includes(nOf(tabs()[1]).toLocaleString('en-US')),
+      $('#homeSumNote').textContent.replace(/\s+/g, ' ').trim());
+  click(tabs()[0]);
+  chk('กดกลับแท็บภาพรวมแล้วการ์ดครบเหมือนเดิม', cardNames().length === allCards,
+      `${cardNames().length} / ${allCards}`);
+  chk('กลับแท็บภาพรวมแล้วหัวข้อสรุปกลับเป็นทั้งหมด',
+      $('#homeSumTitle').textContent === 'ความก้าวหน้าทั้งหมด', $('#homeSumTitle').textContent);
+}
 chk('แถบบนหัวเรื่องบอกความก้าวหน้ารวมทุกวิชา',
     /ทำแล้ว 0 \//.test($('#progressLabel').textContent), $('#progressLabel').textContent);
 
-// ปุ่มบนการ์ดวิชาแรกพาเข้าหน้าข้อสอบ
-const firstCourseName = $('#courseGrid .c-name').textContent;
-click($('#courseGrid .course-card .c-go'));
+// ปุ่มบนการ์ดวิชาพาเข้าหน้าข้อสอบ
+// เลือก ม.1 ด้วยชื่อ ไม่ใช่การ์ดใบแรก — บล็อกที่เหลือของไฟล์นี้ผูกกับหน่วยและป้ายของ ม.1
+const m1Card = $$('#courseGrid .course-card')
+  .find(c => c.textContent.includes('คณิตศาสตร์ ม.1'));
+const firstCourseName = m1Card.querySelector('.c-name').textContent;
+click(m1Card.querySelector('.c-go'));
 chk('กดเริ่มทำข้อสอบแล้วเข้าหน้าข้อสอบ',
     $('#homeView').classList.contains('hide') && !$('#examView').classList.contains('hide'), '');
 chk('เข้าหน้าข้อสอบแล้วปุ่มหน้าแรกโผล่', !$('#homeBtn').classList.contains('hide'), '');
@@ -95,14 +142,18 @@ chk('ชื่อเรื่องมีจำนวนข้อตรงกั
 // ---------- ตัวกรองวิชา (วิชา + ระดับชั้น) ----------
 const courses = () => items('courseList');
 chk('มีตัวกรองวิชา', courses().length >= 2, courses().length + ' วิชา');
-chk('เลือกวิชาแรกไว้ตั้งแต่เปิดหน้า', courses()[0].classList.contains('active'),
+// เลือกไว้ตั้งแต่เปิดหน้า = วิชาที่กดเข้ามา ไม่ใช่วิชาที่อยู่บนสุดของรายการ
+const activeCourse = () => courses().filter(e => e.classList.contains('active'));
+chk('เลือกวิชาที่กดเข้ามาไว้ให้ตั้งแต่เปิดหน้า',
+    activeCourse().length === 1 && label(activeCourse()[0]) === firstCourseName,
     courses().map(label).join(' / '));
 chk('ตัวกรองวิชาไม่มีตัวเลือก "ทุกวิชา"',
     courses().every(e => !/ทุกวิชา/.test(label(e))), courses().map(label).join(' / '));
 chk('จำนวนของทุกวิชารวมกันมากกว่าวิชาเดียว',
     courses().reduce((a, e) => a + count(e), 0) > TOTAL,
     courses().map(e => `${label(e)}:${count(e)}`).join(' · '));
-chk('ชื่อเรื่องตรงกับวิชาที่เลือก', $('#mainTitle').textContent.includes(label(courses()[0])),
+chk('ชื่อเรื่องตรงกับวิชาที่เลือก',
+    $('#mainTitle').textContent.includes(label(activeCourse()[0])),
     $('#mainTitle').textContent);
 chk('หัวกลุ่มวิชาแสดงวิชาที่เลือกอยู่เสมอ',
     !!d.querySelector('#group-course .fhead .fsel'),
@@ -722,8 +773,9 @@ function loadTutor(seeds, reply = 'ลองอ่านโจทย์อีก
   });
   dom.virtualConsole.on('jsdomError', e => errs.push(e.message));
   const r = { dom, d: dom.window.document, w: dom.window, sent };
-  const go = [...r.d.querySelectorAll('#courseGrid .course-card .c-go')][0];
-  go.dispatchEvent(new r.w.Event('click'));
+  const card = [...r.d.querySelectorAll('#courseGrid .course-card')]
+    .find(c => c.textContent.includes('คณิตศาสตร์ ม.1'));
+  card.querySelector('.c-go').dispatchEvent(new r.w.Event('click'));
   return r;
 }
 const tclick = (r, sel) => r.d.querySelector(sel).dispatchEvent(new r.w.Event('click'));

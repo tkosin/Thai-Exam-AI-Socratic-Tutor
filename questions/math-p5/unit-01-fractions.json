@@ -1,0 +1,342 @@
+{
+ "unit": 1,
+ "uname": "เศษส่วน จำนวนคละ และทศนิยม",
+ "questions": [
+  {
+   "text": "<span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">10</span></span> เขียนเป็นทศนิยมได้เท่าใด",
+   "answer": "0.3",
+   "sub": "ชุดที่ 1 · เศษส่วนที่เขียนเป็นทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.5/1",
+   "tag": "ป.5"
+  },
+  {
+   "text": "<span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">10</span></span> เขียนเป็นทศนิยมได้เท่าใด",
+   "answer": "0.7",
+   "sub": "ชุดที่ 1 · เศษส่วนที่เขียนเป็นทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.5/1",
+   "tag": "ป.5"
+  },
+  {
+   "text": "<span class=\"frac\"><span class=\"num\">9</span><span class=\"den\">100</span></span> เขียนเป็นทศนิยมได้เท่าใด",
+   "answer": "0.09",
+   "sub": "ชุดที่ 1 · เศษส่วนที่เขียนเป็นทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.5/1",
+   "tag": "ป.5"
+  },
+  {
+   "text": "<span class=\"frac\"><span class=\"num\">25</span><span class=\"den\">100</span></span> เขียนเป็นทศนิยมได้เท่าใด",
+   "answer": "0.25",
+   "sub": "ชุดที่ 1 · เศษส่วนที่เขียนเป็นทศนิยม",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.5/1",
+   "tag": "ป.5"
+  },
+  {
+   "text": "<span class=\"frac\"><span class=\"num\">48</span><span class=\"den\">100</span></span> เขียนเป็นทศนิยมได้เท่าใด",
+   "answer": "0.48",
+   "sub": "ชุดที่ 1 · เศษส่วนที่เขียนเป็นทศนิยม",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/1",
+   "tag": "ป.5"
+  },
+  {
+   "text": "<span class=\"frac\"><span class=\"num\">125</span><span class=\"den\">1000</span></span> เขียนเป็นทศนิยมได้เท่าใด",
+   "answer": "0.125",
+   "sub": "ชุดที่ 1 · เศษส่วนที่เขียนเป็นทศนิยม",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/1",
+   "tag": "ป.5"
+  },
+  {
+   "text": "<span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span> เขียนเป็นทศนิยมได้เท่าใด",
+   "answer": "0.75",
+   "sub": "ชุดที่ 1 · เศษส่วนที่เขียนเป็นทศนิยม",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/1",
+   "tag": "ป.5"
+  },
+  {
+   "text": "<span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">20</span></span> เขียนเป็นทศนิยมได้เท่าใด",
+   "answer": "0.35",
+   "sub": "ชุดที่ 1 · เศษส่วนที่เขียนเป็นทศนิยม",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/1",
+   "tag": "ป.5"
+  },
+  {
+   "text": "<span class=\"frac\"><span class=\"num\">13</span><span class=\"den\">25</span></span> เขียนเป็นทศนิยมได้เท่าใด",
+   "answer": "0.52",
+   "sub": "ชุดที่ 1 · เศษส่วนที่เขียนเป็นทศนิยม",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.5/1",
+   "tag": "ป.5"
+  },
+  {
+   "text": "<span class=\"frac\"><span class=\"num\">19</span><span class=\"den\">50</span></span> เขียนเป็นทศนิยมได้เท่าใด",
+   "answer": "0.38",
+   "sub": "ชุดที่ 1 · เศษส่วนที่เขียนเป็นทศนิยม",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.5/1",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span> + <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span>",
+   "answer": "5/6",
+   "sub": "ชุดที่ 2 · การบวกและการลบเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.5/3",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span> + <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">6</span></span>",
+   "answer": "11/12",
+   "sub": "ชุดที่ 2 · การบวกและการลบเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.5/3",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">6</span></span> - <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span>",
+   "answer": "7/12",
+   "sub": "ชุดที่ 2 · การบวกและการลบเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.5/3",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">8</span></span> - <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span>",
+   "answer": "0.375",
+   "sub": "ชุดที่ 2 · การบวกและการลบเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.5/3",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> + <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">10</span></span>",
+   "answer": "0.7",
+   "sub": "ชุดที่ 2 · การบวกและการลบเศษส่วน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/3",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">12</span></span> + <span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">18</span></span>",
+   "answer": "29/36",
+   "sub": "ชุดที่ 2 · การบวกและการลบเศษส่วน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/3",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">9</span><span class=\"den\">10</span></span> - <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">15</span></span>",
+   "answer": "23/30",
+   "sub": "ชุดที่ 2 · การบวกและการลบเศษส่วน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/3",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">11</span><span class=\"den\">12</span></span> - <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">8</span></span>",
+   "answer": "7/24",
+   "sub": "ชุดที่ 2 · การบวกและการลบเศษส่วน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/3",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">3</span></span> + <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">4</span></span>",
+   "answer": "43/12",
+   "sub": "ชุดที่ 2 · การบวกและการลบเศษส่วน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.5/3",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">13</span><span class=\"den\">6</span></span> - <span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">9</span></span>",
+   "answer": "25/18",
+   "sub": "ชุดที่ 2 · การบวกและการลบเศษส่วน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.5/3",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">17</span><span class=\"den\">12</span></span> + <span class=\"frac\"><span class=\"num\">11</span><span class=\"den\">8</span></span>",
+   "answer": "67/24",
+   "sub": "ชุดที่ 2 · การบวกและการลบเศษส่วน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.5/3",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">23</span><span class=\"den\">10</span></span> - <span class=\"frac\"><span class=\"num\">17</span><span class=\"den\">15</span></span>",
+   "answer": "7/6",
+   "sub": "ชุดที่ 2 · การบวกและการลบเศษส่วน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.5/3",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span> × <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span>",
+   "answer": "0.4",
+   "sub": "ชุดที่ 3 · การคูณและการหารเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.5/4",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span> × <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">9</span></span>",
+   "answer": "1/6",
+   "sub": "ชุดที่ 3 · การคูณและการหารเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.5/4",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span> ÷ <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span>",
+   "answer": "2",
+   "sub": "ชุดที่ 3 · การคูณและการหารเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.5/4",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span> ÷ <span class=\"frac\"><span class=\"num\">9</span><span class=\"den\">10</span></span>",
+   "answer": "2/3",
+   "sub": "ชุดที่ 3 · การคูณและการหารเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.5/4",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">8</span></span> × <span class=\"frac\"><span class=\"num\">4</span><span class=\"den\">21</span></span>",
+   "answer": "1/6",
+   "sub": "ชุดที่ 3 · การคูณและการหารเศษส่วน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/4",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">6</span></span> ÷ <span class=\"frac\"><span class=\"num\">10</span><span class=\"den\">9</span></span>",
+   "answer": "0.75",
+   "sub": "ชุดที่ 3 · การคูณและการหารเศษส่วน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/4",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">9</span><span class=\"den\">4</span></span> × <span class=\"frac\"><span class=\"num\">8</span><span class=\"den\">15</span></span>",
+   "answer": "1.2",
+   "sub": "ชุดที่ 3 · การคูณและการหารเศษส่วน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/4",
+   "tag": "ป.5"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">3</span></span> ÷ <span class=\"frac\"><span class=\"num\">14</span><span class=\"den\">9</span></span>",
+   "answer": "1.5",
+   "sub": "ชุดที่ 3 · การคูณและการหารเศษส่วน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/4",
+   "tag": "ป.5"
+  },
+  {
+   "text": "2<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span> เขียนเป็นเศษเกิน ตัวเศษคือจำนวนใด",
+   "answer": "7",
+   "sub": "ชุดที่ 3 · การคูณและการหารเศษส่วน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/4",
+   "tag": "ป.5"
+  },
+  {
+   "text": "3<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> เขียนเป็นเศษเกิน ตัวเศษคือจำนวนใด",
+   "answer": "17",
+   "sub": "ชุดที่ 3 · การคูณและการหารเศษส่วน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/4",
+   "tag": "ป.5"
+  },
+  {
+   "text": "1<span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span> เขียนเป็นเศษเกิน ตัวเศษคือจำนวนใด",
+   "answer": "7",
+   "sub": "ชุดที่ 3 · การคูณและการหารเศษส่วน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.5/4",
+   "tag": "ป.5"
+  },
+  {
+   "text": "4<span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">6</span></span> เขียนเป็นเศษเกิน ตัวเศษคือจำนวนใด",
+   "answer": "29",
+   "sub": "ชุดที่ 3 · การคูณและการหารเศษส่วน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.5/4",
+   "tag": "ป.5"
+  },
+  {
+   "text": "มีลูกอม 24 เม็ด แบ่งให้น้อง <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span> ของทั้งหมด แล้วแบ่งส่วนที่เหลืออีก <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span> ให้เพื่อน จะเหลือลูกอมกี่เม็ด",
+   "answer": "12",
+   "sub": "ชุดที่ 4 · โจทย์ปัญหาเศษส่วนสองขั้นตอน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.5/5",
+   "tag": "ป.5"
+  },
+  {
+   "text": "มีลูกอม 36 เม็ด แบ่งให้น้อง <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span> ของทั้งหมด แล้วแบ่งส่วนที่เหลืออีก <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">6</span></span> ให้เพื่อน จะเหลือลูกอมกี่เม็ด",
+   "answer": "15",
+   "sub": "ชุดที่ 4 · โจทย์ปัญหาเศษส่วนสองขั้นตอน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.5/5",
+   "tag": "ป.5"
+  },
+  {
+   "text": "มีลูกอม 60 เม็ด แบ่งให้น้อง <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> ของทั้งหมด แล้วแบ่งส่วนที่เหลืออีก <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span> ให้เพื่อน จะเหลือลูกอมกี่เม็ด",
+   "answer": "27",
+   "sub": "ชุดที่ 4 · โจทย์ปัญหาเศษส่วนสองขั้นตอน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/5",
+   "tag": "ป.5"
+  },
+  {
+   "text": "มีลูกอม 48 เม็ด แบ่งให้น้อง <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">8</span></span> ของทั้งหมด แล้วแบ่งส่วนที่เหลืออีก <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span> ให้เพื่อน จะเหลือลูกอมกี่เม็ด",
+   "answer": "20",
+   "sub": "ชุดที่ 4 · โจทย์ปัญหาเศษส่วนสองขั้นตอน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/5",
+   "tag": "ป.5"
+  },
+  {
+   "text": "มีลูกอม 90 เม็ด แบ่งให้น้อง <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span> ของทั้งหมด แล้วแบ่งส่วนที่เหลืออีก <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> ให้เพื่อน จะเหลือลูกอมกี่เม็ด",
+   "answer": "36",
+   "sub": "ชุดที่ 4 · โจทย์ปัญหาเศษส่วนสองขั้นตอน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/5",
+   "tag": "ป.5"
+  },
+  {
+   "text": "มีลูกอม 120 เม็ด แบ่งให้น้อง <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span> ของทั้งหมด แล้วแบ่งส่วนที่เหลืออีก <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span> ให้เพื่อน จะเหลือลูกอมกี่เม็ด",
+   "answer": "60",
+   "sub": "ชุดที่ 4 · โจทย์ปัญหาเศษส่วนสองขั้นตอน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.5/5",
+   "tag": "ป.5"
+  },
+  {
+   "text": "มีลูกอม 144 เม็ด แบ่งให้น้อง <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">12</span></span> ของทั้งหมด แล้วแบ่งส่วนที่เหลืออีก <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">7</span></span> ให้เพื่อน จะเหลือลูกอมกี่เม็ด",
+   "answer": "60",
+   "sub": "ชุดที่ 4 · โจทย์ปัญหาเศษส่วนสองขั้นตอน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.5/5",
+   "tag": "ป.5"
+  },
+  {
+   "text": "มีลูกอม 200 เม็ด แบ่งให้น้อง <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">10</span></span> ของทั้งหมด แล้วแบ่งส่วนที่เหลืออีก <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">7</span></span> ให้เพื่อน จะเหลือลูกอมกี่เม็ด",
+   "answer": "80",
+   "sub": "ชุดที่ 4 · โจทย์ปัญหาเศษส่วนสองขั้นตอน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.5/5",
+   "tag": "ป.5"
+  }
+ ]
+}
