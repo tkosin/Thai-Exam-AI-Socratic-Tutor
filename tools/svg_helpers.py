@@ -1083,6 +1083,13 @@ def circle_fig(kind, labels=None, caption=None, size=250):
             g.append(_lab(pts[0][0] + 22, pts[0][1] + 18, labels["A"], 12))
         if labels.get("C"):
             g.append(_lab(pts[2][0] - 24, pts[2][1] - 14, labels["C"], 12))
+    elif kind == "radius":
+        # วงกลมกับรัศมีที่ทำป้ายไว้ — ใช้กับโจทย์ความยาวรอบรูปและพื้นที่ของชั้นประถม
+        P = at(35)
+        g += [seg((cx, cy), P), dot((cx, cy)), dot(P),
+              name((cx, cy), "O", -12, 4), name(P, "P", 12, -4)]
+        if labels.get("radius"):
+            g.append(_lab((cx + P[0]) / 2 + 6, (cy + P[1]) / 2 - 8, labels["radius"], 12.5))
     else:
         raise ValueError(f"ไม่รู้จักรูปวงกลมชนิด {kind}")
     return _wrap(size, size, "".join(g), caption)
@@ -2115,8 +2122,121 @@ def construction_fig(kind, caption=None, width=360, height=280):
               f'<rect x="{M[0]}" y="{y0-13}" width="13" height="13" fill="none" '
               f'stroke="{NAVY}" stroke-width="1.6"/>',
               dot(P, "P"), dot(X, "X", 24), dot(Y, "Y", 24), dot(Z, "Z", 24)]
+    elif kind == "parallel":
+        # สร้างเส้นขนานผ่านจุด P ด้วยวิธีลอกมุม: ลากเส้นตัด แล้วย้ายมุมที่จุด A ไปที่ P
+        # จุดตัดทุกจุดคิดจากวงกลมจริง เช่นเดียวกับการสร้างแบบอื่นในไฟล์นี้
+        y0, P = 208, (196, 78)
+        A = (86, y0)
+        # เส้นตัดผ่าน A และ P — ยืดออกทั้งสองข้างให้เห็นว่าเป็นเส้นตัดจริง
+        dx, dy = P[0] - A[0], P[1] - y0
+        L = math.hypot(dx, dy)
+        ux, uy = dx / L, dy / L
+        T0 = (A[0] - ux * 46, y0 - uy * 46)
+        T1 = (P[0] + ux * 58, P[1] + uy * 58)
+        r = 66                                     # ส่วนโค้งลอกมุม ใช้รัศมีเดียวกันทั้งสองจุด
+        # ส่วนโค้งที่ A ตัดเส้นตรงที่ X และตัดเส้นตัดที่ Y
+        X, Y = (A[0] + r, y0), (A[0] + ux * r, y0 + uy * r)
+        # ส่วนโค้งที่ P ตัดเส้นตัดที่ Y2 แล้ววัดระยะ XY มากางที่ P ได้จุด Z
+        Y2 = (P[0] - ux * r, P[1] - uy * r)
+        span = math.dist(X, Y)
+        Z = _circ_cross(Y2, span, P, r, upper=True)
+        g += [seg((40, y0), (width - 40, y0)), seg(T0, T1, SOFT, 1.8),
+              _arc_through(A, r, [X, Y], 20), _arc_through(P, r, [Y2, Z], 20),
+              _arc_through(Y2, span, [Z], 22),
+              seg((P[0] + (Z[0] - P[0]) * 2.4, P[1] + (Z[1] - P[1]) * 2.4),
+                  (P[0] - (Z[0] - P[0]) * 1.5, P[1] - (Z[1] - P[1]) * 1.5), NAVY),
+              dot(A, "A", 24), dot(X, "X", 24), dot(P, "P"), dot(Z, "Z")]
     else:
         raise ValueError(f"ไม่รู้จักการสร้างชนิด {kind}")
     g.append(_t(width / 2, height - 8, "เส้นประ = รอยวงเวียน · เส้นทึบน้ำเงิน = เส้นที่สร้างได้",
                 11, "middle", SOFT))
     return _wrap(width, height, "".join(g), caption)
+
+
+# ------------------------------------------------- รูปสี่เหลี่ยมของชั้นประถม
+def quad_fig(kind, labels=None, caption=None, box=190):
+    """รูปสี่เหลี่ยมด้านขนาน · ขนมเปียกปูน · คางหมู · รูปประกอบ พร้อมเส้นแสดงส่วนสูง
+
+    labels รับสตริง จึงใส่ตัวเลข หน่วย หรือ ? ก็ได้ · คีย์ที่ใช้ต่างกันตามชนิด
+      parallelogram/rhombus : base · height · side
+      trapezoid             : top · bottom · height
+      l_shape               : a · b · c · d  (รูปตัวแอลที่ประกอบจากสี่เหลี่ยมสองผืน)
+    สัดส่วนที่วาดคุมด้วย box เท่านั้น ตัวเลขจริงอ่านจากป้าย ไม่ใช่จากการวัดรูป
+    """
+    labels = labels or {}
+    pad_l, pad_r, pad_t, pad_b = 46, 46, 24, 40
+    lab = lambda x, y, s, anchor="middle": _t(x, y, s, 13, anchor, SERIES[3], "700")
+
+    if kind in ("parallelogram", "rhombus"):
+        bw, bh, skew = box, box * 0.55, box * (0.30 if kind == "parallelogram" else 0.42)
+        w, h = round(pad_l + bw + skew + pad_r), round(pad_t + bh + pad_b)
+        x0, y1 = pad_l, pad_t + bh
+        pts = [(x0, y1), (x0 + bw, y1), (x0 + bw + skew, pad_t), (x0 + skew, pad_t)]
+        body = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>',
+                '<polygon points="' + " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+                + f'" fill="#eef1f4" stroke="{NAVY}" stroke-width="2" '
+                'stroke-linejoin="round"/>']
+        # ส่วนสูงตั้งฉากกับฐาน — ลากเป็นเส้นประเพื่อไม่ให้สับสนกับด้านของรูป
+        hx = x0 + skew
+        body.append(f'<line x1="{hx:.1f}" y1="{pad_t:.1f}" x2="{hx:.1f}" y2="{y1:.1f}" '
+                    f'stroke="{SERIES[3]}" stroke-width="1.6" stroke-dasharray="5 4"/>')
+        m = 11
+        body.append(f'<path d="M {hx:.1f} {y1-m:.1f} L {hx+m:.1f} {y1-m:.1f} '
+                    f'L {hx+m:.1f} {y1:.1f}" fill="none" stroke="{SERIES[3]}" '
+                    'stroke-width="1.4"/>')
+        if labels.get("base"):
+            body.append(lab(x0 + bw / 2, y1 + 21, labels["base"]))
+        if labels.get("height"):
+            body.append(lab(hx + 8, (pad_t + y1) / 2 + 4, labels["height"], "start"))
+        if labels.get("side"):
+            body.append(lab(x0 + bw + skew / 2 + 30, (pad_t + y1) / 2, labels["side"],
+                            "start"))
+        return _wrap(w, h, "".join(body), caption)
+
+    if kind == "trapezoid":
+        bw, bh = box, box * 0.52
+        tw = bw * 0.55
+        w, h = round(pad_l + bw + pad_r), round(pad_t + bh + pad_b)
+        x0, y1 = pad_l, pad_t + bh
+        pts = [(x0, y1), (x0 + bw, y1), (x0 + (bw + tw) / 2, pad_t),
+               (x0 + (bw - tw) / 2, pad_t)]
+        body = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>',
+                '<polygon points="' + " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+                + f'" fill="#eef1f4" stroke="{NAVY}" stroke-width="2" '
+                'stroke-linejoin="round"/>']
+        hx = x0 + (bw - tw) / 2
+        body.append(f'<line x1="{hx:.1f}" y1="{pad_t:.1f}" x2="{hx:.1f}" y2="{y1:.1f}" '
+                    f'stroke="{SERIES[3]}" stroke-width="1.6" stroke-dasharray="5 4"/>')
+        if labels.get("bottom"):
+            body.append(lab(x0 + bw / 2, y1 + 21, labels["bottom"]))
+        if labels.get("top"):
+            body.append(lab(x0 + bw / 2, pad_t - 8, labels["top"]))
+        if labels.get("height"):
+            body.append(lab(hx + 8, (pad_t + y1) / 2 + 4, labels["height"], "start"))
+        return _wrap(w, h, "".join(body), caption)
+
+    if kind == "l_shape":
+        # รูปตัวแอล: กว้าง a สูง b แล้วเว้ามุมขวาบนออกเป็นสี่เหลี่ยม c × d
+        a, b, c, d = (float(labels.get(k + "_len", v))
+                      for k, v in (("a", 6), ("b", 4), ("c", 3), ("d", 2)))
+        s = box / max(a, b)
+        aw, bh, cw, dh = a * s, b * s, c * s, d * s
+        w, h = round(pad_l + aw + pad_r), round(pad_t + bh + pad_b)
+        x0, y0, y1 = pad_l, pad_t, pad_t + bh
+        pts = [(x0, y1), (x0 + aw, y1), (x0 + aw, y0 + dh),
+               (x0 + aw - cw, y0 + dh), (x0 + aw - cw, y0), (x0, y0)]
+        body = [f'<rect x="0" y="0" width="{w}" height="{h}" fill="#fff"/>',
+                '<polygon points="' + " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+                + f'" fill="#eef1f4" stroke="{NAVY}" stroke-width="2" '
+                'stroke-linejoin="round"/>']
+        if labels.get("a"):
+            body.append(lab(x0 + aw / 2, y1 + 21, labels["a"]))
+        if labels.get("b"):
+            body.append(lab(x0 - 8, (y0 + y1) / 2 + 4, labels["b"], "end"))
+        if labels.get("c"):
+            body.append(lab(x0 + aw - cw / 2, y0 - 8, labels["c"]))
+        if labels.get("d"):
+            body.append(lab(x0 + aw + 8, y0 + dh / 2 + 4, labels["d"], "start"))
+        return _wrap(w, h, "".join(body), caption)
+
+    raise ValueError(f"quad_fig: ไม่รู้จักชนิด '{kind}'")

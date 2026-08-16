@@ -25,7 +25,8 @@ from svg_helpers import (bar_chart, line_chart, pie_chart, pictograph, iso_cubes
                          heat_transfer, layers_fig, concentric_layers,
                          field_forces, displacement_fig, construction_fig,
                          force_diagram, reaction_model, em_spectrum,
-                         mirror_image, prism_fig, orbit_fig, moon_phase)
+                         mirror_image, prism_fig, orbit_fig, moon_phase,
+                         quad_fig)
 
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                    "questions", "figures.json")
@@ -480,6 +481,58 @@ FIGURES.update({
     "m2-construct-perpendicular": construction_fig(
         "perpendicular", "การสร้างเส้นตั้งฉากจากจุด P ที่อยู่นอกเส้นตรง"),
 })
+
+
+# ---- คณิตศาสตร์ ป.5 / ป.6 · รูปที่ตัวชี้วัดสั่งให้มี ----
+# ค่าบนรูปเก็บไว้ที่นี่ที่เดียว โจทย์ใน questions/math-p5|p6/ อ้างด้วยชื่อรูป
+# และเลือกค่าเดียวกับที่เขียนไว้ในโจทย์ ไม่ให้รูปกับโจทย์บอกคนละเลข
+P5_TEMP_FIG = [("6", 24), ("9", 28), ("12", 33), ("15", 35), ("18", 31), ("21", 27)]
+P5_BOOKS_FIG = [("ป.4", 45), ("ป.5", 60), ("ป.6", 38), ("ม.1", 52)]
+P6_PIE_FIG = [("ข้าว", 40), ("ผัก", 25), ("ผลไม้", 20), ("อื่น ๆ", 15)]
+# ลูกบาศก์หน่วยของก้อนที่ประกอบกัน — tools/gen_math_p5p6.py import ไปนับเป็นเฉลย
+P6_STACK_CELLS = ([(x, y, 0) for x in range(3) for y in range(2)]
+                  + [(x, 0, 1) for x in range(2)] + [(0, 0, 2)])
+P6_STACK_CELLS_B = ([(x, y, 0) for x in range(4) for y in range(2)]
+                    + [(x, 0, 1) for x in range(3)] + [(0, 0, 2), (1, 0, 2)])
+
+FIGURES.update({
+    "p5-construct-parallel": construction_fig(
+        "parallel", "การสร้างเส้นขนานกับเส้นตรงที่กำหนดให้ ผ่านจุด P ด้วยวิธีลอกมุม"),
+    "p5-par-12-7": quad_fig("parallelogram",
+                            {"base": "12 ซม.", "height": "7 ซม.", "side": "9 ซม."},
+                            "รูปสี่เหลี่ยมด้านขนาน · เส้นประคือส่วนสูง"),
+    "p5-rhom-10-6": quad_fig("rhombus", {"base": "10 ซม.", "height": "6 ซม."},
+                             "รูปสี่เหลี่ยมขนมเปียกปูน · เส้นประคือส่วนสูง"),
+    "p5-box-4-3-2": prism_box("4 ซม.", "3 ซม.", "2 ซม.",
+                              "ทรงสี่เหลี่ยมมุมฉาก"),
+    "p5-line-temp": line_chart([t for t, _ in P5_TEMP_FIG],
+                               [v for _, v in P5_TEMP_FIG],
+                               "อุณหภูมิ (องศาเซลเซียส)",
+                               "อุณหภูมิที่วัดได้ในแต่ละช่วงเวลาของวันหนึ่ง",
+                               x_title="เวลา (นาฬิกา)"),
+    "p5-bar-books": bar_chart([t for t, _ in P5_BOOKS_FIG],
+                              [v for _, v in P5_BOOKS_FIG], "จำนวนเล่ม",
+                              "จำนวนหนังสือที่ยืมในหนึ่งสัปดาห์ แยกตามระดับชั้น"),
+    "p6-l-10-6-4-3": quad_fig("l_shape",
+                              {"a": "10 ซม.", "b": "6 ซม.", "c": "4 ซม.", "d": "3 ซม.",
+                               "a_len": 10, "b_len": 6, "c_len": 4, "d_len": 3},
+                              "รูปตัวแอลที่ได้จากการตัดมุมของรูปสี่เหลี่ยมผืนผ้า"),
+    "p6-cube-net": cube_net({(1, 0): "", (0, 1): "", (1, 1): "", (2, 1): "",
+                             (3, 1): "", (1, 2): ""}, "รูปคลี่ที่ประกอบด้วยรูปสี่เหลี่ยมจัตุรัส 6 รูป"),
+    "p6-pie-food": pie_chart([(k, v) for k, v in P6_PIE_FIG],
+                             "สัดส่วนค่าใช้จ่ายด้านอาหารของครอบครัวหนึ่ง"),
+    "p6-circle-r7": circle_fig("radius", {"radius": "7 ซม."},
+                               "วงกลมที่มีจุดศูนย์กลาง O และรัศมี OP"),
+    "p6-tri-50-60-70": triangle_fig(50, 60, 70, unknown="C",
+                                    caption="รูปสามเหลี่ยม ABC"),
+    # ก้อนที่ประกอบจากลูกบาศก์หน่วย — โจทย์นับจำนวนลูกบาศก์จากรายการเดียวกับที่วาด
+    # จึงไม่มีทางที่รูปกับเฉลยจะบอกคนละจำนวน
+    "p6-stack-cubes": iso_cubes(P6_STACK_CELLS,
+                                "รูปเรขาคณิตสามมิติที่ประกอบจากลูกบาศก์หน่วย"),
+    "p6-stack-cubes-b": iso_cubes(P6_STACK_CELLS_B,
+                                  "รูปเรขาคณิตสามมิติที่ประกอบจากลูกบาศก์หน่วย"),
+})
+
 
 if __name__ == "__main__":
     os.makedirs(os.path.dirname(OUT), exist_ok=True)

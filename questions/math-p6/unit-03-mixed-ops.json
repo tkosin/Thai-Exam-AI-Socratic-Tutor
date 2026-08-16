@@ -1,0 +1,134 @@
+{
+ "unit": 3,
+ "uname": "การบวก ลบ คูณ หารระคนของเศษส่วน",
+ "questions": [
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span> + <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span> × <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span>",
+   "answer": "0.75",
+   "sub": "ชุดที่ 1 · การบวก ลบ คูณ หารระคน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.6/7",
+   "tag": "ป.6"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span> + <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">6</span></span> × <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">1</span></span>",
+   "answer": "1",
+   "sub": "ชุดที่ 1 · การบวก ลบ คูณ หารระคน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.6/7",
+   "tag": "ป.6"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">6</span></span> - <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span> × <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span>",
+   "answer": "2/3",
+   "sub": "ชุดที่ 1 · การบวก ลบ คูณ หารระคน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/7",
+   "tag": "ป.6"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">8</span></span> - <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span> × <span class=\"frac\"><span class=\"num\">4</span><span class=\"den\">3</span></span>",
+   "answer": "5/24",
+   "sub": "ชุดที่ 1 · การบวก ลบ คูณ หารระคน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/7",
+   "tag": "ป.6"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span> + <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">15</span></span> × <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">4</span></span>",
+   "answer": "23/30",
+   "sub": "ชุดที่ 1 · การบวก ลบ คูณ หารระคน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/7",
+   "tag": "ป.6"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">11</span><span class=\"den\">12</span></span> - <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">6</span></span> × <span class=\"frac\"><span class=\"num\">9</span><span class=\"den\">5</span></span>",
+   "answer": "-7/12",
+   "sub": "ชุดที่ 1 · การบวก ลบ คูณ หารระคน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/7",
+   "tag": "ป.6"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">4</span><span class=\"den\">9</span></span> + <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">12</span></span> × <span class=\"frac\"><span class=\"num\">6</span><span class=\"den\">5</span></span>",
+   "answer": "17/18",
+   "sub": "ชุดที่ 1 · การบวก ลบ คูณ หารระคน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/7",
+   "tag": "ป.6"
+  },
+  {
+   "text": "จงหาผลลัพธ์ของ <span class=\"frac\"><span class=\"num\">13</span><span class=\"den\">15</span></span> - <span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">10</span></span> × <span class=\"frac\"><span class=\"num\">4</span><span class=\"den\">7</span></span>",
+   "answer": "7/15",
+   "sub": "ชุดที่ 1 · การบวก ลบ คูณ หารระคน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/7",
+   "tag": "ป.6"
+  },
+  {
+   "text": "มีข้าวสาร 120 กิโลกรัม ขายไป <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">4</span></span> ของทั้งหมด แล้วขายส่วนที่เหลืออีก <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span> จะเหลือข้าวสารกี่กิโลกรัม",
+   "answer": "60",
+   "sub": "ชุดที่ 2 · โจทย์ปัญหาเศษส่วนหลายขั้นตอน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.6/8",
+   "tag": "ป.6"
+  },
+  {
+   "text": "มีข้าวสาร 180 กิโลกรัม ขายไป <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">9</span></span> ของทั้งหมด แล้วขายส่วนที่เหลืออีก <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span> จะเหลือข้าวสารกี่กิโลกรัม",
+   "answer": "70",
+   "sub": "ชุดที่ 2 · โจทย์ปัญหาเศษส่วนหลายขั้นตอน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.6/8",
+   "tag": "ป.6"
+  },
+  {
+   "text": "มีข้าวสาร 240 กิโลกรัม ขายไป <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">8</span></span> ของทั้งหมด แล้วขายส่วนที่เหลืออีก <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> จะเหลือข้าวสารกี่กิโลกรัม",
+   "answer": "90",
+   "sub": "ชุดที่ 2 · โจทย์ปัญหาเศษส่วนหลายขั้นตอน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/8",
+   "tag": "ป.6"
+  },
+  {
+   "text": "มีข้าวสาร 360 กิโลกรัม ขายไป <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">12</span></span> ของทั้งหมด แล้วขายส่วนที่เหลืออีก <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">7</span></span> จะเหลือข้าวสารกี่กิโลกรัม",
+   "answer": "120",
+   "sub": "ชุดที่ 2 · โจทย์ปัญหาเศษส่วนหลายขั้นตอน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/8",
+   "tag": "ป.6"
+  },
+  {
+   "text": "มีข้าวสาร 450 กิโลกรัม ขายไป <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> ของทั้งหมด แล้วขายส่วนที่เหลืออีก <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">6</span></span> จะเหลือข้าวสารกี่กิโลกรัม",
+   "answer": "225",
+   "sub": "ชุดที่ 2 · โจทย์ปัญหาเศษส่วนหลายขั้นตอน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/8",
+   "tag": "ป.6"
+  },
+  {
+   "text": "มีข้าวสาร 600 กิโลกรัม ขายไป <span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">20</span></span> ของทั้งหมด แล้วขายส่วนที่เหลืออีก <span class=\"frac\"><span class=\"num\">4</span><span class=\"den\">13</span></span> จะเหลือข้าวสารกี่กิโลกรัม",
+   "answer": "270",
+   "sub": "ชุดที่ 2 · โจทย์ปัญหาเศษส่วนหลายขั้นตอน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/8",
+   "tag": "ป.6"
+  },
+  {
+   "text": "มีข้าวสาร 315 กิโลกรัม ขายไป <span class=\"frac\"><span class=\"num\">4</span><span class=\"den\">9</span></span> ของทั้งหมด แล้วขายส่วนที่เหลืออีก <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">7</span></span> จะเหลือข้าวสารกี่กิโลกรัม",
+   "answer": "125",
+   "sub": "ชุดที่ 2 · โจทย์ปัญหาเศษส่วนหลายขั้นตอน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/8",
+   "tag": "ป.6"
+  },
+  {
+   "text": "มีข้าวสาร 528 กิโลกรัม ขายไป <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">16</span></span> ของทั้งหมด แล้วขายส่วนที่เหลืออีก <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">11</span></span> จะเหลือข้าวสารกี่กิโลกรัม",
+   "answer": "264",
+   "sub": "ชุดที่ 2 · โจทย์ปัญหาเศษส่วนหลายขั้นตอน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/8",
+   "tag": "ป.6"
+  }
+ ]
+}

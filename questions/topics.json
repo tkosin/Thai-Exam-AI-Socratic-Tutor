@@ -1877,7 +1877,7 @@
    "slug": "math-p5",
    "subject": "คณิตศาสตร์",
    "grade": "ป.5",
-   "status": "planned",
+   "status": "active",
    "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560) · สำนักวิชาการและมาตรฐานการศึกษา สพฐ.",
    "official": {
     "total": 19,
@@ -1902,7 +1902,7 @@
      "indicator": "เขียนเศษส่วนที่มีตัวส่วนเป็นตัวประกอบของ ๑๐ หรือ ๑๐๐ หรือ ๑,๐๐๐ ในรูปทศนิยม",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-002",
@@ -1912,7 +1912,7 @@
      "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหา โดยใช้บัญญัติไตรยางศ์",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-003",
@@ -1922,7 +1922,7 @@
      "indicator": "หาผลบวก ผลลบของเศษส่วนและจำนวนคละ",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-004",
@@ -1932,7 +1932,7 @@
      "indicator": "หาผลคูณ ผลหารของเศษส่วนและจำนวนคละ",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-005",
@@ -1942,7 +1942,7 @@
      "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาการบวก การลบ การคูณ การหาร เศษส่วน ๒ ขั้นตอน",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-006",
@@ -1952,7 +1952,7 @@
      "indicator": "หาผลคูณของทศนิยมที่ผลคูณเป็นทศนิยมไม่เกิน ๓ ตำแหน่ง",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-007",
@@ -1962,7 +1962,7 @@
      "indicator": "หาผลหารที่ตัวตั้งเป็นจำนวนนับหรือทศนิยมไม่เกิน ๓ ตำแหน่ง และตัวหารเป็นจำนวนนับ ผลหารเป็นทศนิยมไม่เกิน ๓ ตำแหน่ง",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-008",
@@ -1972,7 +1972,7 @@
      "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาการบวก การลบ การคูณ การหารทศนิยม ๒ ขั้นตอน",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-009",
@@ -1982,7 +1982,7 @@
      "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาร้อยละไม่เกิน ๒ ขั้นตอน",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-010",
@@ -1992,7 +1992,7 @@
      "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาเกี่ยวกับความยาวที่มีการเปลี่ยนหน่วยและเขียนในรูปทศนิยม",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-011",
@@ -2002,7 +2002,7 @@
      "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาเกี่ยวกับน้ำหนักที่มีการเปลี่ยนหน่วยและเขียนในรูปทศนิยม",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-012",
@@ -2012,7 +2012,7 @@
      "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาเกี่ยวกับปริมาตรของทรงสี่เหลี่ยมมุมฉากและความจุของภาชนะทรงสี่เหลี่ยมมุมฉาก",
      "needs_svg": true,
      "svg_type": "spatial_figure",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-013",
@@ -2022,7 +2022,7 @@
      "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาเกี่ยวกับความยาวรอบรูปของรูปสี่เหลี่ยมและพื้นที่ของรูปสี่เหลี่ยมด้านขนานและรูปสี่เหลี่ยมขนมเปียกปูน",
      "needs_svg": true,
      "svg_type": "geometry_figure",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-014",
@@ -2032,7 +2032,7 @@
      "indicator": "สร้างเส้นตรงหรือส่วนของเส้นตรงให้ขนานกับเส้นตรงหรือส่วนของเส้นตรงที่กำหนดให้",
      "needs_svg": true,
      "svg_type": "geometry_figure",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-015",
@@ -2042,7 +2042,7 @@
      "indicator": "จำแนกรูปสี่เหลี่ยม โดยพิจารณาจากสมบัติของรูป",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-016",
@@ -2052,7 +2052,7 @@
      "indicator": "สร้างรูปสี่เหลี่ยมชนิดต่าง ๆ เมื่อกำหนดความยาวของด้านและขนาดของมุมหรือเมื่อกำหนดความยาวของเส้นทแยงมุม",
      "needs_svg": true,
      "svg_type": "geometry_figure",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-017",
@@ -2062,7 +2062,7 @@
      "indicator": "บอกลักษณะของปริซึม",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-018",
@@ -2072,7 +2072,7 @@
      "indicator": "ใช้ข้อมูลจากกราฟเส้นในการหาคำตอบของโจทย์ปัญหา",
      "needs_svg": true,
      "svg_type": "graph",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P5-019",
@@ -2082,7 +2082,7 @@
      "indicator": "เขียนแผนภูมิแท่งจากข้อมูลที่เป็นจำนวนนับ",
      "needs_svg": true,
      "svg_type": "bar_chart",
-     "status": "planned"
+     "status": "active"
     }
    ]
   },
@@ -2090,7 +2090,7 @@
    "slug": "math-p6",
    "subject": "คณิตศาสตร์",
    "grade": "ป.6",
-   "status": "planned",
+   "status": "active",
    "source": "หลักสูตรแกนกลาง 2551 (ปรับปรุง 2560) · สำนักวิชาการและมาตรฐานการศึกษา สพฐ.",
    "official": {
     "total": 21,
@@ -2115,7 +2115,7 @@
      "indicator": "เปรียบเทียบ เรียงลำดับเศษส่วนและจำนวนคละ จากสถานการณ์ต่าง ๆ",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-002",
@@ -2125,7 +2125,7 @@
      "indicator": "เขียนอัตราส่วนแสดงการเปรียบเทียบปริมาณ ๒ ปริมาณ จากข้อความหรือสถานการณ์ โดยที่ปริมาณแต่ละปริมาณเป็นจำนวนนับ",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-003",
@@ -2135,7 +2135,7 @@
      "indicator": "หาอัตราส่วนที่เท่ากับอัตราส่วนที่กำหนดให้",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-004",
@@ -2145,7 +2145,7 @@
      "indicator": "หา ห.ร.ม. ของจำนวนนับไม่เกิน ๓ จำนวน",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-005",
@@ -2155,7 +2155,7 @@
      "indicator": "หา ค.ร.น. ของจำนวนนับไม่เกิน ๓ จำนวน",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-006",
@@ -2165,7 +2165,7 @@
      "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหา โดยใช้ความรู้เกี่ยวกับ ห.ร.ม. และ ค.ร.น.",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-007",
@@ -2175,7 +2175,7 @@
      "indicator": "หาผลลัพธ์ของการบวก ลบ คูณ หารระคนของเศษส่วนและจำนวนคละ",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-008",
@@ -2185,7 +2185,7 @@
      "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาเศษส่วนและจำนวนคละ ๒ - ๓ ขั้นตอน",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-009",
@@ -2195,7 +2195,7 @@
      "indicator": "หาผลหารของทศนิยมที่ตัวหารและผลหารเป็นทศนิยมไม่เกิน ๓ ตำแหน่ง",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-010",
@@ -2205,7 +2205,7 @@
      "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาการบวก การลบ การคูณ การหารทศนิยม ๓ ขั้นตอน",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-011",
@@ -2215,7 +2215,7 @@
      "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาอัตราส่วน",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-012",
@@ -2225,7 +2225,7 @@
      "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาร้อยละ ๒ - ๓ ขั้นตอน",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-013",
@@ -2235,7 +2235,7 @@
      "indicator": "แสดงวิธีคิดและหาคำตอบของปัญหาเกี่ยวกับแบบรูป",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-014",
@@ -2245,7 +2245,7 @@
      "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาเกี่ยวกับปริมาตรของรูปเรขาคณิตสามมิติที่ประกอบด้วยทรงสี่เหลี่ยมมุมฉาก",
      "needs_svg": true,
      "svg_type": "spatial_figure",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-015",
@@ -2255,7 +2255,7 @@
      "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาเกี่ยวกับความยาวรอบรูปและพื้นที่ของรูปหลายเหลี่ยม",
      "needs_svg": true,
      "svg_type": "geometry_figure",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-016",
@@ -2265,7 +2265,7 @@
      "indicator": "แสดงวิธีหาคำตอบของโจทย์ปัญหาเกี่ยวกับความยาวรอบรูปและพื้นที่ของวงกลม",
      "needs_svg": true,
      "svg_type": "geometry_figure",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-017",
@@ -2275,7 +2275,7 @@
      "indicator": "จำแนกรูปสามเหลี่ยมโดยพิจารณาจากสมบัติของรูป",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-018",
@@ -2285,7 +2285,7 @@
      "indicator": "สร้างรูปสามเหลี่ยมเมื่อกำหนดความยาวของด้านและขนาดของมุม",
      "needs_svg": true,
      "svg_type": "geometry_figure",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-019",
@@ -2295,7 +2295,7 @@
      "indicator": "บอกลักษณะของรูปเรขาคณิตสามมิติชนิดต่าง ๆ",
      "needs_svg": false,
      "svg_type": null,
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-020",
@@ -2305,7 +2305,7 @@
      "indicator": "ระบุรูปเรขาคณิตสามมิติที่ประกอบจากรูปคลี่ และระบุรูปคลี่ของรูปเรขาคณิตสามมิติ",
      "needs_svg": true,
      "svg_type": "spatial_figure",
-     "status": "planned"
+     "status": "active"
     },
     {
      "id": "MATH-P6-021",
@@ -2315,7 +2315,7 @@
      "indicator": "ใช้ข้อมูลจากแผนภูมิรูปวงกลมในการหาคำตอบของโจทย์ปัญหา",
      "needs_svg": true,
      "svg_type": "pie_chart",
-     "status": "planned"
+     "status": "active"
     }
    ]
   },

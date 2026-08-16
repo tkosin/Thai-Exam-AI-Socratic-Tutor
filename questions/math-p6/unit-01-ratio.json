@@ -1,0 +1,262 @@
+{
+ "unit": 1,
+ "uname": "เศษส่วน จำนวนคละ และอัตราส่วน",
+ "questions": [
+  {
+   "text": "ระหว่าง <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span> กับ <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span> จำนวนใดมีค่ามากกว่า",
+   "answer": "0.75",
+   "sub": "ชุดที่ 1 · การเปรียบเทียบเศษส่วนและจำนวนคละ",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.6/1",
+   "tag": "ป.6"
+  },
+  {
+   "text": "ระหว่าง <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">6</span></span> กับ <span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">9</span></span> จำนวนใดมีค่ามากกว่า",
+   "answer": "5/6",
+   "sub": "ชุดที่ 1 · การเปรียบเทียบเศษส่วนและจำนวนคละ",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.6/1",
+   "tag": "ป.6"
+  },
+  {
+   "text": "ระหว่าง <span class=\"frac\"><span class=\"num\">4</span><span class=\"den\">7</span></span> กับ <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">8</span></span> จำนวนใดมีค่ามากกว่า",
+   "answer": "0.625",
+   "sub": "ชุดที่ 1 · การเปรียบเทียบเศษส่วนและจำนวนคละ",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/1",
+   "tag": "ป.6"
+  },
+  {
+   "text": "ระหว่าง <span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">10</span></span> กับ <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">3</span></span> จำนวนใดมีค่ามากกว่า",
+   "answer": "0.7",
+   "sub": "ชุดที่ 1 · การเปรียบเทียบเศษส่วนและจำนวนคละ",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/1",
+   "tag": "ป.6"
+  },
+  {
+   "text": "ระหว่าง <span class=\"frac\"><span class=\"num\">9</span><span class=\"den\">14</span></span> กับ <span class=\"frac\"><span class=\"num\">11</span><span class=\"den\">16</span></span> จำนวนใดมีค่ามากกว่า",
+   "answer": "0.6875",
+   "sub": "ชุดที่ 1 · การเปรียบเทียบเศษส่วนและจำนวนคละ",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/1",
+   "tag": "ป.6"
+  },
+  {
+   "text": "ระหว่าง <span class=\"frac\"><span class=\"num\">13</span><span class=\"den\">20</span></span> กับ <span class=\"frac\"><span class=\"num\">8</span><span class=\"den\">13</span></span> จำนวนใดมีค่ามากกว่า",
+   "answer": "0.65",
+   "sub": "ชุดที่ 1 · การเปรียบเทียบเศษส่วนและจำนวนคละ",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/1",
+   "tag": "ป.6"
+  },
+  {
+   "text": "ระหว่าง <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span> กับ <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">8</span></span> จำนวนใดมีค่ามากกว่า",
+   "answer": "0.625",
+   "sub": "ชุดที่ 1 · การเปรียบเทียบเศษส่วนและจำนวนคละ",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/1",
+   "tag": "ป.6"
+  },
+  {
+   "text": "ระหว่าง <span class=\"frac\"><span class=\"num\">11</span><span class=\"den\">12</span></span> กับ <span class=\"frac\"><span class=\"num\">15</span><span class=\"den\">16</span></span> จำนวนใดมีค่ามากกว่า",
+   "answer": "0.9375",
+   "sub": "ชุดที่ 1 · การเปรียบเทียบเศษส่วนและจำนวนคละ",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/1",
+   "tag": "ป.6"
+  },
+  {
+   "text": "อัตราส่วน 2 : 3 เท่ากับอัตราส่วน 8 : ใด",
+   "answer": "12",
+   "sub": "ชุดที่ 2 · อัตราส่วนและอัตราส่วนที่เท่ากัน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.6/3",
+   "tag": "ป.6"
+  },
+  {
+   "text": "อัตราส่วน 3 : 5 เท่ากับอัตราส่วน 9 : ใด",
+   "answer": "15",
+   "sub": "ชุดที่ 2 · อัตราส่วนและอัตราส่วนที่เท่ากัน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.6/3",
+   "tag": "ป.6"
+  },
+  {
+   "text": "อัตราส่วน 4 : 7 เท่ากับอัตราส่วน 20 : ใด",
+   "answer": "35",
+   "sub": "ชุดที่ 2 · อัตราส่วนและอัตราส่วนที่เท่ากัน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/3",
+   "tag": "ป.6"
+  },
+  {
+   "text": "อัตราส่วน 5 : 8 เท่ากับอัตราส่วน 30 : ใด",
+   "answer": "48",
+   "sub": "ชุดที่ 2 · อัตราส่วนและอัตราส่วนที่เท่ากัน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/3",
+   "tag": "ป.6"
+  },
+  {
+   "text": "อัตราส่วน 7 : 9 เท่ากับอัตราส่วน 28 : ใด",
+   "answer": "36",
+   "sub": "ชุดที่ 2 · อัตราส่วนและอัตราส่วนที่เท่ากัน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/3",
+   "tag": "ป.6"
+  },
+  {
+   "text": "อัตราส่วน 6 : 11 เท่ากับอัตราส่วน 42 : ใด",
+   "answer": "77",
+   "sub": "ชุดที่ 2 · อัตราส่วนและอัตราส่วนที่เท่ากัน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/3",
+   "tag": "ป.6"
+  },
+  {
+   "text": "อัตราส่วน 9 : 10 เท่ากับอัตราส่วน 27 : ใด",
+   "answer": "30",
+   "sub": "ชุดที่ 2 · อัตราส่วนและอัตราส่วนที่เท่ากัน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/3",
+   "tag": "ป.6"
+  },
+  {
+   "text": "อัตราส่วน 8 : 15 เท่ากับอัตราส่วน 40 : ใด",
+   "answer": "75",
+   "sub": "ชุดที่ 2 · อัตราส่วนและอัตราส่วนที่เท่ากัน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/3",
+   "tag": "ป.6"
+  },
+  {
+   "text": "แบ่งเงิน 45 บาทตามอัตราส่วน 2 : 3 คนแรกได้เงินกี่บาท",
+   "answer": "18",
+   "sub": "ชุดที่ 2 · อัตราส่วนและอัตราส่วนที่เท่ากัน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.6/11",
+   "tag": "ป.6"
+  },
+  {
+   "text": "แบ่งเงิน 63 บาทตามอัตราส่วน 3 : 4 คนแรกได้เงินกี่บาท",
+   "answer": "27",
+   "sub": "ชุดที่ 2 · อัตราส่วนและอัตราส่วนที่เท่ากัน",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.6/11",
+   "tag": "ป.6"
+  },
+  {
+   "text": "แบ่งเงิน 108 บาทตามอัตราส่วน 5 : 7 คนแรกได้เงินกี่บาท",
+   "answer": "45",
+   "sub": "ชุดที่ 2 · อัตราส่วนและอัตราส่วนที่เท่ากัน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/11",
+   "tag": "ป.6"
+  },
+  {
+   "text": "แบ่งเงิน 81 บาทตามอัตราส่วน 4 : 5 คนแรกได้เงินกี่บาท",
+   "answer": "36",
+   "sub": "ชุดที่ 2 · อัตราส่วนและอัตราส่วนที่เท่ากัน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/11",
+   "tag": "ป.6"
+  },
+  {
+   "text": "แบ่งเงิน 120 บาทตามอัตราส่วน 7 : 8 คนแรกได้เงินกี่บาท",
+   "answer": "56",
+   "sub": "ชุดที่ 2 · อัตราส่วนและอัตราส่วนที่เท่ากัน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/11",
+   "tag": "ป.6"
+  },
+  {
+   "text": "แบ่งเงิน 154 บาทตามอัตราส่วน 5 : 9 คนแรกได้เงินกี่บาท",
+   "answer": "55",
+   "sub": "ชุดที่ 2 · อัตราส่วนและอัตราส่วนที่เท่ากัน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/11",
+   "tag": "ป.6"
+  },
+  {
+   "text": "แบ่งเงิน 90 บาทตามอัตราส่วน 3 : 7 คนแรกได้เงินกี่บาท",
+   "answer": "27",
+   "sub": "ชุดที่ 2 · อัตราส่วนและอัตราส่วนที่เท่ากัน",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/11",
+   "tag": "ป.6"
+  },
+  {
+   "text": "แบ่งเงิน 136 บาทตามอัตราส่วน 6 : 11 คนแรกได้เงินกี่บาท",
+   "answer": "48",
+   "sub": "ชุดที่ 2 · อัตราส่วนและอัตราส่วนที่เท่ากัน",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/11",
+   "tag": "ป.6"
+  },
+  {
+   "text": "ห้องหนึ่งมีนักเรียนชาย 12 คน หญิง 18 คน อัตราส่วนของจำนวนนักเรียนชายต่อหญิงอย่างต่ำเป็นเท่าใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b> 2 : 3</div><div class=\"ch\"><b>ข.</b> 3 : 2</div><div class=\"ch\"><b>ค.</b> 12 : 18 เท่านั้น</div><div class=\"ch\"><b>ง.</b> 6 : 9</div></div>",
+   "answer": "ก",
+   "sub": "ชุดที่ 3 · การเขียนอัตราส่วนจากสถานการณ์",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.6/2",
+   "tag": "ป.6"
+  },
+  {
+   "text": "อัตราส่วน 20 : 35 เขียนอย่างต่ำได้เป็นเท่าใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b> 10 : 17</div><div class=\"ch\"><b>ข.</b> 4 : 7</div><div class=\"ch\"><b>ค.</b> 5 : 8</div><div class=\"ch\"><b>ง.</b> 2 : 5</div></div>",
+   "answer": "ข",
+   "sub": "ชุดที่ 3 · การเขียนอัตราส่วนจากสถานการณ์",
+   "level": "ง่าย",
+   "std": "ค 1.1 ป.6/2",
+   "tag": "ป.6"
+  },
+  {
+   "text": "อัตราส่วนต่างจากเศษส่วนอย่างไร<div class=\"choices\"><div class=\"ch\"><b>ก.</b> อัตราส่วนเขียนเป็นเศษส่วนไม่ได้</div><div class=\"ch\"><b>ข.</b> อัตราส่วนใช้กับจำนวนเต็มเท่านั้นไม่ได้</div><div class=\"ch\"><b>ค.</b> อัตราส่วนใช้เปรียบเทียบสองปริมาณ ซึ่งอาจเป็นคนละหน่วยกันได้</div><div class=\"ch\"><b>ง.</b> อัตราส่วนต้องมีค่าน้อยกว่า 1 เสมอ</div></div>",
+   "answer": "ค",
+   "sub": "ชุดที่ 3 · การเขียนอัตราส่วนจากสถานการณ์",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/2",
+   "tag": "ป.6"
+  },
+  {
+   "text": "น้ำเชื่อมผสมน้ำในอัตราส่วน 1 : 4 ถ้าใช้น้ำเชื่อม 3 ถ้วย ต้องใช้น้ำกี่ถ้วย<div class=\"choices\"><div class=\"ch\"><b>ก.</b> 4 ถ้วย</div><div class=\"ch\"><b>ข.</b> 7 ถ้วย</div><div class=\"ch\"><b>ค.</b> 15 ถ้วย</div><div class=\"ch\"><b>ง.</b> 12 ถ้วย</div></div>",
+   "answer": "ง",
+   "sub": "ชุดที่ 3 · การเขียนอัตราส่วนจากสถานการณ์",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/2",
+   "tag": "ป.6"
+  },
+  {
+   "text": "ข้อใด<b>ไม่ใช่</b>อัตราส่วนที่เท่ากับ 6 : 9<div class=\"choices\"><div class=\"ch\"><b>ก.</b> 9 : 6</div><div class=\"ch\"><b>ข.</b> 2 : 3</div><div class=\"ch\"><b>ค.</b> 12 : 18</div><div class=\"ch\"><b>ง.</b> 18 : 27</div></div>",
+   "answer": "ก",
+   "sub": "ชุดที่ 3 · การเขียนอัตราส่วนจากสถานการณ์",
+   "level": "กลาง",
+   "std": "ค 1.1 ป.6/3",
+   "tag": "ป.6"
+  },
+  {
+   "text": "ถ้า 3 : 5 = a : 40 แล้ว a มีค่าเท่าใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b> 30</div><div class=\"ch\"><b>ข.</b> 24</div><div class=\"ch\"><b>ค.</b> 20</div><div class=\"ch\"><b>ง.</b> 15</div></div>",
+   "answer": "ข",
+   "sub": "ชุดที่ 3 · การเขียนอัตราส่วนจากสถานการณ์",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/3",
+   "tag": "ป.6"
+  },
+  {
+   "text": "รูปสี่เหลี่ยมผืนผ้ากว้าง 8 เซนติเมตร ยาว 12 เซนติเมตร อัตราส่วนของพื้นที่ต่อความยาวรอบรูปเป็นเท่าใด (ตัวเลขล้วน ไม่คิดหน่วย)<div class=\"choices\"><div class=\"ch\"><b>ก.</b> 3 : 2</div><div class=\"ch\"><b>ข.</b> 24 : 5</div><div class=\"ch\"><b>ค.</b> 12 : 5</div><div class=\"ch\"><b>ง.</b> 2 : 3</div></div>",
+   "answer": "ค",
+   "sub": "ชุดที่ 3 · การเขียนอัตราส่วนจากสถานการณ์",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/2",
+   "tag": "ป.6"
+  },
+  {
+   "text": "เรียงลำดับจากน้อยไปมาก ข้อใดถูกต้อง<div class=\"choices\"><div class=\"ch\"><b>ก.</b> <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span> , <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> , <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span></div><div class=\"ch\"><b>ข.</b> <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span> , <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span> , <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span></div><div class=\"ch\"><b>ค.</b> <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> , <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span> , <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span></div><div class=\"ch\"><b>ง.</b> <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> , <span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span> , <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span></div></div>",
+   "answer": "ง",
+   "sub": "ชุดที่ 3 · การเขียนอัตราส่วนจากสถานการณ์",
+   "level": "ยาก",
+   "std": "ค 1.1 ป.6/1",
+   "tag": "ป.6"
+  }
+ ]
+}
