@@ -34,6 +34,7 @@ LEGACY = os.path.join(QDIR, "legacy-order.json")
 DATA = os.path.join(ROOT, "data")
 HTML = os.path.join(ROOT, "index.html")
 COPY = os.path.join(ROOT, "ข้อสอบคณิตศาสตร์_ม1.html")
+FONT_CSS = os.path.join(ROOT, "questions", "font-embed.css")
 
 PLACEHOLDER = "[[fig]]"
 FIELD_ORDER = ["id", "subject", "grade", "unit", "uname", "sub",
@@ -145,8 +146,32 @@ def build_texts(questions, per_course):
     shell = put(html, "LEGACY_IDS", tight(legacy))
     shell = put(shell, "MANIFEST", dump(manifest))
     split = put(shell, "QUESTIONS", "[]")            # ออนไลน์: โหลดข้อสอบทีหลัง
-    bundled = put(shell, "QUESTIONS", dump(questions))   # ออฟไลน์: รวมไว้ในไฟล์เดียว
+    bundled = embed_font(put(shell, "QUESTIONS", dump(questions)))   # ออฟไลน์: ไฟล์เดียว
     return split, bundled, data_files
+
+
+# บรรทัดที่ดึงฟอนต์จาก Google Fonts — สำเนาออฟไลน์ไม่ต้องใช้ และเรียกไปก็ล้มเปล่า ๆ
+CDN_FONT = re.compile(
+    r'^<link rel="preconnect" href="https://fonts\.(?:googleapis|gstatic)\.com".*?\n'
+    r'|^<link href="https://fonts\.googleapis\.com/css2\?family=.*?\n', re.M)
+
+
+def embed_font(bundled):
+    """ฝังฟอนต์ลงในสำเนาออฟไลน์ แล้วตัดลิงก์ CDN ทิ้ง
+
+    ฝังเฉพาะสำเนาออฟไลน์ ไม่ฝังใน index.html — base64 ราว 152 KB จะดันหน้าแรก
+    จาก 218 KB เป็น 370 KB ซึ่งกินผลของการแยกข้อมูลออกจาก index.html ไปเกือบหมด
+    ส่วนสำเนาออฟไลน์ใหญ่ 4.4 MB อยู่แล้ว เพิ่ม 3% ไม่มีผล
+    """
+    if not os.path.exists(FONT_CSS):
+        print("⚠️  ไม่พบ questions/font-embed.css — สำเนาออฟไลน์จะยังไม่มีฟอนต์ฝังไว้ "
+              "(รัน: python3 tools/build_font.py)")
+        return bundled
+    css = open(FONT_CSS, encoding="utf-8").read().rstrip()
+    out = CDN_FONT.sub("", bundled)
+    if "<style>" not in out:
+        raise SystemExit("ไม่พบแท็ก <style> ในหน้าเว็บ ฝังฟอนต์ไม่ได้")
+    return out.replace("<style>", "<style>\n" + css, 1)
 
 
 def main(check_only):

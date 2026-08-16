@@ -360,11 +360,30 @@ console.log(JSON.stringify({{ bad, manual }}));
         notes.append(f"เฉลยที่ตรวจอัตโนมัติไม่ได้ {len(res['manual'])} ข้อ "
                      f"(คำตอบเชิงบรรยาย)")
 
-    # ---- 8. สำเนาออฟไลน์ต้องเป็นไฟล์เดียวกับ index.html ต่างแค่ข้อมูลที่ฝังไว้ ----
-    strip = lambda t: re.sub(r"const QUESTIONS = \[.*?\];", "const QUESTIONS = [];", t, flags=re.S)
+    # ---- 8. สำเนาออฟไลน์ต้องเป็นไฟล์เดียวกับ index.html ต่างแค่ข้อมูลกับฟอนต์ที่ฝังไว้ ----
+    def strip(t):
+        t = re.sub(r"const QUESTIONS = \[.*?\];", "const QUESTIONS = [];", t, flags=re.S)
+        # สำเนาออฟไลน์ฝังฟอนต์ไว้แทนลิงก์ CDN — ตัดทั้งสองฝั่งออกก่อนเทียบโค้ด
+        t = re.sub(r"/\* สร้างจาก tools/build_font\.py.*?\*/\n", "", t, flags=re.S)
+        t = re.sub(r"@font-face\{font-family:'IBM Plex Sans Thai Looped'.*?\}\n?", "",
+                   t, flags=re.S)
+        t = re.sub(r'<link rel="preconnect" href="https://fonts\.[^\n]*\n', "", t)
+        t = re.sub(r'<link href="https://fonts\.googleapis\.com[^\n]*\n', "", t)
+        return t
     if strip(bundled) != strip(html):
         err("สำเนา ข้อสอบคณิตศาสตร์_ม1.html มีโค้ดไม่ตรงกับ index.html "
             "(รัน: python3 tools/build.py)")
+
+    # ---- 8ก. สำเนาออฟไลน์ต้องพึ่งตัวเองได้จริง ----
+    # เคยโฆษณาใน README ว่าเปิดออฟไลน์ได้ แต่ฟอนต์ยังโหลดจาก CDN — เปิดจริงแล้วฟอนต์ไม่มา
+    if "fonts.googleapis.com" in bundled or "fonts.gstatic.com" in bundled:
+        err("สำเนาออฟไลน์ยังอ้างถึง Google Fonts — เปิดออฟไลน์แล้วฟอนต์จะไม่มา")
+    faces = bundled.count("@font-face")
+    if faces < 4:
+        err(f"สำเนาออฟไลน์มี @font-face แค่ {faces} ชุด "
+            "(รัน: python3 tools/build_font.py && python3 tools/build.py)")
+    else:
+        notes.append(f"สำเนาออฟไลน์ฝังฟอนต์ไว้ {faces} น้ำหนัก ไม่ต้องพึ่ง CDN")
 
     # ---- 9. ความครอบคลุมหัวข้อ เทียบกับ questions/topics.json ----
     coverage(qs)
