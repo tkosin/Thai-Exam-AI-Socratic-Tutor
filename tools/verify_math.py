@@ -201,6 +201,144 @@ def _(q, m):
     want(q, pow(base, exp, mod), f"{base}^{exp} mod {mod}")
 
 
+# ---------- สมการเชิงเส้นตัวแปรเดียว (แก้ให้ทั่วไป ไม่ผูกกับรูปประโยค) ----------
+_FRAC_TERM = re.compile(r"^\((.+)\)/\((\d+)\)$")
+
+
+def _terms(expr):
+    """แยกพจน์ระดับบนสุดพร้อมเครื่องหมาย โดยไม่ตัดกลางวงเล็บ"""
+    out, buf, depth, sign = [], "", 0, 1
+    i = 0
+    while i < len(expr):
+        ch = expr[i]
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth -= 1
+        if depth == 0 and ch in "+-" and buf.strip():
+            out.append((sign, buf.strip()))
+            sign, buf = (1 if ch == "+" else -1), ""
+        elif depth == 0 and ch in "+-" and not buf.strip():
+            sign *= (1 if ch == "+" else -1)      # เครื่องหมายนำหน้าพจน์แรก
+        else:
+            buf += ch
+        i += 1
+    if buf.strip():
+        out.append((sign, buf.strip()))
+    return out
+
+
+def lin_poly(expr):
+    """พหุนามจากนิพจน์ที่อาจมีพจน์เศษส่วนตัวส่วนเป็นค่าคงที่ เช่น (x)/(3) + 5
+
+    poly_of() ปฏิเสธเครื่องหมายหารทุกชนิด ตัวห่อนี้จึงถอดพจน์เศษส่วนออกมาหารเอง
+    แล้วค่อยส่งตัวเศษให้ poly_of เป็นคนแจงพหุนาม
+    """
+    total = {}
+    for sign, term in _terms(expr):
+        m = _FRAC_TERM.match(term)
+        if m:
+            part, den = poly_of(m.group(1)), int(m.group(2))
+            if den == 0:
+                raise NotPoly("ตัวส่วนเป็นศูนย์")
+            part = {k: v / den for k, v in part.items()}
+        else:
+            part = poly_of(term)
+        for k, v in part.items():
+            total[k] = total.get(k, Fraction(0)) + v * sign
+    return {k: v for k, v in total.items() if v}
+
+
+def solve_linear(lhs, rhs):
+    """แก้ ax + b = cx + d — คืนค่า x ที่เป็นคำตอบเดียว"""
+    p = lin_poly(lhs)
+    for k, v in lin_poly(rhs).items():
+        p[k] = p.get(k, Fraction(0)) - v
+    for term in p:
+        if term and term != (("x", 1),):
+            raise NotPoly(f"ไม่ใช่สมการเชิงเส้นใน x — พบพจน์ {term}")
+    a, b = p.get((("x", 1),), Fraction(0)), p.get((), Fraction(0))
+    if a == 0:
+        raise NotPlainData("สัมประสิทธิ์ของ x หักล้างกันหมด ไม่มีคำตอบเดียว")
+    return -b / a
+
+
+@rule(r"จงแก้สมการ (.+?) = (.+?)(?: เพื่อหาค่า x| ค่าของ x เท่ากับเท่าใด)$")
+def _(q, m):
+    want(q, solve_linear(m[1], m[2]), "ย้ายข้างแล้วหารด้วยสัมประสิทธิ์ของ x")
+
+
+@rule(r"จากสมการ (.+?) = (.+?) ต้อง(บวก|ลบ|คูณ|หาร)ด้วยจำนวนใดทั้งสองข้าง")
+def _(q, m):
+    """สมบัติการเท่ากัน — ตัวที่ต้องทำคือตัวที่หักล้างสิ่งที่ติดอยู่กับ x"""
+    lhs, op = m[1], m[3]
+    p = lin_poly(lhs)
+    coef, const = p.get((("x", 1),), Fraction(0)), p.get((), Fraction(0))
+    if op in ("บวก", "ลบ"):
+        if const == 0:
+            raise NotPlainData("ข้างซ้ายไม่มีพจน์คงที่ให้ย้าย")
+        want(q, abs(const), f"หักล้างพจน์คงที่ {const}")
+    else:
+        if coef == 0:
+            raise NotPlainData("ข้างซ้ายไม่มีสัมประสิทธิ์ของ x")
+        # 4x = 28 ต้องหารด้วย 4 · (x)/(3) = 9 ต้องคูณด้วย 3
+        want(q, coef if op == "หาร" else 1 / coef, f"หักล้างสัมประสิทธิ์ {coef}")
+
+
+# ---------- ห.ร.ม. · ค.ร.น. · ผลบวกของชุดจำนวน ----------
+@rule(r"(?:จงหา ?)?(ห\.ร\.ม\.|ค\.ร\.น\.) ของ ((?:\d+ )*\d+(?: และ \d+)?) ?(?:เท่ากับเท่าใด)?$")
+def _(q, m):
+    nums = [int(x) for x in re.findall(r"\d+", m[2])]
+    if len(nums) < 2:
+        raise NotPlainData("ต้องมีอย่างน้อยสองจำนวน")
+    want(q, math.gcd(*nums) if m[1] == "ห.ร.ม." else math.lcm(*nums),
+         f"{m[1]} ของ {nums}")
+
+
+@rule(r"ผลคูณของจำนวนเต็มบวกสองจำนวนเท่ากับ (\d+) และห\.ร\.ม\. เท่ากับ (\d+) "
+      r"จงหาค\.ร\.น\.")
+def _(q, m):
+    prod, g = int(m[1]), int(m[2])
+    if prod % g:
+        raise NotPlainData("ผลคูณต้องหารด้วย ห.ร.ม. ลงตัว")
+    # ยืนยันว่ามีคู่จำนวนจริงที่ให้ผลคูณและ ห.ร.ม. ตามที่โจทย์บอก
+    if not any(a * b == prod and math.gcd(a, b) == g
+               for a in range(1, prod + 1) if prod % a == 0 for b in [prod // a]):
+        raise NotPlainData("ไม่มีคู่จำนวนที่สอดคล้องกับโจทย์")
+    want(q, prod // g, "ห.ร.ม. × ค.ร.น. = ผลคูณของสองจำนวน")
+
+
+@rule(r"^จงหาผลบวกของจำนวนเต็ม(คี่|คู่)?(?:ทั้งหมด)?ตั้งแต่ (-?\d+) ถึง (-?\d+)$")
+def _(q, m):
+    lo, hi = int(m[2]), int(m[3])
+    if lo > hi:
+        raise NotPlainData("ช่วงกลับด้าน")
+    keep = {None: lambda n: True, "คี่": lambda n: n % 2,
+            "คู่": lambda n: n % 2 == 0}[m[1]]
+    want(q, sum(n for n in range(lo, hi + 1) if keep(n)), f"ไล่บวกตั้งแต่ {lo} ถึง {hi}")
+
+
+@rule(r"^จงหาผลบวกของตัวประกอบทั้งหมดของ (\d+)$")
+def _(q, m):
+    n = int(m[1])
+    want(q, sum(d for d in range(1, n + 1) if n % d == 0), f"ไล่หาตัวประกอบของ {n}")
+
+
+@rule(r"^จงหาผลบวกของจำนวนเฉพาะทั้งหมดที่น้อยกว่า (\d+)$")
+def _(q, m):
+    n = int(m[1])
+    prime = lambda k: k > 1 and all(k % d for d in range(2, math.isqrt(k) + 1))
+    want(q, sum(k for k in range(2, n) if prime(k)), f"ไล่หาจำนวนเฉพาะที่น้อยกว่า {n}")
+
+
+@rule(r"จำนวนเต็มบวกที่น้อยกว่า (\d+) และหารด้วย (\d+) เหลือเศษ (\d+) มีทั้งหมดกี่จำนวน")
+def _(q, m):
+    n, k, r = (int(m[i]) for i in (1, 2, 3))
+    if r >= k:
+        raise NotPlainData("เศษต้องน้อยกว่าตัวหาร")
+    want(q, sum(1 for v in range(1, n) if v % k == r), f"ไล่นับจำนวนที่ {k}n + {r}")
+
+
 # หมายเหตุลำดับ: RULES จับคู่ตามลำดับที่ประกาศ และหยุดที่กฎแรกที่ตรง
 # กฎของตระกูลด้านล่างจึงต้องอยู่ก่อนกฎทั่วไปอย่าง "จงหาค่าของ …"
 # ไม่งั้นกฎทั่วไปจะคว้าไปก่อนแล้วโยน NotArithmetic ทิ้งลงถังหางยาว
@@ -1685,6 +1823,33 @@ def selftest():
             got = f"NotPoly({e})"
         if got != expect:
             fails.append(f"poly_of({src!r}) -> {got} (ต้องได้ {expect})")
+    # สมการเชิงเส้น — พจน์เศษส่วนและเครื่องหมายนำหน้าพจน์แรกคือจุดที่พังง่ายที่สุด
+    for lhs, rhs, expect in [("7x - 20", "x - 14", Fraction(1)),
+                             ("5x - 10", "-x - 22", Fraction(-2)),
+                             ("3(x + 2)", "18", Fraction(4)),
+                             ("(x)/(3)", "9", Fraction(27)),
+                             ("(x)/(2) + (x)/(3)", "10", Fraction(12)),
+                             ("(3x)/(4)", "9", Fraction(12)),
+                             ("2(3x + 1) - 5", "2(x + 4)", Fraction(11, 4)),
+                             ("-x + 8", "3", Fraction(5))]:
+        try:
+            got = solve_linear(lhs, rhs)
+        except (NotPoly, NotPlainData) as e:
+            got = f"ปฏิเสธ({e})"
+        if got != expect:
+            fails.append(f"solve_linear({lhs!r}, {rhs!r}) -> {got} (ต้องได้ {expect})")
+    # x^2 + 2x = 0 สำคัญกว่าที่เห็น: ถ้าการ์ด "ต้องเชิงเส้น" หายไป จะได้ x = 0 ออกมา
+    # ซึ่งเป็นรากจริงข้อหนึ่งแต่ไม่ใช่คำตอบเดียว — ตอบผิดโดยไม่มีข้อยกเว้นให้จับ
+    for lhs, rhs in [("2x + 1", "2x + 5"), ("x^2 + 1", "0"), ("(x)/(0)", "1"),
+                     ("x^2 + 2x", "0")]:
+        try:
+            solve_linear(lhs, rhs)
+            fails.append(f"solve_linear({lhs!r}, {rhs!r}) ควรถูกปฏิเสธแต่ผ่าน")
+        except (NotPoly, NotPlainData):
+            pass
+    if _terms("5 - (x)/(3) + 2") != [(1, "5"), (-1, "(x)/(3)"), (1, "2")]:
+        fails.append(f"_terms แยกพจน์ผิด -> {_terms('5 - (x)/(3) + 2')}")
+
     for src in ["3/x", "x^-2", "x^99"]:
         try:
             poly_of(src)
@@ -3685,6 +3850,11 @@ def bucket(course, q):
         return "ตัวเลขอยู่ในรูป อ่านจากข้อความไม่ได้"
     if 'class="choices' in q["text"]:
         return "ปรนัยเชิงนิยาม/แนวคิด ไม่มีเลขให้คิด"
+    # เฉลยที่เป็นข้อความ (เครื่องหมายเปรียบเทียบ · ขั้นตอนการสร้างด้วยวงเวียน · ชื่อสมบัติ)
+    # ไม่มีทางคิดใหม่เป็นตัวเลขได้เลย แยกถังไว้เพื่อไม่ให้กองงานดูใหญ่เกินจริง
+    # ถังนี้ "ปิดแล้ว" — ไม่ใช่งานค้าง ต่างจากถังที่เหลือซึ่งเขียนกฎเพิ่มได้
+    if num(q["answer"]) is None:
+        return "เฉลยเป็นข้อความ คิดใหม่เป็นตัวเลขไม่ได้"
     return "คณิตศาสตร์ที่ยังไม่มีกฎรองรับ"
 
 
