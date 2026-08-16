@@ -57,8 +57,11 @@ check_once() {
   # ใช้ ^1 เพื่อให้ merge commit เทียบกับยอด main เดิม ไม่ใช่กับปลายแบรนช์ที่ถูก merge เข้ามา
   files=()
   if git rev-parse -q --verify "$head^1" >/dev/null; then
+    # core.quotepath=false — ไม่งั้น git คืนชื่อไฟล์ที่ไม่ใช่ ASCII เป็นรหัสหนีในเครื่องหมายคำพูด
+    # ("\340\270\204..." แทน "คลังข้อสอบ_ออฟไลน์.html") ซึ่งหาไฟล์นั้นทั้งใน main และบนเว็บไม่เจอ
+    # แล้วรายงานว่ายังไม่ deploy ทั้งที่ deploy สำเร็จแล้ว · repo นี้มีไฟล์ชื่อไทยที่เสิร์ฟจริง
     while read -r f; do [ -n "$f" ] && files+=("$f"); done < <(
-      git diff --name-only "$head^1" "$head")
+      git -c core.quotepath=false diff --name-only "$head^1" "$head")
   fi
   if [ "${#files[@]}" -gt "$MAXFILES" ]; then
     echo "  (push ล่าสุดแก้ ${#files[@]} ไฟล์ — เทียบแค่ $MAXFILES ไฟล์แรก)"
