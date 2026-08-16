@@ -2994,29 +2994,114 @@
  ],
  "planned_courses": [
   {
-   "subject": "เชาวน์และมิติสัมพันธ์",
+   "subject": "เทคโนโลยี",
    "grade": "ม.1",
-   "phase": 5
+   "phase": 7
   },
   {
-   "subject": "สังคมศึกษา",
-   "grade": "ม.1",
-   "phase": 6
+   "subject": "เทคโนโลยี",
+   "grade": "ม.2",
+   "phase": 7
   },
   {
    "subject": "ภาษาไทย",
    "grade": "ม.1",
-   "phase": 6
+   "phase": 8
+  },
+  {
+   "subject": "ภาษาไทย",
+   "grade": "ม.2",
+   "phase": 8
+  },
+  {
+   "subject": "ภาษาไทย",
+   "grade": "ม.3",
+   "phase": 8
+  },
+  {
+   "subject": "สังคมศึกษา ศาสนา และวัฒนธรรม",
+   "grade": "ม.1",
+   "phase": 8
+  },
+  {
+   "subject": "สังคมศึกษา ศาสนา และวัฒนธรรม",
+   "grade": "ม.2",
+   "phase": 8
+  },
+  {
+   "subject": "สังคมศึกษา ศาสนา และวัฒนธรรม",
+   "grade": "ม.3",
+   "phase": 8
   },
   {
    "subject": "ภาษาอังกฤษ",
    "grade": "ม.1",
-   "phase": 6
+   "phase": 9
+  },
+  {
+   "subject": "ภาษาอังกฤษ",
+   "grade": "ม.2",
+   "phase": 9
+  },
+  {
+   "subject": "ภาษาอังกฤษ",
+   "grade": "ม.3",
+   "phase": 9
+  },
+  {
+   "subject": "สุขศึกษาและพลศึกษา",
+   "grade": "ม.1",
+   "phase": 10
+  },
+  {
+   "subject": "สุขศึกษาและพลศึกษา",
+   "grade": "ม.2",
+   "phase": 10
+  },
+  {
+   "subject": "สุขศึกษาและพลศึกษา",
+   "grade": "ม.3",
+   "phase": 10
+  },
+  {
+   "subject": "ศิลปะ",
+   "grade": "ม.1",
+   "phase": 10
+  },
+  {
+   "subject": "ศิลปะ",
+   "grade": "ม.2",
+   "phase": 10
+  },
+  {
+   "subject": "ศิลปะ",
+   "grade": "ม.3",
+   "phase": 10
+  },
+  {
+   "subject": "การงานอาชีพ",
+   "grade": "ม.1",
+   "phase": 10
+  },
+  {
+   "subject": "การงานอาชีพ",
+   "grade": "ม.2",
+   "phase": 10
+  },
+  {
+   "subject": "การงานอาชีพ",
+   "grade": "ม.3",
+   "phase": 10
+  },
+  {
+   "subject": "เชาวน์และมิติสัมพันธ์",
+   "grade": "ม.1",
+   "phase": 11
   },
   {
    "subject": "ภาษาจีน",
    "grade": "ม.1",
-   "phase": 6
+   "phase": 11
   }
  ]
 }
