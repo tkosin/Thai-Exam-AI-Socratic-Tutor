@@ -7,7 +7,7 @@
   +   questions/figures.json          (คลังรูป SVG ใช้ซ้ำได้)
 เขียน index.html                      (โค้ด + MANIFEST · ไม่มีตัวข้อสอบ)
   +   data/<slug>.json                  (ข้อสอบรายวิชา หน้าเว็บโหลดตอนกดเข้าวิชา)
-  +   ข้อสอบคณิตศาสตร์_ม1.html         (สำเนาชื่อไทย รวมทุกอย่างไว้ในไฟล์เดียว เปิดออฟไลน์ได้)
+  +   คลังข้อสอบ_ออฟไลน์.html          (สำเนาชื่อไทย รวมทุกอย่างไว้ในไฟล์เดียว เปิดออฟไลน์ได้)
 
 ในฟิลด์ `text` ใช้ตัวคั่น [[fig]] เป็นตำแหน่งที่จะแทรกรูปที่อ้างด้วยฟิลด์ `figure`
 ถ้ามี `figure` แต่ไม่มี [[fig]] จะต่อรูปไว้ท้ายโจทย์
@@ -33,7 +33,7 @@ FIGURES = os.path.join(QDIR, "figures.json")
 LEGACY = os.path.join(QDIR, "legacy-order.json")
 DATA = os.path.join(ROOT, "data")
 HTML = os.path.join(ROOT, "index.html")
-COPY = os.path.join(ROOT, "ข้อสอบคณิตศาสตร์_ม1.html")
+COPY = os.path.join(ROOT, "คลังข้อสอบ_ออฟไลน์.html")
 FONT_CSS = os.path.join(ROOT, "questions", "font-embed.css")
 
 PLACEHOLDER = "[[fig]]"
@@ -223,7 +223,7 @@ def main(check_only):
     open(COPY, "w", encoding="utf-8").write(bundled)
     print("ไม่มีการเปลี่ยนแปลง" if same and copy_same and data_same
           else f"เขียน index.html + data/*.json ({len(data_files)} ไฟล์) ใหม่แล้ว")
-    print("ซิงค์สำเนา ข้อสอบคณิตศาสตร์_ม1.html (รวมไฟล์เดียว เปิดออฟไลน์ได้) แล้ว")
+    print("ซิงค์สำเนา คลังข้อสอบ_ออฟไลน์.html (รวมไฟล์เดียว เปิดออฟไลน์ได้) แล้ว")
     return 0
 
 

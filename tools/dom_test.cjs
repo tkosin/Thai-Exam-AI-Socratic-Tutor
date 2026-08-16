@@ -12,7 +12,7 @@ const { JSDOM } = require('jsdom');
 // jsdom ไม่มีเซิร์ฟเวอร์ให้ fetch เทสต์ส่วนใหญ่จึงรันบนสำเนา (โค้ดชุดเดียวกันเป๊ะ)
 // ส่วนเส้นทาง "โหลดรายวิชา" มีบล็อกทดสอบแยกที่ stub fetch ให้
 const SHELL_HTML = path.join(__dirname, '..', 'index.html');
-const HTML = path.join(__dirname, '..', 'ข้อสอบคณิตศาสตร์_ม1.html');
+const HTML = path.join(__dirname, '..', 'คลังข้อสอบ_ออฟไลน์.html');
 const html = fs.readFileSync(HTML, 'utf8');
 const shellHtml = fs.readFileSync(SHELL_HTML, 'utf8');
 const DATA_DIR = path.join(__dirname, '..', 'data');

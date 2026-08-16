@@ -17,7 +17,7 @@ import xml.etree.ElementTree as ET
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HTML = os.path.join(ROOT, "index.html")
-COPY = os.path.join(ROOT, "ข้อสอบคณิตศาสตร์_ม1.html")
+COPY = os.path.join(ROOT, "คลังข้อสอบ_ออฟไลน์.html")
 COURSES = os.path.join(ROOT, "questions", "courses.json")
 TOPICS = os.path.join(ROOT, "questions", "topics.json")
 DATA = os.path.join(ROOT, "data")
@@ -218,7 +218,7 @@ def main():
     # ตรวจจากสำเนาที่รวมไฟล์เดียว เพราะนั่นคือ "ของที่ส่งถึงผู้เรียน" ครบทั้งก้อน
     html = open(HTML, encoding="utf-8").read()
     if not os.path.exists(COPY):
-        err("ไม่พบไฟล์สำเนา ข้อสอบคณิตศาสตร์_ม1.html")
+        err("ไม่พบไฟล์สำเนา คลังข้อสอบ_ออฟไลน์.html")
         return report()
     bundled = open(COPY, encoding="utf-8").read()
 
@@ -407,7 +407,7 @@ console.log(JSON.stringify({{ bad, manual }}));
         t = re.sub(r'<link href="https://fonts\.googleapis\.com[^\n]*\n', "", t)
         return t
     if strip(bundled) != strip(html):
-        err("สำเนา ข้อสอบคณิตศาสตร์_ม1.html มีโค้ดไม่ตรงกับ index.html "
+        err("สำเนา คลังข้อสอบ_ออฟไลน์.html มีโค้ดไม่ตรงกับ index.html "
             "(รัน: python3 tools/build.py)")
 
     # ---- 8ก. สำเนาออฟไลน์ต้องพึ่งตัวเองได้จริง ----
