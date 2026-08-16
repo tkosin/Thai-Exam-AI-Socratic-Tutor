@@ -23,7 +23,9 @@ TOPICS = os.path.join(ROOT, "questions", "topics.json")
 DATA = os.path.join(ROOT, "data")
 
 # แข่งขัน = โจทย์แนวสอบแข่งขัน (สพฐ./สสวท./TEDET) ยากกว่า "ยาก" และมักต้องใช้หลายหัวข้อร่วมกัน
-LEVELS = {"ง่าย", "กลาง", "ยาก", "แข่งขัน"}
+# โอลิมปิก = แนว สอวน./TMO ยากกว่าแข่งขันอีกขั้น มักไม่มีสูตรตรง ๆ ให้ใช้
+LEVELS = {"ง่าย", "กลาง", "ยาก", "แข่งขัน", "โอลิมปิก"}
+LEVEL_ORDER = ("ง่าย", "กลาง", "ยาก", "แข่งขัน", "โอลิมปิก")
 TAGS = {"ม.1", "ม.2", "ม.3", "ทบทวน ป.6", "ต่อยอด ม.2", "ต่อยอด ม.3", "ทบทวน ม.2"}
 # ค = คณิตศาสตร์ · ว = วิทยาศาสตร์ · ตัวชี้วัดวิทย์บางมาตรฐานมีถึงสองหลัก (เช่น ว 1.2 ม.2/17)
 STD_RE = re.compile(r"^([คว] \d\.\d ม\.\d/\d{1,2}|-)$")
@@ -367,19 +369,22 @@ console.log(JSON.stringify({{ bad, manual }}));
     # ---- 9. ความครอบคลุมหัวข้อ เทียบกับ questions/topics.json ----
     coverage(qs)
 
-    # ---- 10. ระดับความยากต้องมีครบทุกระดับในทุกวิชาคณิตศาสตร์ ----
-    by_grade_level = {}
+    # ---- 10. ระดับความยากต้องมีครบทุกระดับในทุกวิชา ----
+    # เดิมบังคับเฉพาะคณิตศาสตร์ วิทยาศาสตร์จึงไม่มีระดับแข่งขันเลยสักข้อโดยไม่มีใครดัก
+    # ระดับที่ทุกวิชาต้องมี ส่วนโอลิมปิกบังคับเฉพาะคณิตศาสตร์ (วิทย์ยังไม่มีแนวข้อสอบรองรับ)
+    REQUIRED = {"คณิตศาสตร์": ("ง่าย", "กลาง", "ยาก", "แข่งขัน", "โอลิมปิก"),
+                "วิทยาศาสตร์": ("ง่าย", "กลาง", "ยาก", "แข่งขัน")}
+    by_course_level = {}
     for q in qs:
-        if q.get("subject") == "คณิตศาสตร์":
-            by_grade_level.setdefault(q.get("grade"), {}).setdefault(q.get("level"), 0)
-            by_grade_level[q["grade"]][q["level"]] += 1
-    for grade in sorted(by_grade_level):
-        lv = by_grade_level[grade]
-        if "แข่งขัน" not in lv:
-            err(f"คณิตศาสตร์ {grade}: ยังไม่มีข้อสอบระดับ 'แข่งขัน'")
-        notes.append(f"ระดับความยากคณิตศาสตร์ {grade}: "
-                     + " · ".join(f"{k}:{lv[k]}" for k in ("ง่าย", "กลาง", "ยาก", "แข่งขัน")
-                                  if k in lv))
+        key = (q.get("subject"), q.get("grade"))
+        by_course_level.setdefault(key, {}).setdefault(q.get("level"), 0)
+        by_course_level[key][q["level"]] += 1
+    for (subj, grade), lv in sorted(by_course_level.items(), key=lambda kv: str(kv[0])):
+        for need in REQUIRED.get(subj, ()):
+            if need not in lv:
+                err(f"{subj} {grade}: ยังไม่มีข้อสอบระดับ '{need}'")
+        notes.append(f"ระดับความยาก{subj} {grade}: "
+                     + " · ".join(f"{k}:{lv[k]}" for k in LEVEL_ORDER if k in lv))
 
     # ---- 11. สรุปจำนวนข้อตามวิชาและหน่วย ----
     for (subj, grade), cqs in by_course.items():
