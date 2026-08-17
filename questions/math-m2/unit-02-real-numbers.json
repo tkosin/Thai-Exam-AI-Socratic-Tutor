@@ -251,16 +251,16 @@
    "tag": "ม.2"
   },
   {
-   "text": "จำนวนในข้อใดเป็นจำนวนอตรรกยะ<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>รากที่สองที่เป็นบวกของ 25</span></div><div class=\"ch\"><b>ข.</b><span>รากที่สองที่เป็นบวกของ 7</span></div><div class=\"ch\"><b>ค.</b><span>0.75</span></div><div class=\"ch\"><b>ง.</b><span>เศษสองส่วนสาม</span></div></div>",
-   "answer": "ข",
+   "text": "จำนวนในข้อใดเป็นจำนวนอตรรกยะ<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>รากที่สองที่เป็นบวกของ 25</span></div><div class=\"ch\"><b>ข.</b><span>เศษสองส่วนสาม</span></div><div class=\"ch\"><b>ค.</b><span>0.75</span></div><div class=\"ch\"><b>ง.</b><span>รากที่สองที่เป็นบวกของ 7</span></div></div>",
+   "answer": "ง",
    "sub": "จำนวนตรรกยะและจำนวนอตรรกยะ",
    "level": "กลาง",
    "std": "ค 1.1 ม.2/2",
    "tag": "ม.2"
   },
   {
-   "text": "จำนวนในข้อใดเป็นจำนวนตรรกยะทั้งหมด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>-3, 0.25, เศษหนึ่งส่วนสาม</span></div><div class=\"ch\"><b>ข.</b><span>π, รากที่สองของ 5, 1.5</span></div><div class=\"ch\"><b>ค.</b><span>รากที่สองของ 3, รากที่สองของ 8</span></div><div class=\"ch\"><b>ง.</b><span>π, 2π, 3π</span></div></div>",
-   "answer": "ก",
+   "text": "จำนวนในข้อใดเป็นจำนวนตรรกยะทั้งหมด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>π, 2π, 3π</span></div><div class=\"ch\"><b>ข.</b><span>π, รากที่สองของ 5, 1.5</span></div><div class=\"ch\"><b>ค.</b><span>รากที่สองของ 3, รากที่สองของ 8</span></div><div class=\"ch\"><b>ง.</b><span>-3, 0.25, เศษหนึ่งส่วนสาม</span></div></div>",
+   "answer": "ง",
    "sub": "จำนวนตรรกยะและจำนวนอตรรกยะ",
    "level": "กลาง",
    "std": "ค 1.1 ม.2/2",
@@ -427,8 +427,8 @@
    "tag": "ม.2"
   },
   {
-   "text": "สมบัติการแจกแจงกล่าวว่า a(b + c) เท่ากับข้อใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ab + ac</span></div><div class=\"ch\"><b>ข.</b><span>ab + c</span></div><div class=\"ch\"><b>ค.</b><span>a + bc</span></div><div class=\"ch\"><b>ง.</b><span>(a + b)(a + c)</span></div></div>",
-   "answer": "ก",
+   "text": "สมบัติการแจกแจงกล่าวว่า a(b + c) เท่ากับข้อใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>a + bc</span></div><div class=\"ch\"><b>ข.</b><span>ab + c</span></div><div class=\"ch\"><b>ค.</b><span>ab + ac</span></div><div class=\"ch\"><b>ง.</b><span>(a + b)(a + c)</span></div></div>",
+   "answer": "ค",
    "sub": "สมบัติของจำนวนจริง",
    "level": "ง่าย",
    "std": "ค 1.1 ม.2/2",

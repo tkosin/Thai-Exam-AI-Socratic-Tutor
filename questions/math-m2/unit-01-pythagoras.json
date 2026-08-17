@@ -265,16 +265,16 @@
    "tag": "ม.2"
   },
   {
-   "text": "ชุดความยาวด้านในข้อใดประกอบเป็นรูปสามเหลี่ยมมุมฉากได้<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>4, 5, 6</span></div><div class=\"ch\"><b>ข.</b><span>7, 24, 25</span></div><div class=\"ch\"><b>ค.</b><span>6, 7, 9</span></div><div class=\"ch\"><b>ง.</b><span>10, 11, 14</span></div></div>",
-   "answer": "ข",
+   "text": "ชุดความยาวด้านในข้อใดประกอบเป็นรูปสามเหลี่ยมมุมฉากได้<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>7, 24, 25</span></div><div class=\"ch\"><b>ข.</b><span>4, 5, 6</span></div><div class=\"ch\"><b>ค.</b><span>6, 7, 9</span></div><div class=\"ch\"><b>ง.</b><span>10, 11, 14</span></div></div>",
+   "answer": "ก",
    "sub": "บทกลับของทฤษฎีบทพีทาโกรัส",
    "level": "กลาง",
    "std": "ค 2.2 ม.2/5",
    "tag": "ม.2"
   },
   {
-   "text": "ชุดความยาวด้านในข้อใดไม่ประกอบเป็นรูปสามเหลี่ยมมุมฉาก<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>3, 4, 5</span></div><div class=\"ch\"><b>ข.</b><span>5, 12, 13</span></div><div class=\"ch\"><b>ค.</b><span>9, 12, 16</span></div><div class=\"ch\"><b>ง.</b><span>20, 21, 29</span></div></div>",
-   "answer": "ค",
+   "text": "ชุดความยาวด้านในข้อใดไม่ประกอบเป็นรูปสามเหลี่ยมมุมฉาก<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>9, 12, 16</span></div><div class=\"ch\"><b>ข.</b><span>5, 12, 13</span></div><div class=\"ch\"><b>ค.</b><span>3, 4, 5</span></div><div class=\"ch\"><b>ง.</b><span>20, 21, 29</span></div></div>",
+   "answer": "ก",
    "sub": "บทกลับของทฤษฎีบทพีทาโกรัส",
    "level": "กลาง",
    "std": "ค 2.2 ม.2/5",

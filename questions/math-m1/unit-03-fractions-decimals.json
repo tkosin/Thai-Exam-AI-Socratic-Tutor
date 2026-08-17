@@ -243,8 +243,8 @@
    "tag": "ม.1"
   },
   {
-   "text": "จำนวนในข้อใดมีค่ามากที่สุด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>0.5</span></div><div class=\"ch\"><b>ข.</b><span>0.45</span></div><div class=\"ch\"><b>ค.</b><span>0.505</span></div><div class=\"ch\"><b>ง.</b><span>0.055</span></div></div>",
-   "answer": "ค",
+   "text": "จำนวนในข้อใดมีค่ามากที่สุด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>0.505</span></div><div class=\"ch\"><b>ข.</b><span>0.45</span></div><div class=\"ch\"><b>ค.</b><span>0.5</span></div><div class=\"ch\"><b>ง.</b><span>0.055</span></div></div>",
+   "answer": "ก",
    "sub": "เปรียบเทียบทศนิยม",
    "level": "ง่าย",
    "std": "ค 1.1 ม.1/1",
@@ -275,8 +275,8 @@
    "tag": "ม.1"
   },
   {
-   "text": "เศษส่วนในข้อใดมีค่ามากที่สุด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span><span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span></span></div><div class=\"ch\"><b>ข.</b><span><span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">8</span></span></span></div><div class=\"ch\"><b>ค.</b><span><span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">12</span></span></span></div><div class=\"ch\"><b>ง.</b><span><span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span></span></div></div>",
-   "answer": "ก",
+   "text": "เศษส่วนในข้อใดมีค่ามากที่สุด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span><span class=\"frac\"><span class=\"num\">7</span><span class=\"den\">12</span></span></span></div><div class=\"ch\"><b>ข.</b><span><span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">8</span></span></span></div><div class=\"ch\"><b>ค.</b><span><span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span></span></div><div class=\"ch\"><b>ง.</b><span><span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span></span></div></div>",
+   "answer": "ค",
    "sub": "เปรียบเทียบเศษส่วน",
    "level": "ง่าย",
    "std": "ค 1.1 ม.1/1",
@@ -355,8 +355,8 @@
    "tag": "ม.1"
   },
   {
-   "text": "<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> &times; 1 = <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> แสดงว่า 1 เป็นเอกลักษณ์ของการดำเนินการใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>การบวก</span></div><div class=\"ch\"><b>ข.</b><span>การคูณ</span></div><div class=\"ch\"><b>ค.</b><span>การลบ</span></div><div class=\"ch\"><b>ง.</b><span>การหาร</span></div></div>",
-   "answer": "ข",
+   "text": "<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> &times; 1 = <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span> แสดงว่า 1 เป็นเอกลักษณ์ของการดำเนินการใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>การบวก</span></div><div class=\"ch\"><b>ข.</b><span>การลบ</span></div><div class=\"ch\"><b>ค.</b><span>การคูณ</span></div><div class=\"ch\"><b>ง.</b><span>การหาร</span></div></div>",
+   "answer": "ค",
    "sub": "สมบัติการบวกและการคูณของจำนวนตรรกยะ",
    "level": "ง่าย",
    "std": "ค 1.1 ม.1/1",
@@ -411,16 +411,16 @@
    "tag": "ม.1"
   },
   {
-   "text": "<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span> เขียนเป็นทศนิยมได้ 0.333... จำนวนนี้เป็นทศนิยมชนิดใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>ทศนิยมรู้จบ</span></div><div class=\"ch\"><b>ข.</b><span>ทศนิยมซ้ำ</span></div><div class=\"ch\"><b>ค.</b><span>จำนวนเต็ม</span></div><div class=\"ch\"><b>ง.</b><span>ไม่เป็นจำนวนตรรกยะ</span></div></div>",
-   "answer": "ข",
+   "text": "<span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span> เขียนเป็นทศนิยมได้ 0.333... จำนวนนี้เป็นทศนิยมชนิดใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>ทศนิยมรู้จบ</span></div><div class=\"ch\"><b>ข.</b><span>จำนวนเต็ม</span></div><div class=\"ch\"><b>ค.</b><span>ทศนิยมซ้ำ</span></div><div class=\"ch\"><b>ง.</b><span>ไม่เป็นจำนวนตรรกยะ</span></div></div>",
+   "answer": "ค",
    "sub": "ทศนิยมซ้ำ",
    "level": "ง่าย",
    "std": "ค 1.1 ม.1/1",
    "tag": "ม.1"
   },
   {
-   "text": "เศษส่วนในข้อใดเขียนเป็นทศนิยมรู้จบได้<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span><span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span></span></div><div class=\"ch\"><b>ข.</b><span><span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">6</span></span></span></div><div class=\"ch\"><b>ค.</b><span><span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">8</span></span></span></div><div class=\"ch\"><b>ง.</b><span><span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">7</span></span></span></div></div>",
-   "answer": "ค",
+   "text": "เศษส่วนในข้อใดเขียนเป็นทศนิยมรู้จบได้<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span><span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">3</span></span></span></div><div class=\"ch\"><b>ข.</b><span><span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">6</span></span></span></div><div class=\"ch\"><b>ค.</b><span><span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">7</span></span></span></div><div class=\"ch\"><b>ง.</b><span><span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">8</span></span></span></div></div>",
+   "answer": "ง",
    "sub": "ทศนิยมซ้ำ",
    "level": "กลาง",
    "std": "ค 1.1 ม.1/1",

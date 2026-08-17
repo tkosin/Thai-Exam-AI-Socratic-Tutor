@@ -163,8 +163,8 @@
    "tag": "ม.1"
   },
   {
-   "text": "45,000 เขียนในรูปสัญกรณ์วิทยาศาสตร์ได้เป็นข้อใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>4.5 &times; 10<sup>3</sup></span></div><div class=\"ch\"><b>ข.</b><span>4.5 &times; 10<sup>4</sup></span></div><div class=\"ch\"><b>ค.</b><span>45 &times; 10<sup>3</sup></span></div><div class=\"ch\"><b>ง.</b><span>0.45 &times; 10<sup>5</sup></span></div></div>",
-   "answer": "ข",
+   "text": "45,000 เขียนในรูปสัญกรณ์วิทยาศาสตร์ได้เป็นข้อใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>4.5 &times; 10<sup>3</sup></span></div><div class=\"ch\"><b>ข.</b><span>0.45 &times; 10<sup>5</sup></span></div><div class=\"ch\"><b>ค.</b><span>45 &times; 10<sup>3</sup></span></div><div class=\"ch\"><b>ง.</b><span>4.5 &times; 10<sup>4</sup></span></div></div>",
+   "answer": "ง",
    "sub": "สัญกรณ์วิทยาศาสตร์",
    "level": "ง่าย",
    "std": "ค 1.1 ม.1/2",
@@ -203,8 +203,8 @@
    "tag": "ม.1"
   },
   {
-   "text": "ข้อใดเขียนถูกต้องตามหลักสัญกรณ์วิทยาศาสตร์<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>12.5 &times; 10<sup>4</sup></span></div><div class=\"ch\"><b>ข.</b><span>0.85 &times; 10<sup>6</sup></span></div><div class=\"ch\"><b>ค.</b><span>9.02 &times; 10<sup>5</sup></span></div><div class=\"ch\"><b>ง.</b><span>10 &times; 10<sup>3</sup></span></div></div>",
-   "answer": "ค",
+   "text": "ข้อใดเขียนถูกต้องตามหลักสัญกรณ์วิทยาศาสตร์<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>12.5 &times; 10<sup>4</sup></span></div><div class=\"ch\"><b>ข.</b><span>0.85 &times; 10<sup>6</sup></span></div><div class=\"ch\"><b>ค.</b><span>10 &times; 10<sup>3</sup></span></div><div class=\"ch\"><b>ง.</b><span>9.02 &times; 10<sup>5</sup></span></div></div>",
+   "answer": "ง",
    "sub": "สัญกรณ์วิทยาศาสตร์",
    "level": "กลาง",
    "std": "ค 1.1 ม.1/2",
@@ -251,8 +251,8 @@
    "tag": "ม.1"
   },
   {
-   "text": "จำนวนในข้อใดมีค่ามากที่สุด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>9.9 &times; 10<sup>5</sup></span></div><div class=\"ch\"><b>ข.</b><span>1.2 &times; 10<sup>6</sup></span></div><div class=\"ch\"><b>ค.</b><span>8.7 &times; 10<sup>5</sup></span></div><div class=\"ch\"><b>ง.</b><span>9.99 &times; 10<sup>5</sup></span></div></div>",
-   "answer": "ข",
+   "text": "จำนวนในข้อใดมีค่ามากที่สุด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>9.9 &times; 10<sup>5</sup></span></div><div class=\"ch\"><b>ข.</b><span>8.7 &times; 10<sup>5</sup></span></div><div class=\"ch\"><b>ค.</b><span>1.2 &times; 10<sup>6</sup></span></div><div class=\"ch\"><b>ง.</b><span>9.99 &times; 10<sup>5</sup></span></div></div>",
+   "answer": "ค",
    "sub": "สัญกรณ์วิทยาศาสตร์",
    "level": "ยาก",
    "std": "ค 1.1 ม.1/2",

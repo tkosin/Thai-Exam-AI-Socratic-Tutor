@@ -599,8 +599,8 @@
    "tag": "ม.2"
   },
   {
-   "text": "แรงแม่เหล็กกระทำต่อวัตถุใดได้บ้าง<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>วัตถุทุกชนิด</span></div><div class=\"ch\"><b>ข.</b><span>สารแม่เหล็ก เช่น เหล็ก นิกเกิล โคบอลต์</span></div><div class=\"ch\"><b>ค.</b><span>เฉพาะวัตถุที่มีประจุไฟฟ้า</span></div><div class=\"ch\"><b>ง.</b><span>เฉพาะวัตถุที่มีมวลมาก</span></div></div>",
-   "answer": "ข",
+   "text": "แรงแม่เหล็กกระทำต่อวัตถุใดได้บ้าง<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>สารแม่เหล็ก เช่น เหล็ก นิกเกิล โคบอลต์</span></div><div class=\"ch\"><b>ข.</b><span>วัตถุทุกชนิด</span></div><div class=\"ch\"><b>ค.</b><span>เฉพาะวัตถุที่มีประจุไฟฟ้า</span></div><div class=\"ch\"><b>ง.</b><span>เฉพาะวัตถุที่มีมวลมาก</span></div></div>",
+   "answer": "ก",
    "sub": "ชุดที่ 5 · แผนภาพแรงจากสนาม",
    "level": "กลาง",
    "std": "ว 2.2 ม.2/12",

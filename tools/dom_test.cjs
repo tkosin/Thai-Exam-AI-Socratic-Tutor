@@ -358,6 +358,36 @@ $('#pwInput').value = '2569';
 click($('#pwConfirmBtn'));
 chk('รหัสถูกเปิดเฉลย', $('.answer').classList.contains('show'));
 
+// ---------- ย้ายความก้าวหน้าเมื่อรหัสประจำข้อเปลี่ยน ----------
+// ข้อที่ถูกแก้จนรหัสเปลี่ยน (สลับตำแหน่งตัวเลือก) ต้องไม่ทำให้ผู้เรียนเสียความก้าวหน้า
+{
+  const MOVES = JSON.parse(/const ID_MOVES = (\{[\s\S]*?\});/.exec(html)[1]);
+  const pairs = Object.entries(MOVES);
+  chk('มีแผนที่ย้ายรหัสประจำข้อ', pairs.length > 0, `${pairs.length} รายการ`);
+  chk('รหัสปลายทางทุกตัวมีอยู่จริงในคลัง',
+      pairs.every(([, to]) => ALL_Q.some(q => q.id === to)),
+      pairs.filter(([, to]) => !ALL_Q.some(q => q.id === to)).slice(0, 2).join());
+  chk('รหัสต้นทางถูกแก้ไปแล้ว จึงต้องไม่เหลืออยู่ในคลัง',
+      pairs.every(([from]) => !ALL_Q.some(q => q.id === from)),
+      pairs.filter(([from]) => ALL_Q.some(q => q.id === from)).slice(0, 2).join());
+
+  const [oldId, newId] = pairs[0];
+  const key = Object.keys(w.localStorage).find(k => PROGRESS.test(k));
+  const seeded = load({ key, value: {
+    done: [oldId], work: { [oldId]: ['บรรทัดที่เขียนไว้'] },
+    finalAns: { [oldId]: '42' }, checked: { [oldId]: 'ok' } } });
+  const st = JSON.parse(seeded.w.localStorage.getItem(key) || '{}');
+  // อ่านสถานะที่หน้าเว็บบันทึกกลับลงไปหลังย้ายแล้ว
+  enterExam(seeded, 'คณิตศาสตร์ ม.1');
+  const after = JSON.parse(seeded.w.localStorage.getItem(key) || '{}');
+  chk('ข้อที่ทำแล้วย้ายไปรหัสใหม่', (after.done || []).includes(newId),
+      JSON.stringify(after.done || []).slice(0, 80));
+  chk('รหัสเก่าไม่หลงเหลือ', !(after.done || []).includes(oldId));
+  chk('วิธีทำย้ายตามไปด้วย', !!(after.work || {})[newId], Object.keys(after.work || {}).join());
+  chk('คำตอบที่กรอกไว้ย้ายตามไปด้วย', (after.finalAns || {})[newId] === '42');
+  chk('ผลตรวจย้ายตามไปด้วย', (after.checked || {})[newId] === 'ok');
+}
+
 // ---------- ป้ายบอกสาระที่คลังไม่ครอบคลุม ----------
 // เหตุผลอยู่ใน docs/implementation-plan.md ข้อ 6.6 — ป้าย "ครบทุกตัวชี้วัด" บนวิชาที่
 // ครอบคลุมครึ่งเดียวทำให้เด็กเตรียมสอบผิด ซึ่งเสียหายกว่าการไม่มีวิชานั้นเลย

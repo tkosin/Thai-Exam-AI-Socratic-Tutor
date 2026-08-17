@@ -31,6 +31,7 @@ QDIR = os.path.join(ROOT, "questions")
 COURSES = os.path.join(QDIR, "courses.json")
 FIGURES = os.path.join(QDIR, "figures.json")
 LEGACY = os.path.join(QDIR, "legacy-order.json")
+MOVES = os.path.join(QDIR, "id-moves.json")
 TOPICS = os.path.join(QDIR, "topics.json")
 DATA = os.path.join(ROOT, "data")
 HTML = os.path.join(ROOT, "index.html")
@@ -147,6 +148,12 @@ def build_texts(questions, per_course):
             raise SystemExit(f"ไม่พบ const {name} ใน index.html")
         return text[:m.start(2)] + value + text[m.end(2):]
 
+    def put_obj(text, name, value):
+        m = re.search(r"(const %s = )(\{.*?\});" % name, text, re.S)
+        if not m:
+            raise SystemExit(f"ไม่พบ const {name} ใน index.html")
+        return text[:m.start(2)] + value + text[m.end(2):]
+
     # MANIFEST — พอสำหรับหน้าแรก: ชื่อวิชา จำนวนข้อ ชื่อหน่วยและจำนวนข้อรายหน่วย
     manifest, data_files = [], {}
     for course, _ in per_course:
@@ -178,7 +185,16 @@ def build_texts(questions, per_course):
     dump = lambda v: json.dumps(v, ensure_ascii=False, separators=(", ", ": "))
     tight = lambda v: json.dumps(v, ensure_ascii=False, separators=(",", ":"))
 
+    # แผนที่ย้ายรหัสประจำข้อ — ข้อที่ถูกแก้จนรหัสเปลี่ยน (เช่นสลับตำแหน่งตัวเลือก)
+    # ต้องบอกหน้าเว็บว่ารหัสเก่าไปอยู่ที่ไหน ไม่งั้นความก้าวหน้าของผู้เรียนหายไปเงียบ ๆ
+    moves = json.load(open(MOVES, encoding="utf-8")) if os.path.exists(MOVES) else {}
+    stale = [a for a, b in moves.items() if b not in known]
+    if stale:
+        print(f"⚠️  id-moves.json ชี้ไปยังรหัสที่ไม่มีในคลังแล้ว {len(stale)} รายการ "
+              f"(เช่น {stale[0]}) — ความก้าวหน้าของข้อเหล่านั้นจะย้ายไม่ได้")
+
     shell = put(html, "LEGACY_IDS", tight(legacy))
+    shell = put_obj(shell, "ID_MOVES", tight(moves))
     shell = put(shell, "MANIFEST", dump(manifest))
     split = put(shell, "QUESTIONS", "[]")            # ออนไลน์: โหลดข้อสอบทีหลัง
     bundled = embed_font(put(shell, "QUESTIONS", dump(questions)))   # ออฟไลน์: ไฟล์เดียว

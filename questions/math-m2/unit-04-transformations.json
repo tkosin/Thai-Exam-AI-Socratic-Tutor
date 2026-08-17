@@ -466,8 +466,8 @@
    "tag": "ม.2"
   },
   {
-   "text": "ตัวอักษรภาษาอังกฤษตัวใดที่สะท้อนข้ามแกนตั้งแล้วได้รูปเดิม<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>A</span></div><div class=\"ch\"><b>ข.</b><span>F</span></div><div class=\"ch\"><b>ค.</b><span>J</span></div><div class=\"ch\"><b>ง.</b><span>R</span></div></div>",
-   "answer": "ก",
+   "text": "ตัวอักษรภาษาอังกฤษตัวใดที่สะท้อนข้ามแกนตั้งแล้วได้รูปเดิม<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>F</span></div><div class=\"ch\"><b>ข.</b><span>A</span></div><div class=\"ch\"><b>ค.</b><span>J</span></div><div class=\"ch\"><b>ง.</b><span>R</span></div></div>",
+   "answer": "ข",
    "sub": "การนำการแปลงไปใช้",
    "level": "กลาง",
    "std": "ค 2.2 ม.2/3",

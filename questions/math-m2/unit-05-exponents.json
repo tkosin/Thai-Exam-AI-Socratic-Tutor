@@ -323,8 +323,8 @@
    "tag": "ม.2"
   },
   {
-   "text": "ในสัญกรณ์วิทยาศาสตร์ A × 10<sup>n</sup> ค่า A ต้องอยู่ในช่วงใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>มากกว่าหรือเท่ากับ 1 แต่น้อยกว่า 10</span></div><div class=\"ch\"><b>ข.</b><span>มากกว่า 0 แต่น้อยกว่า 1</span></div><div class=\"ch\"><b>ค.</b><span>มากกว่าหรือเท่ากับ 10</span></div><div class=\"ch\"><b>ง.</b><span>เป็นจำนวนเต็มเท่านั้น</span></div></div>",
-   "answer": "ก",
+   "text": "ในสัญกรณ์วิทยาศาสตร์ A × 10<sup>n</sup> ค่า A ต้องอยู่ในช่วงใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>มากกว่าหรือเท่ากับ 10</span></div><div class=\"ch\"><b>ข.</b><span>มากกว่า 0 แต่น้อยกว่า 1</span></div><div class=\"ch\"><b>ค.</b><span>มากกว่าหรือเท่ากับ 1 แต่น้อยกว่า 10</span></div><div class=\"ch\"><b>ง.</b><span>เป็นจำนวนเต็มเท่านั้น</span></div></div>",
+   "answer": "ค",
    "sub": "สัญกรณ์วิทยาศาสตร์",
    "level": "ง่าย",
    "std": "ค 1.1 ม.2/1",

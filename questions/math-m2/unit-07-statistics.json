@@ -198,8 +198,8 @@
    "tag": "ม.2"
   },
   {
-   "text": "ฮิสโทแกรมต่างจากแผนภูมิแท่งอย่างไร<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ฮิสโทแกรมใช้กับข้อมูลต่อเนื่องและแท่งติดกัน</span></div><div class=\"ch\"><b>ข.</b><span>ฮิสโทแกรมใช้กับข้อมูลเชิงคุณภาพเท่านั้น</span></div><div class=\"ch\"><b>ค.</b><span>ฮิสโทแกรมมีแท่งแนวนอนเสมอ</span></div><div class=\"ch\"><b>ง.</b><span>ฮิสโทแกรมไม่มีแกนตั้ง</span></div></div>",
-   "answer": "ก",
+   "text": "ฮิสโทแกรมต่างจากแผนภูมิแท่งอย่างไร<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ฮิสโทแกรมไม่มีแกนตั้ง</span></div><div class=\"ch\"><b>ข.</b><span>ฮิสโทแกรมใช้กับข้อมูลเชิงคุณภาพเท่านั้น</span></div><div class=\"ch\"><b>ค.</b><span>ฮิสโทแกรมมีแท่งแนวนอนเสมอ</span></div><div class=\"ch\"><b>ง.</b><span>ฮิสโทแกรมใช้กับข้อมูลต่อเนื่องและแท่งติดกัน</span></div></div>",
+   "answer": "ง",
    "sub": "ฮิสโทแกรม",
    "level": "กลาง",
    "std": "ค 3.1 ม.2/1",
@@ -302,8 +302,8 @@
    "tag": "ม.2"
   },
   {
-   "text": "ค่ากลางของข้อมูลที่หาได้จากผลรวมของข้อมูลหารด้วยจำนวนข้อมูล เรียกว่าอะไร<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ค่าเฉลี่ยเลขคณิต</span></div><div class=\"ch\"><b>ข.</b><span>มัธยฐาน</span></div><div class=\"ch\"><b>ค.</b><span>ฐานนิยม</span></div><div class=\"ch\"><b>ง.</b><span>พิสัย</span></div></div>",
-   "answer": "ก",
+   "text": "ค่ากลางของข้อมูลที่หาได้จากผลรวมของข้อมูลหารด้วยจำนวนข้อมูล เรียกว่าอะไร<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>พิสัย</span></div><div class=\"ch\"><b>ข.</b><span>มัธยฐาน</span></div><div class=\"ch\"><b>ค.</b><span>ฐานนิยม</span></div><div class=\"ch\"><b>ง.</b><span>ค่าเฉลี่ยเลขคณิต</span></div></div>",
+   "answer": "ง",
    "sub": "ค่าเฉลี่ยเลขคณิต",
    "level": "ง่าย",
    "std": "ค 3.1 ม.2/1",
@@ -382,8 +382,8 @@
    "tag": "ม.2"
   },
   {
-   "text": "ค่ากลางที่อยู่ตรงกลางของข้อมูลเมื่อเรียงลำดับแล้ว เรียกว่าอะไร<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ฐานนิยม</span></div><div class=\"ch\"><b>ข.</b><span>มัธยฐาน</span></div><div class=\"ch\"><b>ค.</b><span>ค่าเฉลี่ยเลขคณิต</span></div><div class=\"ch\"><b>ง.</b><span>พิสัย</span></div></div>",
-   "answer": "ข",
+   "text": "ค่ากลางที่อยู่ตรงกลางของข้อมูลเมื่อเรียงลำดับแล้ว เรียกว่าอะไร<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ฐานนิยม</span></div><div class=\"ch\"><b>ข.</b><span>ค่าเฉลี่ยเลขคณิต</span></div><div class=\"ch\"><b>ค.</b><span>มัธยฐาน</span></div><div class=\"ch\"><b>ง.</b><span>พิสัย</span></div></div>",
+   "answer": "ค",
    "sub": "มัธยฐานและฐานนิยม",
    "level": "ง่าย",
    "std": "ค 3.1 ม.2/1",
@@ -446,7 +446,15 @@
    "tag": "ม.2"
   },
   {
-   "text": "ข้อมูล 20, 22, 24, 26, 500 ค่ากลางใดเหมาะสมที่สุดในการเป็นตัวแทนของข้อมูลชุดนี้<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ค่าเฉลี่ยเลขคณิต</span></div><div class=\"ch\"><b>ข.</b><span>มัธยฐาน</span></div><div class=\"ch\"><b>ค.</b><span>พิสัย</span></div><div class=\"ch\"><b>ง.</b><span>ผลรวมของข้อมูล</span></div></div>",
+   "text": "ข้อมูล 20, 22, 24, 26, 500 ค่ากลางใดเหมาะสมที่สุดในการเป็นตัวแทนของข้อมูลชุดนี้<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ค่าเฉลี่ยเลขคณิต</span></div><div class=\"ch\"><b>ข.</b><span>พิสัย</span></div><div class=\"ch\"><b>ค.</b><span>มัธยฐาน</span></div><div class=\"ch\"><b>ง.</b><span>ผลรวมของข้อมูล</span></div></div>",
+   "answer": "ค",
+   "sub": "มัธยฐานและฐานนิยม",
+   "level": "ยาก",
+   "std": "ค 3.1 ม.2/1",
+   "tag": "ม.2"
+  },
+  {
+   "text": "เมื่อข้อมูลมีค่าผิดปกติสูงมากหนึ่งค่า ค่ากลางใดได้รับผลกระทบมากที่สุด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>มัธยฐาน</span></div><div class=\"ch\"><b>ข.</b><span>ค่าเฉลี่ยเลขคณิต</span></div><div class=\"ch\"><b>ค.</b><span>ฐานนิยม</span></div><div class=\"ch\"><b>ง.</b><span>ได้รับผลกระทบเท่ากันทุกค่า</span></div></div>",
    "answer": "ข",
    "sub": "มัธยฐานและฐานนิยม",
    "level": "ยาก",
@@ -454,16 +462,8 @@
    "tag": "ม.2"
   },
   {
-   "text": "เมื่อข้อมูลมีค่าผิดปกติสูงมากหนึ่งค่า ค่ากลางใดได้รับผลกระทบมากที่สุด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ค่าเฉลี่ยเลขคณิต</span></div><div class=\"ch\"><b>ข.</b><span>มัธยฐาน</span></div><div class=\"ch\"><b>ค.</b><span>ฐานนิยม</span></div><div class=\"ch\"><b>ง.</b><span>ได้รับผลกระทบเท่ากันทุกค่า</span></div></div>",
+   "text": "ข้อมูลเชิงคุณภาพ เช่น สีที่ชอบ ควรใช้ค่ากลางใดเป็นตัวแทน<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ฐานนิยม</span></div><div class=\"ch\"><b>ข.</b><span>มัธยฐาน</span></div><div class=\"ch\"><b>ค.</b><span>ค่าเฉลี่ยเลขคณิต</span></div><div class=\"ch\"><b>ง.</b><span>พิสัย</span></div></div>",
    "answer": "ก",
-   "sub": "มัธยฐานและฐานนิยม",
-   "level": "ยาก",
-   "std": "ค 3.1 ม.2/1",
-   "tag": "ม.2"
-  },
-  {
-   "text": "ข้อมูลเชิงคุณภาพ เช่น สีที่ชอบ ควรใช้ค่ากลางใดเป็นตัวแทน<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ค่าเฉลี่ยเลขคณิต</span></div><div class=\"ch\"><b>ข.</b><span>มัธยฐาน</span></div><div class=\"ch\"><b>ค.</b><span>ฐานนิยม</span></div><div class=\"ch\"><b>ง.</b><span>พิสัย</span></div></div>",
-   "answer": "ค",
    "sub": "มัธยฐานและฐานนิยม",
    "level": "กลาง",
    "std": "ค 3.1 ม.2/1",
