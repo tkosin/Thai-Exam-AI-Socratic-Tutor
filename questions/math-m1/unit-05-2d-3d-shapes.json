@@ -413,8 +413,8 @@
    "tag": "ม.1"
   },
   {
-   "text": "รูปคลี่ของทรงกระบอกประกอบด้วยรูปเรขาคณิตใดบ้าง<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>วงกลม 1 รูป กับรูปสามเหลี่ยม 1 รูป</span></div><div class=\"ch\"><b>ข.</b><span>วงกลม 2 รูป กับรูปสี่เหลี่ยมผืนผ้า 1 รูป</span></div><div class=\"ch\"><b>ค.</b><span>วงกลม 2 รูป กับรูปสี่เหลี่ยมจัตุรัส 2 รูป</span></div><div class=\"ch\"><b>ง.</b><span>วงกลม 1 รูป กับรูปสี่เหลี่ยมผืนผ้า 2 รูป</span></div></div>",
-   "answer": "ข",
+   "text": "รูปคลี่ของทรงกระบอกประกอบด้วยรูปเรขาคณิตใดบ้าง<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>วงกลม 1 รูป กับรูปสามเหลี่ยม 1 รูป</span></div><div class=\"ch\"><b>ข.</b><span>วงกลม 1 รูป กับรูปสี่เหลี่ยมผืนผ้า 2 รูป</span></div><div class=\"ch\"><b>ค.</b><span>วงกลม 2 รูป กับรูปสี่เหลี่ยมจัตุรัส 2 รูป</span></div><div class=\"ch\"><b>ง.</b><span>วงกลม 2 รูป กับรูปสี่เหลี่ยมผืนผ้า 1 รูป</span></div></div>",
+   "answer": "ง",
    "sub": "รูปคลี่ของรูปเรขาคณิตสามมิติ",
    "level": "ง่าย",
    "std": "ค 2.2 ม.1/2",
@@ -479,8 +479,8 @@
    "tag": "ม.1"
   },
   {
-   "text": "รูปเรขาคณิตสามมิติในข้อใดไม่มีจุดยอดและไม่มีขอบ<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>ลูกบาศก์</span></div><div class=\"ch\"><b>ข.</b><span>พีระมิดฐานสามเหลี่ยม</span></div><div class=\"ch\"><b>ค.</b><span>ทรงกลม</span></div><div class=\"ch\"><b>ง.</b><span>ปริซึมห้าเหลี่ยม</span></div></div>",
-   "answer": "ค",
+   "text": "รูปเรขาคณิตสามมิติในข้อใดไม่มีจุดยอดและไม่มีขอบ<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>ลูกบาศก์</span></div><div class=\"ch\"><b>ข.</b><span>พีระมิดฐานสามเหลี่ยม</span></div><div class=\"ch\"><b>ค.</b><span>ปริซึมห้าเหลี่ยม</span></div><div class=\"ch\"><b>ง.</b><span>ทรงกลม</span></div></div>",
+   "answer": "ง",
    "sub": "ส่วนประกอบของรูปเรขาคณิตสามมิติ",
    "level": "ง่าย",
    "std": "ค 2.2 ม.1/2",

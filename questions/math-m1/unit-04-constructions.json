@@ -155,8 +155,8 @@
    "tag": "ม.1"
   },
   {
-   "text": "ข้อใดกล่าวถูกต้องเกี่ยวกับ “รังสี”<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>มีจุดปลายทั้งสองข้าง</span></div><div class=\"ch\"><b>ข.</b><span>มีจุดเริ่มต้นหนึ่งจุด และต่อออกไปไม่สิ้นสุดเพียงข้างเดียว</span></div><div class=\"ch\"><b>ค.</b><span>ไม่มีจุดปลายทั้งสองข้าง</span></div><div class=\"ch\"><b>ง.</b><span>วัดความยาวได้เสมอ</span></div></div>",
-   "answer": "ข",
+   "text": "ข้อใดกล่าวถูกต้องเกี่ยวกับ “รังสี”<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>มีจุดเริ่มต้นหนึ่งจุด และต่อออกไปไม่สิ้นสุดเพียงข้างเดียว</span></div><div class=\"ch\"><b>ข.</b><span>มีจุดปลายทั้งสองข้าง</span></div><div class=\"ch\"><b>ค.</b><span>ไม่มีจุดปลายทั้งสองข้าง</span></div><div class=\"ch\"><b>ง.</b><span>วัดความยาวได้เสมอ</span></div></div>",
+   "answer": "ก",
    "sub": "รูปเรขาคณิตพื้นฐานและชนิดของมุม",
    "level": "กลาง",
    "std": "ค 2.2 ม.1/1",
@@ -196,16 +196,16 @@
    "tag": "ม.1"
   },
   {
-   "text": "การสร้างรูปสามเหลี่ยมเมื่อกำหนดความยาวของด้านทั้งสามด้าน เป็นการสร้างด้วยเงื่อนไขแบบใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>ด้าน-มุม-ด้าน</span></div><div class=\"ch\"><b>ข.</b><span>ด้าน-ด้าน-ด้าน</span></div><div class=\"ch\"><b>ค.</b><span>มุม-ด้าน-มุม</span></div><div class=\"ch\"><b>ง.</b><span>มุม-มุม-มุม</span></div></div>",
-   "answer": "ข",
+   "text": "การสร้างรูปสามเหลี่ยมเมื่อกำหนดความยาวของด้านทั้งสามด้าน เป็นการสร้างด้วยเงื่อนไขแบบใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>ด้าน-มุม-ด้าน</span></div><div class=\"ch\"><b>ข.</b><span>มุม-มุม-มุม</span></div><div class=\"ch\"><b>ค.</b><span>มุม-ด้าน-มุม</span></div><div class=\"ch\"><b>ง.</b><span>ด้าน-ด้าน-ด้าน</span></div></div>",
+   "answer": "ง",
    "sub": "การสร้างรูปสามเหลี่ยม",
    "level": "ง่าย",
    "std": "ค 2.2 ม.1/1",
    "tag": "ม.1"
   },
   {
-   "text": "ถ้ากำหนดขนาดของมุมทั้งสามมุมของรูปสามเหลี่ยมให้ จะสร้างรูปสามเหลี่ยมที่แตกต่างกันได้กี่รูป<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ได้เพียง 1 รูปเท่านั้น</span></div><div class=\"ch\"><b>ข.</b><span>ได้ 2 รูป</span></div><div class=\"ch\"><b>ค.</b><span>สร้างไม่ได้เลย</span></div><div class=\"ch\"><b>ง.</b><span>ได้มากมายไม่จำกัด เพราะเป็นรูปที่คล้ายกันแต่ขนาดต่างกัน</span></div></div>",
-   "answer": "ง",
+   "text": "ถ้ากำหนดขนาดของมุมทั้งสามมุมของรูปสามเหลี่ยมให้ จะสร้างรูปสามเหลี่ยมที่แตกต่างกันได้กี่รูป<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ได้เพียง 1 รูปเท่านั้น</span></div><div class=\"ch\"><b>ข.</b><span>ได้มากมายไม่จำกัด เพราะเป็นรูปที่คล้ายกันแต่ขนาดต่างกัน</span></div><div class=\"ch\"><b>ค.</b><span>สร้างไม่ได้เลย</span></div><div class=\"ch\"><b>ง.</b><span>ได้ 2 รูป</span></div></div>",
+   "answer": "ข",
    "sub": "การสร้างรูปสามเหลี่ยม",
    "level": "ยาก",
    "std": "ค 2.2 ม.1/1",
@@ -301,16 +301,16 @@
    "tag": "ม.1"
   },
   {
-   "text": "รูปสี่เหลี่ยมในข้อใดมีเส้นทแยงมุมยาวเท่ากันและตัดกันเป็นมุมฉาก<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>รูปสี่เหลี่ยมผืนผ้า</span></div><div class=\"ch\"><b>ข.</b><span>รูปสี่เหลี่ยมจัตุรัส</span></div><div class=\"ch\"><b>ค.</b><span>รูปสี่เหลี่ยมขนมเปียกปูน</span></div><div class=\"ch\"><b>ง.</b><span>รูปสี่เหลี่ยมด้านขนาน</span></div></div>",
-   "answer": "ข",
+   "text": "รูปสี่เหลี่ยมในข้อใดมีเส้นทแยงมุมยาวเท่ากันและตัดกันเป็นมุมฉาก<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>รูปสี่เหลี่ยมจัตุรัส</span></div><div class=\"ch\"><b>ข.</b><span>รูปสี่เหลี่ยมผืนผ้า</span></div><div class=\"ch\"><b>ค.</b><span>รูปสี่เหลี่ยมขนมเปียกปูน</span></div><div class=\"ch\"><b>ง.</b><span>รูปสี่เหลี่ยมด้านขนาน</span></div></div>",
+   "answer": "ก",
    "sub": "การสร้างรูปสี่เหลี่ยมและสมบัติ",
    "level": "ยาก",
    "std": "ค 2.2 ม.1/1",
    "tag": "ม.1"
   },
   {
-   "text": "เส้นตรงสองเส้นขนานกันเมื่อใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>เมื่อตัดกันที่จุดหนึ่ง</span></div><div class=\"ch\"><b>ข.</b><span>เมื่ออยู่บนระนาบเดียวกันและไม่ตัดกัน</span></div><div class=\"ch\"><b>ค.</b><span>เมื่อตั้งฉากกัน</span></div><div class=\"ch\"><b>ง.</b><span>เมื่อมีความยาวเท่ากัน</span></div></div>",
-   "answer": "ข",
+   "text": "เส้นตรงสองเส้นขนานกันเมื่อใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>เมื่ออยู่บนระนาบเดียวกันและไม่ตัดกัน</span></div><div class=\"ch\"><b>ข.</b><span>เมื่อตัดกันที่จุดหนึ่ง</span></div><div class=\"ch\"><b>ค.</b><span>เมื่อตั้งฉากกัน</span></div><div class=\"ch\"><b>ง.</b><span>เมื่อมีความยาวเท่ากัน</span></div></div>",
+   "answer": "ก",
    "sub": "เส้นขนานและมุมที่เกี่ยวข้อง",
    "level": "ง่าย",
    "std": "ค 2.2 ม.1/1",

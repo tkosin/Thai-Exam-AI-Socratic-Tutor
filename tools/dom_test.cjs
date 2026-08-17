@@ -358,6 +358,101 @@ $('#pwInput').value = '2569';
 click($('#pwConfirmBtn'));
 chk('รหัสถูกเปิดเฉลย', $('.answer').classList.contains('show'));
 
+// ---------- ย้ายความก้าวหน้าเมื่อรหัสประจำข้อเปลี่ยน ----------
+// ข้อที่ถูกแก้จนรหัสเปลี่ยน (สลับตำแหน่งตัวเลือก) ต้องไม่ทำให้ผู้เรียนเสียความก้าวหน้า
+{
+  const MOVES = JSON.parse(/const ID_MOVES = (\{[\s\S]*?\});/.exec(html)[1]);
+  const pairs = Object.entries(MOVES);
+  chk('มีแผนที่ย้ายรหัสประจำข้อ', pairs.length > 0, `${pairs.length} รายการ`);
+  chk('รหัสปลายทางทุกตัวมีอยู่จริงในคลัง',
+      pairs.every(([, to]) => ALL_Q.some(q => q.id === to)),
+      pairs.filter(([, to]) => !ALL_Q.some(q => q.id === to)).slice(0, 2).join());
+  chk('รหัสต้นทางถูกแก้ไปแล้ว จึงต้องไม่เหลืออยู่ในคลัง',
+      pairs.every(([from]) => !ALL_Q.some(q => q.id === from)),
+      pairs.filter(([from]) => ALL_Q.some(q => q.id === from)).slice(0, 2).join());
+
+  const [oldId, newId] = pairs[0];
+  const key = Object.keys(w.localStorage).find(k => PROGRESS.test(k));
+  const seeded = load({ key, value: {
+    done: [oldId], work: { [oldId]: ['บรรทัดที่เขียนไว้'] },
+    finalAns: { [oldId]: '42' }, checked: { [oldId]: 'ok' } } });
+  const st = JSON.parse(seeded.w.localStorage.getItem(key) || '{}');
+  // อ่านสถานะที่หน้าเว็บบันทึกกลับลงไปหลังย้ายแล้ว
+  enterExam(seeded, 'คณิตศาสตร์ ม.1');
+  const after = JSON.parse(seeded.w.localStorage.getItem(key) || '{}');
+  chk('ข้อที่ทำแล้วย้ายไปรหัสใหม่', (after.done || []).includes(newId),
+      JSON.stringify(after.done || []).slice(0, 80));
+  chk('รหัสเก่าไม่หลงเหลือ', !(after.done || []).includes(oldId));
+  chk('วิธีทำย้ายตามไปด้วย', !!(after.work || {})[newId], Object.keys(after.work || {}).join());
+  chk('คำตอบที่กรอกไว้ย้ายตามไปด้วย', (after.finalAns || {})[newId] === '42');
+  chk('ผลตรวจย้ายตามไปด้วย', (after.checked || {})[newId] === 'ok');
+}
+
+// ---------- ป้ายบอกสาระที่คลังไม่ครอบคลุม ----------
+// เหตุผลอยู่ใน docs/implementation-plan.md ข้อ 6.6 — ป้าย "ครบทุกตัวชี้วัด" บนวิชาที่
+// ครอบคลุมครึ่งเดียวทำให้เด็กเตรียมสอบผิด ซึ่งเสียหายกว่าการไม่มีวิชานั้นเลย
+{
+  chk('วิชาที่ครอบคลุมครบ ไม่ขึ้นป้ายเตือน', !$('#courseGrid .c-gaps'),
+      ($('#courseGrid .c-gaps') || {}).textContent);
+
+  // ยังไม่มีวิชาไหนมีหัวข้อ practical จริง (มาถึงตอนเฟส 10) จึงป้อน gaps เข้า MANIFEST
+  // ตรง ๆ เพื่อให้เส้นทางการวาดถูกเดินจริง ไม่ใช่โค้ดที่ไม่เคยถูกเรียก
+  const faked = html.replace('const MANIFEST = [{"slug": "math-m1"',
+                             'const MANIFEST = [{"gaps": ["พลศึกษา"], "slug": "math-m1"');
+  if (faked === html) throw new Error('แทรก gaps เข้า MANIFEST ไม่สำเร็จ — รูปแบบเปลี่ยนไป');
+  const g = new JSDOM(faked, { runScripts: 'dangerously', pretendToBeVisual: true,
+                               url: 'https://tkosin.github.io/Thai-Exam-AI-Socratic-Tutor/' });
+  const box = [...g.window.document.querySelectorAll('#courseGrid .course-card')]
+    .find(c => c.textContent.includes('คณิตศาสตร์ ม.1'));
+  const gap = box && box.querySelector('.c-gaps');
+  chk('วิชาที่ไม่ครอบคลุมบางสาระ ขึ้นป้ายบอกตรง ๆ',
+      !!gap && gap.textContent.includes('พลศึกษา'), gap && gap.textContent);
+  chk('ป้ายบอกด้วยว่าทำไมถึงไม่มี',
+      !!gap && /ปฏิบัติ/.test(gap.textContent), gap && gap.textContent);
+  chk('วิชาอื่นที่ไม่มี gaps ยังไม่ขึ้นป้าย',
+      [...g.window.document.querySelectorAll('#courseGrid .course-card')]
+        .filter(c => c.querySelector('.c-gaps')).length === 1);
+}
+
+// ---------- คำอธิบายวิธีคิด: ต้องอ่านได้โดยไม่ต้องปลดล็อกเฉลย ----------
+// เหตุผลของด่านนี้อยู่ใน docs/implementation-plan.md ข้อ 6.3 — คำอธิบายที่ล็อกไว้
+// หลังรหัสผ่านที่นักเรียนไม่มี เท่ากับไม่มีคำอธิบาย
+{
+  const withEx = ALL_Q.filter(q => q.explain);
+  chk('คลังมีข้อที่เติมคำอธิบายแล้ว', withEx.length > 0, `${withEx.length} ข้อ`);
+  const target = withEx[0];
+  const r = enterExam(load(), `${target.subject} ${target.grade}`);
+  const rd = s => r.d.querySelector(s);
+  const rclick = el => el.dispatchEvent(new r.w.Event('click'));
+  const rtype = (el, v) => { el.value = v; el.dispatchEvent(new r.w.Event('input')); };
+  const head = target.explain.slice(0, 30);
+
+  chk('ยังไม่กดตรวจ ยังไม่เห็นคำอธิบาย', !rd('#checkResult .rexplain'));
+
+  rtype(rd('#finalInput'), 'คำตอบที่ผิดแน่นอน 99999');
+  rclick(rd('#checkBtn'));
+  chk('ตอบผิดแล้วเห็นคำอธิบาย', (rd('#checkResult').textContent || '').includes(head),
+      (rd('#checkResult').textContent || '').slice(0, 60));
+  chk('เห็นคำอธิบายโดยไม่ต้องใส่รหัสผ่าน', !rd('#answerBox').classList.contains('show'));
+  chk('คำอธิบายไม่ได้แอบบอกตัวเฉลย',
+      !(rd('#checkResult .rexplain').textContent || '').includes(`เฉลย: ${target.answer}`));
+
+  rtype(rd('#finalInput'), target.answer);
+  rclick(rd('#checkBtn'));
+  chk('ตอบถูกก็ยังเห็นคำอธิบาย', (rd('#checkResult').textContent || '').includes(head),
+      rd('#checkResult').className);
+
+  // ข้อที่ยังไม่มีคำอธิบาย (คลังเดิม 5,175 ข้อ) ต้องไม่ขึ้นกล่องเปล่า
+  const plain = enterExam(load(), 'คณิตศาสตร์ ม.1');
+  const pd = s => plain.d.querySelector(s);
+  pd('#finalInput').value = 'ผิดแน่นอน 99999';
+  pd('#finalInput').dispatchEvent(new plain.w.Event('input'));
+  pd('#checkBtn').dispatchEvent(new plain.w.Event('click'));
+  chk('ข้อที่ไม่มีคำอธิบาย ไม่ขึ้นกล่องเปล่า',
+      !pd('#checkResult .rexplain') && pd('#checkResult').className.includes('show'),
+      pd('#checkResult').className);
+}
+
 // ---------- โหลดข้อมูลที่บันทึกไว้กลับมาได้ ----------
 {
   const key = Object.keys(w.localStorage).find(k => PROGRESS.test(k));

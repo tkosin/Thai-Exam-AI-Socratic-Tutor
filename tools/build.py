@@ -31,6 +31,8 @@ QDIR = os.path.join(ROOT, "questions")
 COURSES = os.path.join(QDIR, "courses.json")
 FIGURES = os.path.join(QDIR, "figures.json")
 LEGACY = os.path.join(QDIR, "legacy-order.json")
+MOVES = os.path.join(QDIR, "id-moves.json")
+TOPICS = os.path.join(QDIR, "topics.json")
 DATA = os.path.join(ROOT, "data")
 HTML = os.path.join(ROOT, "index.html")
 COPY = os.path.join(ROOT, "คลังข้อสอบ_ออฟไลน์.html")
@@ -39,6 +41,10 @@ FONT_CSS = os.path.join(ROOT, "questions", "font-embed.css")
 PLACEHOLDER = "[[fig]]"
 FIELD_ORDER = ["id", "subject", "grade", "unit", "uname", "sub",
                "text", "answer", "level", "std", "tag"]
+# คำอธิบายวิธีคิด — ยังไม่บังคับทุกข้อ (คลังเดิม 5,175 ข้อไม่มี) จึงแยกจาก FIELD_ORDER
+# ที่เป็นฟิลด์บังคับ · ข้อไหนมีก็ส่งต่อไปหน้าเว็บ ข้อไหนไม่มีก็ไม่ใส่คีย์ให้เปลืองไบต์
+# วิชาที่ตั้ง explain_required ใน topics.json จะถูก validate.py บังคับอีกชั้น
+OPTIONAL_FIELDS = ["explain"]
 
 
 def qid(slug, unit, q):
@@ -86,7 +92,9 @@ def load():
                 missing = [k for k in FIELD_ORDER if k not in merged]
                 if missing:
                     raise SystemExit(f"{where}: ไม่มีฟิลด์ {', '.join(missing)}")
-                questions.append({k: merged[k] for k in FIELD_ORDER})
+                out = {k: merged[k] for k in FIELD_ORDER}
+                out.update({k: merged[k] for k in OPTIONAL_FIELDS if merged.get(k)})
+                questions.append(out)
         per_course.append((course, len(questions) - start))
 
     seen = {}
@@ -97,6 +105,30 @@ def load():
 
     unused = sorted(set(figures) - used)
     return questions, per_course, unused
+
+
+def uncovered_strands(course):
+    """สาระที่คลังไม่ครอบคลุมเลย เพราะทุกหัวข้อในสาระนั้นเป็น practical
+
+    หน้าแรกเอาไปบอกผู้เรียนตรง ๆ ว่าวิชานี้ไม่มีอะไรบ้าง — ป้าย "ครบทุกตัวชี้วัด"
+    บนวิชาที่ครอบคลุมครึ่งเดียวทำให้เด็กเตรียมสอบผิด ซึ่งเสียหายกว่าการไม่มีวิชานั้นเลย
+
+    อ่านจาก topics.json โดยตรง ไม่ให้พิมพ์ข้อความซ้ำด้วยมือ ไม่งั้นวันที่แก้สถานะหัวข้อ
+    แล้วลืมแก้ข้อความ หน้าเว็บจะบอกคนละเรื่องกับด่านตรวจ
+    """
+    if not os.path.exists(TOPICS):
+        return []
+    doc = json.load(open(TOPICS, encoding="utf-8"))
+    for c in doc["courses"]:
+        if (c["subject"], c["grade"]) != (course["subject"], course["grade"]):
+            continue
+        by_strand = {}
+        for t in c["topics"]:
+            by_strand.setdefault(t.get("strand") or t["std"].rsplit(" ", 1)[0],
+                                 []).append(t["status"])
+        return sorted(name for name, st in by_strand.items()
+                      if st and all(s == "practical" for s in st))
+    return []
 
 
 def build_texts(questions, per_course):
@@ -116,6 +148,12 @@ def build_texts(questions, per_course):
             raise SystemExit(f"ไม่พบ const {name} ใน index.html")
         return text[:m.start(2)] + value + text[m.end(2):]
 
+    def put_obj(text, name, value):
+        m = re.search(r"(const %s = )(\{.*?\});" % name, text, re.S)
+        if not m:
+            raise SystemExit(f"ไม่พบ const {name} ใน index.html")
+        return text[:m.start(2)] + value + text[m.end(2):]
+
     # MANIFEST — พอสำหรับหน้าแรก: ชื่อวิชา จำนวนข้อ ชื่อหน่วยและจำนวนข้อรายหน่วย
     manifest, data_files = [], {}
     for course, _ in per_course:
@@ -125,12 +163,16 @@ def build_texts(questions, per_course):
         for q in mine:
             units[q["unit"]] = units.get(q["unit"], 0) + 1
             names[q["unit"]] = q["uname"]
-        manifest.append({
+        entry = {
             "slug": course["slug"], "subject": course["subject"], "grade": course["grade"],
             "count": len(mine),
             "units": [{"unit": u, "uname": names[u], "count": units[u]}
                       for u in sorted(units)],
-        })
+        }
+        gaps = uncovered_strands(course)
+        if gaps:
+            entry["gaps"] = gaps
+        manifest.append(entry)
         data_files[course["slug"]] = mine
 
     legacy = json.load(open(LEGACY, encoding="utf-8"))
@@ -143,7 +185,16 @@ def build_texts(questions, per_course):
     dump = lambda v: json.dumps(v, ensure_ascii=False, separators=(", ", ": "))
     tight = lambda v: json.dumps(v, ensure_ascii=False, separators=(",", ":"))
 
+    # แผนที่ย้ายรหัสประจำข้อ — ข้อที่ถูกแก้จนรหัสเปลี่ยน (เช่นสลับตำแหน่งตัวเลือก)
+    # ต้องบอกหน้าเว็บว่ารหัสเก่าไปอยู่ที่ไหน ไม่งั้นความก้าวหน้าของผู้เรียนหายไปเงียบ ๆ
+    moves = json.load(open(MOVES, encoding="utf-8")) if os.path.exists(MOVES) else {}
+    stale = [a for a, b in moves.items() if b not in known]
+    if stale:
+        print(f"⚠️  id-moves.json ชี้ไปยังรหัสที่ไม่มีในคลังแล้ว {len(stale)} รายการ "
+              f"(เช่น {stale[0]}) — ความก้าวหน้าของข้อเหล่านั้นจะย้ายไม่ได้")
+
     shell = put(html, "LEGACY_IDS", tight(legacy))
+    shell = put_obj(shell, "ID_MOVES", tight(moves))
     shell = put(shell, "MANIFEST", dump(manifest))
     split = put(shell, "QUESTIONS", "[]")            # ออนไลน์: โหลดข้อสอบทีหลัง
     bundled = embed_font(put(shell, "QUESTIONS", dump(questions)))   # ออฟไลน์: ไฟล์เดียว

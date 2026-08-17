@@ -257,8 +257,8 @@
       "figure": "line-phone-cost"
     },
     {
-      "text": "จากกราฟ ความสัมพันธ์นี้เขียนเป็นสมการได้ตรงกับข้อใด เมื่อ y เป็นค่าบริการ (บาท) และ x เป็นเวลาที่ใช้ (นาที)[[fig]]<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>y = 5x</span></div><div class=\"ch\"><b>ข.</b><span>y = 5x + 100</span></div><div class=\"ch\"><b>ค.</b><span>y = 100x + 5</span></div><div class=\"ch\"><b>ง.</b><span>y = x + 100</span></div></div>",
-      "answer": "ข",
+      "text": "จากกราฟ ความสัมพันธ์นี้เขียนเป็นสมการได้ตรงกับข้อใด เมื่อ y เป็นค่าบริการ (บาท) และ x เป็นเวลาที่ใช้ (นาที)[[fig]]<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>y = 5x</span></div><div class=\"ch\"><b>ข.</b><span>y = 100x + 5</span></div><div class=\"ch\"><b>ค.</b><span>y = 5x + 100</span></div><div class=\"ch\"><b>ง.</b><span>y = x + 100</span></div></div>",
+      "answer": "ค",
       "sub": "การอ่านและแปลความหมายกราฟ",
       "level": "ยาก",
       "std": "ค 1.3 ม.1/2",
@@ -306,8 +306,8 @@
       "tag": "ม.1"
     },
     {
-      "text": "จุดในข้อใดอยู่บนกราฟของ y = 4x - 1<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>(1, 3)</span></div><div class=\"ch\"><b>ข.</b><span>(2, 6)</span></div><div class=\"ch\"><b>ค.</b><span>(0, 1)</span></div><div class=\"ch\"><b>ง.</b><span>(3, 10)</span></div></div>",
-      "answer": "ก",
+      "text": "จุดในข้อใดอยู่บนกราฟของ y = 4x - 1<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>(2, 6)</span></div><div class=\"ch\"><b>ข.</b><span>(1, 3)</span></div><div class=\"ch\"><b>ค.</b><span>(0, 1)</span></div><div class=\"ch\"><b>ง.</b><span>(3, 10)</span></div></div>",
+      "answer": "ข",
       "sub": "กราฟของความสัมพันธ์เชิงเส้น",
       "level": "กลาง",
       "std": "ค 1.3 ม.1/3",
@@ -487,8 +487,8 @@
       "figure": "m1-line-2x-plus-1"
     },
     {
-      "text": "[[fig]]จากกราฟ ความสัมพันธ์นี้เขียนเป็นสมการได้อย่างไร<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>y = x + 2</span></div><div class=\"ch\"><b>ข.</b><span>y = 2x + 1</span></div><div class=\"ch\"><b>ค.</b><span>y = x + 1</span></div><div class=\"ch\"><b>ง.</b><span>y = 2x - 1</span></div></div>",
-      "answer": "ข",
+      "text": "[[fig]]จากกราฟ ความสัมพันธ์นี้เขียนเป็นสมการได้อย่างไร<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>y = 2x + 1</span></div><div class=\"ch\"><b>ข.</b><span>y = x + 2</span></div><div class=\"ch\"><b>ค.</b><span>y = x + 1</span></div><div class=\"ch\"><b>ง.</b><span>y = 2x - 1</span></div></div>",
+      "answer": "ก",
       "sub": "อ่านกราฟความสัมพันธ์เชิงเส้น",
       "level": "ยาก",
       "std": "ค 1.3 ม.1/3",

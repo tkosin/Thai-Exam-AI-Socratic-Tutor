@@ -251,16 +251,16 @@
    "tag": "ม.1"
   },
   {
-   "text": "จากแบบรูป 2, 5, 8, 11, ... นิพจน์ของพจน์ที่ n คือข้อใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>3n</span></div><div class=\"ch\"><b>ข.</b><span>3n - 1</span></div><div class=\"ch\"><b>ค.</b><span>2n + 1</span></div><div class=\"ch\"><b>ง.</b><span>3n + 1</span></div></div>",
-   "answer": "ข",
+   "text": "จากแบบรูป 2, 5, 8, 11, ... นิพจน์ของพจน์ที่ n คือข้อใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span>3n - 1</span></div><div class=\"ch\"><b>ข.</b><span>3n</span></div><div class=\"ch\"><b>ค.</b><span>2n + 1</span></div><div class=\"ch\"><b>ง.</b><span>3n + 1</span></div></div>",
+   "answer": "ก",
    "sub": "แบบรูปและนิพจน์พีชคณิต",
    "level": "กลาง",
    "std": "ค 1.3 ม.1/1",
    "tag": "ม.1"
   },
   {
-   "text": "เขียนข้อความ “ครึ่งหนึ่งของ x ลบด้วย 4” เป็นนิพจน์ได้ตรงกับข้อใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span><span class=\"frac\"><span class=\"num\">x</span><span class=\"den\">2</span></span> - 4</span></div><div class=\"ch\"><b>ข.</b><span><span class=\"frac\"><span class=\"num\">x - 4</span><span class=\"den\">2</span></span></span></div><div class=\"ch\"><b>ค.</b><span>2x - 4</span></div><div class=\"ch\"><b>ง.</b><span>4 - <span class=\"frac\"><span class=\"num\">x</span><span class=\"den\">2</span></span></span></div></div>",
-   "answer": "ก",
+   "text": "เขียนข้อความ “ครึ่งหนึ่งของ x ลบด้วย 4” เป็นนิพจน์ได้ตรงกับข้อใด<div class=\"choices two-col\"><div class=\"ch\"><b>ก.</b><span><span class=\"frac\"><span class=\"num\">x - 4</span><span class=\"den\">2</span></span></span></div><div class=\"ch\"><b>ข.</b><span><span class=\"frac\"><span class=\"num\">x</span><span class=\"den\">2</span></span> - 4</span></div><div class=\"ch\"><b>ค.</b><span>2x - 4</span></div><div class=\"ch\"><b>ง.</b><span>4 - <span class=\"frac\"><span class=\"num\">x</span><span class=\"den\">2</span></span></span></div></div>",
+   "answer": "ข",
    "sub": "แบบรูปและนิพจน์พีชคณิต",
    "level": "กลาง",
    "std": "ค 1.3 ม.1/1",
@@ -307,8 +307,8 @@
    "tag": "ม.1"
   },
   {
-   "text": "สมการ 2(x + 3) = 2x + 6 มีคำตอบลักษณะใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ไม่มีคำตอบ</span></div><div class=\"ch\"><b>ข.</b><span>มีคำตอบเพียง 1 คำตอบ</span></div><div class=\"ch\"><b>ค.</b><span>มีคำตอบ 2 คำตอบ</span></div><div class=\"ch\"><b>ง.</b><span>จำนวนทุกจำนวนเป็นคำตอบของสมการ</span></div></div>",
-   "answer": "ง",
+   "text": "สมการ 2(x + 3) = 2x + 6 มีคำตอบลักษณะใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>ไม่มีคำตอบ</span></div><div class=\"ch\"><b>ข.</b><span>มีคำตอบเพียง 1 คำตอบ</span></div><div class=\"ch\"><b>ค.</b><span>จำนวนทุกจำนวนเป็นคำตอบของสมการ</span></div><div class=\"ch\"><b>ง.</b><span>มีคำตอบ 2 คำตอบ</span></div></div>",
+   "answer": "ค",
    "sub": "สมการและคำตอบของสมการ",
    "level": "ยาก",
    "std": "ค 1.3 ม.1/1",
@@ -387,8 +387,8 @@
    "tag": "ม.1"
   },
   {
-   "text": "ถ้า a = b แล้ว a + 5 = b + 5 เป็นการใช้สมบัติใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>สมบัติการบวกของการเท่ากัน</span></div><div class=\"ch\"><b>ข.</b><span>สมบัติการคูณของการเท่ากัน</span></div><div class=\"ch\"><b>ค.</b><span>สมบัติการสลับที่</span></div><div class=\"ch\"><b>ง.</b><span>สมบัติการแจกแจง</span></div></div>",
-   "answer": "ก",
+   "text": "ถ้า a = b แล้ว a + 5 = b + 5 เป็นการใช้สมบัติใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>สมบัติการคูณของการเท่ากัน</span></div><div class=\"ch\"><b>ข.</b><span>สมบัติการบวกของการเท่ากัน</span></div><div class=\"ch\"><b>ค.</b><span>สมบัติการสลับที่</span></div><div class=\"ch\"><b>ง.</b><span>สมบัติการแจกแจง</span></div></div>",
+   "answer": "ข",
    "sub": "สมบัติของการเท่ากัน",
    "level": "กลาง",
    "std": "ค 1.3 ม.1/1",

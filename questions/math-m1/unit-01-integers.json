@@ -268,16 +268,16 @@
    "tag": "ม.1"
   },
   {
-   "text": "17 + (-9) = (-9) + 17 เป็นการใช้สมบัติใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>สมบัติการสลับที่ของการบวก</span></div><div class=\"ch\"><b>ข.</b><span>สมบัติการเปลี่ยนกลุ่มของการบวก</span></div><div class=\"ch\"><b>ค.</b><span>สมบัติการแจกแจง</span></div><div class=\"ch\"><b>ง.</b><span>สมบัติการมีเอกลักษณ์การบวก</span></div></div>",
-   "answer": "ก",
+   "text": "17 + (-9) = (-9) + 17 เป็นการใช้สมบัติใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>สมบัติการแจกแจง</span></div><div class=\"ch\"><b>ข.</b><span>สมบัติการเปลี่ยนกลุ่มของการบวก</span></div><div class=\"ch\"><b>ค.</b><span>สมบัติการสลับที่ของการบวก</span></div><div class=\"ch\"><b>ง.</b><span>สมบัติการมีเอกลักษณ์การบวก</span></div></div>",
+   "answer": "ค",
    "sub": "สมบัติการบวกและการคูณจำนวนเต็ม",
    "level": "ง่าย",
    "std": "ค 1.1 ม.1/1",
    "tag": "ม.1"
   },
   {
-   "text": "(4 &times; 7) &times; 25 = 4 &times; (7 &times; 25) เป็นการใช้สมบัติใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>สมบัติการสลับที่ของการคูณ</span></div><div class=\"ch\"><b>ข.</b><span>สมบัติการเปลี่ยนกลุ่มของการคูณ</span></div><div class=\"ch\"><b>ค.</b><span>สมบัติการแจกแจง</span></div><div class=\"ch\"><b>ง.</b><span>สมบัติการมีเอกลักษณ์การคูณ</span></div></div>",
-   "answer": "ข",
+   "text": "(4 &times; 7) &times; 25 = 4 &times; (7 &times; 25) เป็นการใช้สมบัติใด<div class=\"choices\"><div class=\"ch\"><b>ก.</b><span>สมบัติการสลับที่ของการคูณ</span></div><div class=\"ch\"><b>ข.</b><span>สมบัติการแจกแจง</span></div><div class=\"ch\"><b>ค.</b><span>สมบัติการเปลี่ยนกลุ่มของการคูณ</span></div><div class=\"ch\"><b>ง.</b><span>สมบัติการมีเอกลักษณ์การคูณ</span></div></div>",
+   "answer": "ค",
    "sub": "สมบัติการบวกและการคูณจำนวนเต็ม",
    "level": "ง่าย",
    "std": "ค 1.1 ม.1/1",
